@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
 
-public class Character : MonoBehaviour
+public class Character : Singleton<Character>
 {
     public float speed;
     Vector2 _direction;

@@ -13,6 +13,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "MoveCell",
+                    "type": "Value",
+                    "id": "6414aa5b-119a-463a-8f3a-09409b9d292f",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PickAndPut",
+                    "type": "Button",
+                    "id": "96ffd091-1572-4ff1-8a2a-48bab59700b7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -73,58 +91,69 @@
                 },
                 {
                     "name": "Arrows",
-                    "id": "f41851c0-edb9-4eb8-85a4-0b49556d3ff9",
+                    "id": "667be660-f00c-4ac6-8828-09638732f0e4",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Walk",
+                    "action": "MoveCell",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "up",
-                    "id": "d7fe7686-564a-482e-897c-47aa6184ad7a",
+                    "id": "00ad1846-c106-46cc-bc9e-e1c2c4b896a7",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Walk",
+                    "action": "MoveCell",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "down",
-                    "id": "b774d2ed-64ab-4d2b-9578-4ac19f4bb575",
+                    "id": "131ce6a4-db32-40d7-bb45-9e25a5e01690",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Walk",
+                    "action": "MoveCell",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "left",
-                    "id": "d6a34448-86d9-4d24-8518-729a3a8c8399",
+                    "id": "df69b135-dff7-4c91-83d6-e346ed7faf07",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Walk",
+                    "action": "MoveCell",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "right",
-                    "id": "e81bb786-4808-44de-bd6e-25270ab084be",
+                    "id": "14c8129e-5eec-4d4c-9235-3d12441f52a4",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Walk",
+                    "action": "MoveCell",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "5ab59a05-455c-4d01-8ab3-dfa06b1936f3",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PickAndPut",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
