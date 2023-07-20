@@ -1,44 +1,91 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Items
 {
+    [RequireComponent(typeof(Image), typeof(RectTransform))]
     public class Cell : MonoBehaviour
     {
         public Vector2Int startPos;
         public Vector2Int endPos;
         public Vector2Int size;
 
-        protected Image Image;
+        Image _image;
+
+        protected Image Image
+        {
+            get
+            {
+                if (_image == null)
+                {
+                    _image = GetComponent<Image>();
+                }
+
+                return _image;
+            }
+        }
 
         RectTransform _rect;
+
+        RectTransform Rect
+        {
+            get
+            {
+                if (_rect == null)
+                {
+                    _rect = GetComponent<RectTransform>();
+                }
+
+                return _rect;
+            }
+        }
         
         public void SetUIPosition(Vector2 pos)
         {
-            _rect.anchoredPosition = pos;
+            Rect.anchoredPosition = pos;
         }
 
         public void SetAnchor(Vector2 min, Vector2 max)
         {
-            _rect.anchorMax = max;
-            _rect.anchorMin = min;
+            Rect.anchorMax = max;
+            Rect.anchorMin = min;
         }
 
         public void SetPivot(Vector2 pivot)
         {
-            _rect.pivot = pivot;
-
+            Rect.pivot = pivot;
         }
 
         public void SetUISize(Vector2 size)
         {
-            _rect.sizeDelta = size;
+            Rect.sizeDelta = size;
+        }
+
+        public void PickUp()
+        {
+            Image.raycastTarget = false;
+            transform.SetAsLastSibling();
+        }
+
+        public void PutDown()
+        {
+            Image.raycastTarget = true;
+        }
+        public void Highlight()
+        {
+            Image.color = Color.red;
+        }
+
+        public void ResetColor()
+        {
+            Image.color = Color.white;
         }
 
         void Awake()
         {
-            Image = GetComponent<Image>();
+            _image = GetComponent<Image>();
             _rect = GetComponent<RectTransform>();
         }
     }

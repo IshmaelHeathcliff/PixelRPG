@@ -6,24 +6,22 @@ using UnityEngine.UI;
 
 namespace Items
 {
-    [RequireComponent(typeof(Image))]
     public class ItemCell : Cell, IPointerClickHandler
     {
         public Item item;
 
-        void InitItem()
+        public void SetItem(Item value)
         {
+            item = value;
             if(item != null)
                 Image.sprite = item.image;
+            name = item.itemName;
         }
         
-        void Start()
-        {
-            InitItem();
-        }
-
         public void OnPointerClick(PointerEventData eventData)
         {
+            if (!InventoryController.Instance.mouseControl)
+                return;
             // Debug.Log("item clicked");
             InventoryController.Instance.CurrentItemCell = this;
             InventoryController.Instance.PickUpCurrentItem();

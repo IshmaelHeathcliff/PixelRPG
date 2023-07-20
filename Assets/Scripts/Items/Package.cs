@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace Items
 {
-    [CreateAssetMenu(fileName = "newPackage", menuName = "ScriptObjects/Items/New Package")]
+    [CreateAssetMenu(fileName = "newPackage", menuName = "SO/Items/New Package")]
     public class Package : SerializedScriptableObject
     {
         public Vector2Int size;
-        public Dictionary<int, Item> items;
+        public Dictionary<Vector2Int, Item> items;
     }
 }

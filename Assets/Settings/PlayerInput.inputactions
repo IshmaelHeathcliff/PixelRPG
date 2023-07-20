@@ -13,24 +13,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "MoveCell",
-                    "type": "Value",
-                    "id": "6414aa5b-119a-463a-8f3a-09409b9d292f",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "PickAndPut",
-                    "type": "Button",
-                    "id": "96ffd091-1572-4ff1-8a2a-48bab59700b7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -88,10 +70,54 @@
                     "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Inventory",
+            "id": "1983bf6f-1491-4d82-8d9e-e4590627e539",
+            "actions": [
+                {
+                    "name": "MoveCell",
+                    "type": "Value",
+                    "id": "8ee5e897-d01e-4f11-b9b5-55e43ab5e680",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
+                    "name": "PickAndPut",
+                    "type": "Button",
+                    "id": "863f6333-0af8-489c-a487-1153c71a5cc7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchInventory",
+                    "type": "Button",
+                    "id": "559a7544-cd42-4977-bfb2-abdc52c15d7e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Delete",
+                    "type": "Button",
+                    "id": "0442025b-acec-4354-9de1-0353e4d4336b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
                     "name": "Arrows",
-                    "id": "667be660-f00c-4ac6-8828-09638732f0e4",
+                    "id": "e2756ed1-1d7d-4686-92e2-80224059ef3c",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -102,7 +128,7 @@
                 },
                 {
                     "name": "up",
-                    "id": "00ad1846-c106-46cc-bc9e-e1c2c4b896a7",
+                    "id": "ad4e88ac-065d-4e4d-aade-633bbb45c18c",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
@@ -113,7 +139,7 @@
                 },
                 {
                     "name": "down",
-                    "id": "131ce6a4-db32-40d7-bb45-9e25a5e01690",
+                    "id": "dab232a4-9a2f-4d94-a1a6-5e7036853b5f",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
@@ -124,7 +150,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "df69b135-dff7-4c91-83d6-e346ed7faf07",
+                    "id": "8db926ee-ac92-42dd-9c65-8b42c4a3e8ab",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -135,7 +161,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "14c8129e-5eec-4d4c-9235-3d12441f52a4",
+                    "id": "99fb772c-29a1-4d76-ba91-75d6e062c468",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
@@ -146,12 +172,34 @@
                 },
                 {
                     "name": "",
-                    "id": "5ab59a05-455c-4d01-8ab3-dfa06b1936f3",
+                    "id": "36433e0a-e21e-46e6-a19c-9f2b7ff9afb0",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "PickAndPut",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88271ace-f51c-47e4-97e7-b883bf287114",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff10d37a-2f9e-4017-bbfa-27f79d54e823",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Delete",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

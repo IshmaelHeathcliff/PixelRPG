@@ -5,18 +5,19 @@ using UnityEngine.UI;
 using Vector2Int = UnityEngine.Vector2Int;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
+using UnityEngine.Serialization;
 
 namespace Items
 {
-    public class InventoryController: Singleton<InventoryController>
+    public class InventoryController : Singleton<InventoryController>
     {
-        ItemCell _pickedUpItemCell;
-        bool _mouseControl;
-        public InventoryGrid CurrentGrid { get; set; }
+        public ItemCell pickedUpItemCell;
+        [SerializeField] public bool mouseControl;
+        [SerializeField] Transform inventoryHolder;
+        public ItemGrid CurrentItemGrid { get; set; }
 
         public ItemCell CurrentItemCell { get; set; }
 
-        
         public void PickUpCurrentItem()
         {
             if (CurrentItemCell == null) return;
@@ -25,56 +26,41 @@ namespace Items
 
         public void PickUpItem(ItemCell itemCell)
         {
-            if (CurrentGrid == null) return;
-            if (_pickedUpItemCell != null) return;
-            _pickedUpItemCell = itemCell;
-            CurrentGrid.MoveCurrentCell(itemCell.startPos, itemCell.size);
-            CurrentGrid.currentCell.transform.SetAsFirstSibling();
-            CurrentGrid.currentCell.PickUp();
-            itemCell.GetComponent<Image>().raycastTarget = false;
-            itemCell.transform.SetAsLastSibling(); //显示在最上面
-            CurrentGrid.RemoveItem(itemCell);
+            if (CurrentItemGrid == null) return;
+            if (pickedUpItemCell != null) return;
+            pickedUpItemCell = CurrentItemGrid.PickUp(itemCell);
         }
 
         public void PutDownItem()
         {
-            if (CurrentGrid == null) return;
-            if (_pickedUpItemCell == null) return;
+            if (CurrentItemGrid == null) return;
+            if (pickedUpItemCell == null) return;
+            
 
-            Vector2Int gridPos;
-            gridPos = _mouseControl ? CurrentGrid.GetGridPos(_pickedUpItemCell.item.size) : _pickedUpItemCell.startPos;
-            if(CurrentGrid.AddItem(_pickedUpItemCell, gridPos))
-            {
-                CurrentItemCell = _pickedUpItemCell;
-                _pickedUpItemCell.GetComponent<Image>().raycastTarget = true;
-                _pickedUpItemCell = null;
-                CurrentGrid.MoveCurrentCell(CurrentItemCell.startPos, CurrentItemCell.size);
-                CurrentGrid.currentCell.PutDown();
-                CurrentGrid.currentCell.transform.SetAsLastSibling();
-            }
+            var gridPos = mouseControl
+                ? CurrentItemGrid.GetMouseGridPos(pickedUpItemCell.item.size)
+                : pickedUpItemCell.startPos;
 
+            if (!CurrentItemGrid.PutDown(pickedUpItemCell, gridPos)) return;
+            
+            CurrentItemCell = pickedUpItemCell;
+            pickedUpItemCell = null;
         }
 
+        public void MovePickedUpItemCell(Vector2Int gridPos)
+        {
+            var newPos = CurrentItemGrid.CheckGridPos(gridPos, pickedUpItemCell.size);
+            pickedUpItemCell.SetUIPosition(CurrentItemGrid.GridPosToUIPos(newPos, pickedUpItemCell.size));
+            pickedUpItemCell.startPos = newPos;
+        }
+        
         public void MoveCell(InputAction.CallbackContext context)
         {
-            if (CurrentGrid == null) return;
-            var direction = context.ReadValue<Vector2>();
+            if (CurrentItemGrid == null) return;
             if (!context.performed) return;
 
-            if (Mathf.Abs(direction.x) >= Mathf.Abs(direction.y))
-            {
-                CurrentGrid.MoveCurrentCellTowards(direction.x > 0
-                    ? InventoryGrid.CellDirection.Right
-                    : InventoryGrid.CellDirection.Left);
-            }
-            else
-            {
-                CurrentGrid.MoveCurrentCellTowards(direction.y < 0
-                    ? InventoryGrid.CellDirection.Down
-                    : InventoryGrid.CellDirection.Up);
-            }
-            
-            if (_pickedUpItemCell != null)
+            var direction = context.ReadValue<Vector2>();
+            if (pickedUpItemCell != null)
             {
                 var d = new Vector2Int();
                 if (Mathf.Abs(direction.x) >= Mathf.Abs(direction.y))
@@ -85,11 +71,24 @@ namespace Items
                 {
                     d.y = direction.y < 0 ? 1 : -1;
                 }
-                
-                var newPos = CurrentGrid.CheckGridPos(_pickedUpItemCell.startPos + d, _pickedUpItemCell.size);
-                _pickedUpItemCell.SetUIPosition(CurrentGrid.GridPosToUIPos(newPos, _pickedUpItemCell.size));
-                _pickedUpItemCell.startPos = newPos;
-                CurrentGrid.MoveCurrentCell(_pickedUpItemCell.startPos, _pickedUpItemCell.size);
+
+                MovePickedUpItemCell(pickedUpItemCell.startPos + d);
+                CurrentItemGrid.MoveCurrentCell(pickedUpItemCell.startPos, pickedUpItemCell.size, false);
+            }
+            else
+            {
+                if (Mathf.Abs(direction.x) >= Mathf.Abs(direction.y))
+                {
+                    CurrentItemGrid.MoveCurrentCellTowards(direction.x > 0
+                        ? ItemGrid.CellDirection.Right
+                        : ItemGrid.CellDirection.Left);
+                }
+                else
+                {
+                    CurrentItemGrid.MoveCurrentCellTowards(direction.y < 0
+                        ? ItemGrid.CellDirection.Down
+                        : ItemGrid.CellDirection.Up);
+                }
             }
         }
 
@@ -97,7 +96,7 @@ namespace Items
         {
             if (context.performed)
             {
-                if (_pickedUpItemCell == null)
+                if (pickedUpItemCell == null)
                 {
                     PickUpCurrentItem();
                 }
@@ -108,12 +107,47 @@ namespace Items
             }
         }
 
-        
+        public void SwitchInventory(InputAction.CallbackContext context)
+        {
+            if (!context.performed) return;
+            
+            for (int i = 0; i < inventoryHolder.transform.childCount; i++)
+            {
+                var nextGrid = inventoryHolder.transform.GetChild(i).GetComponent<ItemGrid>();
+                if (nextGrid == CurrentItemGrid) continue;
+                nextGrid.EnableGrid();
+                break;
+            }
+        }
+
+        public void DeleteItemCell(InputAction.CallbackContext context)
+        {
+            if (!context.performed) return;
+
+            if (pickedUpItemCell != null)
+            {
+                DestroyImmediate(pickedUpItemCell.gameObject);
+                pickedUpItemCell = null;
+                CurrentItemGrid.CurrentCell.PutDown();
+            }
+            else
+            {
+                if (CurrentItemCell != null)
+                {
+                    CurrentItemGrid.DeleteItemCell(CurrentItemCell);
+                }
+                    
+            }
+            
+        }
+
+
         void Update()
         {
-            if (_mouseControl && _pickedUpItemCell != null)
+            if (mouseControl && pickedUpItemCell != null)
             {
-                _pickedUpItemCell.transform.position = Input.mousePosition;
+                pickedUpItemCell.transform.position = Input.mousePosition;
+                CurrentItemGrid.MoveCurrentCell(CurrentItemGrid.GetMouseGridPos(pickedUpItemCell.size), pickedUpItemCell.size, false);
             }
         }
     }

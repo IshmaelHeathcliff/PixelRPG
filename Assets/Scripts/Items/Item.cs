@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 namespace Items
 {
-    [CreateAssetMenu(fileName = "newItem", menuName = "ScriptObjects/Items/New Item")]
-    public class Item : SerializedScriptableObject
+    [CreateAssetMenu(fileName = "newItem", menuName = "SO/Items/New Item")]
+    public class Item : ScriptableObject
     {
         [BoxGroup("Base")] public string itemName;
         [BoxGroup("Base")] public Sprite image;
