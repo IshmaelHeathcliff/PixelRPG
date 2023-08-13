@@ -19,13 +19,13 @@ namespace Items
         public Package package;
 
         [Button]
-        protected override void InitGrid()
+        public override void InitGrid()
         {
             GridSize = package.size;
             Rect.sizeDelta = GridSize * tileSize;
             Rect.pivot = new Vector2(0, 1);
             
-            ClearInventory();
+            ClearGrid();
 
             foreach (var itemPair in package.items)
             {
@@ -38,7 +38,7 @@ namespace Items
         }
 
         [Button]
-        void ClearInventory()
+        protected override void ClearGrid()
         {
             ItemCells = new HashSet<ItemCell>();
             DestroyImmediate(ItemsHolder.gameObject);
@@ -53,6 +53,65 @@ namespace Items
 
             package.items.Add(gridPos, itemCell.item);
             return true;
+        }
+        
+        public override bool PutDown(ItemCell itemCell, Vector2Int gridPos)
+        {
+            var overlap = CheckSpace(gridPos, itemCell.size);
+            if (!CheckPos(gridPos, itemCell.size) || overlap.Count > 1)
+            {
+                return false;
+            }
+
+            switch (overlap.Count)
+            {
+                case 0:
+                    AddItemCell(itemCell, gridPos);
+                    itemCell.PutDown();
+                    CurrentCell.PutDown();
+                    MoveCurrentCell(gridPos, itemCell.size);
+                    InventoryController.Instance.CurrentItemCell = itemCell;
+                    InventoryController.Instance.pickedUpItemCell = null;
+                    break;
+                case 1:
+                    InventoryController.Instance.pickedUpItemCell = PickUp(overlap[0]);
+                    AddItemCell(itemCell, gridPos);
+                    itemCell.PutDown();
+                    break;
+            }
+            
+            return true;
+        }
+
+        public override void MoveCurrentCellTowards(CellDirection direction, Vector2Int size)
+        {
+            Vector2Int newPos;
+            if(InventoryController.Instance.pickedUpItemCell == null)
+            {
+                newPos = direction switch
+                {
+                    CellDirection.Right => CurrentCell.startPos + Vector2Int.right * CurrentCell.size.x,
+                    CellDirection.Down => CurrentCell.startPos - Vector2Int.down * CurrentCell.size.y,
+                    CellDirection.Left => CurrentCell.startPos + Vector2Int.left,
+                    CellDirection.Up => CurrentCell.startPos - Vector2Int.up,
+                    _ => Vector2Int.zero
+                };
+            }
+            else
+            {
+                newPos = direction switch
+                {
+                    CellDirection.Right => CurrentCell.startPos + Vector2Int.right,
+                    CellDirection.Down => CurrentCell.startPos - Vector2Int.down,
+                    CellDirection.Left => CurrentCell.startPos + Vector2Int.left,
+                    CellDirection.Up => CurrentCell.startPos - Vector2Int.up,
+                    _ => Vector2Int.zero
+                };
+                
+            }
+
+            MoveCurrentCell(newPos, size);
+
         }
 
         public override void RemoveItemCell(ItemCell itemCell)

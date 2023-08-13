@@ -82,7 +82,8 @@ namespace Items
         }
 
 
-        protected abstract void InitGrid();
+        public abstract void InitGrid();
+        protected abstract void ClearGrid();
         
         /// <summary>
         /// 获得鼠标处的网格位置
@@ -103,84 +104,50 @@ namespace Items
             return gridPosition;
         }
 
-        public Vector2Int CheckGridPos(Vector2Int gridPos, Vector2Int size)
+
+
+        public abstract void MoveCurrentCellTowards(CellDirection direction, Vector2Int size);
+
+        public bool MoveCurrentCell(Vector2Int gridPos, Vector2Int size)
         {
-            while (true)
+            if (!CheckPos(gridPos, size))
             {
-                // Debug.Log(gridPos);
-                
-                if (gridPos.x >= 0 && gridPos.x < GridSize.x - size.x + 1 &&
-                    gridPos.y >= 0 && gridPos.y < GridSize.y - size.y + 1)
-                {
-                    break;
-                }
-
-                if (gridPos.x < 0)
-                {
-                    gridPos.x = GridSize.x - size.x + 1 + gridPos.x;
-                }
-
-                if (gridPos.x > GridSize.x - size.x)
-                {
-                    gridPos.x = 0;
-                }
-
-                if (gridPos.y < 0)
-                {
-                    gridPos.y = GridSize.y - size.y + 1 + gridPos.y;
-                }
-
-                if (gridPos.y > GridSize.y - size.y)
-                {
-                    gridPos.y = 0;
-                }
+                return false;
             }
 
-            return gridPos;
-        }
-
-        public virtual void MoveCurrentCellTowards(CellDirection direction)
-        {
-            var newPos = direction switch
+            var overlap = CheckSpace(gridPos, size);
+            if (overlap.Count > 1)
             {
-                CellDirection.Right => CurrentCell.startPos + Vector2Int.right * CurrentCell.size.x,
-                CellDirection.Down => CurrentCell.startPos - Vector2Int.down * CurrentCell.size.y,
-                CellDirection.Left => CurrentCell.startPos + Vector2Int.left,
-                CellDirection.Up => CurrentCell.startPos - Vector2Int.up,
-                _ => Vector2Int.zero
-            };
+                Debug.Log("Too many overlap");
+                return false;
+            }
 
-            MoveCurrentCell(newPos, Vector2Int.one);
-        }
-        
-        public void MoveCurrentCell(Vector2Int gridPos, Vector2Int size, bool findItem = true)
-        {
-            gridPos = CheckGridPos(gridPos, size);
-            
-            if (!findItem)
+
+            var picked = InventoryController.Instance.pickedUpItemCell;
+            if ( picked != null)
             {
-                SetCurrentCell(gridPos, size);
-                return;
+                SetCurrentCell(gridPos, picked.size);
+                InventoryController.Instance.MovePickedUpItemCell(gridPos);
+            }
+            else
+            {
+                if (overlap.Count == 0)
+                {
+                    SetCurrentCell(gridPos, size);
+                    InventoryController.Instance.CurrentItemCell = null;
+                }
+                else if (overlap[0] == InventoryController.Instance.CurrentItemCell)
+                {
+                    SetCurrentCell(gridPos, size);
+                }
+                else
+                {
+                    InventoryController.Instance.CurrentItemCell = overlap[0];
+                    SetCurrentCell(overlap[0].startPos, overlap[0].size);
+                }
             }
             
-            foreach (var cell in ItemCells)
-            {
-                var start = cell.startPos;
-                var end = cell.startPos + cell.size;
-                if (gridPos.x >= start.x && gridPos.x < end.x &&
-                    gridPos.y >= start.y && gridPos.y < end.y)
-                {
-                    SetCurrentCell(cell.startPos, cell.size);
-                    if (InventoryController.Instance.CurrentItemCell != cell)
-                    {
-                        InventoryController.Instance.CurrentItemCell = cell;
-                    }
-
-                    return;
-                }
-            }
-            InventoryController.Instance.CurrentItemCell = null;
-            SetCurrentCell(gridPos, size);
+            return true;
         }
 
         void SetCurrentCell(Vector2Int gridPos, Vector2Int size)
@@ -208,27 +175,33 @@ namespace Items
 
             itemCell.startPos = startPos;
             itemCell.size = itemCell.item != null ? itemCell.item.size : size;
-            itemCell.endPos = startPos + itemCell.size - new Vector2Int(1, 1);
+            itemCell.endPos = startPos + itemCell.size - Vector2Int.one;
             itemCell.SetUIPosition(GridPosToUIPos(startPos, itemCell.size));
             itemCell.SetUISize(itemCell.size * tileSize - new Vector2Int(2, 2) * frameWidth);
-            ItemCells.Add(itemCell);
         }
 
-        protected bool CheckGridSpace(ItemCell itemCell, Vector2Int startPos)
+        protected void RefreshItemCell(ItemCell itemCell)
         {
-            // 不能超出背包
-            var endPos = startPos + itemCell.item.size;
+            InitItemCell(itemCell, itemCell.startPos, itemCell.size);
+        }
+        
+        
+        // 检查是否在背包内
+        protected bool CheckPos(Vector2Int startPos, Vector2Int size)
+        {
+            return startPos.x >= 0 && startPos.x < GridSize.x - size.x + 1 &&
+                   startPos.y >= 0 && startPos.y < GridSize.y - size.y + 1;
+        }
 
-            if (startPos.x < 0 || startPos.y < 0 || endPos.x > GridSize.x || endPos.y > GridSize.y)
-            {
-                Debug.Log("超出背包");
-                return false;
-            }
+        // 检查背包目标位置是否有空位
+        protected List<ItemCell> CheckSpace(Vector2Int startPos, Vector2Int size)
+        {
+            var overlap = new List<ItemCell>();
 
             var posToCheck = new List<Vector2Int>();
-            for (int i = 0; i < itemCell.size.x; i++)
+            for (int i = 0; i < size.x; i++)
             {
-                for (int j = 0; j < itemCell.size.y; j++)
+                for (int j = 0; j < size.y; j++)
                 {
                     var pos = startPos;
                     pos.x += i;
@@ -237,7 +210,6 @@ namespace Items
                 }
             }
 
-            // 检查背包是否有空位
             foreach (var cell in ItemCells)
             {
                 for (int i = 0; i < cell.size.x; i++)
@@ -248,24 +220,36 @@ namespace Items
                         pos.x += i;
                         pos.y += j;
                         if (posToCheck.Contains(pos))
-                            return false;
+                        {
+                            overlap.Add(cell);
+                            goto @continue;
+                        }
                     }
-                    
                 }
+                @continue: ;
             }
 
-            return true;
+            return overlap;
+        }
+        
+
+        protected bool CheckGrid(Vector2Int startPos, Vector2Int size)
+        {
+            var overlap = CheckSpace(startPos, size);
+
+            return CheckPos(startPos, size) && overlap.Count == 0;
         }
 
         public virtual bool AddItemCell(ItemCell itemCell, Vector2Int gridPos)
         {
-            if (!CheckGridSpace(itemCell, gridPos))
+            if (!CheckGrid(gridPos, itemCell.size))
             {
                 // Debug.Log("Space is not enough.");
                 return false;
             }
 
             InitItemCell(itemCell, gridPos);
+            ItemCells.Add(itemCell);
             return true;
             
         }
@@ -326,8 +310,18 @@ namespace Items
             _currentCell.SetUIPosition(Vector2.zero);
         }
 
-        public void EnableGrid()
+        public virtual void EnableGrid()
         {
+            if (InventoryController.Instance.mouseControl)
+            {
+                CurrentCell.Hide();
+            }
+            else
+            {
+                CurrentCell.Show();
+            }
+            
+            
             var controller = InventoryController.Instance;
             if(controller.CurrentItemGrid != null)
                 controller.CurrentItemGrid.DisableGrid();
@@ -336,21 +330,22 @@ namespace Items
             CurrentCell.gameObject.SetActive(true);
             transform.SetAsLastSibling();
             
+            InitCurrentCellPos();
+            
             if (controller.pickedUpItemCell != null)
             {
                 controller.pickedUpItemCell.transform.SetParent(ItemsHolder);
-                MoveCurrentCell(CurrentCell.startPos, controller.pickedUpItemCell.size, false);
+                MoveCurrentCell(CurrentCell.startPos, controller.pickedUpItemCell.size);
                 controller.MovePickedUpItemCell(CurrentCell.startPos);
                 CurrentCell.PickUp();
             }
             else
             {
-                RefreshCurrentCell();
                 CurrentCell.PutDown();
             }
         }
 
-        public void DisableGrid()
+        public virtual void DisableGrid()
         {
             CurrentCell.PutDown();
             CurrentCell.gameObject.SetActive(false);
@@ -364,19 +359,11 @@ namespace Items
             itemCell.PickUp();
             RemoveItemCell(itemCell);
             CurrentCell.PickUp();
-            MoveCurrentCell(itemCell.startPos, itemCell.size, false);
+            MoveCurrentCell(itemCell.startPos, itemCell.size);
             return itemCell;
         }
 
-        public virtual bool PutDown(ItemCell itemCell, Vector2Int gridPos)
-        {
-            if (!AddItemCell(itemCell, gridPos)) return false;
-            
-            itemCell.PutDown();
-            CurrentCell.PutDown();
-            MoveCurrentCell(gridPos, itemCell.size);
-            return true;
-        }
+        public abstract bool PutDown(ItemCell itemCell, Vector2Int gridPos);
 
         public virtual void InitCurrentCellPos()
         {

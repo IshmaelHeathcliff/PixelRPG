@@ -43,12 +43,14 @@ namespace Items
 
             item = value;
             ItemImage.sprite = item.image;
+            ItemImage.raycastTarget = true;
         }
 
         public void ClearItem()
         {
             item = null;
             ItemImage.sprite = null;
+            ItemImage.raycastTarget = false;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,18 +13,25 @@ namespace Items
 
         [SerializeField] EquipmentType defaultEquipmentType;
 
+        Dictionary<EquipmentType, EquipmentCell> _equipmentCells;
+
         [Button]
-        protected override void InitGrid()
+        public override void InitGrid()
         {
             GridSize = settings.size;
             Rect.sizeDelta = GridSize * tileSize;
             Rect.pivot = new Vector2(0, 1);
             
-            Clear();
+            ClearGrid();
 
             foreach (EquipmentType e in Enum.GetValues(typeof(EquipmentType)))
             {
                 NewEquipmentSlot(e);
+            }
+
+            foreach (var equipmentCell in ItemCells.Cast<EquipmentCell>())
+            {
+                _equipmentCells.Add(equipmentCell.type, equipmentCell);
             }
             
             LoadEquipments();
@@ -48,7 +56,10 @@ namespace Items
             equipmentCell.left = settings[e].left;
             equipmentCell.up = settings[e].up;
             equipmentCell.down = settings[e].down;
+            
+            equipmentCell.ClearItem();
             InitItemCell(equipmentCell, pos, size);
+            ItemCells.Add(equipmentCell);
         }
 
         void LoadEquipments()
@@ -72,18 +83,10 @@ namespace Items
             }
 
             equipments[equipment.type] = equipment;
+            
+            _equipmentCells[equipment.type].SetItem(equipment);
 
-            foreach (var itemCell in ItemCells)
-            {
-                var cell = (EquipmentCell) itemCell;
-                if (cell.type == equipment.type)
-                {
-                    cell.SetItem(equipment);
-                    return true;
-                }
-            }
-
-            return false;
+            return true;
         }
 
         public override void DeleteItemCell(ItemCell itemCell)
@@ -106,6 +109,11 @@ namespace Items
                 return null;
             }
             
+            if(equipmentCell.item == null)
+            {
+                return null;
+            }
+            
             var obj = new GameObject()
             {
                 transform =
@@ -117,7 +125,9 @@ namespace Items
             var cell = obj.AddComponent<ItemCell>();
             cell.SetItem(equipmentCell.item);
             InitItemCell(cell, equipmentCell.startPos, equipmentCell.size);
+            ItemCells.Add(cell);
             equipmentCell.ClearItem();
+            
             equipments[equipmentCell.type] = null;
 
             return base.PickUp(cell);
@@ -129,7 +139,7 @@ namespace Items
             {
                 return false;
             }
-
+            
             var setting = settings[equipment.type];
 
             if (setting.pos != gridPos)
@@ -137,12 +147,25 @@ namespace Items
                 return false;
             }
 
-            EquipItem(equipment);
-            DestroyImmediate(itemCell.gameObject);
-            CurrentCell.PutDown();
-            MoveCurrentCell(gridPos, setting.size);
-            return true;
+            var equipmentCell = _equipmentCells[equipment.type];
 
+            if (equipmentCell.item != null)
+            {                   
+                ref var upItem = ref itemCell.item;
+                ref var downItem = ref equipmentCell.item;
+                var tempItem = upItem;
+                itemCell.SetItem(downItem);
+                equipmentCell.SetItem(tempItem);
+                equipments[equipment.type] = equipment;
+            }
+            else
+            {
+                EquipItem(equipment);
+                DestroyImmediate(itemCell.gameObject);
+                CurrentCell.PutDown();
+            }
+
+            return true;
         }
 
         public override void InitCurrentCellPos()
@@ -151,19 +174,34 @@ namespace Items
             MoveCurrentCell(defaultSetting.pos, defaultSetting.size);
         }
 
-        public override void MoveCurrentCellTowards(CellDirection direction)
+        public override void MoveCurrentCellTowards(CellDirection direction, Vector2Int size)
         {
-            if (InventoryController.Instance.CurrentItemCell == null)
+            var controller = InventoryController.Instance;
+            
+            if (controller.pickedUpItemCell != null)
+            {
+                if(controller.pickedUpItemCell.item is not Equipment equipment)
+                {
+                    return;
+                }
+
+                var cellSetting = settings[equipment.type];
+                MoveCurrentCell(cellSetting.pos, cellSetting.size);
+                return;
+            }
+            
+            if (controller.CurrentItemCell == null)
+            {
+                return;
+            }
+
+            
+            if (!ItemCells.Contains(controller.CurrentItemCell))
             {
                 return;
             }
             
-            if (!ItemCells.Contains(InventoryController.Instance.CurrentItemCell))
-            {
-                return;
-            }
-            
-            var currentItemCell = (EquipmentCell)InventoryController.Instance.CurrentItemCell;
+            var currentItemCell = (EquipmentCell)controller.CurrentItemCell;
 
             var nextCellType = direction switch
             {
@@ -181,10 +219,28 @@ namespace Items
         
 
         [Button]
-        void Clear()
+        protected override void ClearGrid()
         {
             ItemCells = new HashSet<ItemCell>();
+            _equipmentCells = new Dictionary<EquipmentType, EquipmentCell>();
             DestroyImmediate(ItemsHolder.gameObject);
+        }
+
+        public override void EnableGrid()
+        {
+            base.EnableGrid();
+            
+            var controller = InventoryController.Instance;
+            
+            if (controller.pickedUpItemCell != null)
+            {
+                if (controller.pickedUpItemCell.item is Equipment equipment)
+                {
+                    var cellSetting = settings[equipment.type];
+                    MoveCurrentCell(cellSetting.pos, cellSetting.size);
+                    controller.MovePickedUpItemCell(cellSetting.pos);
+                }
+            }
         }
 
         void Start()

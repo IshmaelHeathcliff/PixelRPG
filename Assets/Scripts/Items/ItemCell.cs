@@ -16,6 +16,7 @@ namespace Items
             if(item != null)
                 Image.sprite = item.image;
             name = item.itemName;
+            size = value.size;
         }
         
         public void OnPointerClick(PointerEventData eventData)

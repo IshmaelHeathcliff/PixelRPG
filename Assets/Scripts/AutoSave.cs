@@ -6,7 +6,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 
 [InitializeOnLoad]
-public class AutoSave 
+public class AutoSave
 {
     static AutoSave()
     {
