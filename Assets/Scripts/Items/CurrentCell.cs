@@ -13,10 +13,5 @@ namespace Items
         {
             Image.color = Color.blue;
         }
-        
-        void Start()
-        {
-            Image.color = Color.blue;
-        }
     }
 }

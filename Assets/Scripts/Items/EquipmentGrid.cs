@@ -10,6 +10,8 @@ namespace Items
         public EquipmentCellSettings settings;
         public Equipments equipments;
 
+        [SerializeField] EquipmentType defaultEquipmentType;
+
         [Button]
         protected override void InitGrid()
         {
@@ -42,6 +44,10 @@ namespace Items
 
             var equipmentCell = obj.AddComponent<EquipmentCell>();
             equipmentCell.type = e;
+            equipmentCell.right = settings[e].right;
+            equipmentCell.left = settings[e].left;
+            equipmentCell.up = settings[e].up;
+            equipmentCell.down = settings[e].down;
             InitItemCell(equipmentCell, pos, size);
         }
 
@@ -141,8 +147,36 @@ namespace Items
 
         public override void InitCurrentCellPos()
         {
-            var mainWeaponSetting = settings[EquipmentType.MainWeapon];
-            MoveCurrentCell(mainWeaponSetting.pos, mainWeaponSetting.size);
+            var defaultSetting = settings[defaultEquipmentType];
+            MoveCurrentCell(defaultSetting.pos, defaultSetting.size);
+        }
+
+        public override void MoveCurrentCellTowards(CellDirection direction)
+        {
+            if (InventoryController.Instance.CurrentItemCell == null)
+            {
+                return;
+            }
+            
+            if (!ItemCells.Contains(InventoryController.Instance.CurrentItemCell))
+            {
+                return;
+            }
+            
+            var currentItemCell = (EquipmentCell)InventoryController.Instance.CurrentItemCell;
+
+            var nextCellType = direction switch
+            {
+                CellDirection.Right => currentItemCell.right,
+                CellDirection.Left => currentItemCell.left,
+                CellDirection.Up => currentItemCell.up,
+                CellDirection.Down => currentItemCell.down,
+                _ => currentItemCell.type
+            };
+
+            var nextCellSetting = settings[nextCellType];
+            
+            MoveCurrentCell(nextCellSetting.pos, nextCellSetting.size);
         }
         
 
@@ -169,8 +203,7 @@ namespace Items
         MainWeapon,
         Offhand,
         Belt,
-        LeftRing,
-        RightRing,
+        Ring,
         Amulet,
     }
 }

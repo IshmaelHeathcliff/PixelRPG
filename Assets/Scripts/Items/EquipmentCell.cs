@@ -7,6 +7,10 @@ namespace Items
     {
         public EquipmentType type;
         Image _itemImage;
+        public EquipmentType left;
+        public EquipmentType right;
+        public EquipmentType up;
+        public EquipmentType down;
 
         Image ItemImage
         {

@@ -40,7 +40,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 10
+      Data: 9
     - Name: 
       Entry: 7
       Data: 
@@ -55,7 +55,7 @@ MonoBehaviour:
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 4
+      Data: 3
     - Name: 
       Entry: 3
       Data: 1
@@ -74,6 +74,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: left
+      Entry: 3
+      Data: 7
+    - Name: right
+      Entry: 3
+      Data: 8
+    - Name: up
+      Entry: 3
+      Data: 0
+    - Name: down
+      Entry: 3
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -97,7 +109,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 3
-      Data: 6
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -113,6 +125,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: left
+      Entry: 3
+      Data: 1
+    - Name: right
+      Entry: 3
+      Data: 6
+    - Name: up
+      Entry: 3
+      Data: 4
+    - Name: down
+      Entry: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -133,10 +157,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 7
+      Data: 5
     - Name: 
       Entry: 3
-      Data: 6
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -152,6 +176,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: left
+      Entry: 3
+      Data: 6
+    - Name: right
+      Entry: 3
+      Data: 2
+    - Name: up
+      Entry: 3
+      Data: 5
+    - Name: down
+      Entry: 3
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -172,7 +208,7 @@ MonoBehaviour:
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 4
+      Data: 3
     - Name: 
       Entry: 3
       Data: 3
@@ -191,6 +227,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: left
+      Entry: 3
+      Data: 4
+    - Name: right
+      Entry: 3
+      Data: 5
+    - Name: up
+      Entry: 3
+      Data: 0
+    - Name: down
+      Entry: 3
+      Data: 6
     - Name: 
       Entry: 8
       Data: 
@@ -230,6 +278,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: left
+      Entry: 3
+      Data: 4
+    - Name: right
+      Entry: 3
+      Data: 3
+    - Name: up
+      Entry: 3
+      Data: 7
+    - Name: down
+      Entry: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -250,7 +310,7 @@ MonoBehaviour:
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 7
+      Data: 5
     - Name: 
       Entry: 3
       Data: 2
@@ -269,6 +329,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: left
+      Entry: 3
+      Data: 3
+    - Name: right
+      Entry: 3
+      Data: 5
+    - Name: up
+      Entry: 3
+      Data: 8
+    - Name: down
+      Entry: 3
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -289,10 +361,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 4
+      Data: 3
     - Name: 
       Entry: 3
-      Data: 7
+      Data: 6
     - Name: 
       Entry: 8
       Data: 
@@ -308,6 +380,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: left
+      Entry: 3
+      Data: 1
+    - Name: right
+      Entry: 3
+      Data: 2
+    - Name: up
+      Entry: 3
+      Data: 3
+    - Name: down
+      Entry: 3
+      Data: 6
     - Name: 
       Entry: 8
       Data: 
@@ -328,10 +412,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 3
+      Data: 1
     - Name: 
       Entry: 3
-      Data: 5
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -347,6 +431,18 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: left
+      Entry: 3
+      Data: 7
+    - Name: right
+      Entry: 3
+      Data: 0
+    - Name: up
+      Entry: 3
+      Data: 7
+    - Name: down
+      Entry: 3
+      Data: 4
     - Name: 
       Entry: 8
       Data: 
@@ -370,61 +466,34 @@ MonoBehaviour:
       Data: 6
     - Name: 
       Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: size
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: left
+      Entry: 3
+      Data: 0
+    - Name: right
+      Entry: 3
+      Data: 8
+    - Name: up
+      Entry: 3
+      Data: 8
+    - Name: down
+      Entry: 3
       Data: 5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: size
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 9
-    - Name: $v
-      Entry: 7
-      Data: 11|Items.EquipmentCellSetting, Assembly-CSharp
-    - Name: pos
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 6
-    - Name: 
-      Entry: 3
-      Data: 3
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: size
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -437,4 +506,4 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  size: {x: 10, y: 9}
+  size: {x: 8, y: 8}

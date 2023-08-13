@@ -57,7 +57,6 @@ namespace Items
         public void MoveCell(InputAction.CallbackContext context)
         {
             if (CurrentItemGrid == null) return;
-            if (!context.performed) return;
 
             var direction = context.ReadValue<Vector2>();
             if (pickedUpItemCell != null)
@@ -94,16 +93,15 @@ namespace Items
 
         public void PickAndPutItem(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (!context.performed) return;
+            
+            if (pickedUpItemCell == null)
             {
-                if (pickedUpItemCell == null)
-                {
-                    PickUpCurrentItem();
-                }
-                else
-                {
-                    PutDownItem();
-                }
+                PickUpCurrentItem();
+            }
+            else
+            {
+                PutDownItem();
             }
         }
 

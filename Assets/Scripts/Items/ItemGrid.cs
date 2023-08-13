@@ -139,25 +139,16 @@ namespace Items
             return gridPos;
         }
 
-        public void MoveCurrentCellTowards(CellDirection direction)
+        public virtual void MoveCurrentCellTowards(CellDirection direction)
         {
-            Vector2Int newPos = Vector2Int.zero;
-            switch (direction)
+            var newPos = direction switch
             {
-                case CellDirection.Right:
-                    newPos = CurrentCell.startPos + Vector2Int.right * CurrentCell.size.x;
-                    break;
-                case CellDirection.Down:
-                    newPos = CurrentCell.startPos - Vector2Int.down * CurrentCell.size.y;
-                    break;
-                case CellDirection.Left:
-                    newPos = CurrentCell.startPos + Vector2Int.left;
-                    break;
-                case CellDirection.Up:
-                    newPos = CurrentCell.startPos - Vector2Int.up;
-                    break;
-            }
-
+                CellDirection.Right => CurrentCell.startPos + Vector2Int.right * CurrentCell.size.x,
+                CellDirection.Down => CurrentCell.startPos - Vector2Int.down * CurrentCell.size.y,
+                CellDirection.Left => CurrentCell.startPos + Vector2Int.left,
+                CellDirection.Up => CurrentCell.startPos - Vector2Int.up,
+                _ => Vector2Int.zero
+            };
 
             MoveCurrentCell(newPos, Vector2Int.one);
         }
@@ -324,6 +315,7 @@ namespace Items
                 var image = obj.GetComponent<Image>();
                 image.sprite = currentCellImage;
                 image.raycastTarget = false;
+                _currentCell.PutDown();
 
                 obj.transform.SetAsLastSibling();
                 obj.SetActive(false);
@@ -360,6 +352,7 @@ namespace Items
 
         public void DisableGrid()
         {
+            CurrentCell.PutDown();
             CurrentCell.gameObject.SetActive(false);
         }
 
@@ -371,7 +364,7 @@ namespace Items
             itemCell.PickUp();
             RemoveItemCell(itemCell);
             CurrentCell.PickUp();
-            MoveCurrentCell(itemCell.startPos, itemCell.size);
+            MoveCurrentCell(itemCell.startPos, itemCell.size, false);
             return itemCell;
         }
 
