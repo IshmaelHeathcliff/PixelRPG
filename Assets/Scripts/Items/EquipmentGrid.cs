@@ -238,7 +238,6 @@ namespace Items
                 {
                     var cellSetting = settings[equipment.type];
                     MoveCurrentCell(cellSetting.pos, cellSetting.size);
-                    controller.MovePickedUpItemCell(cellSetting.pos);
                 }
             }
         }

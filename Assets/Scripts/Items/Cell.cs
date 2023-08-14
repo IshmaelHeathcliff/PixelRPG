@@ -6,10 +6,9 @@ using UnityEngine.UI;
 namespace Items
 {
     [RequireComponent(typeof(Image), typeof(RectTransform))]
-    public class Cell : MonoBehaviour
+    public abstract class Cell : MonoBehaviour
     {
         public Vector2Int startPos;
-        public Vector2Int endPos;
         public Vector2Int size;
 
         Image _image;
@@ -63,16 +62,10 @@ namespace Items
             Rect.sizeDelta = size;
         }
 
-        public void PickUp()
-        {
-            Image.raycastTarget = false;
-            transform.SetAsLastSibling();
-        }
+        public abstract void PickUp();
 
-        public void PutDown()
-        {
-            Image.raycastTarget = true;
-        }
+        public abstract void PutDown();
+
         public void Highlight()
         {
             Image.color = Color.red;

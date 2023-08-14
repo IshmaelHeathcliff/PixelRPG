@@ -6,13 +6,13 @@ namespace Items
     {
         bool _isHide;
         
-        public new void PickUp()
+        public override void PickUp()
         {
             if(_isHide) return;
             Image.color = Color.red;
         }
 
-        public new void PutDown()
+        public override void PutDown()
         {
             if(_isHide) return;
             Image.color = Color.blue;

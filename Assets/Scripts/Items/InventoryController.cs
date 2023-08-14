@@ -12,8 +12,12 @@ namespace Items
     public class InventoryController : Singleton<InventoryController>
     {
         public ItemCell pickedUpItemCell;
+        public PickedUp pickedUp;
         [HideInInspector] public bool mouseControl;
         [SerializeField] Transform inventoryHolder;
+        [SerializeField] Transform packageHolder;
+        [SerializeField] Transform equipmentsHolder;
+        [SerializeField] Transform stashHolder;
         public ItemGrid CurrentItemGrid { get; set; }
 
         public ItemCell CurrentItemCell { get; set; }
@@ -46,6 +50,7 @@ namespace Items
             if (CurrentItemGrid == null) return;
             if (pickedUpItemCell != null) return;
             pickedUpItemCell = CurrentItemGrid.PickUp(itemCell);
+            pickedUp.pickedUpItem = pickedUpItemCell.item;
         }
 
         public void PutDownItem()
@@ -59,14 +64,7 @@ namespace Items
                 : pickedUpItemCell.startPos;
 
             CurrentItemGrid.PutDown(pickedUpItemCell, gridPos);
-        }
-
-        public void MovePickedUpItemCell(Vector2Int gridPos)
-        {
-            if (pickedUpItemCell == null)
-                return;
-            pickedUpItemCell.SetUIPosition(CurrentItemGrid.GridPosToUIPos(gridPos, pickedUpItemCell.size));
-            pickedUpItemCell.startPos = gridPos;
+            pickedUp.pickedUpItem = null;
         }
 
         public void MoveCell(InputAction.CallbackContext context)
@@ -93,11 +91,6 @@ namespace Items
                     ? ItemGrid.CellDirection.Down
                     : ItemGrid.CellDirection.Up, cellSize);
             }
-
-            if (pickedUpItemCell != null)
-            {
-                MovePickedUpItemCell(CurrentItemGrid.CurrentCell.startPos);
-            }
         }
 
         public void PickAndPutItem(InputAction.CallbackContext context)
@@ -122,6 +115,7 @@ namespace Items
             {
                 var nextGrid = inventoryHolder.transform.GetChild(i).GetComponent<ItemGrid>();
                 if (nextGrid == CurrentItemGrid || !nextGrid.gameObject.activeSelf) continue;
+                if(CurrentItemGrid != null) CurrentItemGrid.DisableGrid();
                 nextGrid.EnableGrid();
                 break;
             }
@@ -148,6 +142,13 @@ namespace Items
             
         }
 
+        void InitPickedUp()
+        {
+            if (pickedUp.pickedUpItem != null)
+            {
+                
+            }
+        }
 
         [Button]
         public void ReloadGrids()

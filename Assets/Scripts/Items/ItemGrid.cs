@@ -16,7 +16,7 @@ using Image = UnityEngine.UI.Image;
 namespace Items
 {
     [RequireComponent(typeof(RectTransform))]
-    public abstract class ItemGrid : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
+    public abstract class ItemGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler ,IPointerClickHandler
     {
         public int tileSize = 100;
         public int frameWidth = 20;
@@ -104,8 +104,6 @@ namespace Items
             return gridPosition;
         }
 
-
-
         public abstract void MoveCurrentCellTowards(CellDirection direction, Vector2Int size);
 
         public bool MoveCurrentCell(Vector2Int gridPos, Vector2Int size)
@@ -118,7 +116,11 @@ namespace Items
             var overlap = CheckSpace(gridPos, size);
             if (overlap.Count > 1)
             {
-                Debug.Log("Too many overlap");
+                // Debug.Log("Too many overlap");
+                // foreach (var cell in overlap)
+                // {
+                //     Debug.Log($"{cell.startPos}");
+                // }
                 return false;
             }
 
@@ -127,7 +129,7 @@ namespace Items
             if ( picked != null)
             {
                 SetCurrentCell(gridPos, picked.size);
-                InventoryController.Instance.MovePickedUpItemCell(gridPos);
+                SetCell(picked, gridPos, picked.size);
             }
             else
             {
@@ -150,15 +152,30 @@ namespace Items
             return true;
         }
 
+        void SetCell(Cell cell, Vector2Int gridPos, Vector2Int size)
+        {
+            if (!CheckPos(gridPos, size))
+            {
+                return;
+            }
+
+            cell.startPos = gridPos;
+            cell.size = size;
+            cell.SetUIPosition(GridPosToUIPos(gridPos, size));
+            cell.SetUISize(size * tileSize - new Vector2Int(2, 2) * frameWidth);
+        }
+        
         void SetCurrentCell(Vector2Int gridPos, Vector2Int size)
         {
-            var endPos = gridPos + size;
-            if (gridPos.x < 0 || gridPos.y < 0 || endPos.x > GridSize.x || endPos.y > GridSize.y)
+            if (!CheckPos(gridPos, size))
+            {
                 return;
-            CurrentCell.SetUIPosition(GridPosToUIPos(gridPos, size));
-            CurrentCell.SetUISize(size * tileSize);
+            }
+
             CurrentCell.startPos = gridPos;
             CurrentCell.size = size;
+            CurrentCell.SetUIPosition(GridPosToUIPos(gridPos, size));
+            CurrentCell.SetUISize(size * tileSize);
         }
 
         public Vector2 GridPosToUIPos(Vector2Int gridPos, Vector2Int size)
@@ -168,24 +185,6 @@ namespace Items
 
         }
 
-        protected void InitItemCell(ItemCell itemCell, Vector2Int startPos, Vector2Int size = new())
-        {
-            itemCell.SetPivot(new Vector2(0.5f, 0.5f));
-            itemCell.SetAnchor(new Vector2(0, 1), new Vector2(0, 1));
-
-            itemCell.startPos = startPos;
-            itemCell.size = itemCell.item != null ? itemCell.item.size : size;
-            itemCell.endPos = startPos + itemCell.size - Vector2Int.one;
-            itemCell.SetUIPosition(GridPosToUIPos(startPos, itemCell.size));
-            itemCell.SetUISize(itemCell.size * tileSize - new Vector2Int(2, 2) * frameWidth);
-        }
-
-        protected void RefreshItemCell(ItemCell itemCell)
-        {
-            InitItemCell(itemCell, itemCell.startPos, itemCell.size);
-        }
-        
-        
         // 检查是否在背包内
         protected bool CheckPos(Vector2Int startPos, Vector2Int size)
         {
@@ -232,7 +231,6 @@ namespace Items
             return overlap;
         }
         
-
         protected bool CheckGrid(Vector2Int startPos, Vector2Int size)
         {
             var overlap = CheckSpace(startPos, size);
@@ -265,6 +263,17 @@ namespace Items
             DestroyImmediate(itemCell.gameObject);
         }
 
+        protected void InitItemCell(ItemCell itemCell, Vector2Int startPos, Vector2Int size = new())
+        {
+            itemCell.SetPivot(new Vector2(0.5f, 0.5f));
+            itemCell.SetAnchor(new Vector2(0, 1), new Vector2(0, 1));
+
+            itemCell.startPos = startPos;
+            itemCell.size = itemCell.item != null ? itemCell.item.size : size;
+            itemCell.SetUIPosition(GridPosToUIPos(startPos, itemCell.size));
+            itemCell.SetUISize(itemCell.size * tileSize - new Vector2Int(2, 2) * frameWidth);
+        }
+        
         Transform InitItemsHolder()
         {
             var t = (RectTransform)transform.Find("ItemsHolder");
@@ -310,6 +319,11 @@ namespace Items
             _currentCell.SetUIPosition(Vector2.zero);
         }
 
+        public virtual void InitCurrentCellPos()
+        {
+            MoveCurrentCell(Vector2Int.zero, Vector2Int.one);
+        }
+        
         public virtual void EnableGrid()
         {
             if (InventoryController.Instance.mouseControl)
@@ -323,9 +337,6 @@ namespace Items
             
             
             var controller = InventoryController.Instance;
-            if(controller.CurrentItemGrid != null)
-                controller.CurrentItemGrid.DisableGrid();
-
             controller.CurrentItemGrid = this;
             CurrentCell.gameObject.SetActive(true);
             transform.SetAsLastSibling();
@@ -336,7 +347,6 @@ namespace Items
             {
                 controller.pickedUpItemCell.transform.SetParent(ItemsHolder);
                 MoveCurrentCell(CurrentCell.startPos, controller.pickedUpItemCell.size);
-                controller.MovePickedUpItemCell(CurrentCell.startPos);
                 CurrentCell.PickUp();
             }
             else
@@ -347,10 +357,10 @@ namespace Items
 
         public virtual void DisableGrid()
         {
+            InventoryController.Instance.CurrentItemCell = null;
             CurrentCell.PutDown();
             CurrentCell.gameObject.SetActive(false);
         }
-
 
         public virtual ItemCell PickUp(ItemCell itemCell)
         {
@@ -365,16 +375,6 @@ namespace Items
 
         public abstract bool PutDown(ItemCell itemCell, Vector2Int gridPos);
 
-        public virtual void InitCurrentCellPos()
-        {
-            MoveCurrentCell(Vector2Int.zero, Vector2Int.one);
-        }
-
-        public void RefreshCurrentCell()
-        {
-            MoveCurrentCell(CurrentCell.startPos, CurrentCell.size);
-        }
-        
         void Awake()
         {
             _rect = GetComponent<RectTransform>();
@@ -387,10 +387,13 @@ namespace Items
             EnableGrid();
         }
 
-        // public void OnPointerExit(PointerEventData eventData)
-        // {
-        //     InventoryController.Instance.CurrentItemGrid = null;
-        // }
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (!InventoryController.Instance.mouseControl)
+                return;
+            DisableGrid();
+        }
+        
         public void OnPointerClick(PointerEventData eventData)
         {
             if (!InventoryController.Instance.mouseControl)

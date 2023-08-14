@@ -19,6 +19,18 @@ namespace Items
             size = value.size;
         }
         
+        public override void PickUp()
+        {
+            Image.raycastTarget = false;
+            InventoryController.Instance.pickedUpItemCell = this;
+            transform.SetAsLastSibling();
+        }
+        
+        public override void PutDown()
+        {
+            Image.raycastTarget = true;
+        }
+        
         public void OnPointerClick(PointerEventData eventData)
         {
             if (!InventoryController.Instance.mouseControl)
