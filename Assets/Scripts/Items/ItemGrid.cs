@@ -284,7 +284,7 @@ namespace Items
         
         void InitCurrentCell()
         {
-            _currentCell = GetComponentInChildren<CurrentCell>();
+            _currentCell = GetComponentInChildren<CurrentCell>(true);
 
             if (_currentCell == null)
             {
