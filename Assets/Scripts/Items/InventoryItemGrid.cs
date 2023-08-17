@@ -21,20 +21,18 @@ namespace Items
         [Button]
         public override void InitGrid()
         {
-            GridSize = package.size;
-            Rect.sizeDelta = GridSize * tileSize;
+            gridSize = package.size;
+            Rect.sizeDelta = gridSize * tileSize;
             Rect.pivot = new Vector2(0, 1);
             
             ClearGrid();
 
             foreach (var itemPair in package.items)
             {
-                var itemGameObject = Instantiate(itemCellPrefab, ItemsHolder);
-                var itemCell = itemGameObject.GetComponent<ItemCell>();
-                itemCell.SetItem(itemPair.Value);
-                InitItemCell(itemCell, itemPair.Key);
-                ItemCells.Add(itemCell);
+                CreateItemCell(itemPair.Value, itemPair.Key);
             }
+
+            InitCurrentCellPos();
         }
 
         [Button]
@@ -42,6 +40,17 @@ namespace Items
         {
             ItemCells = new HashSet<ItemCell>();
             DestroyImmediate(ItemsHolder.gameObject);
+        }
+        
+        public ItemCell CreateItemCell(Item item, Vector2Int gridPos)
+        {
+            var itemGameObject = Instantiate(itemCellPrefab, ItemsHolder);
+            var itemCell = itemGameObject.GetComponent<ItemCell>();
+            itemCell.SetItem(item);
+            InitItemCell(itemCell, gridPos);
+            ItemCells.Add(itemCell);
+
+            return itemCell;
         }
         
         public override bool AddItemCell(ItemCell itemCell, Vector2Int gridPos)
@@ -58,6 +67,7 @@ namespace Items
         public override bool PutDown(ItemCell itemCell, Vector2Int gridPos)
         {
             var overlap = CheckSpace(gridPos, itemCell.size);
+            // Debug.Log($"{overlap.Count}");
             if (!CheckPos(gridPos, itemCell.size) || overlap.Count > 1)
             {
                 return false;
@@ -86,7 +96,8 @@ namespace Items
         public override void MoveCurrentCellTowards(CellDirection direction, Vector2Int size)
         {
             Vector2Int newPos;
-            if(InventoryController.Instance.pickedUpItemCell == null)
+            var pickedUp = InventoryController.Instance.pickedUpItemCell;
+            if(pickedUp == null)
             {
                 newPos = direction switch
                 {
@@ -107,11 +118,12 @@ namespace Items
                     CellDirection.Up => CurrentCell.startPos - Vector2Int.up,
                     _ => Vector2Int.zero
                 };
-                
+
+                if (newPos.x + pickedUp.size.x > gridSize.x) newPos.x = gridSize.x;
+                if (newPos.y + pickedUp.size.y > gridSize.y) newPos.y = gridSize.y;
             }
 
             MoveCurrentCell(newPos, size);
-
         }
 
         public override void RemoveItemCell(ItemCell itemCell)
@@ -126,11 +138,9 @@ namespace Items
             base.DeleteItemCell(itemCell);
         }
 
-
-        void Start()
+        void Awake()
         {
-            InitGrid();
-            InitCurrentCellPos();
+            ItemCells = new HashSet<ItemCell>();
         }
     }
 }

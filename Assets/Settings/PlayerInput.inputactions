@@ -96,7 +96,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SwitchInventory",
+                    "name": "Package",
                     "type": "Button",
                     "id": "559a7544-cd42-4977-bfb2-abdc52c15d7e",
                     "expectedControlType": "Button",
@@ -184,11 +184,11 @@
                 {
                     "name": "",
                     "id": "88271ace-f51c-47e4-97e7-b883bf287114",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchInventory",
+                    "action": "Package",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

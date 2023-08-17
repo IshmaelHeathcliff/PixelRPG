@@ -37,7 +37,7 @@ namespace Items
                 return;
             // Debug.Log("item clicked");
             InventoryController.Instance.CurrentItemCell = this;
-            InventoryController.Instance.PickUpCurrentItem();
+            InventoryController.Instance.PickUpCurrentItemCell();
         }
     }
 }

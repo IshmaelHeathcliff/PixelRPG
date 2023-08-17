@@ -18,8 +18,8 @@ namespace Items
         [Button]
         public override void InitGrid()
         {
-            GridSize = settings.size;
-            Rect.sizeDelta = GridSize * tileSize;
+            gridSize = settings.size;
+            Rect.sizeDelta = gridSize * tileSize;
             Rect.pivot = new Vector2(0, 1);
             
             ClearGrid();
@@ -35,6 +35,8 @@ namespace Items
             }
             
             LoadEquipments();
+            
+            InitCurrentCellPos();
         }
 
         void NewEquipmentSlot(EquipmentType e)
@@ -178,23 +180,10 @@ namespace Items
         {
             var controller = InventoryController.Instance;
             
-            if (controller.pickedUpItemCell != null)
-            {
-                if(controller.pickedUpItemCell.item is not Equipment equipment)
-                {
-                    return;
-                }
-
-                var cellSetting = settings[equipment.type];
-                MoveCurrentCell(cellSetting.pos, cellSetting.size);
-                return;
-            }
-            
             if (controller.CurrentItemCell == null)
             {
                 return;
             }
-
             
             if (!ItemCells.Contains(controller.CurrentItemCell))
             {
@@ -202,6 +191,25 @@ namespace Items
             }
             
             var currentItemCell = (EquipmentCell)controller.CurrentItemCell;
+            
+            if (controller.pickedUpItemCell != null)
+            {
+                if(controller.pickedUpItemCell.item is not Equipment equipment)
+                {
+                    return;
+                }
+
+                if (equipment.type == currentItemCell.type)
+                {
+                    MoveOut(direction);
+                }
+                else
+                {
+                    var cellSetting = settings[equipment.type];
+                    MoveCurrentCell(cellSetting.pos, cellSetting.size);
+                }
+                return;
+            }
 
             var nextCellType = direction switch
             {
@@ -213,8 +221,36 @@ namespace Items
             };
 
             var nextCellSetting = settings[nextCellType];
-            
-            MoveCurrentCell(nextCellSetting.pos, nextCellSetting.size);
+
+            if (nextCellType != currentItemCell.type)
+            {
+                MoveCurrentCell(nextCellSetting.pos, nextCellSetting.size);
+            }
+            else
+            {
+                MoveOut(direction);
+            }
+        }
+
+        void MoveOut(CellDirection direction)
+        {
+            var newPos = InventoryController.Instance.CurrentItemCell.startPos;
+            switch (direction)
+            {
+                case CellDirection.Down:
+                    newPos.y = gridSize.y;
+                    break;
+                case CellDirection.Up:
+                    newPos.y = -1;
+                    break;
+                case CellDirection.Right:
+                    newPos.x = gridSize.x;
+                    break;
+                case CellDirection.Left:
+                    newPos.x = -1;
+                    break;
+            }
+            MoveCurrentCell(newPos, Vector2Int.one);
         }
         
 
@@ -226,26 +262,35 @@ namespace Items
             DestroyImmediate(ItemsHolder.gameObject);
         }
 
-        public override void EnableGrid()
+        public override void EnableGrid(Vector2Int gridPos)
         {
-            base.EnableGrid();
+            base.EnableGrid(gridPos);
             
             var controller = InventoryController.Instance;
             
             if (controller.pickedUpItemCell != null)
             {
-                if (controller.pickedUpItemCell.item is Equipment equipment)
-                {
-                    var cellSetting = settings[equipment.type];
-                    MoveCurrentCell(cellSetting.pos, cellSetting.size);
-                }
+                if (controller.pickedUpItemCell.item is not Equipment equipment) return;
+                var cellSetting = settings[equipment.type];
+                MoveCurrentCell(cellSetting.pos, cellSetting.size);
             }
-        }
+            else
+            {
+                var defaultSetting = settings[defaultEquipmentType];
+                var newPos = defaultSetting.pos;
+                var newSize = defaultSetting.size;
+                foreach (var cell in ItemCells)
+                {
+                    if (Vector2Int.Distance(cell.startPos, gridPos) < Vector2Int.Distance(newPos, gridPos))
+                    {
+                        newPos = cell.startPos;
+                        newSize = cell.size;
+                    }
 
-        void Start()
-        {
-            InitGrid();
-            InitCurrentCellPos();
+                    MoveCurrentCell(newPos, newSize);
+                }
+                
+            }
         }
     }
 

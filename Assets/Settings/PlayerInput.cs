@@ -118,7 +118,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SwitchInventory"",
+                    ""name"": ""Package"",
                     ""type"": ""Button"",
                     ""id"": ""559a7544-cd42-4977-bfb2-abdc52c15d7e"",
                     ""expectedControlType"": ""Button"",
@@ -206,11 +206,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""88271ace-f51c-47e4-97e7-b883bf287114"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/i"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SwitchInventory"",
+                    ""action"": ""Package"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -237,7 +237,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
         m_Inventory_MoveCell = m_Inventory.FindAction("MoveCell", throwIfNotFound: true);
         m_Inventory_PickAndPut = m_Inventory.FindAction("PickAndPut", throwIfNotFound: true);
-        m_Inventory_SwitchInventory = m_Inventory.FindAction("SwitchInventory", throwIfNotFound: true);
+        m_Inventory_Package = m_Inventory.FindAction("Package", throwIfNotFound: true);
         m_Inventory_Delete = m_Inventory.FindAction("Delete", throwIfNotFound: true);
     }
 
@@ -348,7 +348,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IInventoryActions> m_InventoryActionsCallbackInterfaces = new List<IInventoryActions>();
     private readonly InputAction m_Inventory_MoveCell;
     private readonly InputAction m_Inventory_PickAndPut;
-    private readonly InputAction m_Inventory_SwitchInventory;
+    private readonly InputAction m_Inventory_Package;
     private readonly InputAction m_Inventory_Delete;
     public struct InventoryActions
     {
@@ -356,7 +356,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InventoryActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveCell => m_Wrapper.m_Inventory_MoveCell;
         public InputAction @PickAndPut => m_Wrapper.m_Inventory_PickAndPut;
-        public InputAction @SwitchInventory => m_Wrapper.m_Inventory_SwitchInventory;
+        public InputAction @Package => m_Wrapper.m_Inventory_Package;
         public InputAction @Delete => m_Wrapper.m_Inventory_Delete;
         public InputActionMap Get() { return m_Wrapper.m_Inventory; }
         public void Enable() { Get().Enable(); }
@@ -373,9 +373,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @PickAndPut.started += instance.OnPickAndPut;
             @PickAndPut.performed += instance.OnPickAndPut;
             @PickAndPut.canceled += instance.OnPickAndPut;
-            @SwitchInventory.started += instance.OnSwitchInventory;
-            @SwitchInventory.performed += instance.OnSwitchInventory;
-            @SwitchInventory.canceled += instance.OnSwitchInventory;
+            @Package.started += instance.OnPackage;
+            @Package.performed += instance.OnPackage;
+            @Package.canceled += instance.OnPackage;
             @Delete.started += instance.OnDelete;
             @Delete.performed += instance.OnDelete;
             @Delete.canceled += instance.OnDelete;
@@ -389,9 +389,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @PickAndPut.started -= instance.OnPickAndPut;
             @PickAndPut.performed -= instance.OnPickAndPut;
             @PickAndPut.canceled -= instance.OnPickAndPut;
-            @SwitchInventory.started -= instance.OnSwitchInventory;
-            @SwitchInventory.performed -= instance.OnSwitchInventory;
-            @SwitchInventory.canceled -= instance.OnSwitchInventory;
+            @Package.started -= instance.OnPackage;
+            @Package.performed -= instance.OnPackage;
+            @Package.canceled -= instance.OnPackage;
             @Delete.started -= instance.OnDelete;
             @Delete.performed -= instance.OnDelete;
             @Delete.canceled -= instance.OnDelete;
@@ -420,7 +420,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnMoveCell(InputAction.CallbackContext context);
         void OnPickAndPut(InputAction.CallbackContext context);
-        void OnSwitchInventory(InputAction.CallbackContext context);
+        void OnPackage(InputAction.CallbackContext context);
         void OnDelete(InputAction.CallbackContext context);
     }
 }

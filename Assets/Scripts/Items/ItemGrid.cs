@@ -21,6 +21,8 @@ namespace Items
         public int tileSize = 100;
         public int frameWidth = 20;
 
+        public Vector2Int globalStartPosition;
+
         public Sprite currentCellImage;
 
         // 用于非鼠标仓库定位
@@ -39,7 +41,7 @@ namespace Items
             }
         }
 
-        protected Vector2Int GridSize;
+        public Vector2Int gridSize;
 
         RectTransform _rect;
 
@@ -110,43 +112,32 @@ namespace Items
         {
             if (!CheckPos(gridPos, size))
             {
+                InventoryController.Instance.SwitchInventoryWithPos(globalStartPosition, gridPos);
                 return false;
             }
 
             var overlap = CheckSpace(gridPos, size);
-            if (overlap.Count > 1)
+            
+            if (overlap.Count == 0)
             {
-                // Debug.Log("Too many overlap");
-                // foreach (var cell in overlap)
-                // {
-                //     Debug.Log($"{cell.startPos}");
-                // }
-                return false;
+                SetCurrentCell(gridPos, size);
+                InventoryController.Instance.CurrentItemCell = null;
             }
-
-
+            else if(overlap.Count == 1)
+            {
+                InventoryController.Instance.CurrentItemCell = overlap[0];
+                SetCurrentCell(overlap[0].startPos, overlap[0].size);
+            }
+            else
+            {
+                SetCurrentCell(gridPos, size);
+            }
+            
             var picked = InventoryController.Instance.pickedUpItemCell;
             if ( picked != null)
             {
                 SetCurrentCell(gridPos, picked.size);
                 SetCell(picked, gridPos, picked.size);
-            }
-            else
-            {
-                if (overlap.Count == 0)
-                {
-                    SetCurrentCell(gridPos, size);
-                    InventoryController.Instance.CurrentItemCell = null;
-                }
-                else if (overlap[0] == InventoryController.Instance.CurrentItemCell)
-                {
-                    SetCurrentCell(gridPos, size);
-                }
-                else
-                {
-                    InventoryController.Instance.CurrentItemCell = overlap[0];
-                    SetCurrentCell(overlap[0].startPos, overlap[0].size);
-                }
             }
             
             return true;
@@ -186,10 +177,10 @@ namespace Items
         }
 
         // 检查是否在背包内
-        protected bool CheckPos(Vector2Int startPos, Vector2Int size)
+        public bool CheckPos(Vector2Int startPos, Vector2Int size)
         {
-            return startPos.x >= 0 && startPos.x < GridSize.x - size.x + 1 &&
-                   startPos.y >= 0 && startPos.y < GridSize.y - size.y + 1;
+            return startPos.x >= 0 && startPos.x < gridSize.x - size.x + 1 &&
+                   startPos.y >= 0 && startPos.y < gridSize.y - size.y + 1;
         }
 
         // 检查背包目标位置是否有空位
@@ -324,7 +315,7 @@ namespace Items
             MoveCurrentCell(Vector2Int.zero, Vector2Int.one);
         }
         
-        public virtual void EnableGrid()
+        public virtual void EnableGrid(Vector2Int gridPos)
         {
             if (InventoryController.Instance.mouseControl)
             {
@@ -340,8 +331,8 @@ namespace Items
             controller.CurrentItemGrid = this;
             CurrentCell.gameObject.SetActive(true);
             transform.SetAsLastSibling();
-            
-            InitCurrentCellPos();
+
+            MoveCurrentCell(gridPos, Vector2Int.one);
             
             if (controller.pickedUpItemCell != null)
             {
@@ -384,7 +375,7 @@ namespace Items
         {
             if (!InventoryController.Instance.mouseControl)
                 return;
-            EnableGrid();
+            EnableGrid(Vector2Int.zero);
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -398,7 +389,7 @@ namespace Items
         {
             if (!InventoryController.Instance.mouseControl)
                 return;
-            InventoryController.Instance.PutDownItem();
+            InventoryController.Instance.PutDown();
         }
     }
 }

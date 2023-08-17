@@ -18,9 +18,10 @@ public class InputController : Singleton<InputController>
         _playerInput.Player.Walk.canceled += Character.Instance.Move;
 
         _playerInput.Inventory.MoveCell.performed += InventoryController.Instance.MoveCell;
-        _playerInput.Inventory.PickAndPut.performed += InventoryController.Instance.PickAndPutItem;
-        _playerInput.Inventory.SwitchInventory.performed += InventoryController.Instance.SwitchInventory;
+        _playerInput.Inventory.PickAndPut.performed += InventoryController.Instance.PickAndPut;
         _playerInput.Inventory.Delete.performed += InventoryController.Instance.DeleteItemCell;
+
+        _playerInput.Inventory.Package.performed += InventoryController.Instance.OpenPackage;
     }
     
 }

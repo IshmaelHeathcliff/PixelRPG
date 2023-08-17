@@ -21,4 +21,4 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  pickedUpItem: {fileID: 0}
+  pickedUpItem: {fileID: 11400000, guid: 01b7e611a5c1881488db4ab03e338614, type: 2}
