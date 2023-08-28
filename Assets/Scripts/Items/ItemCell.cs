@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Items
 {
-    public class ItemCell : Cell, IPointerClickHandler
+    public class ItemCell : Cell
     {
         public Item item;
 
@@ -29,15 +29,6 @@ namespace Items
         public override void PutDown()
         {
             Image.raycastTarget = true;
-        }
-        
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (!InventoryController.Instance.mouseControl)
-                return;
-            // Debug.Log("item clicked");
-            InventoryController.Instance.CurrentItemCell = this;
-            InventoryController.Instance.PickUpCurrentItemCell();
         }
     }
 }

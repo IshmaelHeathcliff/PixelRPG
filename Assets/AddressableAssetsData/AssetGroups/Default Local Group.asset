@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b4d974f7f505dd242b172e7675f417ed
+  m_SerializeEntries:
+  - m_GUID: 496bc1d7c3e15954db1b302abbf7934f
+    m_Address: "Assets/SOs/Equipments/\u76AE\u8170\u5E26.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 01b7e611a5c1881488db4ab03e338614
+    m_Address: "Assets/SOs/Equipments/\u6CD5\u6756.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4eaca530b89b27e4bb12030c6dca2c97
+    m_Address: "Assets/SOs/Equipments/\u65C5\u4EBA\u76AE\u8863.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77806aeb61f492d4ba30df8857841ae6
+    m_Address: "Assets/SOs/Equipments/\u65C5\u4EBA\u978B.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 341cb33a61ed9b84482815eb15da3ab2
+    m_Address: "Assets/SOs/Equipments/\u91D1\u6212\u6307.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 69480ea013ed6764a87867808f4d0940
+    m_Address: "Assets/SOs/Equipments/\u94F6\u9879\u94FE.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6320e697960415443864f3f06f26ffbe
+    m_Address: "Assets/SOs/Equipments/\u76AE\u9769\u624B\u5957.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c1d91d97b76cdc44bcae08e7461bb5b
+    m_Address: "Assets/SOs/Equipments/\u730E\u4EBA\u5E3D.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b96b7714e9753b4c8c683e2ef0691dd
+    m_Address: "Assets/SOs/Equipments/\u94A2\u76FE\u724C.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bcd686468a9c824482d10a1aacd1f3d
+    m_Address: "Assets/SOs/Equipments/\u5DE8\u5251.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Equipment
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: d53f7a51e0caaed4bb538d038523adc9, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 3336a1ef418d6f74c8afe3ff8f6a3791, type: 2}
+    - {fileID: 11400000, guid: 6d1d9f5fce806bf46a0506704601b7d8, type: 2}

@@ -45,7 +45,8 @@ namespace Items
             {
                 transform =
                 {
-                    parent = ItemsHolder
+                    parent = ItemsHolder,
+                    localScale = Vector3.one
                 }
             };
 

@@ -1,22 +1,11 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using Sirenix.OdinInspector;
-using Sirenix.Utilities;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
 namespace Items
 {
     [RequireComponent(typeof(RectTransform))]
-    public abstract class ItemGrid : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler ,IPointerClickHandler
+    public abstract class ItemGrid : MonoBehaviour
     {
         public int tileSize = 100;
         public int frameWidth = 20;
@@ -73,7 +62,13 @@ namespace Items
             
         }
 
-        protected HashSet<ItemCell> ItemCells;
+        HashSet<ItemCell> _itemCells;
+
+        protected HashSet<ItemCell> ItemCells
+        {
+            get => _itemCells ??= new HashSet<ItemCell>();
+            set => _itemCells = value;
+        }
 
         public enum CellDirection
         {
@@ -87,25 +82,6 @@ namespace Items
         public abstract void InitGrid();
         protected abstract void ClearGrid();
         
-        /// <summary>
-        /// 获得鼠标处的网格位置
-        /// </summary>
-        /// <param name="size">将放置的物品的大小</param>
-        /// <returns>物品左上角网格位置</returns>
-        public Vector2Int GetMouseGridPos(Vector2Int size)
-        {
-            var mousePosition = (Vector2)Input.mousePosition - 
-                                Vector2.Scale(size * tileSize, new Vector2(1, -1)) / 2;
-            Vector2 position = Rect.position;
-            
-            var gridPosition =  new Vector2Int
-            {
-                x = Mathf.RoundToInt((mousePosition.x - position.x) / tileSize),
-                y = Mathf.RoundToInt((position.y - mousePosition.y) / tileSize)
-            };
-            return gridPosition;
-        }
-
         public abstract void MoveCurrentCellTowards(CellDirection direction, Vector2Int size);
 
         public bool MoveCurrentCell(Vector2Int gridPos, Vector2Int size)
@@ -317,16 +293,6 @@ namespace Items
         
         public virtual void EnableGrid(Vector2Int gridPos)
         {
-            if (InventoryController.Instance.mouseControl)
-            {
-                CurrentCell.Hide();
-            }
-            else
-            {
-                CurrentCell.Show();
-            }
-            
-            
             var controller = InventoryController.Instance;
             controller.CurrentItemGrid = this;
             CurrentCell.gameObject.SetActive(true);
@@ -369,27 +335,6 @@ namespace Items
         void Awake()
         {
             _rect = GetComponent<RectTransform>();
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (!InventoryController.Instance.mouseControl)
-                return;
-            EnableGrid(Vector2Int.zero);
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            if (!InventoryController.Instance.mouseControl)
-                return;
-            DisableGrid();
-        }
-        
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (!InventoryController.Instance.mouseControl)
-                return;
-            InventoryController.Instance.PutDown();
         }
     }
 }

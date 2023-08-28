@@ -1,15 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 
 namespace Items
 {
@@ -136,11 +127,6 @@ namespace Items
         {
             package.items.Remove(itemCell.startPos);
             base.DeleteItemCell(itemCell);
-        }
-
-        void Awake()
-        {
-            ItemCells = new HashSet<ItemCell>();
         }
     }
 }

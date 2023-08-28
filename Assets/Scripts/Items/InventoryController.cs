@@ -1,50 +1,31 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 using Vector2Int = UnityEngine.Vector2Int;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
-using UnityEngine.Serialization;
 
 namespace Items
 {
     public class InventoryController : Singleton<InventoryController>
     {
-        public ItemCell pickedUpItemCell;
-        public PickedUp pickedUp;
-        [HideInInspector] public bool mouseControl;
         [SerializeField] ItemGrid packageGrid;
         [SerializeField] ItemGrid equipmentsGrid;
         [SerializeField] ItemGrid stashGrid;
-        public ItemGrid CurrentItemGrid { get; set; }
+        [SerializeField] GameObject inventoryHolder;
+        
+        public ItemCell pickedUpItemCell;
+        public PickedUp pickedUp;
 
+        public ItemGrid CurrentItemGrid { get; set; }
         public ItemCell CurrentItemCell { get; set; }
 
 
-        [Button]
-        public void MouseControl()
-        {
-            mouseControl = true;
-            if(CurrentItemGrid != null)
-                CurrentItemGrid.CurrentCell.Hide();
-        }
-
-        [Button]
-        public void ButtonControl()
-        {
-            mouseControl = false;
-            if(CurrentItemGrid != null)
-                CurrentItemGrid.CurrentCell.Show();
-        }
-
-        public void PickUpCurrentItemCell()
+        void PickUpCurrentItemCell()
         {
             if (CurrentItemCell == null) return;
             PickUp(CurrentItemCell);
         }
 
-        public void PickUp(ItemCell itemCell)
+        void PickUp(ItemCell itemCell)
         {
             if (CurrentItemGrid == null) return;
             if (pickedUpItemCell != null)
@@ -56,15 +37,13 @@ namespace Items
             pickedUp.pickedUpItem = pickedUpItemCell.item;
         }
 
-        public void PutDown()
+        void PutDown()
         {
             if (CurrentItemGrid == null) return;
             if (pickedUpItemCell == null) return;
             
 
-            var gridPos = mouseControl
-                ? CurrentItemGrid.GetMouseGridPos(pickedUpItemCell.item.size)
-                : pickedUpItemCell.startPos;
+            var gridPos = pickedUpItemCell.startPos;
 
             CurrentItemGrid.PutDown(pickedUpItemCell, gridPos);
             pickedUp.pickedUpItem = null;
@@ -110,10 +89,22 @@ namespace Items
             }
         }
 
-        public void OpenPackage(InputAction.CallbackContext context)
+        public void SwitchPackage(InputAction.CallbackContext context)
         {
-            SwitchInventory(packageGrid, Vector2Int.zero);
-            InitPickedUp();
+            if (!inventoryHolder.activeSelf)
+            {
+                inventoryHolder.SetActive(true);
+                SwitchInventory(packageGrid, Vector2Int.zero);
+                InitPickedUp();
+            }
+            else
+            {
+                if (pickedUpItemCell != null)
+                {
+                    DestroyImmediate(pickedUpItemCell.gameObject);
+                }
+                inventoryHolder.SetActive(false);
+            }
         }
 
         public void SwitchInventoryWithPos(Vector2Int preStartPos, Vector2Int pos)
@@ -146,7 +137,7 @@ namespace Items
             }
         }
 
-        public void SwitchInventory(ItemGrid targetGrid, Vector2Int gridPos)
+        void SwitchInventory(ItemGrid targetGrid, Vector2Int gridPos)
         {
             if (!targetGrid.gameObject.activeSelf)
             {
@@ -183,7 +174,7 @@ namespace Items
             
         }
 
-        public void InitPickedUp()
+        void InitPickedUp()
         {
             if (pickedUp.pickedUpItem == null) return;
             SwitchInventory(packageGrid, Vector2Int.zero);
@@ -202,14 +193,6 @@ namespace Items
         void Start()
         {
             ReloadGrids();
-        }
-        
-        void Update()
-        {
-            if (mouseControl && pickedUpItemCell != null)
-            {
-                pickedUpItemCell.transform.position = Input.mousePosition;
-            }
         }
     }
 }

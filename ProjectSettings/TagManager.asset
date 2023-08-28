@@ -3,12 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - Weapon
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
@@ -41,13 +43,13 @@ TagManager:
   - name: Ground
     uniqueID: 3104351053
     locked: 0
-  - name: UnderPlayer
+  - name: UnderEntity
     uniqueID: 3414631889
     locked: 0
-  - name: Player
+  - name: Entity
     uniqueID: 3695264197
     locked: 0
-  - name: OverPlayer
+  - name: OverEntity
     uniqueID: 4280424989
     locked: 0
   - name: Default
