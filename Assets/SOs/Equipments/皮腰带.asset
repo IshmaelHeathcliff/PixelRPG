@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2feaee030b40cba635207ee12c6415, type: 3}
+  m_Script: {fileID: 11500000, guid: e6240e54169d30744bbdb4df021d46c2, type: 3}
   m_Name: "\u76AE\u8170\u5E26"
   m_EditorClassIdentifier: 
+  guid: 1c1717fe-9ffc-42ff-a24b-60fcb81d7003
   itemName: "\u76AE\u8170\u5E26"
-  image: {fileID: 149769989, guid: 1122996ac42fd1340aeb6d7bcad8fe4c, type: 3}
+  icon: {fileID: 1232416384, guid: 1122996ac42fd1340aeb6d7bcad8fe4c, type: 3}
   size: {x: 2, y: 1}
   price: 0
   weight: 0

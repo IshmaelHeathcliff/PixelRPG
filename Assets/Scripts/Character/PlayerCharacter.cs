@@ -4,14 +4,15 @@ using UnityEngine.Serialization;
 
 namespace Character
 {
-    public class Character : Singleton<Character>
+    public class PlayerCharacter : Singleton<PlayerCharacter>
     {
         [HideInInspector]public PlayerController playerController;
         [HideInInspector]public CharacterAttributes characterAttributes;
         [HideInInspector]public Damageable damageable;
 
-        protected void Start()
+        protected override void Awake()
         {
+            base.Awake();
             playerController = GetComponent<PlayerController>();
             characterAttributes = GetComponentInChildren<CharacterAttributes>();
             damageable = GetComponentInChildren<Damageable>();

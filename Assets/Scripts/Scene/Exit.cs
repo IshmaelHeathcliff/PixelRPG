@@ -10,6 +10,6 @@ public class Exit : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         SceneManager.LoadSceneAsync(nextSceneName);
-        Character.Character.Instance.transform.position = newPos;
+        Character.PlayerCharacter.Instance.transform.position = newPos;
     }
 }

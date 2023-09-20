@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
     {
         if (_isPlayerFount)
         {
-            Face(((Vector2) (Character.Character.Instance.transform.position - transform.position)).normalized);
+            Face(((Vector2) (Character.PlayerCharacter.Instance.transform.position - transform.position)).normalized);
         }
 
         _rigidbody.velocity = _direction * speed;
@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
 
     void FindPlayer()
     {
-        if (Vector2.Distance(Character.Character.Instance.transform.position, transform.position) < detectRadius)
+        if (Vector2.Distance(Character.PlayerCharacter.Instance.transform.position, transform.position) < detectRadius)
         {
             _isPlayerFount = true;
         }

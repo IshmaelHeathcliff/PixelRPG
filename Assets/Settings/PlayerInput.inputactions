@@ -74,7 +74,7 @@
             ]
         },
         {
-            "name": "Inventory",
+            "name": "UI",
             "id": "1983bf6f-1491-4d82-8d9e-e4590627e539",
             "actions": [
                 {
@@ -83,22 +83,13 @@
                     "id": "8ee5e897-d01e-4f11-b9b5-55e43ab5e680",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "Press",
+                    "interactions": "Press,Hold",
                     "initialStateCheck": true
                 },
                 {
                     "name": "PickAndPut",
                     "type": "Button",
                     "id": "863f6333-0af8-489c-a487-1153c71a5cc7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Package",
-                    "type": "Button",
-                    "id": "559a7544-cd42-4977-bfb2-abdc52c15d7e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -183,23 +174,68 @@
                 },
                 {
                     "name": "",
-                    "id": "88271ace-f51c-47e4-97e7-b883bf287114",
-                    "path": "<Keyboard>/i",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Package",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "ff10d37a-2f9e-4017-bbfa-27f79d54e823",
                     "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Delete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Main",
+            "id": "b011a464-3a2b-47e4-9e96-99eaebe0cd42",
+            "actions": [
+                {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "45fb51ca-39b4-4314-9ac1-79ed1adfdda8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "52c7740d-5875-4064-ba0b-be29e5a0d898",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Menu",
+            "id": "e65ff970-8f7d-4205-9cfb-4b503776657f",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "faf2d317-8a20-4275-a17f-eeb500b29e41",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b0755457-6f40-4d96-aefc-b55995405d5d",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

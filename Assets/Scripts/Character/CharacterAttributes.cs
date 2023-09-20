@@ -43,7 +43,7 @@ namespace Character
         {
             health = maxHealth;
             UpdateHealth();
-            Character.Instance.damageable.onHurt.AddListener(GainDamage);
+            PlayerCharacter.Instance.damageable.onHurt.AddListener(GainDamage);
         }
     }
 }

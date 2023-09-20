@@ -7,22 +7,30 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public static class AddressablesManager
 {
-    public static void LoadAssetsWithLabel<T>(AssetLabelReference label, Action<AsyncOperationHandle<IList<T>>> callback)
+    public static AsyncOperationHandle<IList<T>> LoadAssetsWithLabel<T>(AssetLabelReference label, Action<AsyncOperationHandle<IList<T>>> callback)
     {
-        Addressables.LoadAssetsAsync<T>(label, _ => { }).Completed += callback;
+        var handler = Addressables.LoadAssetsAsync<T>(label, _ => { });
+        handler.Completed += callback;
+        return handler;
     }
-    public static void LoadAssetsWithLabel<T>(string label, Action<AsyncOperationHandle<IList<T>>> callback)
+    public static AsyncOperationHandle<IList<T>> LoadAssetsWithLabel<T>(string label, Action<AsyncOperationHandle<IList<T>>> callback)
     {
-        Addressables.LoadAssetsAsync<T>(label, _ => { }).Completed += callback;
+        var handler = Addressables.LoadAssetsAsync<T>(label, _ => { });
+        handler.Completed += callback;
+        return handler;
     }
 
-    public static void LoadAssetWithName<T>(string name, Action<AsyncOperationHandle<T>> callback)
+    public static AsyncOperationHandle<T> LoadAssetWithName<T>(string name, Action<AsyncOperationHandle<T>> callback)
     {
-        Addressables.LoadAssetAsync<T>(name).Completed += callback;
+        var handler = Addressables.LoadAssetAsync<T>(name);
+        handler.Completed += callback;
+        return handler;
     }
 
-    public static void InstantiateWithName(string name, Action<AsyncOperationHandle<GameObject>> callback)
+    public static AsyncOperationHandle<GameObject> InstantiateWithName(string name, Action<AsyncOperationHandle<GameObject>> callback)
     {
-        Addressables.InstantiateAsync(name).Completed += callback;
+        var handler = Addressables.InstantiateAsync(name);
+        handler.Completed += callback;
+        return handler;
     }
 }

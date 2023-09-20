@@ -96,7 +96,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Inventory"",
+            ""name"": ""UI"",
             ""id"": ""1983bf6f-1491-4d82-8d9e-e4590627e539"",
             ""actions"": [
                 {
@@ -105,22 +105,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""id"": ""8ee5e897-d01e-4f11-b9b5-55e43ab5e680"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": ""Press,Hold"",
                     ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""PickAndPut"",
                     ""type"": ""Button"",
                     ""id"": ""863f6333-0af8-489c-a487-1153c71a5cc7"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Package"",
-                    ""type"": ""Button"",
-                    ""id"": ""559a7544-cd42-4977-bfb2-abdc52c15d7e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -205,23 +196,68 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""88271ace-f51c-47e4-97e7-b883bf287114"",
-                    ""path"": ""<Keyboard>/i"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Package"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""ff10d37a-2f9e-4017-bbfa-27f79d54e823"",
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Delete"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Main"",
+            ""id"": ""b011a464-3a2b-47e4-9e96-99eaebe0cd42"",
+            ""actions"": [
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""45fb51ca-39b4-4314-9ac1-79ed1adfdda8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""52c7740d-5875-4064-ba0b-be29e5a0d898"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""e65ff970-8f7d-4205-9cfb-4b503776657f"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""faf2d317-8a20-4275-a17f-eeb500b29e41"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b0755457-6f40-4d96-aefc-b55995405d5d"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -233,12 +269,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Walk = m_Player.FindAction("Walk", throwIfNotFound: true);
-        // Inventory
-        m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
-        m_Inventory_MoveCell = m_Inventory.FindAction("MoveCell", throwIfNotFound: true);
-        m_Inventory_PickAndPut = m_Inventory.FindAction("PickAndPut", throwIfNotFound: true);
-        m_Inventory_Package = m_Inventory.FindAction("Package", throwIfNotFound: true);
-        m_Inventory_Delete = m_Inventory.FindAction("Delete", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_MoveCell = m_UI.FindAction("MoveCell", throwIfNotFound: true);
+        m_UI_PickAndPut = m_UI.FindAction("PickAndPut", throwIfNotFound: true);
+        m_UI_Delete = m_UI.FindAction("Delete", throwIfNotFound: true);
+        // Main
+        m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
+        m_Main_Inventory = m_Main.FindAction("Inventory", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -343,45 +384,40 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     }
     public PlayerActions @Player => new PlayerActions(this);
 
-    // Inventory
-    private readonly InputActionMap m_Inventory;
-    private List<IInventoryActions> m_InventoryActionsCallbackInterfaces = new List<IInventoryActions>();
-    private readonly InputAction m_Inventory_MoveCell;
-    private readonly InputAction m_Inventory_PickAndPut;
-    private readonly InputAction m_Inventory_Package;
-    private readonly InputAction m_Inventory_Delete;
-    public struct InventoryActions
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_MoveCell;
+    private readonly InputAction m_UI_PickAndPut;
+    private readonly InputAction m_UI_Delete;
+    public struct UIActions
     {
         private @PlayerInput m_Wrapper;
-        public InventoryActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @MoveCell => m_Wrapper.m_Inventory_MoveCell;
-        public InputAction @PickAndPut => m_Wrapper.m_Inventory_PickAndPut;
-        public InputAction @Package => m_Wrapper.m_Inventory_Package;
-        public InputAction @Delete => m_Wrapper.m_Inventory_Delete;
-        public InputActionMap Get() { return m_Wrapper.m_Inventory; }
+        public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MoveCell => m_Wrapper.m_UI_MoveCell;
+        public InputAction @PickAndPut => m_Wrapper.m_UI_PickAndPut;
+        public InputAction @Delete => m_Wrapper.m_UI_Delete;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InventoryActions set) { return set.Get(); }
-        public void AddCallbacks(IInventoryActions instance)
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
         {
-            if (instance == null || m_Wrapper.m_InventoryActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_InventoryActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
             @MoveCell.started += instance.OnMoveCell;
             @MoveCell.performed += instance.OnMoveCell;
             @MoveCell.canceled += instance.OnMoveCell;
             @PickAndPut.started += instance.OnPickAndPut;
             @PickAndPut.performed += instance.OnPickAndPut;
             @PickAndPut.canceled += instance.OnPickAndPut;
-            @Package.started += instance.OnPackage;
-            @Package.performed += instance.OnPackage;
-            @Package.canceled += instance.OnPackage;
             @Delete.started += instance.OnDelete;
             @Delete.performed += instance.OnDelete;
             @Delete.canceled += instance.OnDelete;
         }
 
-        private void UnregisterCallbacks(IInventoryActions instance)
+        private void UnregisterCallbacks(IUIActions instance)
         {
             @MoveCell.started -= instance.OnMoveCell;
             @MoveCell.performed -= instance.OnMoveCell;
@@ -389,38 +425,134 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @PickAndPut.started -= instance.OnPickAndPut;
             @PickAndPut.performed -= instance.OnPickAndPut;
             @PickAndPut.canceled -= instance.OnPickAndPut;
-            @Package.started -= instance.OnPackage;
-            @Package.performed -= instance.OnPackage;
-            @Package.canceled -= instance.OnPackage;
             @Delete.started -= instance.OnDelete;
             @Delete.performed -= instance.OnDelete;
             @Delete.canceled -= instance.OnDelete;
         }
 
-        public void RemoveCallbacks(IInventoryActions instance)
+        public void RemoveCallbacks(IUIActions instance)
         {
-            if (m_Wrapper.m_InventoryActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IInventoryActions instance)
+        public void SetCallbacks(IUIActions instance)
         {
-            foreach (var item in m_Wrapper.m_InventoryActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_InventoryActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public InventoryActions @Inventory => new InventoryActions(this);
+    public UIActions @UI => new UIActions(this);
+
+    // Main
+    private readonly InputActionMap m_Main;
+    private List<IMainActions> m_MainActionsCallbackInterfaces = new List<IMainActions>();
+    private readonly InputAction m_Main_Inventory;
+    public struct MainActions
+    {
+        private @PlayerInput m_Wrapper;
+        public MainActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Inventory => m_Wrapper.m_Main_Inventory;
+        public InputActionMap Get() { return m_Wrapper.m_Main; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MainActions set) { return set.Get(); }
+        public void AddCallbacks(IMainActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MainActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MainActionsCallbackInterfaces.Add(instance);
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
+        }
+
+        private void UnregisterCallbacks(IMainActions instance)
+        {
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
+        }
+
+        public void RemoveCallbacks(IMainActions instance)
+        {
+            if (m_Wrapper.m_MainActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMainActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MainActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MainActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MainActions @Main => new MainActions(this);
+
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
+    private readonly InputAction m_Menu_Newaction;
+    public struct MenuActions
+    {
+        private @PlayerInput m_Wrapper;
+        public MenuActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_Menu_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Add(instance);
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
+        }
+
+        private void UnregisterCallbacks(IMenuActions instance)
+        {
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
+        }
+
+        public void RemoveCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
     public interface IPlayerActions
     {
         void OnWalk(InputAction.CallbackContext context);
     }
-    public interface IInventoryActions
+    public interface IUIActions
     {
         void OnMoveCell(InputAction.CallbackContext context);
         void OnPickAndPut(InputAction.CallbackContext context);
-        void OnPackage(InputAction.CallbackContext context);
         void OnDelete(InputAction.CallbackContext context);
+    }
+    public interface IMainActions
+    {
+        void OnInventory(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

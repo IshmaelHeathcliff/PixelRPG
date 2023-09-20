@@ -14,22 +14,13 @@ public class InputController : Singleton<InputController>
         _playerInput.Disable();
     }
 
-    void Register()
-    {
-        _playerInput.Player.Walk.performed += Character.Character.Instance.playerController.Move;
-        _playerInput.Player.Walk.canceled += Character.Character.Instance.playerController.Move;
-        _playerInput.Inventory.MoveCell.performed += InventoryController.Instance.MoveCell;
-        _playerInput.Inventory.PickAndPut.performed += InventoryController.Instance.PickAndPut;
-        _playerInput.Inventory.Delete.performed += InventoryController.Instance.DeleteItemCell;
-        _playerInput.Inventory.Package.performed += InventoryController.Instance.SwitchPackage;
-
-    }
-
-    void Start()
+    protected override void Awake()
     {
         _playerInput = new PlayerInput();
+    }
+    
+    void Start()
+    {
         _playerInput.Enable();
-        Register();
-
     }
 }

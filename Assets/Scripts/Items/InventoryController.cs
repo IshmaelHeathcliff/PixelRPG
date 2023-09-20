@@ -1,87 +1,69 @@
+﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Vector2Int = UnityEngine.Vector2Int;
-using Sirenix.OdinInspector;
 
 namespace Items
 {
-    public class InventoryController : Singleton<InventoryController>
+    /// <summary>
+    /// 处理Inventory相关输入与UI
+    /// </summary>
+    public class InventoryController : MonoBehaviour
     {
-        [SerializeField] ItemGrid packageGrid;
-        [SerializeField] ItemGrid equipmentsGrid;
-        [SerializeField] ItemGrid stashGrid;
-        [SerializeField] GameObject inventoryHolder;
-        
-        public ItemCell pickedUpItemCell;
-        public PickedUp pickedUp;
+        public Inventory package;
+        public Inventory stash;
+        public InventoryUI packageUI;
+        public InventoryUI stashUI;
 
-        public ItemGrid CurrentItemGrid { get; set; }
-        public ItemCell CurrentItemCell { get; set; }
+        Vector2Int _globalCurrentPos;
+        Inventory _currentInventory;
+        InventoryUI _currentInventoryUI;
 
-
-        void PickUpCurrentItemCell()
+        Vector2Int LocalCurrentPos
         {
-            if (CurrentItemCell == null) return;
-            PickUp(CurrentItemCell);
+            get => _globalCurrentPos - _currentInventoryUI.GlobalStarPos;
+            set => _globalCurrentPos = value + _currentInventoryUI.GlobalStarPos;
         }
 
-        void PickUp(ItemCell itemCell)
+        void PickUp()
         {
-            if (CurrentItemGrid == null) return;
-            if (pickedUpItemCell != null)
-            {
-                PutDown();
-                return;
-            }
-            pickedUpItemCell = CurrentItemGrid.PickUp(itemCell);
-            pickedUp.pickedUpItem = pickedUpItemCell.item;
+            _currentInventory.PickUp(LocalCurrentPos);
+            UpdateCurrentCell();
         }
 
         void PutDown()
         {
-            if (CurrentItemGrid == null) return;
-            if (pickedUpItemCell == null) return;
-            
-
-            var gridPos = pickedUpItemCell.startPos;
-
-            CurrentItemGrid.PutDown(pickedUpItemCell, gridPos);
-            pickedUp.pickedUpItem = null;
+            _currentInventory.PutDown(LocalCurrentPos);
+            UpdateCurrentCell();
         }
 
-        public void MoveCell(InputAction.CallbackContext context)
+        void UpdateCurrentCell()
         {
-            if (CurrentItemGrid == null) return;
-
-            var direction = context.ReadValue<Vector2>();
-            var cellSize = Vector2Int.one;
-
-            if (pickedUpItemCell != null)
+            if (LocalCurrentPos.x < 0 || LocalCurrentPos.y < 0)
+                return;
+            
+            if (Inventory.pickedUp != null)
             {
-                cellSize = pickedUpItemCell.size;
+                _currentInventoryUI.SetCurrentCell(LocalCurrentPos, Inventory.pickedUp.GetSize());
+                return;
             }
-
-            if (Mathf.Abs(direction.x) >= Mathf.Abs(direction.y))
+            
+            var item = _currentInventory.GetItem(LocalCurrentPos, out var itemPos);
+            if (item != null)
             {
-                CurrentItemGrid.MoveCurrentCellTowards(direction.x > 0
-                    ? ItemGrid.CellDirection.Right
-                    : ItemGrid.CellDirection.Left, cellSize);
+                _currentInventoryUI.SetCurrentCell(itemPos, item.GetSize());
+                LocalCurrentPos = itemPos;
             }
             else
             {
-                CurrentItemGrid.MoveCurrentCellTowards(direction.y < 0
-                    ? ItemGrid.CellDirection.Down
-                    : ItemGrid.CellDirection.Up, cellSize);
+                _currentInventoryUI.SetCurrentCell(LocalCurrentPos, Vector2Int.one);
             }
         }
 
         public void PickAndPut(InputAction.CallbackContext context)
         {
-            if (!context.performed) return;
-            
-            if (pickedUpItemCell == null)
+            if (Inventory.pickedUp == null)
             {
-                PickUpCurrentItemCell();
+                PickUp();
             }
             else
             {
@@ -91,108 +73,124 @@ namespace Items
 
         public void SwitchPackage(InputAction.CallbackContext context)
         {
-            if (!inventoryHolder.activeSelf)
+            if (_currentInventoryUI == packageUI)
             {
-                inventoryHolder.SetActive(true);
-                SwitchInventory(packageGrid, Vector2Int.zero);
-                InitPickedUp();
+                _currentInventoryUI = null;
+                packageUI.DisableGrid();
             }
             else
             {
-                if (pickedUpItemCell != null)
-                {
-                    DestroyImmediate(pickedUpItemCell.gameObject);
-                }
-                inventoryHolder.SetActive(false);
+                _currentInventoryUI = packageUI;
+                packageUI.EnableGrid(Vector2Int.zero);
             }
         }
 
-        public void SwitchInventoryWithPos(Vector2Int preStartPos, Vector2Int pos)
+        public void SwitchStash(InputAction.CallbackContext context)
         {
-            ItemGrid[] grids = {packageGrid, stashGrid, equipmentsGrid};
-            foreach (var grid in grids)
+            if (_currentInventoryUI == stashUI)
             {
-                var newPos = pos + preStartPos - grid.globalStartPosition;
-                if (grid.CheckPos(newPos, Vector2Int.one))
+                _currentInventoryUI = null;
+                stashUI.DisableGrid();
+            }
+            else
+            {
+                _currentInventoryUI = stashUI;
+                stashUI.EnableGrid(Vector2Int.zero);
+            }
+        }
+
+        public void DeleteItem(InputAction.CallbackContext context)
+        {
+            if (Inventory.pickedUp != null)
+            {
+                Inventory.pickedUp = null;
+                UpdateCurrentCell();
+            }
+            else
+            {
+                _currentInventory.RemoveItem(LocalCurrentPos);
+                UpdateCurrentCell();
+            }
+        }
+
+        public void MoveCurrentPos(InputAction.CallbackContext context)
+        {
+            var prePos = new Vector2Int(LocalCurrentPos.x, LocalCurrentPos.y);
+            var inputDirection = context.ReadValue<Vector2>().normalized;
+            var direction = Movement(inputDirection);
+        }
+
+        Vector2Int Movement(Vector2 inputDirection)
+        {
+            var direction = Vector2Int.zero;
+            if (Mathf.Abs(inputDirection.x) >= Mathf.Abs(inputDirection.y))
+            {
+                if (inputDirection.x > 0)
                 {
-                    if (pickedUpItemCell != null)
+                    direction = Vector2Int.right;
+                }
+
+                if (inputDirection.x < 0)
+                {
+                    direction = Vector2Int.left;
+                }
+            }
+            else
+            {
+                if (inputDirection.y > 0)
+                {
+                    direction = Vector2Int.up;
+                }
+
+                if (inputDirection.y < 0)
+                {
+                    direction = Vector2Int.down;
+                }
+            }
+
+            if (Inventory.pickedUp == null)
+            {
+                var item = _currentInventory.GetItem(LocalCurrentPos, out var itemPos);
+                if (item != null)
+                {
+                    LocalCurrentPos = itemPos;
+                    if (direction == Vector2Int.right || direction == Vector2Int.down)
                     {
-                        if (newPos.x + pickedUpItemCell.size.x > grid.gridSize.x)
-                        {
-                            newPos.x = grid.gridSize.x - pickedUpItemCell.size.x;
-                        }
-                        
-                        if (newPos.y + pickedUpItemCell.size.y > grid.gridSize.y)
-                        {
-                            newPos.y = grid.gridSize.y - pickedUpItemCell.size.y;
-                        }
-
-                        if (!grid.CheckPos(newPos, pickedUpItemCell.size))
-                        {
-                            return;
-                        }
+                        direction *= item.GetSize();
                     }
-                    SwitchInventory(grid, newPos);
                 }
             }
+
+            return direction;
         }
 
-        void SwitchInventory(ItemGrid targetGrid, Vector2Int gridPos)
+
+        bool CheckCurrentPos()
         {
-            if (!targetGrid.gameObject.activeSelf)
+            if (Inventory.pickedUp == null)
             {
-                return;
-            }
-            
-            if (CurrentItemGrid != null)
-            {
-                CurrentItemGrid.DisableGrid();
-            }
-
-            CurrentItemGrid = targetGrid;
-            targetGrid.EnableGrid(gridPos);
-        }
-
-        public void DeleteItemCell(InputAction.CallbackContext context)
-        {
-            if (!context.performed) return;
-
-            if (pickedUpItemCell != null)
-            {
-                DestroyImmediate(pickedUpItemCell.gameObject);
-                pickedUpItemCell = null;
-                CurrentItemGrid.CurrentCell.PutDown();
-            }
-            else
-            {
-                if (CurrentItemCell != null)
+                if (_currentInventory.CheckPos(LocalCurrentPos, Vector2Int.one))
                 {
-                    CurrentItemGrid.DeleteItemCell(CurrentItemCell);
+                    return true;
                 }
+                else
+                {
                     
+                }
             }
-            
-        }
 
-        void InitPickedUp()
-        {
-            if (pickedUp.pickedUpItem == null) return;
-            SwitchInventory(packageGrid, Vector2Int.zero);
-            var itemCell = (packageGrid as InventoryItemGrid)?.CreateItemCell(pickedUp.pickedUpItem, Vector2Int.zero);
-            PickUp(itemCell);
+            return true;
         }
-
-        [Button]
-        public void ReloadGrids()
-        {
-            equipmentsGrid.InitGrid();
-            packageGrid.InitGrid();
-            stashGrid.InitGrid();
-        }
+        
+        
+        
 
         void Start()
         {
-            ReloadGrids();
+            package.onUpdateInventory += packageUI.Redraw;
+            stash.onUpdateInventory += stashUI.Redraw;
+            package.UpdateInventory();
+            stash.UpdateInventory();
         }
     }
 }

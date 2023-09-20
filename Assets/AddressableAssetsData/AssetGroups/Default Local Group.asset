@@ -21,61 +21,73 @@ MonoBehaviour:
     m_Address: "Assets/SOs/Equipments/\u76AE\u8170\u5E26.asset"
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Equipment
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 01b7e611a5c1881488db4ab03e338614
     m_Address: "Assets/SOs/Equipments/\u6CD5\u6756.asset"
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Equipment
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4eaca530b89b27e4bb12030c6dca2c97
     m_Address: "Assets/SOs/Equipments/\u65C5\u4EBA\u76AE\u8863.asset"
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Equipment
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 77806aeb61f492d4ba30df8857841ae6
     m_Address: "Assets/SOs/Equipments/\u65C5\u4EBA\u978B.asset"
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Equipment
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 341cb33a61ed9b84482815eb15da3ab2
     m_Address: "Assets/SOs/Equipments/\u91D1\u6212\u6307.asset"
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Equipment
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 69480ea013ed6764a87867808f4d0940
     m_Address: "Assets/SOs/Equipments/\u94F6\u9879\u94FE.asset"
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Equipment
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6320e697960415443864f3f06f26ffbe
     m_Address: "Assets/SOs/Equipments/\u76AE\u9769\u624B\u5957.asset"
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Equipment
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9c1d91d97b76cdc44bcae08e7461bb5b
     m_Address: "Assets/SOs/Equipments/\u730E\u4EBA\u5E3D.asset"
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Equipment
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b96b7714e9753b4c8c683e2ef0691dd
     m_Address: "Assets/SOs/Equipments/\u94A2\u76FE\u724C.asset"
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Equipment
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4bcd686468a9c824482d10a1aacd1f3d
     m_Address: "Assets/SOs/Equipments/\u5DE8\u5251.asset"
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Equipment
+    - Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 186a69d3f8b6ac043a7a2c8a8cef6f62
+    m_Address: "Assets/SOs/Items/\u5C0F\u751F\u547D\u836F\u6C34.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f817462b43568f64c9e2028c04fe9a81
+    m_Address: "Assets/SOs/Items/\u91D1\u5E01.asset"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Item
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d53f7a51e0caaed4bb538d038523adc9, type: 2}
