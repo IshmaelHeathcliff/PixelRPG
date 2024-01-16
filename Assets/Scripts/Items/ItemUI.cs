@@ -11,6 +11,8 @@ namespace Items
         public Vector2Int startPos;
         public Vector2Int size;
 
+        const string UIItemsName = "Assets/Artworks/Items/";
+
         Image _bg;
 
         protected Image Background
@@ -78,14 +80,25 @@ namespace Items
             Rect.localScale = Vector3.one;
         }
 
-        public void SetIcon(Sprite icon)
+        public void SetIcon(string icon)
         {
-            Icon.sprite = icon;
+            string iconPath = UIItemsName + $"{icon}";
+            AddressablesManager.LoadAssetWithName<Sprite>(iconPath, handle => { Icon.sprite = handle.Result;});
+        }
+
+        public void SetIconSize(Vector2Int iconSize)
+        {
+            Icon.GetComponent<RectTransform>().sizeDelta = iconSize;
         }
 
         public void SetBgColor(Color color)
         {
             Background.color = color;
+        }
+
+        public void SetBg(string bg)
+        {
+            AddressablesManager.LoadAssetWithName<Sprite>(bg, handle => { Background.sprite = handle.Result;});
         }
 
         public void EnableIcon()

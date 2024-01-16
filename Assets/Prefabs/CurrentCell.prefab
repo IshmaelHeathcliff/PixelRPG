@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5148253035833776373}
   - component: {fileID: 1036028865399008437}
   - component: {fileID: 7674455984108878487}
-  - component: {fileID: 7474820811364208170}
+  - component: {fileID: 2950608520523058518}
   m_Layer: 0
   m_Name: CurrentCell
   m_TagString: Untagged
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.9150943, g: 0, b: 0.054924805, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7474820811364208170
+--- !u!114 &2950608520523058518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,11 +86,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 340846135821034761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ad1ac6a37d46a242b853814f52f1f70, type: 3}
+  m_Script: {fileID: 11500000, guid: 51a9e0017a064b949a74a78290ba78c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startPos: {x: 0, y: 0}
-  size: {x: 0, y: 0}
+  size: {x: 1, y: 1}
 --- !u!1 &2813938064561379421
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

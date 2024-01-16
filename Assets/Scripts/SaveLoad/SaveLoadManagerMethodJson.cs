@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace SaveLoad
@@ -9,7 +10,8 @@ namespace SaveLoad
     {
         public void Save(object saveObject, FileStream saveFile)
         {
-			string json = JsonUtility.ToJson(saveObject);
+			// string json = JsonUtility.ToJson(saveObject, true);
+            string json = JsonConvert.SerializeObject(saveObject, Formatting.Indented);
 			var streamWriter = new StreamWriter(saveFile);
 			streamWriter.Write(json);
 			streamWriter.Close();
@@ -17,11 +19,13 @@ namespace SaveLoad
 
         }
 
-        public object Load(Type objectType, FileStream saveFile)
+        public T Load<T>(FileStream saveFile, JsonConverter converter = null)
         {
             var streamReader = new StreamReader(saveFile, Encoding.UTF8);
 			string json = streamReader.ReadToEnd();
-			object savedObject = JsonUtility.FromJson(json, objectType);
+			// object savedObject = JsonUtility.FromJson(json, objectType);
+            var savedObject = converter == null ? JsonConvert.DeserializeObject<T>(json) : 
+                JsonConvert.DeserializeObject<T>(json, converter);
             streamReader.Close();
 			saveFile.Close();
 			return savedObject;

@@ -4,7 +4,7 @@ public class SceneController : Singleton<SceneController>
 {
     public void LoadScene(string sceneName)
     {
-        InputController.Instance.Disable();
+        // InputController.Instance.Disable();
         SceneManager.LoadSceneAsync(sceneName);
     }
 

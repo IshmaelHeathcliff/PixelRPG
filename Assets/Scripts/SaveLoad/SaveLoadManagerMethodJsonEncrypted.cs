@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace SaveLoad
@@ -21,9 +22,9 @@ namespace SaveLoad
 			saveFile.Close();
         }
 
-        public object Load(Type objectType, FileStream saveFile)
+        public T Load<T>(FileStream saveFile, JsonConverter converter = null)
         {
-			object savedObject = null;
+            T savedObject;
 			using (var memoryStream = new MemoryStream())
 				using (var streamReader = new StreamReader(memoryStream))
 				{
@@ -33,11 +34,13 @@ namespace SaveLoad
 					}
 					catch (CryptographicException ce)
 					{
-						Debug.LogError("[MMSaveLoadManager] Encryption key error: " + ce.Message);
-						return null;
+						Debug.LogError("[SaveLoadManager] Encryption key error: " + ce.Message);
+						return default;
 					}
 					memoryStream.Position = 0;
-					savedObject = JsonUtility.FromJson(streamReader.ReadToEnd(), objectType);
+                    string json = streamReader.ReadToEnd();
+                    savedObject = converter == null ? JsonConvert.DeserializeObject<T>(json) : 
+                                        JsonConvert.DeserializeObject<T>(json, converter);
 				}
 			saveFile.Close();
 			return savedObject;

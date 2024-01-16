@@ -1,4 +1,5 @@
 using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace SaveLoad
@@ -7,8 +8,8 @@ namespace SaveLoad
     {
         public static ISaveLoadManagerMethod SaveLoadMethod { get; set; } = new SaveLoadManagerMethodJson();
 
-        const string BaseFolderName = "/MMData/";
-        const string DefaultFolderName = "MMSaveLoadManager";
+        const string BaseFolderName = "/Data/";
+        const string DefaultFolderName = "Save";
 
 		static string DetermineSavePath(string folderName = DefaultFolderName)
 		{
@@ -35,9 +36,9 @@ namespace SaveLoad
 			return fileName;
 		}
 
-		public static void Save(object saveObject, string fileName, string foldername = DefaultFolderName)
+		public static void Save(object saveObject, string fileName, string folderName = DefaultFolderName)
 		{
-			string savePath = DetermineSavePath(foldername);
+			string savePath = DetermineSavePath(folderName);
 			string saveFileName = DetermineSaveFileName(fileName);
             
 			if (!Directory.Exists(savePath))
@@ -52,20 +53,18 @@ namespace SaveLoad
 		}
 
 
-		public static object Load(System.Type objectType, string fileName, string foldername = DefaultFolderName)
+		public static T Load<T>(string fileName, string folderName = DefaultFolderName, JsonConverter converter = null)
 		{
-			string savePath = DetermineSavePath(foldername);
+			string savePath = DetermineSavePath(folderName);
 			string saveFileName = savePath + DetermineSaveFileName(fileName);
 
-			object returnObject;
-
-			if (!Directory.Exists(savePath) || !File.Exists(saveFileName))
+            if (!Directory.Exists(savePath) || !File.Exists(saveFileName))
 			{
-				return null;
+				return default;
 			}
 
 			var saveFile = File.Open(saveFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-			returnObject = SaveLoadMethod.Load(objectType, saveFile);
+			var returnObject = SaveLoadMethod.Load<T>(saveFile, converter);
 			saveFile.Close();
 
 			return returnObject;

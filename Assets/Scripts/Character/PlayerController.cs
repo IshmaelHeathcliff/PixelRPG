@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,8 @@ namespace Character
         static readonly int Walking = Animator.StringToHash("Walking");
         static readonly int Y = Animator.StringToHash("Y");
         static readonly int X = Animator.StringToHash("X");
+
+        InputActionMap _playerInput;
 
         public void Move(InputAction.CallbackContext context)
         {
@@ -31,10 +34,24 @@ namespace Character
             }
         }
 
+        void RegisterActions()
+        {
+            _playerInput.FindAction("Move").performed += Move;
+            _playerInput.FindAction("Move").canceled += Move;
+        }
+
+        void Awake()
+        {
+            _playerInput = InputController.Instance.Player;
+        }
+
         void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+            
+            _playerInput.Enable();
+            RegisterActions();
         }
     }
 }

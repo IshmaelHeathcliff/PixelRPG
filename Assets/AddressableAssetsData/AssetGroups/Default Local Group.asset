@@ -17,77 +17,1475 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: b4d974f7f505dd242b172e7675f417ed
   m_SerializeEntries:
-  - m_GUID: 496bc1d7c3e15954db1b302abbf7934f
-    m_Address: "Assets/SOs/Equipments/\u76AE\u8170\u5E26.asset"
+  - m_GUID: b862b022cfbd0a246bcbb2172caab57d
+    m_Address: Assets/Artworks/Items/UI_Items.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 01b7e611a5c1881488db4ab03e338614
-    m_Address: "Assets/SOs/Equipments/\u6CD5\u6756.asset"
+  - m_GUID: c0a5b0f055396b042ac7af990e888b45
+    m_Address: Assets/Artworks/CurrentCell1.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4eaca530b89b27e4bb12030c6dca2c97
-    m_Address: "Assets/SOs/Equipments/\u65C5\u4EBA\u76AE\u8863.asset"
+  - m_GUID: 5a98e8fde8711d540832ac6796cd3fb7
+    m_Address: Assets/Artworks/CurrentCell0.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 77806aeb61f492d4ba30df8857841ae6
-    m_Address: "Assets/SOs/Equipments/\u65C5\u4EBA\u978B.asset"
+  - m_GUID: 42d42f41b2bd79f4d8462a231f08e5b7
+    m_Address: Assets/Artworks/Items/Gems/Gem_03_02.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 341cb33a61ed9b84482815eb15da3ab2
-    m_Address: "Assets/SOs/Equipments/\u91D1\u6212\u6307.asset"
+  - m_GUID: 3a57ecce633ed454e9768b9476f29ce5
+    m_Address: Assets/Artworks/Items/Gems/Gem_07_05.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 69480ea013ed6764a87867808f4d0940
-    m_Address: "Assets/SOs/Equipments/\u94F6\u9879\u94FE.asset"
+  - m_GUID: b2e2a1b7fbb377a439a41f3b903cf286
+    m_Address: Assets/Artworks/Items/Loots/Loots_11.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6320e697960415443864f3f06f26ffbe
-    m_Address: "Assets/SOs/Equipments/\u76AE\u9769\u624B\u5957.asset"
+  - m_GUID: a44a364e6bdae7e4980d6d41596dcadf
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_05_03.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9c1d91d97b76cdc44bcae08e7461bb5b
-    m_Address: "Assets/SOs/Equipments/\u730E\u4EBA\u5E3D.asset"
+  - m_GUID: 95daeedad9c0f984783a937761434860
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_03_01.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5b96b7714e9753b4c8c683e2ef0691dd
-    m_Address: "Assets/SOs/Equipments/\u94A2\u76FE\u724C.asset"
+  - m_GUID: e79f8ba4f0570174f9addcf2565d7042
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_04_02.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4bcd686468a9c824482d10a1aacd1f3d
-    m_Address: "Assets/SOs/Equipments/\u5DE8\u5251.asset"
+  - m_GUID: 00e6cdcf483acdf46bcd922015c8efc7
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_03_03.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 186a69d3f8b6ac043a7a2c8a8cef6f62
-    m_Address: "Assets/SOs/Items/\u5C0F\u751F\u547D\u836F\u6C34.asset"
+  - m_GUID: 5f1ea604b64492e42b27badde1ace1ef
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_06_02.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f817462b43568f64c9e2028c04fe9a81
-    m_Address: "Assets/SOs/Items/\u91D1\u5E01.asset"
+  - m_GUID: 19d5b8c20edd42a47af4f18f6b961eae
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_02_05.png
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Item
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4dbec61882890a2429fa7631a3cee22b
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_06_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76c9c7fb6d6a920498d2d23ff0143b2f
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_03_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a760a7669fa286e4d800490ec611b026
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_05_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56fa8e2c1efa6254db02237a0cff4ece
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_02_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94921537e368d1b4e8a2e140cb51e9f5
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_01_07.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 05c3784a021cd36498bc8e34394b3ede
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_02_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 88a00b4b4a741074ab99236611b9430c
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_03_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54bcfa06816eb3b42b1e522c408937eb
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_02_07.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58ec919321beadf418ad54ca1db8199b
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_06_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ad4c8b670eb66c74fbd213db378fc222
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_03_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5ae7e7d67323d9c49b0331f4f7c52520
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_01_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5ef50ed53f9ca914bac1441ba88ae2b0
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_01_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 31d8ac1d877c8b74a8305306a1f0d41e
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_04_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 181934708b99a4f42b56b04347eb9b70
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_02_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c99d468938026164e8dc0f591d67e376
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_05_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e8d12e3ec64cc6544b538e558b3fcd12
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_01_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 968390fe22d462146a2c14dd81526211
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_02_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7cb9f9cd2656d644aad5a7f5eb750d13
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_04_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6108d2b512314da4093c2ddecbfd342d
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_01_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 89679cc410e531241a1596bacb6859d1
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_01_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff79efacf173ccd488ec3931d1edb71f
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_02_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1958b5987dc475442968bffe92f3a275
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_06_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f4b124751137164598951780609d1dc
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_01_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb1c2af3ac7f3db4b9654db9c6e24537
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_05_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b4e3020a2e2a13f4cb80f925e429a9a1
+    m_Address: Assets/Artworks/Items/Clothing/Boots/Boot_02_08.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b427e9fbde765824fbe4bb60dc60c3e0
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_04_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f240349a3de93ac438153740cca0b5c5
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_02_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 939c6e77d1eecb14c8212e3417068ab6
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_03_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 26b6871de3d3c2b4b99faf7558838c16
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_06_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1788664f68bf31349865164ef0d7bb29
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_04_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1640a098be18c04fa522c2ebdd3e7cc
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_05_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aad89a05e144f0b4bbd8f067cbea1a2d
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_05_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96add210a3c8b574c9fbcfe6198a8c95
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_01_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4193317456133664484600937c5b0473
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_05_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bfe4e6721b29f3b47a9f71e4f3b2cdd3
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_01_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a5d70c8d0e6338a458e58763638c7e15
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_01_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c61154173e6295c4a95bded8353c9a17
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_07_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9517d6f4a9c7b4a49a4a6ebc3f40acf7
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_07_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68ee63fbc60356f4884f233470e9e2c8
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_07_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0cb4e4574c937b64693afab5a7738f06
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_02_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a9105abcc07fccb42b341663bc2cc8ff
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_05_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86a41b9403e6f1a43b5d2f6e26116b8e
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_07_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3973fbf88b1b66049bbeae53f83b1221
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_04_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c008d8cc74b40e747b7dca7d41e6c544
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_04_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 10a0ae24150c97749bc19640e8f92e23
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_06_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d51bd3023c2535f4688822da43cf3831
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_02_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 15760300595c0b649911a27c812b9c9e
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_03_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 614ead8f518085a45bdb9fda30f6c9dc
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_02_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ba6e2e738c0accf4c825840ea5c6cd18
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_03_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c72fb32d841c8634bbec1a3d1151682a
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_04_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e62eb36aea558841b51a41f111c2e8b
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_06_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b56353c2cbb6cf84bb824684cf0d049c
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_02_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e7d652a24510884cab02f8ea2bd7d31
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_01_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b4c086e3b7e2f841a8512f838104201
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_05_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 740303dd9484e234c9bad399f660e0b8
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_03_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 489ae8b951934c343908363e783365cb
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_06_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce68b79212b099a4596087d38be925ba
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_06_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c5c38851a6a15024299bcc6d56d4306b
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_07_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59e54e23356083643aa00a4a2b8041d9
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_03_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e84c052378ef04429edd60bbfbaafaf
+    m_Address: Assets/Artworks/Items/Clothing/Armors/Armor_01_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84507ee4ff79d874aa66559109d4ec48
+    m_Address: Assets/Artworks/Items/Gems/Gem_09_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 88f4cbc573b864c4794798b5855ebfce
+    m_Address: Assets/Artworks/Items/Gems/Gem_06_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dcb58c58bb452e4448828dda9d27b6b5
+    m_Address: Assets/Artworks/Items/Gems/Gem_02_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b541f7e09135eb34982596cc7c1b5ccd
+    m_Address: Assets/Artworks/Items/Gems/Gem_01_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b9e4eea0d7f7974c99d42495f28aa3b
+    m_Address: Assets/Artworks/Items/Gems/Gem_08_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64cc0e5a4667a394aa5b75852f7e3822
+    m_Address: Assets/Artworks/Items/Gems/Gem_05_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8c1fa82563e38e45962a8711aca4e78
+    m_Address: Assets/Artworks/Items/Gems/Gem_05_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39c5afab910679d429d8edc1ad056408
+    m_Address: Assets/Artworks/Items/Gems/Gem_03_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cc7d2676a8086544ea7ffd999ecca7a0
+    m_Address: Assets/Artworks/Items/Gems/Gem_09_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d1fc1eddb155c3d428ed69860f794cd4
+    m_Address: Assets/Artworks/Items/Gems/Gem_10_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7585f4ea6a0425b48876f6fee2d509cb
+    m_Address: Assets/Artworks/Items/Gems/Gem_03_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d211cf078e86754086df2d8a01d4fab
+    m_Address: Assets/Artworks/Items/Gems/Gem_04_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 948ee49426aaba44ebff391ffba89d33
+    m_Address: Assets/Artworks/Items/Gems/Gem_07_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9fe98ee4f9fcdd544acb2459d5c8e135
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_04_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e7924525eb0c5f46a67204f0c36f781
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_03_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb54ceab3fae2724eb01ebe9f93263b5
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_01_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 50adc7b3cc8bcae4bbd730230fb09a76
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_04_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30f2f53740bc75042a9c1a952f3796a3
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_02_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3631a37fde713674c926e8edc50789b5
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_03_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66e2df9172d0b8f4cbce4ea30570341f
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_02_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a3af563804c6044d89cfb1b4f5d962e
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_02_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9869ae3e2d93bd247bb036600675edb5
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_03_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dee009cda8c1d494f850a7a37abb2072
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_01_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9f6b630f5c9f514d8e5cf127e8a0f5d
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_02_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 830fac1e9808b814faca5ac0dfc48ddd
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_01_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2b7f1329592512498e5882e25626c51
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_04_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0133e98f611e8aa43be92f7480ad3b58
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_01_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd1e92d5ff3767b49b0a1dc01448177d
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_03_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37da453198911044e946774037960e52
+    m_Address: Assets/Artworks/Items/Clothing/Pants/Pant_04_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c467ac8a42a1f243abcaf4a97338abc
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_06_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 172f8c0e563a2fa439927e018e14fec6
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_06_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1b59211586142c4fb927d2a90b1d8ff
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_01_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c97b5859e3a5a7a488da5cfb71bf8016
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_03_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: feab288acf39c0b46aef903c75fbd224
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_05_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8d3489505a7e49c42ad9eded4530f736
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_04_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 707e7e509b6351c43b94070755cac8b2
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_05_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2e366730dab3294fbbfa3656b0ca20a
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_03_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5bd9d5fe1c2730643a93a1ead6b31c3b
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_01_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e71d753954389f940a85eb9dda41b233
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_05_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c07bc44a3c72f8e469f853b08b72a85f
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_07_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a40c8902ea024b64ba5c00e6e195bdd5
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_01_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf60cdca855f08c46af3dfa21438eb76
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_07_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c775107227ff88b45bdf604f6c9c5b03
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_06_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 347ec7909a13bdd43b9daeec73bb2b00
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_07_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 45437550391460a4ea869bd438bff501
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_02_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78ff43e52023c1d4cb0425c7cba78b5f
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_04_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 167334d0992f9d6498e872f94107a25c
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_01_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd14c2ce04ada164ca2460a42a7aa36f
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_05_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d65b58bc8d8a3a94a8af93344f498380
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_02_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab7d98d2b8748bb40af8bc3413690e83
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_03_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7662816045a1ab140acd712b949efab1
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_02_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5f18c8fe4cbfd146b0dc94aebb1b194
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_04_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ac6fab8eafc61c408c6fc42ef2f2073
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_04_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bad44c6ab16550f48add4dac94ba7153
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_07_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2541371a91c61b4f9a77571e4dd6a3b
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_02_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fc408e35cddb3224db62e6bb1d7d6202
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_06_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 990a0985f7edf09479a4d8bdc9688772
+    m_Address: Assets/Artworks/Items/Clothing/Helmets/Helmet_03_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9272fa3178ebee5469ca085d50c7deae
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_03_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bd15b118febfe743a32aa68d66cdef7
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_02_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96997d4e302cbf640ade543bc8fa4540
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_02_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8416c0d288ada0246a3c91a50f6ff7e9
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_02_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3a913c781a2099439b7d3d5d271bd58
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_04_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b61e829748c972e49a2c64052a6177c6
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_02_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 029fe9b7155a13641bd95dd6cd43db08
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_01_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5b8bde8d82816a4b8418526e1c28845
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_01_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e1952d60a7f64f488584b4919bd7cee
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_04_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f6339e5a08bdb674c97d7882c655c91f
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_04_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b08915ea968e9f146955ebdaae03c0b7
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_01_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 65a704c1aa93e0a41b0db5ff5df0b642
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_03_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df0444fb90ccae24eb807a531e3ba92e
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_03_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b75e826a7ca16544951e2762f4e1142
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_04_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8cbfa09731c2197489a12893ffbb0f4d
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_01_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 443e170cd7af9854c8399bd154919312
+    m_Address: Assets/Artworks/Items/Clothing/Necklaces/Necklace_03_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0b44e50e15924a94895fe063fd9b5f04
+    m_Address: Assets/Artworks/Items/Gems/Gem_07_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6efce7f5ba6ed6540834292b6744cd20
+    m_Address: Assets/Artworks/Items/Gems/Gem_09_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da1303798d134ff45a3aea8b8b5abdf2
+    m_Address: Assets/Artworks/Items/Gems/Gem_04_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8057ee3ec0d3a8c43b97033fe0412f93
+    m_Address: Assets/Artworks/Items/Gems/Gem_01_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8816b7142af4e144c958c1341e17077c
+    m_Address: Assets/Artworks/Items/Gems/Gem_05_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3d6df76eebc0d14893d266023f5e933
+    m_Address: Assets/Artworks/Items/Gems/Gem_02_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f550a401cdcc4ea4da826106b0f6cae2
+    m_Address: Assets/Artworks/Items/Gems/Gem_04_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ca4a87a89dd1fbd45b5755c5214354b8
+    m_Address: Assets/Artworks/Items/Gems/Gem_08_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 727d6454b2ea89549bbf7333386fa4b8
+    m_Address: Assets/Artworks/Items/Gems/Gem_09_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54f2b6c12a9517e418cac31afbc122c1
+    m_Address: Assets/Artworks/Items/Gems/Gem_04_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b791d05a46c8f154295c597656f9daf9
+    m_Address: Assets/Artworks/Items/Gems/Gem_07_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 592bcdd36994b65488906fb190e0e4bd
+    m_Address: Assets/Artworks/Items/Gems/Gem_08_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c9633ae0c2457643ae46529252ba94e
+    m_Address: Assets/Artworks/Items/Gems/Gem_08_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bbd2fced8f88e9944be6499d85506fc3
+    m_Address: Assets/Artworks/Items/Gems/Gem_02_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae45744571b1fdc41af34467a2fe1e63
+    m_Address: Assets/Artworks/Items/Gems/Gem_07_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29a6e2fed98f0414b982b2f380f5e01f
+    m_Address: Assets/Artworks/Items/Gems/Gem_01_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5793357e7eda1aa47b62b673085d74f4
+    m_Address: Assets/Artworks/Items/Gems/Gem_10_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a2dcd6e8aa40249499a5d9bddcc66133
+    m_Address: Assets/Artworks/Items/Gems/Gem_03_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d58f8bfeb337d04abd1f461be5569a9
+    m_Address: Assets/Artworks/Items/Gems/Gem_06_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8dd3eb302eee9bb4188a29427919c091
+    m_Address: Assets/Artworks/Items/Gems/Gem_01_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 074a9960d5e9f634da96f790b584cd96
+    m_Address: Assets/Artworks/Items/Gems/Gem_08_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 136bccc4285d83e4697443cee4572cac
+    m_Address: Assets/Artworks/Items/Gems/Gem_05_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a41023a1bd6fff74d911e161b3ef6e61
+    m_Address: Assets/Artworks/Items/Gems/Gem_10_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f202e424cc26b0a41a140428f1d31574
+    m_Address: Assets/Artworks/Items/Gems/Gem_08_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 138815b2cae04924881930d09181b94a
+    m_Address: Assets/Artworks/Items/Gems/Gem_06_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4901a433f314d60419f84ad683a7e4ca
+    m_Address: Assets/Artworks/Items/Gems/Gem_10_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ba2e1e3df84f984a9552572f170d500
+    m_Address: Assets/Artworks/Items/Gems/Gem_02_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0354a758db830b44b911962c31c347a8
+    m_Address: Assets/Artworks/Items/Gems/Gem_10_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71c4f085ff092a5449da1fca38b79970
+    m_Address: Assets/Artworks/Items/Gems/Gem_01_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe2deb2b5dbdc244a974d209e0321617
+    m_Address: Assets/Artworks/Items/Gems/Gem_06_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 779e482ec0edc35418837bbf69b37e66
+    m_Address: Assets/Artworks/Items/Gems/Gem_04_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a66b5e63416afb48b4a917df3f7c2bb
+    m_Address: Assets/Artworks/Items/Gems/Gem_06_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cdd692a5084cda749a492e330187b1de
+    m_Address: Assets/Artworks/Items/Gems/Gem_05_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66fcd19ccfdee0b4fb5aa3e690b8b9ff
+    m_Address: Assets/Artworks/Items/Gems/Gem_07_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21a416ffedf43d746ad5e41c8e20b1f1
+    m_Address: Assets/Artworks/Items/Gems/Gem_01_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bdf409c323f2a0c48998446738966483
+    m_Address: Assets/Artworks/Items/Gems/Gem_09_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f645e6ff32e64234b95f521d69039031
+    m_Address: Assets/Artworks/Items/Gems/Gem_02_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1cb38a980de4ad545a3d4da6292ee611
+    m_Address: Assets/Artworks/Items/Gems/Gem_06_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2b94919f7f89954d87ca6c867a4cb7a
+    m_Address: Assets/Artworks/Items/Gems/Gem_09_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af7dc0d91603b8540a07f5c465345115
+    m_Address: Assets/Artworks/Items/Gems/Gem_05_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da96aaa91c7be5a48bd4c6877eb6a607
+    m_Address: Assets/Artworks/Items/Gems/Gem_02_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0fa175b40a1b3374899540052ffcfb87
+    m_Address: Assets/Artworks/Items/Gems/Gem_04_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 69fd8520be539c447a4b9b5d7e70e6f3
+    m_Address: Assets/Artworks/Items/Gems/Gem_10_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76dc5ebf65f8c0d48a924ff326c095d5
+    m_Address: Assets/Artworks/Items/Gems/Gem_03_06.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ba995c6d65c7ac541a620759e15d06f1
+    m_Address: Assets/Artworks/Items/Gems/Gem_03_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7f5ae76b572e2524dacc9e3f894ee5d0
+    m_Address: Assets/Artworks/Items/Potions/Potions_03_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fac39161580664049b630f853ae983a0
+    m_Address: Assets/Artworks/Items/Potions/Potions_03_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1dc8efbca61d21449e8be4082fba0f4
+    m_Address: Assets/Artworks/Items/Potions/Potions_01_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e20bfabd155f964eb2ee180d8eef529
+    m_Address: Assets/Artworks/Items/Potions/Potions_04_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6bb7090f12574df48916e44049026298
+    m_Address: Assets/Artworks/Items/Potions/Potions_04_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e3f8499b606ad94980564490bd63a41
+    m_Address: Assets/Artworks/Items/Potions/Potions_05_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb0ec0d089c11744e9126a024f9b2c75
+    m_Address: Assets/Artworks/Items/Potions/Potions_01_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a4cbc7dbe5fc4ca4f825bc95f485f014
+    m_Address: Assets/Artworks/Items/Potions/Potions_01_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e9f2794ba0eaad4b98db8aad9ad0707
+    m_Address: Assets/Artworks/Items/Potions/Potions_04_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b71f193a49f7f2a47801ef9d3969e597
+    m_Address: Assets/Artworks/Items/Potions/Potions_02_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cfaa8b02293f78442b4d9c07fef5c124
+    m_Address: Assets/Artworks/Items/Potions/Potions_01_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c0180418c5e77344eb98ce16abbfd449
+    m_Address: Assets/Artworks/Items/Potions/Potions_04_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84e9a7d8518c0c24aacb755c8516763f
+    m_Address: Assets/Artworks/Items/Potions/Potions_03_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0a1cb7b1baec6d74992f129e7942f04d
+    m_Address: Assets/Artworks/Items/Potions/Potions_03_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90cb02361c48db44da72b7a6885adc53
+    m_Address: Assets/Artworks/Items/Potions/Potions_02_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2eb2767abba2fa4ab39ac69b2e51eb7
+    m_Address: Assets/Artworks/Items/Potions/Potions_02_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3f42d6613287134783cfed17c155c22
+    m_Address: Assets/Artworks/Items/Potions/Potions_05_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a17626cf675a042488d8b78339c8b871
+    m_Address: Assets/Artworks/Items/Potions/Potions_02_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 04d867d940213234b81e1503964c0142
+    m_Address: Assets/Artworks/Items/Shield/Shield_05_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20be5b356428bbb4e99a5c6ba2b12041
+    m_Address: Assets/Artworks/Items/Shield/Shield_04_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7358abcd6648b04cac64f1d15c6df29
+    m_Address: Assets/Artworks/Items/Shield/Shield_01_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a0bb7ac0e97ceb4aad27e53a57f4de5
+    m_Address: Assets/Artworks/Items/Shield/Shield_03_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a14816af1d6a1b4badd5bfc7072d0c2
+    m_Address: Assets/Artworks/Items/Shield/Shield_09_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79539b69b1ee85148bab93989db25003
+    m_Address: Assets/Artworks/Items/Shield/Shield_06_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9df8cac03ebeb894db04ed808d2cd649
+    m_Address: Assets/Artworks/Items/Shield/Shield_06_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e432aa6aca8c654ba40586a6a7acee9
+    m_Address: Assets/Artworks/Items/Shield/Shield_04_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3f6b770b2ccbe941a2f64eaac47c3e2
+    m_Address: Assets/Artworks/Items/Shield/Shield_09_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 19aef80e8e9591743950dcba06045d2c
+    m_Address: Assets/Artworks/Items/Shield/Shield_02_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 476aa2c5f23d67f4bb90f5c430e7c36b
+    m_Address: Assets/Artworks/Items/Shield/Shield_05_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d527e60fc072cb43bfef9e895c7ee6a
+    m_Address: Assets/Artworks/Items/Shield/Shield_01_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21c99fdb2cb213644a3375e17d0bae78
+    m_Address: Assets/Artworks/Items/Shield/Shield_07_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79c2235255f243b47b9f11e5ab0cd421
+    m_Address: Assets/Artworks/Items/Shield/Shield_07_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8f0b5ad99d4a0a42a797f2d2ae78386
+    m_Address: Assets/Artworks/Items/Shield/Shield_06_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e9d935139e56c24d95103f4169efd49
+    m_Address: Assets/Artworks/Items/Shield/Shield_03_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 008e32337e4f943419aa5f6788f5cf5e
+    m_Address: Assets/Artworks/Items/Shield/Shield_08_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ff8093d2edcef6344a1f7f3af3561bff
+    m_Address: Assets/Artworks/Items/Shield/Shield_08_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb2c5d0b11c292840b5ae25072c65c36
+    m_Address: Assets/Artworks/Items/Shield/Shield_03_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94cb5207b5737dc4a8bc4d79696e99c5
+    m_Address: Assets/Artworks/Items/Shield/Shield_09_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83492f346a465404c8dee4aa7fd09cde
+    m_Address: Assets/Artworks/Items/Shield/Shield_01_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35d98a7a6ea442542bf98bc23ebd20ce
+    m_Address: Assets/Artworks/Items/Shield/Shield_05_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1069dabfd56952c43b14fa8aac56f76d
+    m_Address: Assets/Artworks/Items/Shield/Shield_04_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd7eb76689c1da34c93984feda2f8a03
+    m_Address: Assets/Artworks/Items/Shield/Shield_08_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2efe19f9d0ead0645bc2776b8915832d
+    m_Address: Assets/Artworks/Items/Shield/Shield_06_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67201c2de39d7ed4f8786707a1d374bc
+    m_Address: Assets/Artworks/Items/Shield/Shield_03_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f39bdbc3773feee4199e5d747cff276d
+    m_Address: Assets/Artworks/Items/Shield/Shield_03_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb2fa4ef48a7ce14d9a69d76b425d380
+    m_Address: Assets/Artworks/Items/Shield/Shield_01_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9769ed02193e3cb459a937da9609ecb0
+    m_Address: Assets/Artworks/Items/Shield/Shield_04_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5efe1391996409848bc01d02f0a33ee3
+    m_Address: Assets/Artworks/Items/Shield/Shield_04_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 55993991dd5795f4f812f6b408942bc1
+    m_Address: Assets/Artworks/Items/Shield/Shield_10_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 276d34254a0ee7044af5152f9fa51fdb
+    m_Address: Assets/Artworks/Items/Shield/Shield_10_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86f91a7c27b6e6a449f2f17639d5e838
+    m_Address: Assets/Artworks/Items/Shield/Shield_05_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 94afc103f34f25240b9d32943260aa81
+    m_Address: Assets/Artworks/Items/Shield/Shield_02_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc7bf8660cc82eb419db76afa4da15c9
+    m_Address: Assets/Artworks/Items/Shield/Shield_01_05.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67db4505f4021b44580d6cec8c89c35c
+    m_Address: Assets/Artworks/Items/Shield/Shield_06_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f49c97137978c847b43f9dad3beb7b3
+    m_Address: Assets/Artworks/Items/Shield/Shield_09_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 658698e54147b4e418ce1bf147a0c8fa
+    m_Address: Assets/Artworks/Items/Shield/Shield_10_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eeecd3e038b9672439f2e545d4d168d9
+    m_Address: Assets/Artworks/Items/Shield/Shield_05_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c17d76e2b4f7354a83233604ad32290
+    m_Address: Assets/Artworks/Items/Shield/Shield_09_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b97fd3bc2bb4894cbc359e2e8e997ef
+    m_Address: Assets/Artworks/Items/Shield/Shield_02_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 21a685fa4d19eb54f8a27dbfd96f18b8
+    m_Address: Assets/Artworks/Items/Shield/Shield_10_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7795d26b031c33b4cb1640382746e8c9
+    m_Address: Assets/Artworks/Items/Shield/Shield_07_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b4797c2bda016d34d898f9e55c943f0c
+    m_Address: Assets/Artworks/Items/Shield/Shield_07_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fd6844174f7159340ae42b0d394f0f01
+    m_Address: Assets/Artworks/Items/Shield/Shield_02_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2f63737321ada5d489cfbac6ceec433b
+    m_Address: Assets/Artworks/Items/Shield/Shield_02_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5dbcae80d447ad84f9b957ec46e32828
+    m_Address: Assets/Artworks/Items/Shield/shield_47.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5cccd8f056f64674aaa6ab8fa2a5bb1a
+    m_Address: Assets/Artworks/Items/Sword/Sword_08_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95ee6a825a0db2543a402933ef62b3b7
+    m_Address: Assets/Artworks/Items/Sword/Sword_08_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 17f5090dcf085634cb3d486b116c2ddb
+    m_Address: Assets/Artworks/Items/Sword/Sword_04_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91aa1c5062c987a4fa75a9a92cf0f960
+    m_Address: Assets/Artworks/Items/Sword/Sword_12_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b10392fc3ba9bc448fe1e13a8dba578
+    m_Address: Assets/Artworks/Items/Sword/Sword_11_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 01e85c0670ac6ef4eb2de4b73b918f64
+    m_Address: Assets/Artworks/Items/Sword/Sword_10_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a9731fa7999143f4d803093b11d48f5f
+    m_Address: Assets/Artworks/Items/Sword/Sword_06_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea8057d76948779439d09eba8b2c3a1b
+    m_Address: Assets/Artworks/Items/Sword/Sword_08_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0223578c0aa4f584f8932ed2e2939455
+    m_Address: Assets/Artworks/Items/Sword/Sword_09_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ced4a171a7a8c1849a52f1f55084a162
+    m_Address: Assets/Artworks/Items/Sword/Sword_04_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84143b76ffc8b5c4a9d5811ea7cd08d2
+    m_Address: Assets/Artworks/Items/Sword/Sword_02_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e38ea24af6574847b11b6f792aa1df6
+    m_Address: Assets/Artworks/Items/Sword/Sword_10_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25622b231887a3645ba61820ae41aa78
+    m_Address: Assets/Artworks/Items/Sword/Sword_07_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 316d7e89c28915a4cb98ffb7e5b514a7
+    m_Address: Assets/Artworks/Items/Sword/Sword_01_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b009277e5e8adf14797ca57f1f7ae2e0
+    m_Address: Assets/Artworks/Items/Sword/Sword_05_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eaee66ff9e59ba247ab0d4f3953e9871
+    m_Address: Assets/Artworks/Items/Sword/Sword_05_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0cf6cab24ca82ff4a900659a43b132d5
+    m_Address: Assets/Artworks/Items/Sword/Sword_04_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1bca0430044f1e4c8881d388329d421
+    m_Address: Assets/Artworks/Items/Sword/Sword_09_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 14a2708f4d100844cb4a8b5e1e7f31fc
+    m_Address: Assets/Artworks/Items/Sword/Sword_11_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9d09d311ef1a324e909b090a2de1a08
+    m_Address: Assets/Artworks/Items/Sword/Sword_02_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9acb21b0dbb2b2249961dfa4d52979eb
+    m_Address: Assets/Artworks/Items/Sword/Sword_07_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c883c12e6625c204689d6c48f79133e1
+    m_Address: Assets/Artworks/Items/Sword/Sword_05_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bba8afa2ee167084884ff74ab1d425a5
+    m_Address: Assets/Artworks/Items/Sword/Sword_07_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3bc5f6a4ddea01940b2a78ab2f780cf2
+    m_Address: Assets/Artworks/Items/Sword/Sword_01_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a360ab91d25cbf14fac25355deca034e
+    m_Address: Assets/Artworks/Items/Sword/Sword_12_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 095044f1dba513e4dbca73f9746774c2
+    m_Address: Assets/Artworks/Items/Sword/Sword_09_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5ccb8a27f16a9640885e57204a52265
+    m_Address: Assets/Artworks/Items/Sword/Sword_10_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6cedfc06b72f001439ae3c0585c502f5
+    m_Address: Assets/Artworks/Items/Sword/Sword_03_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d31c8efd5ead7664eb8962882df8f775
+    m_Address: Assets/Artworks/Items/Sword/Sword_07_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e97f061972936c4480ab3d4505a22aa
+    m_Address: Assets/Artworks/Items/Sword/Sword_02_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b85aa9557572b48409cc319db13dd1ed
+    m_Address: Assets/Artworks/Items/Sword/Sword_03_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1bfa57da78de789468f8f8911e8455b3
+    m_Address: Assets/Artworks/Items/Sword/Sword_04_04.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3db3b6c42ceab1249ab4c74b9576539a
+    m_Address: Assets/Artworks/Items/Sword/Sword_06_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a278cbfba3711bc44994b00b814e7f18
+    m_Address: Assets/Artworks/Items/Sword/Sword_01_02.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 722129a8019d27a4485e40dd94ab89f8
+    m_Address: Assets/Artworks/Items/Sword/Sword_09_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef4b1c67d54cee24d985a36519346cd5
+    m_Address: Assets/Artworks/Items/Sword/Sword_01_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6b249f415705fe45982f0f797c3dfb0
+    m_Address: Assets/Artworks/Items/Sword/Sword_02_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e9144bd9774e8049bd718a4be646101
+    m_Address: Assets/Artworks/Items/Sword/Sword_10_01.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b6fb667b4075a340bdfac18bf1e8d65
+    m_Address: Assets/Artworks/Items/Sword/Sword_08_03.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d53f7a51e0caaed4bb538d038523adc9, type: 2}

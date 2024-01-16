@@ -18,7 +18,7 @@ public class EventManager
             Action<GameEvent> newAction = e => evt((T)e);
             s_EventLookups[evt] = newAction;
 
-            if (s_Events.TryGetValue(typeof(T), out Action<GameEvent> internalAction))
+            if (s_Events.TryGetValue(typeof(T), out var internalAction))
                 s_Events[typeof(T)] = internalAction += newAction;
             else
                 s_Events[typeof(T)] = newAction;

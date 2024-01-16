@@ -7,7 +7,7 @@ namespace SaveLoad
 		[Header("Save and load method")]
 
 		[Tooltip("the method to use to save to file")]
-		public SaveLoadManagerMethods SaveLoadMethod = SaveLoadManagerMethods.Binary;
+		public SaveLoadManagerMethods SaveLoadMethod = SaveLoadManagerMethods.Json;
 		/// the key to use to encrypt the file (if using an encryption method)
 		[Tooltip("the key to use to encrypt the file (if using an encryption method)")]
 		public string EncryptionKey = "ThisIsTheKey";
@@ -29,13 +29,6 @@ namespace SaveLoad
 		{
 			switch(SaveLoadMethod)
 			{
-				case SaveLoadManagerMethods.Binary:
-					_saveLoadManagerMethod = new SaveLoadManagerMethodBinary();
-					break;
-				case SaveLoadManagerMethods.BinaryEncrypted:
-					_saveLoadManagerMethod = new SaveLoadManagerMethodBinaryEncrypted();
-					((SaveLoadManagerEncryptor)_saveLoadManagerMethod).Key = EncryptionKey;
-					break;
 				case SaveLoadManagerMethods.Json:
 					_saveLoadManagerMethod = new SaveLoadManagerMethodJson();
 					break;

@@ -1,84 +1,85 @@
 using System;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using SaveLoad;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.UI;
 
 namespace Items
 {
-    [CreateAssetMenu(fileName = "newItem", menuName = "SO/Items/New Item")]
-    public class Item : ScriptableObject, ISerializationCallbackReceiver
+    public class Item
     {
-        [BoxGroup("Base")] [SerializeField] string guid;
-        [BoxGroup("Base")] [SerializeField] string itemName;
-        [BoxGroup("Base")] [PreviewField] [SerializeField] Sprite icon;
-        [BoxGroup("Base")] [SerializeField] Vector2Int size = new Vector2Int(1, 1);
-        
-        static Dictionary<string, Item> _itemLookupCache;
+        [JsonProperty] 
+        public ItemType Type { get; private set; }
+        [JsonProperty]
+        public string Guid { get; private set; }
+        [JsonProperty]
+        public string ItemName { get; private set; }
+        [JsonProperty]
+        public string IconName { get; private set; }
+        [JsonProperty]
+        public Vector2Int Size { get; private set; }
 
-        static Action<string> _onLoaded;
-
-        static void LoadItems(AsyncOperationHandle<IList<Item>> context)
+        public enum ItemType
         {
-            _itemLookupCache = new Dictionary<string, Item>();
-            foreach (var item in context.Result)
-            {
-                if (_itemLookupCache.TryGetValue(item.guid, out var value))
-                {
-                    Debug.LogError($"Duplicate ID for objects: {value} and {item}");
-                    continue;
-                }
-
-                _itemLookupCache[item.guid] = item;
-            }
+            Equipment,
+            Stackable,
+            Consumable
         }
 
+        static Dictionary<string, Item> _lookupCache;
+
+        const string JsonPath = "Item";
+        const string JsonName = "Items.json";
+
+        public static void Load()
+        {
+            var itemList = SaveLoadManager.Load<List<Item>>(JsonName, JsonPath, new ItemConverter());
+            foreach (var item in itemList)
+            {
+                _lookupCache.Add(item.Guid, item);
+            }
+        }
+        
         public static Item GetFromID(string itemID)
         {
-            if (_itemLookupCache == null)
+            if (_lookupCache == null)
             {
-                AddressablesManager.LoadAssetsWithLabel<Item>("Item", LoadItems).WaitForCompletion();
+                _lookupCache = new Dictionary<string, Item>();
+                Load();
             }
 
-            if (itemID == null || !_itemLookupCache.ContainsKey(itemID)) return null;
-            return _itemLookupCache[itemID];
+            if (itemID == null || !_lookupCache.ContainsKey(itemID)) return null;
+            return _lookupCache[itemID];
         }
 
-        
-        public string GetID()
+    }
+
+    public class ItemConverter : JsonConverter
+    {
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            return guid;
+            throw new NotImplementedException();
         }
 
-        public string GetName()
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return itemName;
-        }
-
-        public Sprite GetIcon()
-        {
-            return icon;
-        }
-
-        public Vector2Int GetSize()
-        {
-            return size;
-        }
-        
-        void ISerializationCallbackReceiver.OnBeforeSerialize()
-        {
-            // Generate and save a new UUID if this is blank.
-            if (string.IsNullOrWhiteSpace(guid))
+            var jObject = JObject.Load(reader);
+            var itemType = (string)jObject["Type"];
+            var item = itemType switch
             {
-                guid = System.Guid.NewGuid().ToString();
-            }
+                "Equipment" => new Equipment(),
+                "Stackable" => new Stackable(),
+                "Consumable" => new Consumable(),
+                _ => new Item()
+            };
+            serializer.Populate(jObject.CreateReader(), item);
+            return item;
         }
 
-        void ISerializationCallbackReceiver.OnAfterDeserialize()
+        public override bool CanConvert(Type objectType)
         {
-            // Require by the ISerializationCallbackReceiver but we don't need
-            // to do anything with it.
+            return typeof(Item).IsAssignableFrom(objectType);
         }
     }
 }

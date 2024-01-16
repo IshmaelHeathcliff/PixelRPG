@@ -1,0 +1,23 @@
+[
+  {
+    "Type": "Stackable",
+    "Guid": "1",
+    "ItemName": "金币",
+    "IconName": "Loots/Loots_11.png",
+    "Size": {
+      "x": 1,
+      "y": 1
+    }
+  },
+  {
+    "EType": "MainWeapon",
+    "Type": "Equipment",
+    "Guid": "2",
+    "ItemName": "大剑",
+    "IconName": "Sword/Sword_02_01.png",
+    "Size": {
+      "x": 2,
+      "y": 3
+    }
+  }
+]

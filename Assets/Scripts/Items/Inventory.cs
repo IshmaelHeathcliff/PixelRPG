@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using SaveLoad;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
 using Unity.VisualScripting;
 using UnityEditorInternal.Profiling.Memory.Experimental;
@@ -8,73 +11,128 @@ using UnityEngine;
 
 namespace Items
 {
-    [CreateAssetMenu(fileName = "newInventory", menuName = "SO/Items/New Inventory")]
-    public class Inventory : SerializedScriptableObject
+    public class Inventory : MonoBehaviour, ISavable
     {
+        [SerializeField] public string inventoryName;
         [SerializeField] Vector2Int size;
-        [SerializeField] Dictionary<Vector2Int, Item> items;
+        Dictionary<Vector2Int, Item> _items;
 
         public static Item pickedUp;
 
-        public struct InventoryContext
+        // endPos不包含在范围内
+        public static bool ContainPoint(Vector2Int startPos, Vector2Int endPos, Vector2Int point)
         {
-            public Vector2Int size;
-            public Dictionary<Vector2Int, Item> items;
+            return startPos.x <= point.x && startPos.y <= point.y &&
+                   endPos.x > point.x && endPos.y > point.y;
         }
+
+        public enum InventoryActionType
+        {
+            Delete,
+            Add,
+            Update,
+            Init
+        }
+
+        public struct InventoryAction
+        {
+            public InventoryActionType type;
+            public Vector2Int vec;
+            public Item item;
+        }
+
+        Queue<InventoryAction> _actionQueue = new();
         
-        public event Action<InventoryContext> onUpdateInventory;
+        public event Action<Queue<InventoryAction>> UpdateInventory;
 
         public bool AddItem(Item item, Vector2Int itemPos)
         {
-            if (!CheckPos(itemPos, item.GetSize()))
+            if (!CheckPos(itemPos, item.Size))
                 return false;
             
-            if(items.ContainsKey(itemPos))
+            if(_items.ContainsKey(itemPos))
                 return false;
 
-            if (CheckOverlap(itemPos, item.GetSize()).Count != 0)
+            if (!CheckItemPos(itemPos))
                 return false;
 
-            items[itemPos] = item;
-            UpdateInventory();
+            if (CheckOverlap(itemPos, item.Size).Count != 0)
+                return false;
+
+            _items[itemPos] = item;
+            _actionQueue.Enqueue(new InventoryAction
+            {
+                type = InventoryActionType.Add,
+                vec = itemPos,
+                item = item
+            });
 
             return true;
         }
 
-        public void AddItem(Item item)
+        public bool AddItem(Item item)
         {
-            for (int i = 0; i < size.x; i++)
+            for (var i = 0; i < size.x; i++)
             {
-                for (int j = 0; j < size.y; j++)
+                for (var j = 0; j < size.y; j++)
                 {
                     if (AddItem(item, new Vector2Int(i, j)))
                     {
-                        return;
+                        return true;
                     }
                 }
             }
+
+            return false;
+        }
+
+        public void AddRandomItem()
+        {
+            AddItem(Item.GetFromID("1"));
+            AddItem(Item.GetFromID("2"));
+        }
+
+        void InitInventory()
+        {
+            _actionQueue = new Queue<InventoryAction>();
+            _actionQueue.Enqueue(new InventoryAction
+            {
+                type = InventoryActionType.Init,
+                vec = size
+            });
+            
+
+            _items = new Dictionary<Vector2Int, Item>();
         }
 
         public void RemoveItem(Vector2Int pos)
         {
-            if (items.ContainsKey(pos))
+            Vector2Int itemPos;
+            if (_items.ContainsKey(pos))
             {
-                items.Remove(pos);
+                _items.Remove(pos);
+                itemPos = pos;
             }
             else
             {
-                var item = GetItem(pos, out var itemPos);
+                var item = GetItem(pos, out itemPos);
                 if (item != null)
                 {
-                    items.Remove(itemPos);
+                    _items.Remove(itemPos);
                 }
             }
-            UpdateInventory();
+            
+            _actionQueue.Enqueue(new InventoryAction()
+            {
+                type = InventoryActionType.Delete,
+                vec = itemPos
+            });
+            
         }
 
         public void RemoveItem(Item item)
         {
-            foreach (var (pos, it) in items)
+            foreach (var (pos, it) in _items)
             {
                 if (item != it) continue;
                 RemoveItem(pos);
@@ -84,13 +142,12 @@ namespace Items
 
         public Item GetItem(Vector2Int pos, out Vector2Int itemPos)
         {
-            foreach (var (p, item) in items)
+            foreach (var (p, item) in _items)
             {
-                var itemSize = item.GetSize();
+                var itemSize = item.Size;
                 var endPos = p + itemSize;
                 
-                if (pos.x < p.x || pos.x >= endPos.x ||
-                    pos.y < p.y || pos.y >= endPos.y)
+                if (!ContainPoint(p, endPos,pos))
                     continue;
                 
                 itemPos = p;
@@ -108,11 +165,10 @@ namespace Items
                 return;
             }
             
-            if(items.TryGetValue(pos, out var item))
+            if(_items.TryGetValue(pos, out var item))
             {
                 pickedUp = item;
                 RemoveItem(pos);
-                UpdateInventory();
                 return;
             }
 
@@ -124,7 +180,6 @@ namespace Items
 
             pickedUp = item;
             RemoveItem(itemPos);
-            UpdateInventory();
         }
 
         public void PutDown(Vector2Int itemPos)
@@ -132,11 +187,11 @@ namespace Items
             if (pickedUp == null)
                 return;
 
-            if (!CheckPos(itemPos, pickedUp.GetSize()))
+            if (!CheckPos(itemPos, pickedUp.Size))
                 return;
 
 
-            var overlap = CheckOverlap(itemPos, pickedUp.GetSize());
+            var overlap = CheckOverlap(itemPos, pickedUp.Size);
             switch (overlap.Count)
             {
                 case 0:
@@ -144,35 +199,52 @@ namespace Items
                     pickedUp = null;
                     break;
                 case 1:
-                    var tempPickedItem = items[overlap[0]];
+                    var tempPickedItem = _items[overlap[0]];
                     RemoveItem(overlap[0]);
                     AddItem(pickedUp, itemPos);
                     pickedUp = tempPickedItem;
                     break;
             }
-            UpdateInventory();
         }
 
         [Button]
-        public void UpdateInventory()
+        public void OnUpdateInventory()
         {
-            if(onUpdateInventory != null)
-                onUpdateInventory.Invoke(new InventoryContext
+            if (UpdateInventory == null) return;
+            UpdateInventory.Invoke(_actionQueue);
+            _actionQueue = new Queue<InventoryAction>();
+        }
+
+        //检查起始位置是否已被占据
+        public bool CheckItemPos(Vector2Int pos)
+        {
+            foreach (var (p, item) in _items)
+            {
+                if (ContainPoint(p, p + item.Size, pos))
                 {
-                    size = size,
-                    items = items
-                });
+                    return false;
+                }
+            }
+            
+            return true;
         }
         
-
+        /// <summary>
+        /// 检查item要放置的位置是否与已放置的item重叠
+        /// </summary>
+        /// <param name="itemPos"></param>
+        /// <param name="itemSize"></param>
+        /// <returns>
+        /// 重叠的item的起始位置
+        /// </returns>
         List<Vector2Int> CheckOverlap(Vector2Int itemPos, Vector2Int itemSize)
         {          
             var overlap = new List<Vector2Int>();
              
             var posToCheck = new List<Vector2Int>();
-            for (int i = 0; i < size.x; i++)
+            for (var i = 0; i < itemSize.x; i++)
             {
-                for (int j = 0; j < size.y; j++)
+                for (var j = 0; j < itemSize.y; j++)
                 {
                     var pos = itemPos;
                     pos.x += i;
@@ -181,32 +253,61 @@ namespace Items
                 }
             }
 
-            foreach (var (pos, item) in items)
+            foreach (var (pos, item) in _items)
             {
-                var p = pos;
-                for (int i = 0; i < item.GetSize().x; i++)
+                for (var i = 0; i < item.Size.x; i++)
                 {
-                    for (int j = 0; j < item.GetSize().y; j++)
+                    for (var j = 0; j < item.Size.y; j++)
                     {
+                        var p = pos;
                         p.x += i;
                         p.y += j;
-                        if (posToCheck.Contains(pos))
+                        if (posToCheck.Contains(p))
                         {
-                            overlap.Add(pos);
+                            if(!overlap.Contains(pos))
+                                overlap.Add(pos);
                             goto @continue;
                         }
                     }
                 }
                 @continue: ;
             }
-
+            
             return overlap;
         }
 
+        // 检查是否在inventory内
         public bool CheckPos(Vector2Int itemPos, Vector2Int itemSize)
         {
             return itemPos.x >= 0 && itemPos.x < size.x - itemSize.x + 1 &&
                    itemPos.y >= 0 && itemPos.y < size.y - itemSize.y + 1;
+        }
+
+        public void Save()
+        {
+            var serializedInventory = new SerializedInventory(size);
+            serializedInventory.Serialize(_items);
+            
+            SaveLoadManager.Save(serializedInventory, $"Inventory-{inventoryName}.json");
+        }
+        
+        public void Load()
+        {
+            InitInventory();
+            
+            var serializedInventory = SaveLoadManager.Load<SerializedInventory>($"Inventory-{inventoryName}.json");
+
+            size = serializedInventory.GetSize();
+            var items = serializedInventory.Deserialize();
+            foreach (var (itemPos, item) in items)
+            {
+                AddItem(item, itemPos);
+            }
+        }
+
+        void Awake()
+        {
+            InitInventory();
         }
     }
 }

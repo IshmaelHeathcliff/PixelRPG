@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace SaveLoad
 {
@@ -9,10 +10,10 @@ namespace SaveLoad
     {
         public void Save(object saveObject, FileStream saveFile);
 
-        public object Load(Type objectType, FileStream saveFile);
+        public T Load<T>(FileStream saveFile, JsonConverter converter = null);
     }
     
-	public enum SaveLoadManagerMethods { Json, JsonEncrypted, Binary, BinaryEncrypted };
+	public enum SaveLoadManagerMethods { Json, JsonEncrypted };
 
 	public abstract class SaveLoadManagerEncryptor
 	{
@@ -23,7 +24,7 @@ namespace SaveLoad
         protected virtual void Encrypt(Stream inputStream, Stream outputStream, string sKey)
 		{
 			var algorithm = new AesManaged();
-			var key = new Rfc2898DeriveBytes(sKey, Encoding.ASCII.GetBytes(saltText), 1000, HashAlgorithmName.MD5);
+            var key = new Rfc2898DeriveBytes(sKey, Encoding.ASCII.GetBytes(saltText), 1000, HashAlgorithmName.SHA256);
 
 			algorithm.Key = key.GetBytes(algorithm.KeySize / 8);
 			algorithm.IV = key.GetBytes(algorithm.BlockSize / 8);
