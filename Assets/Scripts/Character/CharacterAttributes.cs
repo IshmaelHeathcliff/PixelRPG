@@ -5,25 +5,28 @@ namespace Character
 {
     public class CharacterAttributes : MonoBehaviour
     {
-        public float health;
-        public float maxHealth;
+        public ConsumableAttribute health = new ConsumableAttribute();
+        public ConsumableAttribute mana = new ConsumableAttribute();
 
+        public CharacterAttribute strength = new CharacterAttribute();
+        public CharacterAttribute dexterity = new CharacterAttribute();
+        public CharacterAttribute intelligence = new CharacterAttribute();
+
+        public CharacterAttribute damage = new CharacterAttribute();
+        
         void UpdateHealth()
         {
-            CharacterUIController.Instance.OnHpChanged(health, maxHealth);
+            CharacterUIController.Instance.OnHpChanged(health.currentValue, health.GetValue());
         }
 
         void CheckHealth()
         {
-            if (health < 0) health = 0;
-
-            if (health > maxHealth) health = maxHealth;
+            health.CheckCurrentValue();
         }
 
         void GainHealth(float value)
         {
-            health += value;
-            CheckHealth();
+            health.ChangeCurrentValue(value);
             UpdateHealth();
         }
 
@@ -34,14 +37,13 @@ namespace Character
 
         public void SetHealth(float value)
         {
-            health = value;
-            CheckHealth();
+            health.SetCurrentValue(value);
             UpdateHealth();
         }
 
         void Start()
         {
-            health = maxHealth;
+            health.MaxCurrentValue();
             UpdateHealth();
             PlayerCharacter.Instance.damageable.onHurt.AddListener(GainDamage);
         }

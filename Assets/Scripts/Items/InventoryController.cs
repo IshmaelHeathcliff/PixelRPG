@@ -12,10 +12,11 @@ namespace Items
     /// <summary>
     /// 处理Inventory相关输入与UI
     /// </summary>
-    public class InventoryController : MonoBehaviour
+    public class InventoryController : MonoBehaviour, IDataPersister
     {
         [SerializeField] Inventory[] inventories;
         [SerializeField] InventoryUI[] inventoryUIs;
+        [SerializeField] DataSettings dataSettings;
 
         Vector2Int _globalCurrentPos;
         
@@ -38,17 +39,6 @@ namespace Items
             {
                 Inventory.OnUpdateInventory();
             }
-
-            public void Save()
-            {
-                Inventory.Save();
-            }
-            
-            public void Load()
-            {
-                Inventory.Load();
-                Update();
-            }
         }
         
         List<InventoryControl> _inventoryControls;
@@ -62,43 +52,6 @@ namespace Items
         {
             get => _globalCurrentPos - _currentControl.Grid.globalStartPos;
             set => _globalCurrentPos = value + _currentControl.Grid.globalStartPos;
-        }
-
-
-        [Button]
-        void SaveInventory()
-        {
-            foreach (var inventoryControl in _inventoryControls)
-            {
-                inventoryControl.Save();
-            }
-            
-            SavePickedUp();
-        }
-
-        void SavePickedUp()
-        {
-            SaveLoadManager.Save(Inventory.pickedUp, $"Inventory-PickUp.json");
-        }
-
-        [Button]
-        void LoadInventory()
-        {
-            Inventory.pickedUp = null;
-            LoadPickedUp();
-            foreach (var inventoryControl in _inventoryControls)
-            {
-                inventoryControl.Load();
-            }
-
-            
-            UpdateCurrentCell();
-        }
-
-        void LoadPickedUp()
-        {
-            var pickedUp = SaveLoadManager.Load<Item>($"Inventory-PickUp.json");
-            Inventory.pickedUp = pickedUp;
         }
 
         void PickUp()
@@ -122,9 +75,9 @@ namespace Items
                 return;
             }
             
-            if (Inventory.pickedUp != null)
+            if (Inventory.PickedUp != null)
             {
-                _currentControl.UI.SetCurrentCell(LocalCurrentPos, Inventory.pickedUp.Size);
+                _currentControl.UI.SetCurrentCell(LocalCurrentPos, Inventory.PickedUp.Size);
                 return;
             }
             
@@ -142,7 +95,7 @@ namespace Items
 
         public void PickAndPut(InputAction.CallbackContext context)
         {
-            if (Inventory.pickedUp == null)
+            if (Inventory.PickedUp == null)
             {
                 PickUp();
             }
@@ -175,6 +128,7 @@ namespace Items
 
                 control.UI.EnableUI(Vector2Int.zero);
                 control.UI.gameObject.SetActive(true);
+                control.Update();
                 LocalCurrentPos = Vector2Int.zero;
                 UpdateCurrentCell();
             }
@@ -192,9 +146,9 @@ namespace Items
 
         public void DeleteItem(InputAction.CallbackContext context)
         {
-            if (Inventory.pickedUp != null)
+            if (Inventory.PickedUp != null)
             {
-                Inventory.pickedUp = null;
+                Inventory.PickedUp = null;
             }
             else
             {
@@ -212,11 +166,11 @@ namespace Items
                 return;
             }
             
-            if (Inventory.pickedUp != null)
+            if (Inventory.PickedUp != null)
             {
-                if (_preControl.Inventory.AddItem(Inventory.pickedUp))
+                if (_preControl.Inventory.AddItem(Inventory.PickedUp))
                 {
-                    Inventory.pickedUp = null;
+                    Inventory.PickedUp = null;
                 }
             }
             else
@@ -279,7 +233,7 @@ namespace Items
                 }
             }
 
-            if (Inventory.pickedUp == null)
+            if (Inventory.PickedUp == null)
             {
                 if (_currentControl.Inventory == null)
                 {
@@ -299,7 +253,7 @@ namespace Items
         bool CheckPos(Vector2Int pos)
         {
             return _currentControl.Inventory.CheckPos(pos, 
-                Inventory.pickedUp == null ? Vector2Int.one : Inventory.pickedUp.Size);
+                Inventory.PickedUp == null ? Vector2Int.one : Inventory.PickedUp.Size);
         }
 
         void RegisterInput()
@@ -318,6 +272,7 @@ namespace Items
             _inventoryInput = InputController.Instance.Inventory;
             _inventoryInput.Enable();
             RegisterInput();
+            PersistentDataManager.RegisterPersister(this);
         }
 
         void Start()
@@ -343,6 +298,28 @@ namespace Items
         void OnDisable()
         {
             _inventoryInput.Disable();
+        }
+
+        public DataSettings GetDataSettings()
+        {
+            return dataSettings;
+        }
+
+        public void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
+        {
+            dataSettings.dataTag = dataTag;
+            dataSettings.persistenceType = persistenceType;
+        }
+
+        public Data SaveData()
+        {
+            return new Data<Item>(Inventory.PickedUp);
+        }
+
+        public void LoadData(Data data)
+        {
+            var pickedUpData = (Data<Item>) data;
+            Inventory.PickedUp = pickedUpData.value;
         }
     }
 }

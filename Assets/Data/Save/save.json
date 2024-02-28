@@ -1,0 +1,65 @@
+{
+  "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[SaveLoad.Data, Assembly-CSharp]], mscorlib",
+  "pickUp": {
+    "$type": "SaveLoad.Data`1[[Items.Item, Assembly-CSharp]], Assembly-CSharp",
+    "value": {
+      "$type": "Items.Stackable, Assembly-CSharp",
+      "Type": 1,
+      "Guid": "1",
+      "ItemName": "金币",
+      "IconName": "Loots/Loots_11.png",
+      "Size": {
+        "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
+        "x": 1,
+        "y": 1,
+        "magnitude": 1.41421354,
+        "sqrMagnitude": 2
+      }
+    }
+  },
+  "stash": {
+    "$type": "SaveLoad.Data`1[[Items.SerializedInventory, Assembly-CSharp]], Assembly-CSharp",
+    "value": {
+      "$type": "Items.SerializedInventory, Assembly-CSharp",
+      "sizeX": 8,
+      "sizeY": 6,
+      "itemsWithPos": {
+        "$type": "Items.SerializedInventory+ItemWithPos[], Assembly-CSharp",
+        "$values": []
+      }
+    }
+  },
+  "package": {
+    "$type": "SaveLoad.Data`1[[Items.SerializedInventory, Assembly-CSharp]], Assembly-CSharp",
+    "value": {
+      "$type": "Items.SerializedInventory, Assembly-CSharp",
+      "sizeX": 8,
+      "sizeY": 6,
+      "itemsWithPos": {
+        "$type": "Items.SerializedInventory+ItemWithPos[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
+            "itemPosX": 0,
+            "itemPosY": 1,
+            "item": {
+              "$type": "Items.Equipment, Assembly-CSharp",
+              "EType": 4,
+              "Type": 0,
+              "Guid": "2",
+              "ItemName": "大剑",
+              "IconName": "Sword/Sword_02_01.png",
+              "Size": {
+                "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
+                "x": 2,
+                "y": 3,
+                "magnitude": 3.60555124,
+                "sqrMagnitude": 13
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

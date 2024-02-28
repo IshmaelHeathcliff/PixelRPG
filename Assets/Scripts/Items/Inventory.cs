@@ -11,13 +11,15 @@ using UnityEngine;
 
 namespace Items
 {
-    public class Inventory : MonoBehaviour, ISavable
+    public class Inventory : MonoBehaviour, IDataPersister
     {
-        [SerializeField] public string inventoryName;
+        [SerializeField] string inventoryName;
         [SerializeField] Vector2Int size;
-        Dictionary<Vector2Int, Item> _items;
+        [SerializeField] DataSettings dataSettings;
 
-        public static Item pickedUp;
+        Dictionary<Vector2Int, Item> _items;
+        
+        public static Item PickedUp { get; set; }
 
         // endPos不包含在范围内
         public static bool ContainPoint(Vector2Int startPos, Vector2Int endPos, Vector2Int point)
@@ -160,14 +162,14 @@ namespace Items
 
         public void PickUp(Vector2Int pos)
         {
-            if (pickedUp != null)
+            if (PickedUp != null)
             {
                 return;
             }
             
             if(_items.TryGetValue(pos, out var item))
             {
-                pickedUp = item;
+                PickedUp = item;
                 RemoveItem(pos);
                 return;
             }
@@ -178,31 +180,31 @@ namespace Items
                 return;
             }
 
-            pickedUp = item;
+            PickedUp = item;
             RemoveItem(itemPos);
         }
 
         public void PutDown(Vector2Int itemPos)
         {
-            if (pickedUp == null)
+            if (PickedUp == null)
                 return;
 
-            if (!CheckPos(itemPos, pickedUp.Size))
+            if (!CheckPos(itemPos, PickedUp.Size))
                 return;
 
 
-            var overlap = CheckOverlap(itemPos, pickedUp.Size);
+            var overlap = CheckOverlap(itemPos, PickedUp.Size);
             switch (overlap.Count)
             {
                 case 0:
-                    AddItem(pickedUp, itemPos);
-                    pickedUp = null;
+                    AddItem(PickedUp, itemPos);
+                    PickedUp = null;
                     break;
                 case 1:
                     var tempPickedItem = _items[overlap[0]];
                     RemoveItem(overlap[0]);
-                    AddItem(pickedUp, itemPos);
-                    pickedUp = tempPickedItem;
+                    AddItem(PickedUp, itemPos);
+                    PickedUp = tempPickedItem;
                     break;
             }
         }
@@ -283,19 +285,34 @@ namespace Items
                    itemPos.y >= 0 && itemPos.y < size.y - itemSize.y + 1;
         }
 
-        public void Save()
+        public DataSettings GetDataSettings()
+        {
+            return dataSettings;
+        }
+
+        public void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
+        {
+            dataSettings.dataTag = dataTag;
+            dataSettings.persistenceType = persistenceType;
+        }
+
+        public Data SaveData()
         {
             var serializedInventory = new SerializedInventory(size);
             serializedInventory.Serialize(_items);
-            
-            SaveLoadManager.Save(serializedInventory, $"Inventory-{inventoryName}.json");
+
+            // SaveLoadManager.Save(serializedInventory, $"Inventory-{inventoryName}.json");
+            return new Data<SerializedInventory>(serializedInventory);
         }
-        
-        public void Load()
+
+        public void LoadData(Data data)
         {
             InitInventory();
             
-            var serializedInventory = SaveLoadManager.Load<SerializedInventory>($"Inventory-{inventoryName}.json");
+            // var serializedInventory = SaveLoadManager.Load<SerializedInventory>($"Inventory-{inventoryName}.json");
+
+            var inventoryData = (Data<SerializedInventory>) data;
+            var serializedInventory = inventoryData.value;
 
             size = serializedInventory.GetSize();
             var items = serializedInventory.Deserialize();
@@ -305,9 +322,13 @@ namespace Items
             }
         }
 
+
         void Awake()
         {
             InitInventory();
+            PersistentDataManager.RegisterPersister(this);
         }
+
+
     }
 }

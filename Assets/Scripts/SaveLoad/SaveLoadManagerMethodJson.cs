@@ -11,7 +11,11 @@ namespace SaveLoad
         public void Save(object saveObject, FileStream saveFile)
         {
 			// string json = JsonUtility.ToJson(saveObject, true);
-            string json = JsonConvert.SerializeObject(saveObject, Formatting.Indented);
+			var jsonSerializerSettings = new JsonSerializerSettings() {
+                TypeNameHandling = TypeNameHandling.All,
+                Formatting = Formatting.Indented
+            };
+            string json = JsonConvert.SerializeObject(saveObject, jsonSerializerSettings);
 			var streamWriter = new StreamWriter(saveFile);
 			streamWriter.Write(json);
 			streamWriter.Close();
@@ -24,7 +28,10 @@ namespace SaveLoad
             var streamReader = new StreamReader(saveFile, Encoding.UTF8);
 			string json = streamReader.ReadToEnd();
 			// object savedObject = JsonUtility.FromJson(json, objectType);
-            var savedObject = converter == null ? JsonConvert.DeserializeObject<T>(json) : 
+			var jsonSerializerSettings = new JsonSerializerSettings() {
+                TypeNameHandling = TypeNameHandling.All,
+            };
+            var savedObject = converter == null ? JsonConvert.DeserializeObject<T>(json, jsonSerializerSettings) : 
                 JsonConvert.DeserializeObject<T>(json, converter);
             streamReader.Close();
 			saveFile.Close();

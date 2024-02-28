@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace SaveLoad
@@ -31,16 +33,16 @@ namespace SaveLoad
             return instance;
         }
 
-        protected HashSet<IDataPersister> m_DataPersisters = new HashSet<IDataPersister>();
-        protected Dictionary<string, Data> m_Store = new Dictionary<string, Data>();
-        event System.Action schedule = null;
+        protected HashSet<IDataPersister> dataPersisters = new HashSet<IDataPersister>();
+        protected Dictionary<string, Data> store = new Dictionary<string, Data>();
+        event System.Action Schedule = null;
 
         void Update()
         {
-            if (schedule != null)
+            if (Schedule != null)
             {
-                schedule();
-                schedule = null;
+                Schedule();
+                Schedule = null;
             }
         }
 
@@ -85,7 +87,7 @@ namespace SaveLoad
 
         public static void ClearPersisters()
         {
-            Instance.m_DataPersisters.Clear();
+            Instance.dataPersisters.Clear();
         }
         public static void SetDirty(IDataPersister dp)
         {
@@ -94,7 +96,7 @@ namespace SaveLoad
 
         protected void SaveAllDataInternal()
         {
-            foreach (var dp in m_DataPersisters)
+            foreach (var dp in dataPersisters)
             {
                 Save(dp);
             }
@@ -102,47 +104,91 @@ namespace SaveLoad
 
         protected void Register(IDataPersister persister)
         {
-            schedule += () =>
+            Schedule += () =>
             {
-                m_DataPersisters.Add(persister);
+                dataPersisters.Add(persister);
             };
         }
 
         protected void Unregister(IDataPersister persister)
         {
-            schedule += () => m_DataPersisters.Remove(persister);
+            Schedule += () => dataPersisters.Remove(persister);
         }
 
         protected void Save(IDataPersister dp)
         {
             var dataSettings = dp.GetDataSettings();
-            if (dataSettings.persistenceType == DataSettings.PersistenceType.ReadOnly || dataSettings.persistenceType == DataSettings.PersistenceType.DoNotPersist)
+            if (dataSettings.persistenceType is DataSettings.PersistenceType.DoNotPersist)
                 return;
             if (!string.IsNullOrEmpty(dataSettings.dataTag))
             {
-                m_Store[dataSettings.dataTag] = dp.SaveData();
+                store[dataSettings.dataTag] = dp.SaveData();
             }
         }
 
         protected void LoadAllDataInternal()
         {
-            schedule += () =>
+            Schedule += () =>
             {
-                foreach (var dp in m_DataPersisters)
+                foreach (var dp in dataPersisters)
                 {
                     var dataSettings = dp.GetDataSettings();
-                    if (dataSettings.persistenceType == DataSettings.PersistenceType.WriteOnly || dataSettings.persistenceType == DataSettings.PersistenceType.DoNotPersist)
+                    if (dataSettings.persistenceType is DataSettings.PersistenceType.DoNotPersist)
                         continue;
                     if (!string.IsNullOrEmpty(dataSettings.dataTag))
                     {
-                        if (m_Store.ContainsKey(dataSettings.dataTag))
+                        if (store.TryGetValue(dataSettings.dataTag, out var data))
                         {
-                            dp.LoadData(m_Store[dataSettings.dataTag]);
+                            dp.LoadData(data);
                         }
                     }
                 }
             };
         }
 
+        protected void SaveAllDataToFileInternal()
+        {
+            var dataToSave = new Dictionary<string, Data>();
+            foreach (var dp in Instance.dataPersisters)
+            {
+                var dataSettings = dp.GetDataSettings();
+                if (dataSettings.persistenceType is DataSettings.PersistenceType.SceneOnly
+                    or DataSettings.PersistenceType.DoNotPersist)
+                {
+                    continue;
+                }
+
+                if (!string.IsNullOrEmpty(dataSettings.dataTag))
+                {
+                    if (store.TryGetValue(dataSettings.dataTag, out var data))
+                    {
+                        dataToSave[dataSettings.dataTag] = data;
+                    }
+                }
+            }
+
+            SaveLoadManager.Save(dataToSave, "save.json");
+        }
+
+        protected void LoadAllDataFromFileInternal()
+        {
+            var data = SaveLoadManager.Load<Dictionary<string, Data>>("save.json");
+            foreach (var data1 in data)
+            {
+                
+            }
+        }
+
+        public static void SaveAllDataToFile()
+        {
+            SaveAllData();
+            Instance.SaveAllDataToFileInternal();
+        }
+
+        public static void LoadAllDataFromFile()
+        {
+            Instance.LoadAllDataFromFileInternal();
+            LoadAllData();
+        }
     }
 }

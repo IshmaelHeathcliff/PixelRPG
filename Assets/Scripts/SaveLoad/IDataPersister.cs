@@ -22,13 +22,13 @@ namespace SaveLoad
         public enum PersistenceType
         {
             DoNotPersist,
-            ReadOnly,
-            WriteOnly,
-            ReadWrite,
+            SceneOnly,
+            SaveOnly,
+            Both,
         }
 
         public string dataTag = System.Guid.NewGuid().ToString();
-        public PersistenceType persistenceType = PersistenceType.ReadWrite;
+        public PersistenceType persistenceType = PersistenceType.Both;
 
         public override string ToString()
         {
@@ -38,7 +38,6 @@ namespace SaveLoad
 
     public class Data
     {
-
     }
 
 

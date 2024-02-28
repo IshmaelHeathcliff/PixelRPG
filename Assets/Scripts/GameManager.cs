@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using SaveLoad;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -17,4 +19,15 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    [Button]
+    public void Save()
+    {
+        PersistentDataManager.SaveAllDataToFile();
+    }
+    
+    [Button]
+    public void Load()
+    {
+        PersistentDataManager.LoadAllDataFromFile();
+    }
 }

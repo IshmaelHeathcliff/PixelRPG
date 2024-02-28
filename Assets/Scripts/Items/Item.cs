@@ -29,7 +29,7 @@ namespace Items
 
         static Dictionary<string, Item> _lookupCache;
 
-        const string JsonPath = "Item";
+        const string JsonPath = "Preset";
         const string JsonName = "Items.json";
 
         public static void Load()

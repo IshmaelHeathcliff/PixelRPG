@@ -143,10 +143,10 @@ namespace Items
             CurrentCell.SetUIPosition(GridPosToUIPos(gridPos, size));
             CurrentCell.SetUISize(size * tileSize);
 
-            if (Inventory.pickedUp != null)
+            if (Inventory.PickedUp != null)
             {
                 CurrentCell.PickUp();
-                CurrentCell.SetIcon(Inventory.pickedUp.IconName);
+                CurrentCell.SetIcon(Inventory.PickedUp.IconName);
                 CurrentCell.SetIconSize(CurrentCell.size * tileSize - new Vector2Int(2, 2) * frameWidth);
             }
             else

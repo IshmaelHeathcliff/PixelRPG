@@ -7,6 +7,7 @@ namespace Character
     public class PlayerController : MonoBehaviour
     {
         public float speed;
+        
         Vector2 _direction;
         Rigidbody2D _rigidbody;
         Animator _animator;
