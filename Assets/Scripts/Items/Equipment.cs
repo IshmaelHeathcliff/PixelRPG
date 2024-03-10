@@ -15,9 +15,9 @@ namespace Items
         public enum EquipmentType
         {
             Helmet,
+            Armour,
             Gloves,
             Boots,
-            Armour,
             MainWeapon,
             Offhand,
             Belt,

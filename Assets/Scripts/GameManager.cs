@@ -1,22 +1,22 @@
-﻿using SaveLoad;
+﻿using Character;
+using SaveLoad;
+using Scene;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    Character.PlayerCharacter _player;
+    public Character.PlayerCharacter Player { get; private set; }
+    public InputController InputManager { get; private set; }
+    public SceneController SceneController { get; private set; }
 
-    public Character.PlayerCharacter Player
+
+    protected override void Awake()
     {
-        get
-        {
-            if (_player == null)
-            {
-                _player = GameObject.FindWithTag("Player").GetComponent<Character.PlayerCharacter>();
-            }
-
-            return _player;
-        }
+        base.Awake();
+        Player = FindFirstObjectByType<PlayerCharacter>();
+        InputManager = GetComponent<InputController>();
+        SceneController = GetComponent<SceneController>();
     }
 
     [Button]

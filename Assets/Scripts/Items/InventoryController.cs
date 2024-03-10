@@ -12,6 +12,7 @@ namespace Items
     /// <summary>
     /// 处理Inventory相关输入与UI
     /// </summary>
+    [RequireComponent(typeof(PlayerInput), typeof(EquipmentController))]
     public class InventoryController : MonoBehaviour, IDataPersister
     {
         [SerializeField] Inventory[] inventories;
@@ -47,6 +48,8 @@ namespace Items
         InventoryControl _preControl;
 
         InputActionMap _inventoryInput;
+
+        EquipmentController _equipmentController;
 
         Vector2Int LocalCurrentPos
         {
@@ -187,6 +190,37 @@ namespace Items
             _currentControl.Update();
             _preControl.Update();
         }
+        
+        public void EquipItem(InputAction.CallbackContext context)
+        {
+            if (Inventory.PickedUp != null)
+            {
+                if(Inventory.PickedUp is Equipment equipment)
+                {
+                    var equipped = _equipmentController.Equip(equipment);
+                    Inventory.PickedUp = equipped;
+                }
+            }
+            else
+            {
+                var item = _currentControl.Inventory.GetItem(LocalCurrentPos, out var itemPos);
+                if (item is Equipment equipment)
+                {
+                    var equipped = _equipmentController.Equip(equipment);
+                    if (equipped == null)
+                    {
+                        _currentControl.Inventory.RemoveItem(itemPos);
+                    }
+                    else
+                    {
+                        _currentControl.Inventory.AddItem(equipped);
+                    }
+                }
+            }
+            
+            UpdateCurrentCell();
+            _currentControl.Update();
+        }
 
         public void MoveCurrentPos(InputAction.CallbackContext context)
         {
@@ -265,13 +299,15 @@ namespace Items
             _inventoryInput.FindAction("Package").performed += SwitchPackage;
             _inventoryInput.FindAction("Stash").performed += SwitchStash;
             _inventoryInput.FindAction("Transfer").performed += TransferItem;
+            _inventoryInput.FindAction("Equip").performed += EquipItem;
         }
 
         void Awake()
         {
-            _inventoryInput = InputController.Instance.Inventory;
+            _inventoryInput = GetComponent<PlayerInput>().actions.FindActionMap("Inventory");
             _inventoryInput.Enable();
             RegisterInput();
+            _equipmentController = GetComponent<EquipmentController>();
             PersistentDataManager.RegisterPersister(this);
         }
 
@@ -300,6 +336,8 @@ namespace Items
             _inventoryInput.Disable();
         }
 
+        #region DataPersistence
+
         public DataSettings GetDataSettings()
         {
             return dataSettings;
@@ -320,6 +358,8 @@ namespace Items
         {
             var pickedUpData = (Data<Item>) data;
             Inventory.PickedUp = pickedUpData.value;
+            UpdateCurrentCell();
         }
+        #endregion
     }
 }

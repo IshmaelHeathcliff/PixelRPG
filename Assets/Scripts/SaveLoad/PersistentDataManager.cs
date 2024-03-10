@@ -5,34 +5,8 @@ using UnityEngine;
 
 namespace SaveLoad
 {
-    public class PersistentDataManager : MonoBehaviour
+    public class PersistentDataManager : Singleton<PersistentDataManager>
     {
-        public static PersistentDataManager Instance
-        {
-            get
-            {
-                if (instance != null)
-                    return instance;
-                instance = FindObjectOfType<PersistentDataManager>();
-                if (instance != null)
-                    return instance;
-
-                Create ();
-                return instance;
-            }
-        }
-
-        protected static PersistentDataManager instance;
-        protected static bool quitting;
-
-        public static PersistentDataManager Create ()
-        {
-            var dataManagerGameObject = new GameObject("PersistentDataManager");
-            DontDestroyOnLoad(dataManagerGameObject);
-            instance = dataManagerGameObject.AddComponent<PersistentDataManager>();
-            return instance;
-        }
-
         protected HashSet<IDataPersister> dataPersisters = new HashSet<IDataPersister>();
         protected Dictionary<string, Data> store = new Dictionary<string, Data>();
         event System.Action Schedule = null;
@@ -45,19 +19,6 @@ namespace SaveLoad
                 Schedule = null;
             }
         }
-
-        void Awake()
-        {
-            if (Instance != this)
-                Destroy(gameObject);
-        }
-
-        void OnDestroy()
-        {
-            if (instance == this)
-                quitting = true;
-        }
-
         public static void RegisterPersister(IDataPersister persister)
         {
             var ds = persister.GetDataSettings();
@@ -173,9 +134,9 @@ namespace SaveLoad
         protected void LoadAllDataFromFileInternal()
         {
             var data = SaveLoadManager.Load<Dictionary<string, Data>>("save.json");
-            foreach (var data1 in data)
+            foreach ((string k, var d) in data)
             {
-                
+                store[k] = d;
             }
         }
 

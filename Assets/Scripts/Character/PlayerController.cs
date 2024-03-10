@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace Character
 {
+    [RequireComponent(typeof(PlayerInput), typeof(Animator), typeof(Rigidbody2D))]
     public class PlayerController : MonoBehaviour
     {
         public float speed;
@@ -43,7 +44,7 @@ namespace Character
 
         void Awake()
         {
-            _playerInput = InputController.Instance.Player;
+            _playerInput = GetComponent<PlayerInput>().actions.FindActionMap("Player");
         }
 
         void Start()

@@ -34,9 +34,21 @@ namespace Items
         {
             get
             {
+                if (_icon == null && transform.childCount != 0)
+                {
+                    _icon = transform.Find("Icon").GetComponent<Image>();
+                }
+
                 if (_icon == null)
                 {
-                    _icon = transform.GetChild(0).GetComponent<Image>();
+                    var obj = new GameObject("Icon")
+                    {
+                        transform =
+                        {
+                            parent = Rect
+                        }
+                    };
+                    _icon = obj.AddComponent<Image>();
                 }
 
                 return _icon;
@@ -45,7 +57,7 @@ namespace Items
 
         RectTransform _rect;
 
-        RectTransform Rect
+        protected RectTransform Rect
         {
             get
             {
@@ -55,6 +67,20 @@ namespace Items
                 }
 
                 return _rect;
+            }
+        }
+
+        RectTransform _iconRect;
+        protected RectTransform IconRect
+        {
+            get
+            {
+                if (_iconRect == null)
+                {
+                    _iconRect = Icon.GetComponent<RectTransform>();
+                }
+
+                return _iconRect;
             }
         }
         
@@ -86,9 +112,26 @@ namespace Items
             AddressablesManager.LoadAssetWithName<Sprite>(iconPath, handle => { Icon.sprite = handle.Result;});
         }
 
-        public void SetIconSize(Vector2Int iconSize)
+        public void SetIconSize(Vector2 iconSize)
         {
-            Icon.GetComponent<RectTransform>().sizeDelta = iconSize;
+            IconRect.sizeDelta = iconSize;
+            IconRect.localScale = Vector3.one;
+        }
+        
+        public void SetIconAnchor(Vector2 min, Vector2 max)
+        {
+            IconRect.anchorMax = max;
+            IconRect.anchorMin = min;
+        }
+        
+        public void SetIconPivot(Vector2 pivot)
+        {
+            IconRect.pivot = pivot;
+        }
+
+        public void SetIconPos(Vector2 pos)
+        {
+            IconRect.anchoredPosition = pos;
         }
 
         public void SetBgColor(Color color)

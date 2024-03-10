@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Character
 {
@@ -13,31 +14,17 @@ namespace Character
         public CharacterAttribute intelligence = new CharacterAttribute();
 
         public CharacterAttribute damage = new CharacterAttribute();
+
+        public UnityEvent<float, float> OnHpChanged;
         
         void UpdateHealth()
         {
-            CharacterUIController.Instance.OnHpChanged(health.currentValue, health.GetValue());
+            OnHpChanged.Invoke(health.currentValue, health.GetValue());
         }
 
-        void CheckHealth()
+        public void GainDamage(float value)
         {
-            health.CheckCurrentValue();
-        }
-
-        void GainHealth(float value)
-        {
-            health.ChangeCurrentValue(value);
-            UpdateHealth();
-        }
-
-        void GainDamage(float value)
-        {
-            GainHealth(-value);
-        }
-
-        public void SetHealth(float value)
-        {
-            health.SetCurrentValue(value);
+            health.ChangeCurrentValue(-value);
             UpdateHealth();
         }
 
@@ -45,7 +32,7 @@ namespace Character
         {
             health.MaxCurrentValue();
             UpdateHealth();
-            PlayerCharacter.Instance.damageable.onHurt.AddListener(GainDamage);
+            GameManager.Instance.Player.damageable.onHurt.AddListener(GainDamage);
         }
     }
 }

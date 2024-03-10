@@ -1,65 +1,68 @@
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+namespace Character
 {
-    public float speed = 5;
-    public Transform leftBoundary;
-    public Transform rightBoundary;
-    public Transform upBoundary;
-    public Transform downBoundary;
-
-    Camera _camera;
-    Transform _transform;
-
-    void Awake()
+    public class CameraFollow : MonoBehaviour
     {
-        _camera = GetComponent<Camera>();
-        _transform = GetComponent<Transform>();
-    }
+        public float speed = 5;
+        public Transform leftBoundary;
+        public Transform rightBoundary;
+        public Transform upBoundary;
+        public Transform downBoundary;
 
-    void OnEnable()
-    {
-        var targetPosition = Character.PlayerCharacter.Instance.transform.position;
-        targetPosition.z = _transform.position.z;
-        _transform.position = targetPosition;
-    }
+        Camera _camera;
+        Transform _transform;
 
-    void MoveCamera()
-    {
-        float cameraHalfWidth = _camera.orthographicSize * _camera.aspect;
-        float cameraHalfHeight = _camera.orthographicSize;
-
-        var cameraPosition = _transform.position;
-        var playerPosition = Character.PlayerCharacter.Instance.transform.position;
-        var targetPosition = Vector3.Lerp(cameraPosition, playerPosition, Time.deltaTime * speed);
-
-        if (targetPosition.x - cameraHalfWidth < leftBoundary.transform.position.x)
+        void Awake()
         {
-            targetPosition.x = leftBoundary.transform.position.x + cameraHalfWidth;
+            _camera = GetComponent<Camera>();
+            _transform = GetComponent<Transform>();
         }
 
-        if (targetPosition.x + cameraHalfWidth > rightBoundary.transform.position.x)
+        // void OnEnable()
+        // {
+        //     var targetPosition = GameManager.Instance.Player.transform.position;
+        //     targetPosition.z = _transform.position.z;
+        //     _transform.position = targetPosition;
+        // }
+
+        void MoveCamera()
         {
-            targetPosition.x = rightBoundary.transform.position.x - cameraHalfWidth;
+            float cameraHalfWidth = _camera.orthographicSize * _camera.aspect;
+            float cameraHalfHeight = _camera.orthographicSize;
+
+            var cameraPosition = _transform.position;
+            var playerPosition = GameManager.Instance.Player.transform.position;
+            var targetPosition = Vector3.Lerp(cameraPosition, playerPosition, Time.deltaTime * speed);
+
+            if (targetPosition.x - cameraHalfWidth < leftBoundary.transform.position.x)
+            {
+                targetPosition.x = leftBoundary.transform.position.x + cameraHalfWidth;
+            }
+
+            if (targetPosition.x + cameraHalfWidth > rightBoundary.transform.position.x)
+            {
+                targetPosition.x = rightBoundary.transform.position.x - cameraHalfWidth;
+            }
+
+            if (targetPosition.y - cameraHalfHeight < downBoundary.transform.position.y)
+            {
+                targetPosition.y = downBoundary.transform.position.y + cameraHalfHeight;
+            }
+
+            if (targetPosition.y + cameraHalfHeight > upBoundary.transform.position.y)
+            {
+                targetPosition.y = upBoundary.transform.position.y - cameraHalfHeight;
+            }
+
+            targetPosition.z = cameraPosition.z;
+
+            _transform.position = targetPosition;
         }
 
-        if (targetPosition.y - cameraHalfHeight < downBoundary.transform.position.y)
+        void Update()
         {
-            targetPosition.y = downBoundary.transform.position.y + cameraHalfHeight;
+            MoveCamera();
         }
-
-        if (targetPosition.y + cameraHalfHeight > upBoundary.transform.position.y)
-        {
-            targetPosition.y = upBoundary.transform.position.y - cameraHalfHeight;
-        }
-
-        targetPosition.z = cameraPosition.z;
-
-        _transform.position = targetPosition;
-    }
-
-    void Update()
-    {
-        MoveCamera();
     }
 }

@@ -285,6 +285,8 @@ namespace Items
                    itemPos.y >= 0 && itemPos.y < size.y - itemSize.y + 1;
         }
 
+        #region DataPersistence
+
         public DataSettings GetDataSettings()
         {
             return dataSettings;
@@ -320,7 +322,11 @@ namespace Items
             {
                 AddItem(item, itemPos);
             }
+            
+            OnUpdateInventory();
         }
+         
+        #endregion
 
 
         void Awake()

@@ -1,9 +1,12 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T: Singleton<T>
 {
     static T _instance;
+
+    protected static bool quitting;
 
     public static T Instance
     {
@@ -16,16 +19,17 @@ public abstract class Singleton<T> : MonoBehaviour where T: Singleton<T>
 
             if (_instance == null)
             {
-                _instance = CreateGameObject();
+                _instance = Create();
             }
             
             return _instance;
         }
     }
 
-    protected static T CreateGameObject()
+    protected static T Create()
     {
         var obj = new GameObject(typeof(T).ToString());
+        // DontDestroyOnLoad(obj);
         return obj.AddComponent<T>();
     }
 
@@ -38,9 +42,18 @@ public abstract class Singleton<T> : MonoBehaviour where T: Singleton<T>
         
         if(_instance != this)
         {
-            DestroyImmediate(this);
+            Destroy(gameObject);
+            return;
         }
         
-                
+        DontDestroyOnLoad(gameObject);
+    }
+
+    protected void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            quitting = true;
+        }
     }
 }

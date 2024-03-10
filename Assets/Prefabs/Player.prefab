@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4182660040688748799}
   - component: {fileID: 4796907506753341902}
   - component: {fileID: 429674820262761007}
-  - component: {fileID: 6953499787803898880}
   m_Layer: 3
   m_Name: Damageable
   m_TagString: Player
@@ -95,20 +94,55 @@ MonoBehaviour:
   onHurt:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6953499787803898880
+--- !u!1 &3726377183472750189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3400269635122868525}
+  - component: {fileID: 4267901795205264382}
+  m_Layer: 3
+  m_Name: Inventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3400269635122868525
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3726377183472750189}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5784407661373748749}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4267901795205264382
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 461715177517504220}
+  m_GameObject: {fileID: 3726377183472750189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d3aaddc7cae45b8a559c27b70f785ee, type: 3}
+  m_Script: {fileID: 11500000, guid: 4557ccd6f81856542958364e3ab0b561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  maxHealth: 100
+  inventoryName: Package
+  size: {x: 8, y: 6}
+  dataSettings:
+    dataTag: package
+    persistenceType: 3
 --- !u!1 &9007783603261809430
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,13 +152,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5784407661373748749}
-  - component: {fileID: 6451157340001599919}
   - component: {fileID: 619056163815153529}
   - component: {fileID: 4820194187837225394}
   - component: {fileID: 5176264822991265309}
   - component: {fileID: 424969659555729839}
-  - component: {fileID: 495984549731575591}
-  - component: {fileID: 1854039227387626631}
+  - component: {fileID: 6438441766491902177}
+  - component: {fileID: 6451157340001599919}
+  - component: {fileID: 1959771465387891149}
+  - component: {fileID: 510120290097453220}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -146,21 +181,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4182660040688748799}
+  - {fileID: 3400269635122868525}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6451157340001599919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9007783603261809430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9545844783281f4db3f3299bed8decb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
 --- !u!212 &619056163815153529
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -296,7 +319,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &495984549731575591
+--- !u!114 &6438441766491902177
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -311,7 +334,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   characterAttributes: {fileID: 0}
   damageable: {fileID: 0}
---- !u!114 &1854039227387626631
+--- !u!114 &6451157340001599919
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -320,8 +343,194 @@ MonoBehaviour:
   m_GameObject: {fileID: 9007783603261809430}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4557ccd6f81856542958364e3ab0b561, type: 3}
+  m_Script: {fileID: 11500000, guid: d9545844783281f4db3f3299bed8decb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryName: Package
-  size: {x: 8, y: 6}
+  speed: 10
+--- !u!114 &1959771465387891149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007783603261809430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3aaddc7cae45b8a559c27b70f785ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health:
+    baseValue: 0
+    addedValue: 0
+    fixedValue: 0
+    increase: 0
+    more: 1
+    currentValue: 0
+  mana:
+    baseValue: 0
+    addedValue: 0
+    fixedValue: 0
+    increase: 0
+    more: 1
+    currentValue: 0
+  strength:
+    baseValue: 0
+    addedValue: 0
+    fixedValue: 0
+    increase: 0
+    more: 1
+  dexterity:
+    baseValue: 0
+    addedValue: 0
+    fixedValue: 0
+    increase: 0
+    more: 1
+  intelligence:
+    baseValue: 0
+    addedValue: 0
+    fixedValue: 0
+    increase: 0
+    more: 1
+  damage:
+    baseValue: 0
+    addedValue: 0
+    fixedValue: 0
+    increase: 0
+    more: 1
+  OnHpChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Character.CharacterUIController, Assembly-CSharp
+        m_MethodName: ChangeHpUI
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &510120290097453220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007783603261809430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 2219b7cd6a4e0e841b34b603fb972eb8, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eeb663a5-eda5-4dea-b1b9-ba2d4d82e13d
+    m_ActionName: Player/Walk[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a7c05555-00cb-4cf0-b3bc-9ccbf43edde1
+    m_ActionName: Player/Fire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c81618f6-df2d-4b7c-886e-cea650c9415f
+    m_ActionName: Player/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 89cfcf54-f245-4516-84c2-4f8c2e728bf4
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4180bec9-11f3-49f7-b401-2e1eda1d8561
+    m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b934e43a-ff14-43ed-9995-f9616eb5d455
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a98832cb-a049-448f-b05d-4d312596cd45
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 26aa0649-985b-4f5f-a612-c307366bc6a9
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 903ec774-8967-44be-af7c-68628a55dbbb
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a0f1c390-35ab-480b-b780-c89023fa7814
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 01fabdc3-0f2f-4c32-ac86-ec2c59a1f42e
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cba174d0-3180-4065-ac13-2cd907d74e18
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9766647d-c655-49e5-97f6-0c481deb7e96
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 04f13171-667b-468e-b8a3-b548a18a5ca2
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 45fb51ca-39b4-4314-9ac1-79ed1adfdda8
+    m_ActionName: Main/Inventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: faf2d317-8a20-4275-a17f-eeb500b29e41
+    m_ActionName: Menu/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f2689f99-67aa-4ef5-9efc-8a49edb11439
+    m_ActionName: Inventory/PickAndPut[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c6c0336a-0246-4054-8134-8a6bd0eea115
+    m_ActionName: Inventory/Delete[/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 54417499-7816-496c-a7ea-5821403717f3
+    m_ActionName: Inventory/Add[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 87eeb4f0-ca5f-4ab0-bb52-1c45b56dc363
+    m_ActionName: Inventory/MoveCell[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a53e177e-4e52-4542-a009-fa48a0de33e4
+    m_ActionName: Inventory/Package[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4a91ddba-5c16-49f8-8207-263c0ccbf366
+    m_ActionName: Inventory/Stash[/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9ce9fc2a-bdfc-4372-83aa-082f7b127b19
+    m_ActionName: Inventory/Transfer[/Keyboard/f]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
