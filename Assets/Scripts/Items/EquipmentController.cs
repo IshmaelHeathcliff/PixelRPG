@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using SaveLoad;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Items
@@ -12,80 +9,91 @@ namespace Items
     /// </summary>
     public class EquipmentController : MonoBehaviour
     {
-        public Equipments equipments;
-
-        InputActionMap _equipmentsInput;
-
-        Dictionary<Vector2Int, Equipment.EquipmentType> _equipmentPosMap =
-            new()
-            {
-                [Vector2Int.zero] = Equipment.EquipmentType.Ring,
-                [new Vector2Int(0, 1)] = Equipment.EquipmentType.Helmet,
-                [new Vector2Int(0, 2)] = Equipment.EquipmentType.Amulet,
-                [new Vector2Int(1, 0)] = Equipment.EquipmentType.MainWeapon,
-                [new Vector2Int(1, 1)] = Equipment.EquipmentType.Armour,
-                [new Vector2Int(1, 2)] = Equipment.EquipmentType.Offhand,
-                [new Vector2Int(2, 0)] = Equipment.EquipmentType.Gloves,
-                [new Vector2Int(2, 1)] = Equipment.EquipmentType.Belt,
-                [new Vector2Int(2, 2)] = Equipment.EquipmentType.Boots
-            };
-
-        Dictionary<Equipment.EquipmentType, EquipmentSlotUI> _equipmentSlotMap;
         InventoryController _inventoryController;
+        InputActionMap _equipmentsInput;
+        InputActionMap _menuInput;
+        [SerializeField] EquipmentsUI equipmentsUI;
 
-        void InitEquipmentsUI()
-        {
-            _equipmentSlotMap = new Dictionary<Equipment.EquipmentType, EquipmentSlotUI>();
-
-            var equipmentSlots = GetComponentsInChildren<EquipmentSlotUI>();
-            if (equipmentSlots.Length == 0)
-            {
-                
-            }
-            
-            foreach (var es in equipmentSlots)
-            {
-                _equipmentSlotMap.Add(es.equipmentType, es);
-            }
-        }
-
-        void UpdateEquipmentsUI()
-        {
-            foreach (var (k, e) in equipments.GetEquipments())
-            {
-                _equipmentSlotMap[k].UpdateUI(e);
-            }
-        }
+        bool _isActive;
 
         public Equipment Equip(Equipment equipment)
         {
-            var equipped = equipments.Equip(equipment);
-            _equipmentSlotMap[equipment.EType].UpdateUI(equipment);
-            return equipped;
+            return equipmentsUI.Equip(equipment);
         }
 
-        void Takeoff(Equipment.EquipmentType equipmentType)
+        public Equipment Takeoff(Equipment.EquipmentType equipmentType)
         {
-            equipments.Takeoff(equipmentType);
-            _equipmentSlotMap[equipmentType].UpdateUI(null);
+            return equipmentsUI.Takeoff(equipmentType);
         }
+
+        public Equipment Takeoff()
+        {
+            return equipmentsUI.Takeoff();
+        }
+
+        public void SetActive(bool value)
+        {
+            if (value)
+            {
+                _isActive = true;
+                equipmentsUI.EnableUI();
+                _equipmentsInput.Enable();
+            }
+            else
+            {
+                _isActive = false;
+                equipmentsUI.DisableUI();
+                _equipmentsInput.Disable();
+            }
+        }
+
 
         void SwitchEquipmentsUI(InputAction.CallbackContext context)
         {
+            if (_isActive)
+            {
+                SetActive(false);
+                equipmentsUI.gameObject.SetActive(false);
+            }
+            else
+            {
+                _inventoryController.SwitchInventory(null);
+                equipmentsUI.gameObject.SetActive(true);
+                SetActive(true);
+            }
             
         }
 
+        void MoveCurrentSlot(InputAction.CallbackContext context)
+        {
+            var inputDirection = context.ReadValue<Vector2>().normalized;
+            equipmentsUI.MoveCurrentCell(inputDirection);
+        }
+
+
+        void TakeoffEquipment(InputAction.CallbackContext context)
+        {
+            var equipped = equipmentsUI.Takeoff();
+            if (!_inventoryController.AddItemToPackage(equipped))
+            {
+                Equip(equipped);
+            }
+        }
+        
         void RegisterInput()
         {
-            _equipmentsInput.FindAction("Equipments").performed += SwitchEquipmentsUI;
+            _menuInput.FindAction("Equipments").performed += SwitchEquipmentsUI;
+            _equipmentsInput.FindAction("Move").performed += MoveCurrentSlot;
+            _equipmentsInput.FindAction("Takeoff").performed += TakeoffEquipment;
         }
 
         void Awake()
         {
             _inventoryController = GetComponent<InventoryController>();
-            InitEquipmentsUI();
             _equipmentsInput = GetComponent<PlayerInput>().actions.FindActionMap("Equipments");
-            _equipmentsInput.Enable();
+            _menuInput = GetComponent<PlayerInput>().actions.FindActionMap("Menu");
+            _menuInput.Enable();
+            
             RegisterInput();
         }
     }

@@ -1487,6 +1487,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be90c2aa6489c4949ad39493ab6b650a
+    m_Address: Assets/Artworks/Items/Weapons.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: da832c6f60ba900469a70bcdffc0b0a0
+    m_Address: Assets/Artworks/Items/Armour.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3da37f87aac7f6a4a982b77c29004cd6
+    m_Address: Assets/Artworks/Items/Items.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d53f7a51e0caaed4bb538d038523adc9, type: 2}
   m_SchemaSet:

@@ -57,7 +57,7 @@ namespace Items
 
         RectTransform _rect;
 
-        protected RectTransform Rect
+        public RectTransform Rect
         {
             get
             {

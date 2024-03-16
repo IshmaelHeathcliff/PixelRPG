@@ -20,8 +20,8 @@ namespace Items
         [SerializeField] DataSettings dataSettings;
 
         Vector2Int _globalCurrentPos;
-        
-        class InventoryControl
+
+        public class InventoryControl
         {
             public Inventory Inventory { get; }
             public InventoryUI UI { get; }
@@ -48,6 +48,7 @@ namespace Items
         InventoryControl _preControl;
 
         InputActionMap _inventoryInput;
+        InputActionMap _menuInput;
 
         EquipmentController _equipmentController;
 
@@ -71,7 +72,7 @@ namespace Items
             UpdateCurrentCell();
         }
 
-        void UpdateCurrentCell()
+        public void UpdateCurrentCell()
         {
             if (LocalCurrentPos.x < 0 || LocalCurrentPos.y < 0)
             {
@@ -96,8 +97,35 @@ namespace Items
             }
         }
 
-        public void PickAndPut(InputAction.CallbackContext context)
+        public bool AddItemToPackage(Item item)
         {
+            var packageControl = _inventoryControls[0];
+            bool result = packageControl.Inventory.AddItem(item);
+            packageControl.Inventory.OnUpdateInventory();
+            return result;
+        }
+
+        public bool AddItem(Item item)
+        {
+            if (_currentControl == null)
+            {
+                return false;
+            }
+            
+            
+            bool result = _currentControl.Inventory.AddItem(item);
+            _currentControl.Inventory.OnUpdateInventory();
+
+            return result;
+        }
+
+        public void PickAndPut()
+        {
+            if (_currentControl == null)
+            {
+                return;
+            }
+            
             if (Inventory.PickedUp == null)
             {
                 PickUp();
@@ -108,14 +136,30 @@ namespace Items
             }
         }
 
-        public void AddItem(InputAction.CallbackContext context)
+        public void AddRandomItem()
         {
+            if (_currentControl == null)
+            {
+                return;
+            }
+            
             _currentControl.Inventory.AddRandomItem();
             _currentControl.Inventory.OnUpdateInventory();
         }
 
-        void SwitchInventory(InventoryControl control)
+        public void SwitchInventory(InventoryControl control)
         {
+            if (control == null)
+            {
+                _currentControl?.UI.DisableUI();
+                (_preControl, _currentControl) = (_currentControl, _preControl);
+                _currentControl = null;
+                _inventoryInput.Disable();
+                return;
+            }
+            
+            _inventoryInput.Enable();
+            
             if (_currentControl == control)
             {
                 control.UI.DisableUI();
@@ -137,17 +181,19 @@ namespace Items
             }
         }
 
-        public void SwitchPackage(InputAction.CallbackContext context)
+        public void SwitchPackage()
         {
+            _equipmentController.SetActive(false);
             SwitchInventory(_inventoryControls[0]);
         }
 
-        public void SwitchStash(InputAction.CallbackContext context)
+        public void SwitchStash()
         {
+            _equipmentController.SetActive(false);
             SwitchInventory(_inventoryControls[1]);
         }
 
-        public void DeleteItem(InputAction.CallbackContext context)
+        public void DeleteItem()
         {
             if (Inventory.PickedUp != null)
             {
@@ -155,6 +201,10 @@ namespace Items
             }
             else
             {
+                if (_currentControl == null)
+                {
+                    return;
+                }
                 _currentControl.Inventory.RemoveItem(LocalCurrentPos);
             }
             
@@ -162,8 +212,13 @@ namespace Items
             _currentControl.Update();
         }
 
-        public void TransferItem(InputAction.CallbackContext context)
+        public void TransferItem()
         {
+            if (_currentControl == null)
+            {
+                return;
+            }
+            
             if (_preControl == null || !_preControl.UI.gameObject.activeSelf)
             {
                 return;
@@ -191,7 +246,7 @@ namespace Items
             _preControl.Update();
         }
         
-        public void EquipItem(InputAction.CallbackContext context)
+        public void EquipItem()
         {
             if (Inventory.PickedUp != null)
             {
@@ -203,6 +258,11 @@ namespace Items
             }
             else
             {
+                if (_currentControl == null)
+                {
+                    return;
+                }
+                
                 var item = _currentControl.Inventory.GetItem(LocalCurrentPos, out var itemPos);
                 if (item is Equipment equipment)
                 {
@@ -293,20 +353,21 @@ namespace Items
         void RegisterInput()
         {
             _inventoryInput.FindAction("MoveCell").performed += MoveCurrentPos;
-            _inventoryInput.FindAction("Add").performed += AddItem;
-            _inventoryInput.FindAction("PickAndPut").performed += PickAndPut;
-            _inventoryInput.FindAction("Delete").performed += DeleteItem;
-            _inventoryInput.FindAction("Package").performed += SwitchPackage;
-            _inventoryInput.FindAction("Stash").performed += SwitchStash;
-            _inventoryInput.FindAction("Transfer").performed += TransferItem;
-            _inventoryInput.FindAction("Equip").performed += EquipItem;
+            _inventoryInput.FindAction("Add").performed += _ => AddRandomItem();
+            _inventoryInput.FindAction("PickAndPut").performed += _ => PickAndPut();
+            _inventoryInput.FindAction("Delete").performed += _ => DeleteItem();
+            _inventoryInput.FindAction("Transfer").performed += _ => TransferItem();
+            _inventoryInput.FindAction("Equip").performed += _ => EquipItem();
+            _menuInput.FindAction("Package").performed += _ => SwitchPackage();
+            _menuInput.FindAction("Stash").performed += _ => SwitchStash();
         }
 
         void Awake()
         {
+            _menuInput = GetComponent<PlayerInput>().actions.FindActionMap("Menu");
             _inventoryInput = GetComponent<PlayerInput>().actions.FindActionMap("Inventory");
-            _inventoryInput.Enable();
             RegisterInput();
+            _menuInput.Enable();
             _equipmentController = GetComponent<EquipmentController>();
             PersistentDataManager.RegisterPersister(this);
         }
@@ -329,11 +390,11 @@ namespace Items
 
         void OnEnable()
         {
-            _inventoryInput.Enable();
+            _menuInput.Enable();
         }
         void OnDisable()
         {
-            _inventoryInput.Disable();
+            _menuInput.Disable();
         }
 
         #region DataPersistence

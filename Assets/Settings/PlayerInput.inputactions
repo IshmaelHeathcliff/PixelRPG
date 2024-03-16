@@ -825,9 +825,27 @@
             "id": "e65ff970-8f7d-4205-9cfb-4b503776657f",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Package",
                     "type": "Button",
-                    "id": "faf2d317-8a20-4275-a17f-eeb500b29e41",
+                    "id": "ee351f82-2332-4717-9844-5133c66178d7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Stash",
+                    "type": "Button",
+                    "id": "beb15f63-60fa-4b38-8311-f1fa985762aa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Equipments",
+                    "type": "Button",
+                    "id": "3a148f91-8614-4ad0-9740-d9bf98cb57a0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -837,12 +855,34 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "b0755457-6f40-4d96-aefc-b55995405d5d",
-                    "path": "",
+                    "id": "57433830-1ced-4b5e-b23d-fe6d070cd854",
+                    "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Package",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "91dfc1ae-8cd9-40eb-b953-2043849de01c",
+                    "path": "<Keyboard>/u",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Stash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "75bdfecc-df2f-481e-a252-6044dcee781e",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Equipments",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -887,24 +927,6 @@
                     "processors": "",
                     "interactions": "Press,Hold",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Package",
-                    "type": "Button",
-                    "id": "a53e177e-4e52-4542-a009-fa48a0de33e4",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Stash",
-                    "type": "Button",
-                    "id": "4a91ddba-5c16-49f8-8207-263c0ccbf366",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 },
                 {
                     "name": "Transfer",
@@ -1016,28 +1038,6 @@
                 },
                 {
                     "name": "",
-                    "id": "53012f52-0b68-4068-831c-5d73299487c0",
-                    "path": "<Keyboard>/i",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Package",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "432fcd55-6e37-4739-b49e-34bddb97896f",
-                    "path": "<Keyboard>/u",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Stash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "1830355d-6057-4cc5-8178-732a1973a10b",
                     "path": "<Keyboard>/f",
                     "interactions": "",
@@ -1065,7 +1065,7 @@
             "id": "0fd0a1c5-4f1e-4e6b-8957-37ced5cc0744",
             "actions": [
                 {
-                    "name": "MoveCell",
+                    "name": "Move",
                     "type": "Value",
                     "id": "456cba3a-c6a2-4af4-987a-dee98a016e27",
                     "expectedControlType": "Vector2",
@@ -1077,15 +1077,6 @@
                     "name": "Takeoff",
                     "type": "Button",
                     "id": "0e08410a-0edd-4dc7-9222-9a1199da6f5e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Equipments",
-                    "type": "Button",
-                    "id": "d384a1a0-0135-49b7-8aeb-1094631c515f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1111,7 +1102,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCell",
+                    "action": "Move",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -1122,7 +1113,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCell",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1133,7 +1124,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCell",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1144,7 +1135,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCell",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1155,20 +1146,9 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCell",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "58066b72-a20e-4c69-a3e8-0ec6cbce9edf",
-                    "path": "<Keyboard>/o",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Equipments",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         }
