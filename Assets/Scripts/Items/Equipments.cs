@@ -35,7 +35,7 @@ namespace Items
             _equipments[equipmentType] = null;
             return equipped;
         }
-
+        
         public Dictionary<Equipment.EquipmentType, Equipment> GetEquipments()
         {
             var equipments = new Dictionary<Equipment.EquipmentType, Equipment>();

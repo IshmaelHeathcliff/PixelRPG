@@ -68,6 +68,8 @@ namespace Items
                 vec = itemPos,
                 item = item
             });
+            
+            // Debug.Log($"added item at {itemPos}");
 
             return true;
         }
@@ -129,6 +131,7 @@ namespace Items
                 type = InventoryActionType.Delete,
                 vec = itemPos
             });
+            // Debug.Log($"removed item at {itemPos}");
             
         }
 
@@ -332,6 +335,7 @@ namespace Items
         void Awake()
         {
             InitInventory();
+            OnUpdateInventory();
             PersistentDataManager.RegisterPersister(this);
         }
 

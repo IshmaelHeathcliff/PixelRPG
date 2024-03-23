@@ -11,14 +11,6 @@ namespace SaveLoad
         protected Dictionary<string, Data> store = new Dictionary<string, Data>();
         event System.Action Schedule = null;
 
-        void Update()
-        {
-            if (Schedule != null)
-            {
-                Schedule();
-                Schedule = null;
-            }
-        }
         public static void RegisterPersister(IDataPersister persister)
         {
             var ds = persister.GetDataSettings();
@@ -150,6 +142,31 @@ namespace SaveLoad
         {
             Instance.LoadAllDataFromFileInternal();
             LoadAllData();
+        }
+
+        protected override void Awake()
+        {
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+        
+            if(_instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            
+            DontDestroyOnLoad(gameObject);
+        }
+        
+        void Update()
+        {
+            if (Schedule != null)
+            {
+                Schedule();
+                Schedule = null;
+            }
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Character
         {
             health.MaxCurrentValue();
             UpdateHealth();
-            GameManager.Instance.Player.damageable.onHurt.AddListener(GainDamage);
+            GameManager.Instance.Player.Damageable.onHurt.AddListener(GainDamage);
         }
     }
 }

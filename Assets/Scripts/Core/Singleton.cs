@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T: Singleton<T>
 {
-    static T _instance;
+    protected static T _instance;
 
     protected static bool quitting;
 

@@ -1,14 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Items
 {
     public class EquipmentsUI : MonoBehaviour
     {
-        public Equipments equipments;
-
         Dictionary<Vector2Int, Equipment.EquipmentType> _equipmentPosMap =
             new()
             {
@@ -25,10 +25,23 @@ namespace Items
 
         Dictionary<Equipment.EquipmentType, EquipmentSlotUI> _equipmentSlotMap;
 
-        [SerializeField] GameObject currentCellPrefab;
-        CurrentItemUI _currentCell;
         Vector2Int _currentPos = Vector2Int.one; 
 
+        CurrentItemUI _currentItemUI;
+        CurrentItemUI CurrentItemUI
+        {
+            get
+            {
+                if (_currentItemUI == null)
+                {
+                    InitCurrentItemUI();
+                }
+                
+                return _currentItemUI;
+            }
+        }
+        public ItemUIPool Pool { private get; set; }
+        
         void InitEquipmentsUI()
         {
             _equipmentSlotMap = new Dictionary<Equipment.EquipmentType, EquipmentSlotUI>();
@@ -45,67 +58,62 @@ namespace Items
             }
         }
 
-        void UpdateEquipmentsUI()
+        public void UpdateEquipmentsUI(Dictionary<Equipment.EquipmentType, Equipment> equipments)
         {
-            foreach (var (k, e) in equipments.GetEquipments())
+            foreach (var (equipmentType, equipment) in equipments)
             {
-                _equipmentSlotMap[k].UpdateUI(e);
+                _equipmentSlotMap[equipmentType].UpdateUI(equipment);
             }
         }
 
-        public Equipment Equip(Equipment equipment)
+        public void Equip(Equipment equipment)
         {
-            var equipped = equipments.Equip(equipment);
             _equipmentSlotMap[equipment.EType].UpdateUI(equipment);
-            return equipped;
         }
 
-        public Equipment Takeoff(Equipment.EquipmentType equipmentType)
+        public void Takeoff(Equipment.EquipmentType equipmentType)
         {
-            var equipment = equipments.Takeoff(equipmentType);
             _equipmentSlotMap[equipmentType].UpdateUI(null);
-            return equipment;
         }
 
-        public Equipment Takeoff()
+        public Equipment.EquipmentType GetCurrentEquipmentType()
         {
-            var currentType = _equipmentPosMap[_currentPos];
-            return Takeoff(currentType);
+            return _equipmentPosMap[_currentPos];
         }
-        
-        
-        void InitCurrentCell()
+
+        void InitCurrentItemUI()
         {
-            var currentCellTransform = transform.Find("CurrentCell");
-            if (currentCellTransform != null)
+            var currentTransform = transform.Find("CurrentItemUI");
+            if (currentTransform != null)
             {
-                if (!currentCellTransform.TryGetComponent(out _currentCell))
+                if (!currentTransform.TryGetComponent(out _currentItemUI))
                 {
-                    _currentCell = currentCellTransform.AddComponent<CurrentItemUI>();
+                    _currentItemUI = currentTransform.AddComponent<CurrentItemUI>();
                 }
             }
             else
             {
-                var obj = Instantiate(currentCellPrefab, transform);
-                obj.name = "CurrentCell";
-                
-                _currentCell = obj.GetComponent<CurrentItemUI>();
-                var image = obj.GetComponent<Image>();
+                var currentItemUI = Pool.GetNewCurrentItemUI();
+                currentItemUI.transform.SetParent(transform);
+                currentItemUI.name = "CurrentItemUI";
+
+                var image = currentItemUI.GetComponent<Image>();
                 image.raycastTarget = false;
 
-                obj.transform.SetAsLastSibling();
-                obj.SetActive(false);
+                currentItemUI.transform.SetAsLastSibling();
+                currentItemUI.gameObject.SetActive(false);
+                _currentItemUI = currentItemUI;
             }
             
-            _currentCell.SetAnchor(Vector2.one / 2, Vector2.one / 2);
-            _currentCell.SetPivot(Vector2.one / 2);
-            _currentCell.SetUIPosition(Vector2.zero);
-            _currentCell.DisableIcon();
+            _currentItemUI.SetAnchor(Vector2.one / 2, Vector2.one / 2);
+            _currentItemUI.SetPivot(Vector2.one / 2);
+            _currentItemUI.SetUIPosition(Vector2.zero);
+            _currentItemUI.DisableIcon();
             
-            UpdateCurrentCell();
+            UpdateCurrentItemUI();
         }
 
-        void UpdateCurrentCell()
+        void UpdateCurrentItemUI()
         {
             if (_currentPos.x < 0 || _currentPos.x > 2 ||
                 _currentPos.y < 0 || _currentPos.y > 2)
@@ -114,12 +122,12 @@ namespace Items
             }
 
             var slotRect = _equipmentSlotMap[_equipmentPosMap[_currentPos]].Rect;
-            _currentCell.SetUIPosition(slotRect.anchoredPosition);
-            _currentCell.SetUISize(slotRect.sizeDelta);
-            _currentCell.DisableIcon();
+            CurrentItemUI.SetUIPosition(slotRect.anchoredPosition);
+            CurrentItemUI.SetUISize(slotRect.sizeDelta);
+            CurrentItemUI.DisableIcon();
         }
 
-        public void MoveCurrentCell(Vector2 inputDirection)
+        public void MoveCurrentItemUI(Vector2 inputDirection)
         {
             var direction = Vector2Int.zero;
             if (Mathf.Abs(inputDirection.x) >= Mathf.Abs(inputDirection.y))
@@ -145,25 +153,35 @@ namespace Items
             if (_equipmentPosMap.ContainsKey(newPos))
             {
                 _currentPos = newPos;
-                UpdateCurrentCell();
+                UpdateCurrentItemUI();
             }
         }
 
         public void EnableUI()
         {
-            _currentCell.gameObject.SetActive(true);
+            if (!CurrentItemUI.gameObject.activeSelf)
+            {
+                CurrentItemUI.gameObject.SetActive(true);
+            }
             transform.SetAsLastSibling();
         }
 
         public void DisableUI()
         {
-            _currentCell.gameObject.SetActive(false);
+            if (CurrentItemUI.gameObject.activeSelf)
+            {
+                CurrentItemUI.gameObject.SetActive(false);
+            }
         }
 
         void Awake()
         {
             InitEquipmentsUI();
-            InitCurrentCell();
+        }
+
+        void Start()
+        {
+            InitCurrentItemUI();
         }
     }
 }

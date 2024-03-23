@@ -920,7 +920,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MoveCell",
+                    "name": "Move",
                     "type": "Value",
                     "id": "87eeb4f0-ca5f-4ab0-bb52-1c45b56dc363",
                     "expectedControlType": "Vector2",
@@ -988,7 +988,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCell",
+                    "action": "Move",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -999,7 +999,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCell",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1010,7 +1010,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCell",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1021,7 +1021,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCell",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1032,7 +1032,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveCell",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },

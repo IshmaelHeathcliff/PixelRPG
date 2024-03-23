@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Items
@@ -13,24 +14,21 @@ namespace Items
         [SerializeField] int tileSize = 100;
         [SerializeField] int frameWidth = 20;
 
-        [SerializeField] GameObject cellPrefab;
-        [SerializeField] GameObject currentCellPrefab;
-
-        Dictionary<Vector2Int, ItemUI> _cells = new();
-
+        Dictionary<Vector2Int, ItemUI> _itemUIs = new();
+        
         // 用于仓库定位
-        CurrentItemUI _currentCell;
+        CurrentItemUI _currentItemUI;
 
-        CurrentItemUI CurrentCell
+        CurrentItemUI CurrentItemUI
         {
             get
             {
-                if (_currentCell == null)
+                if (_currentItemUI == null)
                 {
-                    InitCurrentCell();
+                    InitCurrentItemUI();
                 }
                 
-                return _currentCell;
+                return _currentItemUI;
             }
         }
 
@@ -65,6 +63,8 @@ namespace Items
             }
             
         }
+        
+        public ItemUIPool Pool { private get; set; }
 
         public void Redraw(Queue<Inventory.InventoryAction> actions)
         {
@@ -74,13 +74,20 @@ namespace Items
                 {
                     case Inventory.InventoryActionType.Init:
                     {
-                        // Debug.Log("Inventory Action Init");
-                        foreach (Transform child in ItemsHolder)
+                        if(_itemUIs != null)
                         {
-                            Destroy(child.gameObject);
+                            foreach (var (pos, itemUI) in _itemUIs)
+                            {
+                                Pool.Push(itemUI);
+                            }
+
+                            _itemUIs.Clear();
+                        }
+                        else
+                        {
+                            _itemUIs = new Dictionary<Vector2Int, ItemUI>();
                         }
 
-                        _cells = new Dictionary<Vector2Int, ItemUI>();
 
                         _gridSize = action.vec;            
                         Rect.sizeDelta = _gridSize * tileSize;
@@ -89,10 +96,10 @@ namespace Items
                     }
                     case Inventory.InventoryActionType.Add:
                         // Debug.Log("Inventory Action Add");
-                        AddCell(action.vec, action.item);
+                        AddItemUI(action.vec, action.item);
                         break;
                     case Inventory.InventoryActionType.Delete:
-                        RemoveCell(action.vec);
+                        RemoveItemUI(action.vec);
                         break;
                     case Inventory.InventoryActionType.Update:
                         break;
@@ -102,62 +109,63 @@ namespace Items
             }
         }
 
-        void AddCell(Vector2Int gridPos, Item item)
+        void AddItemUI(Vector2Int gridPos, Item item)
         {
-            var cell = Instantiate(cellPrefab, ItemsHolder).GetComponent<ItemUI>();
-            _cells.Add(gridPos, cell);
+            var itemUI = Pool.Pop();
+            itemUI.transform.SetParent(ItemsHolder);
+            _itemUIs.Add(gridPos, itemUI);
             
-            cell.startPos = gridPos;
-            cell.size = item.Size;
-            cell.SetPivot(new Vector2(0.5f, 0.5f));
-            cell.SetAnchor(new Vector2(0, 1), new Vector2(0, 1));
-            cell.SetUIPosition(GridPosToUIPos(gridPos, cell.size));
-            cell.SetUISize(cell.size * tileSize - new Vector2Int(2, 2) * frameWidth);
-            cell.SetIcon(item.IconName);
+            itemUI.startPos = gridPos;
+            itemUI.size = item.Size;
+            itemUI.SetPivot(new Vector2(0.5f, 0.5f));
+            itemUI.SetAnchor(new Vector2(0, 1), new Vector2(0, 1));
+            itemUI.SetUIPosition(GridPosToUIPos(gridPos, itemUI.size));
+            itemUI.SetUISize(itemUI.size * tileSize - new Vector2Int(2, 2) * frameWidth);
+            itemUI.SetIcon(item.IconName);
         }
 
-        void RemoveCell(Vector2Int pos)
+        void RemoveItemUI(Vector2Int pos)
         {
-            if (_cells.ContainsKey(pos))
+            if (_itemUIs.ContainsKey(pos))
             {
-                Destroy(_cells[pos].gameObject);
-                _cells.Remove(pos);
+                Pool.Push(_itemUIs[pos]);
+                _itemUIs.Remove(pos);
                 return;
             }
             
-            foreach (var (p, cell) in _cells)
+            foreach (var (p, itemUI) in _itemUIs)
             {
-                if (Inventory.ContainPoint(cell.startPos, cell.startPos + cell.size, pos))
+                if (Inventory.ContainPoint(itemUI.startPos, itemUI.startPos + itemUI.size, pos))
                 {
-                    Destroy(cell.gameObject);
-                    _cells.Remove(p);
+                    Pool.Push(itemUI);
+                    _itemUIs.Remove(p);
                     return;
                 }
             }
         }
         
-        public void SetCurrentCell(Vector2Int gridPos, Vector2Int size)
+        public void SetCurrentItemUI(Vector2Int gridPos, Vector2Int size)
         {
-            CurrentCell.startPos = gridPos;
-            CurrentCell.size = size;
-            CurrentCell.SetUIPosition(GridPosToUIPos(gridPos, size));
-            CurrentCell.SetUISize(size * tileSize);
+            CurrentItemUI.startPos = gridPos;
+            CurrentItemUI.size = size;
+            CurrentItemUI.SetUIPosition(GridPosToUIPos(gridPos, size));
+            CurrentItemUI.SetUISize(size * tileSize);
 
             if (Inventory.PickedUp != null)
             {
-                CurrentCell.PickUp();
-                CurrentCell.SetIcon(Inventory.PickedUp.IconName);
-                CurrentCell.SetIconSize(CurrentCell.size * tileSize - new Vector2Int(2, 2) * frameWidth);
+                CurrentItemUI.PickUp();
+                CurrentItemUI.SetIcon(Inventory.PickedUp.IconName);
+                CurrentItemUI.SetIconSize(CurrentItemUI.size * tileSize - new Vector2Int(2, 2) * frameWidth);
             }
             else
             {
-                CurrentCell.PutDown();
+                CurrentItemUI.PutDown();
             }
         }
 
-        public Vector2Int GetCurrentCellSize()
+        public Vector2Int GetCurrentItemUISize()
         {
-            return CurrentCell.size;
+            return CurrentItemUI.size;
         }
 
         Vector2 GridPosToUIPos(Vector2Int gridPos, Vector2Int size)
@@ -183,45 +191,46 @@ namespace Items
             return t;
         }
         
-        void InitCurrentCell()
+        void InitCurrentItemUI()
         {
-            var currentCellTransform = transform.Find("CurrentCell");
-            if (currentCellTransform != null)
+            var currentTransform = transform.Find("CurrentItemUI");
+            if (currentTransform != null)
             {
-                if (!currentCellTransform.TryGetComponent(out _currentCell))
+                if (!currentTransform.TryGetComponent(out _currentItemUI))
                 {
-                    _currentCell = currentCellTransform.AddComponent<CurrentItemUI>();
+                    _currentItemUI = currentTransform.AddComponent<CurrentItemUI>();
                 }
             }
             else
             {
-                var obj = Instantiate(currentCellPrefab, Rect);
-                obj.name = "CurrentCell";
+                var currentItemUI = Pool.GetNewCurrentItemUI();
+                currentItemUI.transform.SetParent(Rect);
+                currentItemUI.name = "CurrentItemUI";
                 
-                _currentCell = obj.GetComponent<CurrentItemUI>();
-                var image = obj.GetComponent<Image>();
+                var image = currentItemUI.GetComponent<Image>();
                 image.raycastTarget = false;
 
-                obj.transform.SetAsLastSibling();
-                obj.SetActive(false);
+                currentItemUI.transform.SetAsLastSibling();
+                currentItemUI.gameObject.SetActive(false);
+                _currentItemUI = currentItemUI;
             }
             
-            _currentCell.SetAnchor(Vector2.up, Vector2.up);
-            _currentCell.SetPivot(Vector2.one / 2);
-            _currentCell.SetUIPosition(Vector2.zero);
-            _currentCell.DisableIcon();
-            SetCurrentCell(Vector2Int.one, Vector2Int.one);
+            _currentItemUI.SetAnchor(Vector2.up, Vector2.up);
+            _currentItemUI.SetPivot(Vector2.one / 2);
+            _currentItemUI.SetUIPosition(Vector2.zero);
+            _currentItemUI.DisableIcon();
+            SetCurrentItemUI(Vector2Int.one, Vector2Int.one);
         }
 
         public void EnableUI(Vector2Int gridPos)
         {
-            CurrentCell.gameObject.SetActive(true);
+            CurrentItemUI.gameObject.SetActive(true);
             transform.SetAsLastSibling();
         }
 
         public void DisableUI()
         {
-            CurrentCell.gameObject.SetActive(false);
+            CurrentItemUI.gameObject.SetActive(false);
         }
 
         void Awake()

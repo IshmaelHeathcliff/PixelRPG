@@ -1,63 +1,58 @@
+using System;
 using UnityEngine;
 
 namespace Character
 {
     public class CameraFollow : MonoBehaviour
     {
-        public float speed = 5;
-        public Transform leftBoundary;
-        public Transform rightBoundary;
-        public Transform upBoundary;
-        public Transform downBoundary;
+        [SerializeField] float speed = 5;
+        [SerializeField] Transform leftBoundary;
+        [SerializeField] Transform rightBoundary;
+        [SerializeField] Transform upBoundary;
+        [SerializeField] Transform downBoundary;
 
         Camera _camera;
         Transform _transform;
+        Vector2 _cameraHalfSize;
 
         void Awake()
         {
             _camera = GetComponent<Camera>();
             _transform = GetComponent<Transform>();
+            _cameraHalfSize = new Vector2(_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
         }
-
-        // void OnEnable()
-        // {
-        //     var targetPosition = GameManager.Instance.Player.transform.position;
-        //     targetPosition.z = _transform.position.z;
-        //     _transform.position = targetPosition;
-        // }
 
         void MoveCamera()
         {
-            float cameraHalfWidth = _camera.orthographicSize * _camera.aspect;
-            float cameraHalfHeight = _camera.orthographicSize;
-
-            var cameraPosition = _transform.position;
             var playerPosition = GameManager.Instance.Player.transform.position;
-            var targetPosition = Vector3.Lerp(cameraPosition, playerPosition, Time.deltaTime * speed);
+            var targetPosition = Vector3.Lerp(_transform.position, playerPosition, Time.deltaTime * speed);
 
-            if (targetPosition.x - cameraHalfWidth < leftBoundary.transform.position.x)
+            if (targetPosition.x - _cameraHalfSize.x < leftBoundary.position.x)
             {
-                targetPosition.x = leftBoundary.transform.position.x + cameraHalfWidth;
+                targetPosition.x = leftBoundary.position.x + _cameraHalfSize.x;
             }
 
-            if (targetPosition.x + cameraHalfWidth > rightBoundary.transform.position.x)
+            if (targetPosition.x + _cameraHalfSize.x > rightBoundary.position.x)
             {
-                targetPosition.x = rightBoundary.transform.position.x - cameraHalfWidth;
+                targetPosition.x = rightBoundary.position.x - _cameraHalfSize.x;
             }
 
-            if (targetPosition.y - cameraHalfHeight < downBoundary.transform.position.y)
+            if (targetPosition.y - _cameraHalfSize.y < downBoundary.position.y)
             {
-                targetPosition.y = downBoundary.transform.position.y + cameraHalfHeight;
+                targetPosition.y = downBoundary.position.y + _cameraHalfSize.y;
             }
 
-            if (targetPosition.y + cameraHalfHeight > upBoundary.transform.position.y)
+            if (targetPosition.y + _cameraHalfSize.y > upBoundary.position.y)
             {
-                targetPosition.y = upBoundary.transform.position.y - cameraHalfHeight;
+                targetPosition.y = upBoundary.position.y - _cameraHalfSize.y;
             }
 
-            targetPosition.z = cameraPosition.z;
-
+            targetPosition.z = _transform.position.z;
             _transform.position = targetPosition;
+        }
+
+        void Start()
+        {
         }
 
         void Update()

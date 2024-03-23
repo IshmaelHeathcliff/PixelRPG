@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Items
@@ -7,28 +8,24 @@ namespace Items
     /// 根据Equipments加载UI
     /// 处理玩家输入
     /// </summary>
+    [RequireComponent(typeof(InventoryController), typeof(ItemUIPool))]
     public class EquipmentController : MonoBehaviour
     {
         InventoryController _inventoryController;
         InputActionMap _equipmentsInput;
         InputActionMap _menuInput;
+        
+        [SerializeField] Equipments equipments;
         [SerializeField] EquipmentsUI equipmentsUI;
 
         bool _isActive;
+        ItemUIPool _pool;
 
         public Equipment Equip(Equipment equipment)
         {
-            return equipmentsUI.Equip(equipment);
-        }
-
-        public Equipment Takeoff(Equipment.EquipmentType equipmentType)
-        {
-            return equipmentsUI.Takeoff(equipmentType);
-        }
-
-        public Equipment Takeoff()
-        {
-            return equipmentsUI.Takeoff();
+            var equipped = equipments.Equip(equipment);
+            equipmentsUI.Equip(equipment);
+            return equipped;
         }
 
         public void SetActive(bool value)
@@ -47,6 +44,11 @@ namespace Items
             }
         }
 
+        void UpdateEquipmentsUI()
+        {
+            equipmentsUI.UpdateEquipmentsUI(equipments.GetEquipments());
+        }
+
 
         void SwitchEquipmentsUI(InputAction.CallbackContext context)
         {
@@ -59,6 +61,7 @@ namespace Items
             {
                 _inventoryController.SwitchInventory(null);
                 equipmentsUI.gameObject.SetActive(true);
+                UpdateEquipmentsUI();
                 SetActive(true);
             }
             
@@ -67,14 +70,19 @@ namespace Items
         void MoveCurrentSlot(InputAction.CallbackContext context)
         {
             var inputDirection = context.ReadValue<Vector2>().normalized;
-            equipmentsUI.MoveCurrentCell(inputDirection);
+            equipmentsUI.MoveCurrentItemUI(inputDirection);
         }
 
 
         void TakeoffEquipment(InputAction.CallbackContext context)
         {
-            var equipped = equipmentsUI.Takeoff();
-            if (!_inventoryController.AddItemToPackage(equipped))
+            var currentType = equipmentsUI.GetCurrentEquipmentType();
+            var equipped = equipments.Takeoff(currentType);
+            if (_inventoryController.AddItemToPackage(equipped))
+            {
+                equipmentsUI.Takeoff(currentType);
+            }
+            else
             {
                 Equip(equipped);
             }
@@ -87,14 +95,35 @@ namespace Items
             _equipmentsInput.FindAction("Takeoff").performed += TakeoffEquipment;
         }
 
+        void UnregisterInput()
+        {
+            _menuInput.FindAction("Equipments").performed -= SwitchEquipmentsUI;
+            _equipmentsInput.FindAction("Move").performed -= MoveCurrentSlot;
+            _equipmentsInput.FindAction("Takeoff").performed -= TakeoffEquipment;
+        }
+
         void Awake()
         {
             _inventoryController = GetComponent<InventoryController>();
-            _equipmentsInput = GetComponent<PlayerInput>().actions.FindActionMap("Equipments");
-            _menuInput = GetComponent<PlayerInput>().actions.FindActionMap("Menu");
-            _menuInput.Enable();
-            
+            _pool = GetComponent<ItemUIPool>();
+            equipmentsUI.Pool = _pool;
+        }
+
+        void OnEnable()
+        {
+            _equipmentsInput = GameManager.Instance.InputManager.EquipmentsActionMap;
+            _menuInput = GameManager.Instance.InputManager.MenuActionMap;
             RegisterInput();
+        }
+
+        void OnDisable()
+        {
+            UnregisterInput();
+        }
+
+        void Start()
+        {
+            equipmentsUI.gameObject.SetActive(false);
         }
     }
 }

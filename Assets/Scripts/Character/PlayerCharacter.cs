@@ -6,15 +6,15 @@ namespace Character
 {
     public class PlayerCharacter : MonoBehaviour
     {
-        [HideInInspector]public PlayerController playerController;
-        [HideInInspector]public CharacterAttributes characterAttributes;
-        [HideInInspector]public Damageable damageable;
+        public PlayerController PlayerController { get; private set; }
+        public CharacterAttributes CharacterAttributes { get; private set; }
+        public Damageable Damageable { get; private set; }
 
         void Awake()
         {
-            playerController = GetComponent<PlayerController>();
-            characterAttributes = GetComponentInChildren<CharacterAttributes>();
-            damageable = GetComponentInChildren<Damageable>();
+            PlayerController = GetComponent<PlayerController>();
+            CharacterAttributes = GetComponentInChildren<CharacterAttributes>();
+            Damageable = GetComponentInChildren<Damageable>();
         }
 
         void Update()
