@@ -8,17 +8,24 @@ namespace Character
     [Serializable]
     public class CharacterAttribute
     {
-        public float baseValue = 0;
-        public float addedValue = 0;
-        public float fixedValue = 0;
-        public float increase = 0;
-        public float more = 1f;
+        public string Name { get; private set; }
+        public float BaseValue { get; private set; } = 0f;
+        public float AddedValue { get; private set; } = 0f;
+        public float FixedValue { get; private set; } = 0f;
+        public float Increase { get; private set; } = 0f;
+        public float More { get; private set; } = 1f;
 
         Dictionary<string, float> _baseValueModifiers = new Dictionary<string, float>();
         Dictionary<string, float> _addedValueModifiers = new Dictionary<string, float>();
         Dictionary<string, float> _fixedValueModifiers = new Dictionary<string, float>();
         Dictionary<string, float> _increaseModifiers = new Dictionary<string, float>();
         Dictionary<string, float> _moreModifiers = new Dictionary<string, float>();
+
+        public CharacterAttribute(string name)
+        {
+            Name = name;
+            InitValue();
+        }
 
         public void AddBaseValueModifier(string key, float value)
         {
@@ -74,63 +81,68 @@ namespace Character
         public float CalculateValue()
         {
             InitValue();
-            baseValue = _baseValueModifiers.Sum(x => x.Value);
-            addedValue = _addedValueModifiers.Sum(x => x.Value);
-            fixedValue = _fixedValueModifiers.Sum(x => x.Value);
-            increase = _increaseModifiers.Sum(x => x.Value);
-            more = _moreModifiers.Values.Aggregate((x, y) => x * y);
+            BaseValue = _baseValueModifiers.Sum(x => x.Value);
+            AddedValue = _addedValueModifiers.Sum(x => x.Value);
+            FixedValue = _fixedValueModifiers.Sum(x => x.Value);
+            Increase = _increaseModifiers.Sum(x => x.Value);
+            More = _moreModifiers.Values.Aggregate((x, y) => x * y);
             return GetValue();
         }
 
         public float GetValue()
         {
-            return (baseValue + addedValue) * (1 + increase) * more + fixedValue;
+            return (BaseValue + AddedValue) * (1 + Increase) * More + FixedValue;
         }
 
         public void InitValue()
         {
-            baseValue = 0;
-            addedValue = 0;
-            fixedValue = 0;
-            increase = 0;
-            more = 1;
+            BaseValue = 0;
+            AddedValue = 0;
+            FixedValue = 0;
+            Increase = 0;
+            More = 1;
         }
     }
 
     [Serializable]
     public class ConsumableAttribute : CharacterAttribute
     {
-        public float currentValue;
+        public float CurrentValue { get; private set; }
 
         public void CheckCurrentValue()
         {
             float maxValue = GetValue();
-            if (currentValue < 0)
+            if (CurrentValue < 0)
             {
-                currentValue = 0;
+                CurrentValue = 0;
             }
 
-            if (currentValue > maxValue)
+            if (CurrentValue > maxValue)
             {
-                currentValue = maxValue;
+                CurrentValue = maxValue;
             }
         }
 
         public void ChangeCurrentValue(float value)
         {
-            currentValue += value;
+            CurrentValue += value;
             CheckCurrentValue();
         }
         
         public void SetCurrentValue(float value)
         {
-            currentValue = value;
+            CurrentValue = value;
             CheckCurrentValue();
         }
 
         public void MaxCurrentValue()
         {
-            currentValue = GetValue();
+            CurrentValue = GetValue();
+        }
+
+        public ConsumableAttribute(string name) : base(name)
+        {
+            CurrentValue = GetValue();
         }
     }
 }

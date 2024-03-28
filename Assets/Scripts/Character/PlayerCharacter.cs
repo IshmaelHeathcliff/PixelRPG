@@ -4,21 +4,19 @@ using UnityEngine.Serialization;
 
 namespace Character
 {
-    public class PlayerCharacter : MonoBehaviour
+    public class PlayerCharacter : Character
     {
         public PlayerController PlayerController { get; private set; }
         public CharacterAttributes CharacterAttributes { get; private set; }
         public Damageable Damageable { get; private set; }
+        public EntryFactory EntryFactory { get; private set; }
 
-        void Awake()
+        protected void Awake()
         {
             PlayerController = GetComponent<PlayerController>();
             CharacterAttributes = GetComponentInChildren<CharacterAttributes>();
             Damageable = GetComponentInChildren<Damageable>();
-        }
-
-        void Update()
-        {
+            EntryFactory = new EntryFactory(CharacterAttributes);
         }
     }
 }

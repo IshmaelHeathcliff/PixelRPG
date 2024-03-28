@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
+using Character;
 using Newtonsoft.Json;
-using SaveLoad;
+using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Items
 {
+    [Serializable]
     public class Equipment : Item
     {
-        [JsonProperty]
-        public EquipmentType EType { get; private set; }
+
+        [SerializeField][JsonProperty] EquipmentType type;
+        [JsonIgnore] public EquipmentType Type => type;
 
         public enum EquipmentType
         {

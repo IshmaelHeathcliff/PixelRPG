@@ -92,8 +92,8 @@ namespace Items
 
         public void AddRandomItem()
         {
-            AddItem(Item.GetFromID("1"));
-            AddItem(Item.GetFromID("2"));
+            AddItem(Item.GetFromID(0));
+            AddItem(Item.GetFromID(1));
         }
 
         void InitInventory()

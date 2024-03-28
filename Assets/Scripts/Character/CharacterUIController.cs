@@ -7,7 +7,7 @@ namespace Character
     {
         [SerializeField]Slider hpSlider;
 
-        public void ChangeHpUI(float health, float maxHealth)
+        public void OnHpChanged(float health, float maxHealth)
         {
             hpSlider.value = health / maxHealth;
         }

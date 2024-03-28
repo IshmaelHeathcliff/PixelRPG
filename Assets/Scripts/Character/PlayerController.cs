@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 namespace Character
 {
     [RequireComponent( typeof(Animator), typeof(Rigidbody2D))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MoveController
     {
         [SerializeField] float speed = 10;
         [SerializeField] float acceleration = 10;

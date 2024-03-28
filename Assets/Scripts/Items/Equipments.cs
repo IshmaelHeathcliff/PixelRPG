@@ -12,7 +12,7 @@ namespace Items
 
         public Equipment Equip(Equipment equipment)
         {
-            var equipmentType = equipment.EType;
+            var equipmentType = equipment.Type;
             Equipment equipped = null;
             if (_equipments[equipmentType] != null)
             {

@@ -404,50 +404,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3aaddc7cae45b8a559c27b70f785ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health:
-    baseValue: 0
-    addedValue: 0
-    fixedValue: 0
-    increase: 0
-    more: 1
-    currentValue: 0
-  mana:
-    baseValue: 0
-    addedValue: 0
-    fixedValue: 0
-    increase: 0
-    more: 1
-    currentValue: 0
-  strength:
-    baseValue: 0
-    addedValue: 0
-    fixedValue: 0
-    increase: 0
-    more: 1
-  dexterity:
-    baseValue: 0
-    addedValue: 0
-    fixedValue: 0
-    increase: 0
-    more: 1
-  intelligence:
-    baseValue: 0
-    addedValue: 0
-    fixedValue: 0
-    increase: 0
-    more: 1
-  damage:
-    baseValue: 0
-    addedValue: 0
-    fixedValue: 0
-    increase: 0
-    more: 1
-  OnHpChanged:
+  hpChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Character.CharacterUIController, Assembly-CSharp
-        m_MethodName: ChangeHpUI
+        m_MethodName: OnHpChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

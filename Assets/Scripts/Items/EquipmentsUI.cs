@@ -68,7 +68,7 @@ namespace Items
 
         public void Equip(Equipment equipment)
         {
-            _equipmentSlotMap[equipment.EType].UpdateUI(equipment);
+            _equipmentSlotMap[equipment.Type].UpdateUI(equipment);
         }
 
         public void Takeoff(Equipment.EquipmentType equipmentType)

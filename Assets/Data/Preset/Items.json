@@ -1,23 +1,32 @@
-[
-  {
-    "Type": "Stackable",
-    "Guid": "1",
-    "ItemName": "金币",
-    "IconName": "Loots/Loots_11.png",
-    "Size": {
-      "x": 1,
-      "y": 1
+{
+  "$type": "System.Collections.Generic.List`1[[Items.Item, Assembly-CSharp]], mscorlib",
+  "$values": [
+    {
+      "$type": "Items.Stackable, Assembly-CSharp",
+      "id": 0,
+      "itemName": "金币",
+      "iconName": "Loots/Loots_11.png",
+      "size": {
+        "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
+        "x": 1,
+        "y": 1,
+        "magnitude": 1.41421354,
+        "sqrMagnitude": 2
+      }
+    },
+    {
+      "$type": "Items.Equipment, Assembly-CSharp",
+      "type": 0,
+      "id": 1,
+      "itemName": "大剑",
+      "iconName": "Sword/Sword_02_01.png",
+      "size": {
+        "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
+        "x": 2,
+        "y": 3,
+        "magnitude": 3.60555124,
+        "sqrMagnitude": 13
+      }
     }
-  },
-  {
-    "EType": "MainWeapon",
-    "Type": "Equipment",
-    "Guid": "2",
-    "ItemName": "大剑",
-    "IconName": "Sword/Sword_02_01.png",
-    "Size": {
-      "x": 2,
-      "y": 3
-    }
-  }
-]
+  ]
+}
