@@ -108,6 +108,7 @@ namespace Items
             _currentItemUI.SetAnchor(Vector2.one / 2, Vector2.one / 2);
             _currentItemUI.SetPivot(Vector2.one / 2);
             _currentItemUI.SetUIPosition(Vector2.zero);
+            _currentItemUI.PutDown();
             _currentItemUI.DisableIcon();
             
             UpdateCurrentItemUI();

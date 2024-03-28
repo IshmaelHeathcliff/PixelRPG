@@ -8,14 +8,14 @@ namespace Items
         {
             SetBgColor(Color.red);
             EnableIcon();
-            SetBg("Assets/Artworks/CurrentCell1.png");
+            SetBg("Assets/Artworks/UI/CurrentCell1.aseprite[CurrentCell1]");
         }
 
         public void PutDown()
         {
             SetBgColor(Color.blue);
             DisableIcon();
-            SetBg("Assets/Artworks/CurrentCell0.png");
+            SetBg("Assets/Artworks/UI/CurrentCell0.aseprite[CurrentCell0]");
             
         }
     }

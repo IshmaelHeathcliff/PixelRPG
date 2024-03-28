@@ -16,7 +16,7 @@
     },
     {
       "$type": "Items.Equipment, Assembly-CSharp",
-      "type": 0,
+      "type": 4,
       "id": 1,
       "itemName": "大剑",
       "iconName": "Sword/Sword_02_01.png",

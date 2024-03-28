@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: data
+    - Name: Data
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[Items.Item, Assembly-CSharp]], mscorlib
     - Name: 
@@ -59,7 +59,7 @@ MonoBehaviour:
       Data: 2|Items.Equipment, Assembly-CSharp
     - Name: id
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: itemName
       Entry: 1
       Data: "\u5927\u5251"
@@ -80,7 +80,7 @@ MonoBehaviour:
       Data: 
     - Name: type
       Entry: 3
-      Data: 0
+      Data: 4
     - Name: 
       Entry: 8
       Data: 
@@ -90,5 +90,8 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: ItemPresetEditor+Data
+      Entry: 9
+      Data: 0
   jsonName: items.json
   jsonPath: Preset

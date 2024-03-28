@@ -90,7 +90,7 @@ namespace Items
 
 
                         _gridSize = action.vec;            
-                        Rect.sizeDelta = _gridSize * tileSize;
+                        Rect.sizeDelta = _gridSize * tileSize + Vector2.one * (frameWidth * 2);
                         Rect.pivot = new Vector2(0, 1);
                         break;
                     }
@@ -149,7 +149,7 @@ namespace Items
             CurrentItemUI.startPos = gridPos;
             CurrentItemUI.size = size;
             CurrentItemUI.SetUIPosition(GridPosToUIPos(gridPos, size));
-            CurrentItemUI.SetUISize(size * tileSize);
+            CurrentItemUI.SetUISize(size * tileSize + new Vector2Int(2, 2) * frameWidth);
 
             if (Inventory.PickedUp != null)
             {
@@ -170,7 +170,8 @@ namespace Items
 
         Vector2 GridPosToUIPos(Vector2Int gridPos, Vector2Int size)
         {
-            var pos = Vector2.Scale(gridPos + (Vector2)size / 2 , new Vector2(1, -1)) * tileSize;
+            var pos = Vector2.Scale(gridPos + (Vector2)size / 2 , new Vector2(1, -1)) * (tileSize);
+            pos += new Vector2(1, -1) * frameWidth;
             return pos;
         }
         

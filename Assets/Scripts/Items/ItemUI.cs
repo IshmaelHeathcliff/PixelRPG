@@ -110,6 +110,8 @@ namespace Items
         {
             string iconPath = UIItemsName + $"{icon}";
             AddressablesManager.LoadAssetWithName<Sprite>(iconPath, handle => { Icon.sprite = handle.Result;});
+            // var sprite = await AddressablesManager.LoadAssetWithName<Sprite>(iconPath);
+            // Icon.sprite = sprite;
         }
 
         public void SetIconSize(Vector2 iconSize)
