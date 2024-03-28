@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using SaveLoad;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace Scene
 {
@@ -23,19 +21,18 @@ namespace Scene
             _inputController = GetComponent<InputController>();
         }
 
-        public void RegisterEntrance(string tag, SceneEntrance entrance)
+        public void RegisterEntrance(string entranceTag, SceneEntrance entrance)
         {
-            _sceneEntrances[tag] = entrance;
+            _sceneEntrances[entranceTag] = entrance;
         }
 
 
-        public void LoadScene(string sceneName, string entranceTag = null)
+        public async void LoadScene(string sceneName, string entranceTag = null)
         {
-            StartCoroutine(Transition(sceneName, entranceTag));
-
+            await Transition(sceneName, entranceTag);
         }
 
-        IEnumerator Transition(string sceneName, string entranceTag)
+        async UniTask Transition(string sceneName, string entranceTag)
         {
             BeforeSceneLoad?.Invoke();
             
@@ -43,9 +40,7 @@ namespace Scene
             PersistentDataManager.ClearPersisters();
             _sceneEntrances.Clear();
             
-            yield return SceneManager.LoadSceneAsync(sceneName);
-
-            yield return null;
+            await SceneManager.LoadSceneAsync(sceneName);
             
             PersistentDataManager.LoadAllData();
             
