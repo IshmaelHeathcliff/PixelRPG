@@ -1,5 +1,7 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -14,6 +16,9 @@ namespace Items
         const string UIItemsName = "Assets/Artworks/Items/";
 
         Image _bg;
+
+        AsyncOperationHandle<Sprite> _iconHandle;
+        AsyncOperationHandle<Sprite> _bgHandle;
 
         protected Image Background
         {
@@ -109,7 +114,11 @@ namespace Items
         public void SetIcon(string icon)
         {
             string iconPath = UIItemsName + $"{icon}";
-            AddressablesManager.LoadAssetWithName<Sprite>(iconPath, handle => { Icon.sprite = handle.Result;});
+            _iconHandle = AddressablesManager.LoadAssetWithName<Sprite>(iconPath, handle =>
+            {
+                Icon.sprite = handle.Result;
+                // Addressables.Release(handle);
+            });
             // var sprite = await AddressablesManager.LoadAssetWithName<Sprite>(iconPath);
             // Icon.sprite = sprite;
         }
@@ -143,7 +152,16 @@ namespace Items
 
         public void SetBg(string bg)
         {
-            AddressablesManager.LoadAssetWithName<Sprite>(bg, handle => { Background.sprite = handle.Result;});
+            _bgHandle = AddressablesManager.LoadAssetWithName<Sprite>(bg, handle =>
+            {
+                Background.sprite = handle.Result;
+                // Addressables.Release(handle);
+            });
+        }
+
+        public void SetBg(Sprite sprite)
+        {
+            Background.sprite = sprite;
         }
 
         public void EnableIcon()
@@ -151,12 +169,33 @@ namespace Items
             Icon.enabled = true;
         }
 
+        protected void ReleaseHandle(AsyncOperationHandle<Sprite> handle)
+        {
+            if(handle.IsValid())
+                Addressables.Release(handle);
+        }
+        
+
+        public void Release()
+        {
+            Icon.sprite = null;
+            Background.sprite = null;
+            
+            ReleaseHandle(_iconHandle);
+            ReleaseHandle(_bgHandle);
+        }
+
         public void DisableIcon()
         {
             Icon.enabled = false;
         }
 
-        void Awake()
+        void OnDestroy()
+        {
+            Release();
+        }
+
+        protected void Awake()
         {
             _bg = GetComponent<Image>();
             _rect = GetComponent<RectTransform>();

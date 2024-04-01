@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
 
 namespace Items
@@ -76,6 +77,7 @@ namespace Items
             
             obj.transform.SetParent(ItemsHolder);
             obj.gameObject.SetActive(false);
+            obj.Release();
             _pool.Push(obj);
         }
 
