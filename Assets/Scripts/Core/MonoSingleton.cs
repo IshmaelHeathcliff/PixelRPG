@@ -2,7 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-public abstract class Singleton<T> : MonoBehaviour where T: Singleton<T>
+public abstract class MonoSingleton<T> : MonoBehaviour where T: MonoSingleton<T>
 {
     protected static T _instance;
 

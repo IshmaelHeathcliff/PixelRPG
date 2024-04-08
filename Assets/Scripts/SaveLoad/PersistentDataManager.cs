@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace SaveLoad
 {
-    public class PersistentDataManager : Singleton<PersistentDataManager>
+    public class PersistentDataManager : MonoSingleton<PersistentDataManager>
     {
         protected HashSet<IDataPersister> dataPersisters = new HashSet<IDataPersister>();
         protected Dictionary<string, Data> store = new Dictionary<string, Data>();

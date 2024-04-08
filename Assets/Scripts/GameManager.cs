@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoSingleton<GameManager>
 {
     public PlayerCharacter Player { get; private set; }
     public InputController InputManager { get; private set; }
