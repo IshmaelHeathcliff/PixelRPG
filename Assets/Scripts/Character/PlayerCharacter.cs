@@ -1,4 +1,5 @@
 ﻿using System;
+using Character.Entry;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,14 +10,14 @@ namespace Character
         public PlayerController PlayerController { get; private set; }
         public CharacterAttributes CharacterAttributes { get; private set; }
         public Damageable Damageable { get; private set; }
-        public EntryFactory EntryFactory { get; private set; }
+        public IEntryFactory EntryFactory { get; private set; }
 
         protected void Awake()
         {
             PlayerController = GetComponent<PlayerController>();
             CharacterAttributes = GetComponentInChildren<CharacterAttributes>();
             Damageable = GetComponentInChildren<Damageable>();
-            EntryFactory = new EntryFactory(CharacterAttributes);
+            // EntryFactory = new IEntryFactory(CharacterAttributes);
         }
     }
 }

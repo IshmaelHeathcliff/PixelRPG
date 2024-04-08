@@ -6,8 +6,6 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T: MonoSingleton<T>
 {
     protected static T _instance;
 
-    protected static bool quitting;
-
     public static T Instance
     {
         get
@@ -49,11 +47,5 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T: MonoSingleton<T>
         DontDestroyOnLoad(gameObject);
     }
 
-    protected void OnDestroy()
-    {
-        if (_instance == this)
-        {
-            quitting = true;
-        }
-    }
+
 }

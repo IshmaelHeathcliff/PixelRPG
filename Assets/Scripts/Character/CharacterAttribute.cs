@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Character
@@ -8,11 +9,17 @@ namespace Character
     [Serializable]
     public class CharacterAttribute
     {
+        
         public string Name { get; private set; }
+        [ShowInInspector][BoxGroup]
         public float BaseValue { get; private set; } = 0f;
+        [ShowInInspector][BoxGroup]
         public float AddedValue { get; private set; } = 0f;
+        [ShowInInspector][BoxGroup]
         public float FixedValue { get; private set; } = 0f;
+        [ShowInInspector][BoxGroup]
         public float Increase { get; private set; } = 0f;
+        [ShowInInspector][BoxGroup]
         public float More { get; private set; } = 1f;
 
         Dictionary<string, float> _baseValueModifiers = new Dictionary<string, float>();
@@ -80,18 +87,18 @@ namespace Character
 
         public float CalculateValue()
         {
-            InitValue();
             BaseValue = _baseValueModifiers.Sum(x => x.Value);
             AddedValue = _addedValueModifiers.Sum(x => x.Value);
             FixedValue = _fixedValueModifiers.Sum(x => x.Value);
             Increase = _increaseModifiers.Sum(x => x.Value);
-            More = _moreModifiers.Values.Aggregate((x, y) => x * y);
+            More = _moreModifiers.Values.Aggregate(0f, (x, y) => (1 + x/100) * (1 + y/100));
+
             return GetValue();
         }
 
         public float GetValue()
         {
-            return (BaseValue + AddedValue) * (1 + Increase) * More + FixedValue;
+            return (BaseValue + AddedValue) * (1 + Increase/100f) * More + FixedValue;
         }
 
         public void InitValue()

@@ -2,120 +2,106 @@
   "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[SaveLoad.Data, Assembly-CSharp]], mscorlib",
   "pickUp": {
     "$type": "SaveLoad.Data`1[[Items.Item, Assembly-CSharp]], Assembly-CSharp",
-    "value": {
-      "$type": "Items.Equipment, Assembly-CSharp",
-      "EType": 4,
-      "Type": 0,
-      "Guid": "2",
-      "ItemName": "大剑",
-      "IconName": "Sword/Sword_02_01.png",
-      "Size": {
-        "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-        "x": 2,
-        "y": 3,
-        "magnitude": 3.60555124,
-        "sqrMagnitude": 13
-      }
-    }
+    "value": null
   },
   "package": {
     "$type": "SaveLoad.Data`1[[Items.SerializedInventory, Assembly-CSharp]], Assembly-CSharp",
     "value": {
       "$type": "Items.SerializedInventory, Assembly-CSharp",
       "sizeX": 8,
-      "sizeY": 6,
+      "sizeY": 5,
       "itemsWithPos": {
         "$type": "Items.SerializedInventory+ItemWithPos[], Assembly-CSharp",
         "$values": [
           {
             "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
             "itemPosX": 0,
+            "itemPosY": 0,
+            "item": {
+              "$type": "Items.Stackable, Assembly-CSharp",
+              "id": 0,
+              "itemName": "金币",
+              "iconName": "Loots/Loots_11.png",
+              "size": {
+                "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
+                "x": 1,
+                "y": 1,
+                "magnitude": 1.41421354,
+                "sqrMagnitude": 2
+              }
+            }
+          },
+          {
+            "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
+            "itemPosX": 0,
             "itemPosY": 1,
             "item": {
               "$type": "Items.Equipment, Assembly-CSharp",
-              "EType": 4,
-              "Type": 0,
-              "Guid": "2",
-              "ItemName": "大剑",
-              "IconName": "Sword/Sword_02_01.png",
-              "Size": {
-                "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-                "x": 2,
-                "y": 3,
-                "magnitude": 3.60555124,
-                "sqrMagnitude": 13
-              }
-            }
-          },
-          {
-            "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
-            "itemPosX": 4,
-            "itemPosY": 0,
-            "item": {
-              "$type": "Items.Stackable, Assembly-CSharp",
-              "Type": 1,
-              "Guid": "1",
-              "ItemName": "金币",
-              "IconName": "Loots/Loots_11.png",
-              "Size": {
-                "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-                "x": 1,
-                "y": 1,
-                "magnitude": 1.41421354,
-                "sqrMagnitude": 2
-              }
-            }
-          },
-          {
-            "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
-            "itemPosX": 0,
-            "itemPosY": 0,
-            "item": {
-              "$type": "Items.Stackable, Assembly-CSharp",
-              "Type": 1,
-              "Guid": "1",
-              "ItemName": "金币",
-              "IconName": "Loots/Loots_11.png",
-              "Size": {
-                "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-                "x": 1,
-                "y": 1,
-                "magnitude": 1.41421354,
-                "sqrMagnitude": 2
-              }
-            }
-          },
-          {
-            "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
-            "itemPosX": 0,
-            "itemPosY": 4,
-            "item": {
-              "$type": "Items.Stackable, Assembly-CSharp",
-              "Type": 1,
-              "Guid": "1",
-              "ItemName": "金币",
-              "IconName": "Loots/Loots_11.png",
-              "Size": {
-                "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-                "x": 1,
-                "y": 1,
-                "magnitude": 1.41421354,
-                "sqrMagnitude": 2
-              }
-            }
-          },
-          {
-            "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
-            "itemPosX": 2,
-            "itemPosY": 3,
-            "item": {
-              "$type": "Items.Equipment, Assembly-CSharp",
-              "EType": 4,
-              "Type": 0,
-              "Guid": "2",
-              "ItemName": "大剑",
-              "IconName": "Sword/Sword_02_01.png",
-              "Size": {
+              "type": 4,
+              "entry1": {
+                "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+                "level": 4,
+                "value": 48.8015862,
+                "entryInfo": {
+                  "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
+                  "attributeName": "生命",
+                  "attributeType": 0,
+                  "maxLevel": 5,
+                  "levelRanges": {
+                    "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
+                    "$values": [
+                      {
+                        "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+                        "min": 1.0,
+                        "max": 10.0
+                      },
+                      {
+                        "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+                        "min": 11.0,
+                        "max": 20.0
+                      },
+                      {
+                        "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+                        "min": 21.0,
+                        "max": 30.0
+                      },
+                      {
+                        "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+                        "min": 31.0,
+                        "max": 40.0
+                      },
+                      {
+                        "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+                        "min": 41.0,
+                        "max": 50.0
+                      }
+                    ]
+                  },
+                  "entryID": 0,
+                  "name": "生命基础值",
+                  "entryType": 0,
+                  "factoryID": "player",
+                  "positiveDescription": "增加{0}基础值{1}点",
+                  "negativeDescription": "减少{0}基础值{1}点"
+                },
+                "entryID": 0,
+                "instanceID": "1b20b3dd-1ea2-49be-98fe-031305433d5e"
+              },
+              "entry2": null,
+              "entry3": null,
+              "entry4": null,
+              "entry5": null,
+              "entry6": null,
+              "entry1Info": "增加生命基础值48.80159点",
+              "entry2Info": null,
+              "entry3Info": null,
+              "entry4Info": null,
+              "entry5Info": null,
+              "entry6Info": null,
+              "id": 1,
+              "itemName": "大剑",
+              "iconName": "Sword/Sword_02_01.png",
+              "size": {
                 "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
                 "x": 2,
                 "y": 3,
@@ -133,11 +119,26 @@
     "value": {
       "$type": "Items.SerializedInventory, Assembly-CSharp",
       "sizeX": 8,
-      "sizeY": 6,
+      "sizeY": 10,
       "itemsWithPos": {
         "$type": "Items.SerializedInventory+ItemWithPos[], Assembly-CSharp",
         "$values": []
       }
+    }
+  },
+  "equipments": {
+    "$type": "SaveLoad.Data`1[[System.Collections.Generic.Dictionary`2[[Items.Equipment+EquipmentType, Assembly-CSharp],[Items.Equipment, Assembly-CSharp]], mscorlib]], Assembly-CSharp",
+    "value": {
+      "$type": "System.Collections.Generic.Dictionary`2[[Items.Equipment+EquipmentType, Assembly-CSharp],[Items.Equipment, Assembly-CSharp]], mscorlib",
+      "Helmet": null,
+      "Armour": null,
+      "Gloves": null,
+      "Boots": null,
+      "MainWeapon": null,
+      "Offhand": null,
+      "Belt": null,
+      "Ring": null,
+      "Amulet": null
     }
   }
 }

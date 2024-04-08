@@ -1,11 +1,13 @@
 ﻿using System;
+using Character.Entry;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Character
 {
-    public class CharacterAttributes : MonoBehaviour
+    public class CharacterAttributes : MonoBehaviour, IAttributeEntryFactory
     {
         public ConsumableAttribute health = new ConsumableAttribute("生命");
         public ConsumableAttribute mana = new ConsumableAttribute("魔力");
@@ -17,6 +19,19 @@ namespace Character
         public CharacterAttribute damage = new CharacterAttribute("伤害");
 
         public UnityEvent<float, float> hpChanged;
+
+        [SerializeField] string attributeFactoryID;
+
+        [Button]
+        public void UpdateValues()
+        {
+            health.CalculateValue();
+            mana.CalculateValue();
+            strength.CalculateValue();
+            dexterity.CalculateValue();
+            intelligence.CalculateValue();
+            damage.CalculateValue();
+        }
         
         void OnHpChanged()
         {
@@ -42,12 +57,32 @@ namespace Character
             health.ChangeCurrentValue(-value);
             OnHpChanged();
         }
+        
+        public IEntry CreateEntry(EntryInfo entryInfo)
+        {
+            if (entryInfo is not AttributeEntryInfo info) return null;
+            
+            var attribute = GetAttribute(info.attributeName);
+            return attribute != null ? 
+                AttributeEntryCommonFactory.CreateAttributeEntry(info, attribute) : null;
+        }
+
+        public CharacterAttribute GetAttribute(AttributeEntryInfo entryInfo)
+        {
+            return GetAttribute(entryInfo.attributeName);
+        }
 
         void Start()
         {
+            EntrySystem.RegisterEntryFactory(attributeFactoryID, this);
             health.MaxCurrentValue();
             OnHpChanged();
             GameManager.Instance.Player.Damageable.onHurt.AddListener(GainDamage);
+        }
+
+        void OnDestroy()
+        {
+            EntrySystem.UnregisterEntryFactory(attributeFactoryID);
         }
     }
 }

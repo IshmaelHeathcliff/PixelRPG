@@ -4499,6 +4499,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1959771465387891149, guid: 968e302bd995df04a958db2ea0611aa8, type: 3}
+      propertyPath: attributeFactoryID
+      value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959771465387891149, guid: 968e302bd995df04a958db2ea0611aa8, type: 3}
       propertyPath: hpChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1763721135}
@@ -4566,6 +4570,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4557ccd6f81856542958364e3ab0b561, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1211663925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1211663927}
+  - component: {fileID: 1211663926}
+  m_Layer: 0
+  m_Name: EntrySystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1211663926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211663925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75686cf08046a3c46b858fd4bb9105be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1211663927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211663925}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1454.5286, y: 623.77997, z: -4.1995506}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1218057705 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7556143032896110374, guid: 6abc1e90dd323884a9b87944187be308, type: 3}
@@ -38095,4 +38143,5 @@ SceneRoots:
   - {fileID: 408090696724680010}
   - {fileID: 626767197}
   - {fileID: 1820914913}
+  - {fileID: 1211663927}
   - {fileID: 1734764226}

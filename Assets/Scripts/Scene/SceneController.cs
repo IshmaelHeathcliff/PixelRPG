@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Character.Entry;
 using Cysharp.Threading.Tasks;
 using SaveLoad;
 using UnityEngine;
@@ -39,6 +40,8 @@ namespace Scene
             PersistentDataManager.SaveAllData();
             PersistentDataManager.ClearPersisters();
             _sceneEntrances.Clear();
+            
+            EntrySystem.ClearEntryFactories();
             
             await SceneManager.LoadSceneAsync(sceneName);
             

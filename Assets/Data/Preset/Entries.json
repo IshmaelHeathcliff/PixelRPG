@@ -1,0 +1,111 @@
+{
+  "$type": "System.Collections.Generic.List`1[[Character.Entry.EntryInfo, Assembly-CSharp]], mscorlib",
+  "$values": [
+    {
+      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
+      "attributeName": "生命",
+      "attributeType": 0,
+      "maxLevel": 5,
+      "levelRanges": {
+        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+            "min": 1.0,
+            "max": 10.0
+          },
+          {
+            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+            "min": 11.0,
+            "max": 20.0
+          },
+          {
+            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+            "min": 21.0,
+            "max": 30.0
+          },
+          {
+            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+            "min": 31.0,
+            "max": 40.0
+          },
+          {
+            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+            "min": 41.0,
+            "max": 50.0
+          }
+        ]
+      },
+      "entryID": 0,
+      "name": "生命基础值",
+      "entryType": 0,
+      "factoryID": "player",
+      "positiveDescription": "增加{0}基础值{1}点",
+      "negativeDescription": "减少{0}基础值{1}点"
+    },
+    {
+      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
+      "attributeName": "生命",
+      "attributeType": 2,
+      "maxLevel": 3,
+      "levelRanges": {
+        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+            "min": 1.0,
+            "max": 20.0
+          },
+          {
+            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+            "min": 21.0,
+            "max": 40.0
+          },
+          {
+            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+            "min": 41.0,
+            "max": 60.0
+          }
+        ]
+      },
+      "entryID": 1,
+      "name": "生命提高值",
+      "entryType": 0,
+      "factoryID": "player",
+      "positiveDescription": "{0}提高{1}%",
+      "negativeDescription": "{0}降低{1}%"
+    },
+    {
+      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
+      "attributeName": "生命",
+      "attributeType": 3,
+      "maxLevel": 3,
+      "levelRanges": {
+        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+            "min": 1.0,
+            "max": 10.0
+          },
+          {
+            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+            "min": 11.0,
+            "max": 20.0
+          },
+          {
+            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
+            "min": 21.0,
+            "max": 30.0
+          }
+        ]
+      },
+      "entryID": 2,
+      "name": "生命总增",
+      "entryType": 0,
+      "factoryID": "player",
+      "positiveDescription": "{0}总增{1}%",
+      "negativeDescription": "{0}总降{1}%"
+    }
+  ]
+}
