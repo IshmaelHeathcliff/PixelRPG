@@ -20,6 +20,7 @@ namespace Items
             }
 
             _equipments[equipmentType] = equipment;
+            equipment.Equip();
 
             return equipped;
         }
@@ -32,6 +33,7 @@ namespace Items
             }
             
             var equipped = _equipments[equipmentType];
+            equipped.Takeoff();
             _equipments[equipmentType] = null;
             return equipped;
         }
@@ -92,6 +94,10 @@ namespace Items
             else
             {
                 _equipments = equipmentData;
+                foreach (var (_, equipment) in _equipments)
+                {
+                    equipment.LoadEntries();
+                }
             }
         }
         

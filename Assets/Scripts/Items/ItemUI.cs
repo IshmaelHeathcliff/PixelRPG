@@ -178,8 +178,8 @@ namespace Items
 
         public void Release()
         {
-            Icon.sprite = null;
-            Background.sprite = null;
+            // Icon.sprite = null;
+            // Background.sprite = null;
             
             ReleaseHandle(_iconHandle);
             ReleaseHandle(_bgHandle);

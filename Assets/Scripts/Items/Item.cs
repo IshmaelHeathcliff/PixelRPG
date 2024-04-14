@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SaveLoad;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Items
@@ -10,6 +11,38 @@ namespace Items
     [Serializable]
     public abstract class Item
     {
+        #region static
+        
+        static Dictionary<int, Item> _lookupCache;
+
+        const string JsonPath = "Preset";
+        const string JsonName = "Items.json";
+
+        public static void Load()
+        {
+            var itemList = SaveLoadManager.Load<List<Item>>(JsonName, JsonPath);
+            foreach (var item in itemList)
+            {
+                _lookupCache.Add(item.ID, item);
+            }
+        }
+        
+        public static Item GetFromID(int itemID)
+        {
+            if (_lookupCache == null)
+            {
+                _lookupCache = new Dictionary<int, Item>();
+                Load();
+            }
+
+            if (!_lookupCache.ContainsKey(itemID)) return null;
+            var item = _lookupCache[itemID];
+            item.Init();
+            return item;
+        }
+        
+        #endregion
+
         // [SerializeField][JsonProperty] ItemType type;
         [SerializeField][JsonProperty] int id;
         [SerializeField][JsonProperty] string itemName;
@@ -34,32 +67,10 @@ namespace Items
             Consumable
         }
 
-        static Dictionary<int, Item> _lookupCache;
-
-        const string JsonPath = "Preset";
-        const string JsonName = "Items.json";
-
-        public static void Load()
+        protected virtual void Init()
         {
-            var itemList = SaveLoadManager.Load<List<Item>>(JsonName, JsonPath);
-            foreach (var item in itemList)
-            {
-                _lookupCache.Add(item.ID, item);
-            }
+            
         }
-        
-        public static Item GetFromID(int itemID)
-        {
-            if (_lookupCache == null)
-            {
-                _lookupCache = new Dictionary<int, Item>();
-                Load();
-            }
-
-            if (!_lookupCache.ContainsKey(itemID)) return null;
-            return _lookupCache[itemID];
-        }
-
     }
 
     // public class ItemConverter : JsonConverter

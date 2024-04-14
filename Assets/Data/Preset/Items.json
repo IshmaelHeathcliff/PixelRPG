@@ -17,6 +17,16 @@
     {
       "$type": "Items.Equipment, Assembly-CSharp",
       "type": 4,
+      "rarity": 2,
+      "entryPool": {
+        "$type": "System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib",
+        "$values": [
+          0,
+          1,
+          2
+        ]
+      },
+      "_entries": null,
       "id": 1,
       "itemName": "大剑",
       "iconName": "Sword/Sword_02_01.png",

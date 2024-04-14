@@ -81,6 +81,33 @@ MonoBehaviour:
     - Name: type
       Entry: 3
       Data: 4
+    - Name: rarity
+      Entry: 3
+      Data: 2
+    - Name: entryPool
+      Entry: 7
+      Data: 3|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: _entries
+      Entry: 6
+      Data: 
     - Name: 
       Entry: 8
       Data: 
