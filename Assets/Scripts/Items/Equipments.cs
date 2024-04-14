@@ -16,7 +16,7 @@ namespace Items
             Equipment equipped = null;
             if (_equipments[equipmentType] != null)
             {
-                equipped = _equipments[equipmentType];
+                equipped = Takeoff(equipmentType);
             }
 
             _equipments[equipmentType] = equipment;

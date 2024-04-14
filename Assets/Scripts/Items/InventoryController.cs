@@ -287,11 +287,8 @@ namespace Items
                 if (item is Equipment equipment)
                 {
                     var equipped = _equipmentController.Equip(equipment);
-                    if (equipped == null)
-                    {
-                        _currentControl.Inventory.RemoveItem(itemPos);
-                    }
-                    else
+                    _currentControl.Inventory.RemoveItem(itemPos);
+                    if (equipped != null)
                     {
                         _currentControl.Inventory.AddItem(equipped);
                     }

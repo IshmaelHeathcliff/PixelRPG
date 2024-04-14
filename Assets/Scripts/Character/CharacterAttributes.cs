@@ -9,6 +9,17 @@ namespace Character
 {
     public class CharacterAttributes : MonoBehaviour, IAttributeEntryFactory
     {
+        [Button]
+        public void UpdateValues()
+        {
+            health.CalculateValue();
+            mana.CalculateValue();
+            strength.CalculateValue();
+            dexterity.CalculateValue();
+            intelligence.CalculateValue();
+            damage.CalculateValue();
+        }
+        
         public ConsumableAttribute health = new ConsumableAttribute("生命");
         public ConsumableAttribute mana = new ConsumableAttribute("魔力");
 
@@ -21,17 +32,6 @@ namespace Character
         public UnityEvent<float, float> hpChanged;
 
         [SerializeField] string attributeFactoryID;
-
-        [Button]
-        public void UpdateValues()
-        {
-            health.CalculateValue();
-            mana.CalculateValue();
-            strength.CalculateValue();
-            dexterity.CalculateValue();
-            intelligence.CalculateValue();
-            damage.CalculateValue();
-        }
         
         void OnHpChanged()
         {

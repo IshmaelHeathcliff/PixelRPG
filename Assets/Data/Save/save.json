@@ -15,89 +15,114 @@
         "$values": [
           {
             "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
-            "itemPosX": 0,
+            "itemPosX": 2,
             "itemPosY": 0,
             "item": {
-              "$type": "Items.Stackable, Assembly-CSharp",
-              "id": 0,
-              "itemName": "金币",
-              "iconName": "Loots/Loots_11.png",
+              "$type": "Items.Equipment, Assembly-CSharp",
+              "type": 4,
+              "rarity": 2,
+              "entryPool": {
+                "$type": "System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib",
+                "$values": [
+                  0,
+                  1,
+                  2
+                ]
+              },
+              "_entries": {
+                "$type": "Character.Entry.IEntry[], Assembly-CSharp",
+                "$values": [
+                  {
+                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+                    "level": 1,
+                    "value": 24.33437,
+                    "entryID": 1,
+                    "instanceID": "0476ae2d-5a11-4764-a7b9-e98887db39d4"
+                  },
+                  {
+                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+                    "level": 1,
+                    "value": 30.5067081,
+                    "entryID": 1,
+                    "instanceID": "7fcf092c-d5b2-41f3-a383-cb938434491f"
+                  },
+                  {
+                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+                    "level": 0,
+                    "value": 3.81692719,
+                    "entryID": 0,
+                    "instanceID": "504bbb8e-5907-419d-9191-4e598347aed1"
+                  },
+                  {
+                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+                    "level": 0,
+                    "value": 9.224758,
+                    "entryID": 2,
+                    "instanceID": "2d5da499-f18c-4f13-990b-be172eb6a720"
+                  }
+                ]
+              },
+              "id": 1,
+              "itemName": "大剑",
+              "iconName": "Sword/Sword_02_01.png",
               "size": {
                 "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-                "x": 1,
-                "y": 1,
-                "magnitude": 1.41421354,
-                "sqrMagnitude": 2
+                "x": 2,
+                "y": 3,
+                "magnitude": 3.60555124,
+                "sqrMagnitude": 13
               }
             }
           },
           {
             "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
             "itemPosX": 0,
-            "itemPosY": 1,
+            "itemPosY": 0,
             "item": {
               "$type": "Items.Equipment, Assembly-CSharp",
               "type": 4,
-              "entry1": {
-                "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-                "level": 4,
-                "value": 48.8015862,
-                "entryInfo": {
-                  "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                  "attributeName": "生命",
-                  "attributeType": 0,
-                  "maxLevel": 5,
-                  "levelRanges": {
-                    "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                    "$values": [
-                      {
-                        "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                        "min": 1.0,
-                        "max": 10.0
-                      },
-                      {
-                        "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                        "min": 11.0,
-                        "max": 20.0
-                      },
-                      {
-                        "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                        "min": 21.0,
-                        "max": 30.0
-                      },
-                      {
-                        "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                        "min": 31.0,
-                        "max": 40.0
-                      },
-                      {
-                        "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                        "min": 41.0,
-                        "max": 50.0
-                      }
-                    ]
-                  },
-                  "entryID": 0,
-                  "name": "生命基础值",
-                  "entryType": 0,
-                  "factoryID": "player",
-                  "positiveDescription": "增加{0}基础值{1}点",
-                  "negativeDescription": "减少{0}基础值{1}点"
-                },
-                "entryID": 0,
-                "instanceID": "1b20b3dd-1ea2-49be-98fe-031305433d5e"
+              "rarity": 2,
+              "entryPool": {
+                "$type": "System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib",
+                "$values": [
+                  0,
+                  1,
+                  2
+                ]
               },
-              "entry2": null,
-              "entry3": null,
-              "entry4": null,
-              "entry5": null,
-              "entry6": null,
-              "entry1Info": "增加生命基础值48.80159点",
-              "entry2Info": null,
-              "entry3Info": null,
-              "entry4Info": null,
-              "entry5Info": null,
-              "entry6Info": null,
+              "_entries": {
+                "$type": "Character.Entry.IEntry[], Assembly-CSharp",
+                "$values": [
+                  {
+                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+                    "level": 1,
+                    "value": 28.5361443,
+                    "entryID": 1,
+                    "instanceID": "58f65050-fdfb-415f-a9ad-a715974afd6e"
+                  },
+                  {
+                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+                    "level": 2,
+                    "value": 25.4853725,
+                    "entryID": 2,
+                    "instanceID": "75312e38-5940-4c65-bc03-59f8813974e8"
+                  },
+                  {
+                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+                    "level": 1,
+                    "value": 19.51928,
+                    "entryID": 2,
+                    "instanceID": "af21c43b-1488-4fc3-8aad-9c9ac3bd41e9"
+                  },
+                  {
+                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+                    "level": 3,
+                    "value": 38.9057655,
+                    "entryID": 0,
+                    "instanceID": "343f2063-c375-41d7-978c-3e23ba7953da"
+                  }
+                ]
+              },
               "id": 1,
               "itemName": "大剑",
               "iconName": "Sword/Sword_02_01.png",
@@ -134,7 +159,62 @@
       "Armour": null,
       "Gloves": null,
       "Boots": null,
-      "MainWeapon": null,
+      "MainWeapon": {
+        "$type": "Items.Equipment, Assembly-CSharp",
+        "type": 4,
+        "rarity": 2,
+        "entryPool": {
+          "$type": "System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib",
+          "$values": [
+            0,
+            1,
+            2
+          ]
+        },
+        "_entries": {
+          "$type": "Character.Entry.IEntry[], Assembly-CSharp",
+          "$values": [
+            {
+              "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+              "level": 2,
+              "value": 55.2409172,
+              "entryID": 1,
+              "instanceID": "bb1dfc08-e74f-4756-9f27-4e8f12016123"
+            },
+            {
+              "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+              "level": 0,
+              "value": 3.24179244,
+              "entryID": 0,
+              "instanceID": "b02c9478-0af2-439d-be8e-bee1b6274ca5"
+            },
+            {
+              "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+              "level": 0,
+              "value": 8.932305,
+              "entryID": 2,
+              "instanceID": "43dc8985-9910-435e-9c69-a73e22a732cf"
+            },
+            {
+              "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
+              "level": 1,
+              "value": 16.3190384,
+              "entryID": 2,
+              "instanceID": "c6e2f56c-25a5-43ea-abc0-be1f4e206aa6"
+            }
+          ]
+        },
+        "id": 1,
+        "itemName": "大剑",
+        "iconName": "Sword/Sword_02_01.png",
+        "size": {
+          "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
+          "x": 2,
+          "y": 3,
+          "magnitude": 3.60555124,
+          "sqrMagnitude": 13
+        }
+      },
       "Offhand": null,
       "Belt": null,
       "Ring": null,

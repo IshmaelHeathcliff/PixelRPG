@@ -6,6 +6,8 @@ namespace Items
     {
         public Equipment.EquipmentType equipmentType;
 
+        public Equipment equipped;
+
         public void UpdateUI(Equipment equipment)
         {
             if (equipment != null)
@@ -16,6 +18,7 @@ namespace Items
                 SetIconAnchor(Vector2.zero, Vector2.one);
                 SetIconPos(Vector2.zero);
                 EnableIcon();
+                equipped = equipment;
             }
             else
             {

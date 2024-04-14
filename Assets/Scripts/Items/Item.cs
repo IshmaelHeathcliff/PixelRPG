@@ -36,9 +36,13 @@ namespace Items
             }
 
             if (!_lookupCache.ContainsKey(itemID)) return null;
-            var item = _lookupCache[itemID];
-            item.Init();
-            return item;
+            if (_lookupCache[itemID].MemberwiseClone() is Item item)
+            {
+                item.Init();
+                return item;
+            }
+
+            return null;
         }
         
         #endregion
