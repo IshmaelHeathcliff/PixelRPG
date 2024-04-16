@@ -45,7 +45,10 @@ namespace Character.Entry
 
         public static void UnregisterEntryFactory(string factoryID)
         {
-            Instance.Unregister(factoryID);
+            if (!quitting)
+            {
+                Instance.Unregister(factoryID);
+            }
         }
 
         public static void ClearEntryFactories()

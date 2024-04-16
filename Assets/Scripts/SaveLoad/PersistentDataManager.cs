@@ -11,7 +11,6 @@ namespace SaveLoad
         protected Dictionary<string, Data> store = new Dictionary<string, Data>();
         event System.Action Schedule = null;
 
-        protected static bool quitting;
         public static void RegisterPersister(IDataPersister persister)
         {
             var ds = persister.GetDataSettings();
@@ -167,14 +166,6 @@ namespace SaveLoad
             {
                 Schedule();
                 Schedule = null;
-            }
-        }
-        
-        protected void OnDestroy()
-        {
-            if (_instance == this)
-            {
-                quitting = true;
             }
         }
     }

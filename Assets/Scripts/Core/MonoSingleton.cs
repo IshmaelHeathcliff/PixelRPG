@@ -23,6 +23,8 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T: MonoSingleton<T>
             return _instance;
         }
     }
+    
+    protected static bool quitting;
 
     protected static T Create()
     {
@@ -46,6 +48,12 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T: MonoSingleton<T>
         
         DontDestroyOnLoad(gameObject);
     }
-
-
+    
+    protected void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            quitting = true;
+        }
+    }
 }
