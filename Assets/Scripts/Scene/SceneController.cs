@@ -4,6 +4,7 @@ using Character.Entry;
 using Cysharp.Threading.Tasks;
 using SaveLoad;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 namespace Scene
@@ -43,7 +44,7 @@ namespace Scene
             
             EntrySystem.ClearEntryFactories();
             
-            await SceneManager.LoadSceneAsync(sceneName);
+            await Addressables.LoadSceneAsync(sceneName);
             
             PersistentDataManager.LoadAllData();
             

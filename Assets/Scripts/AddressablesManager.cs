@@ -2,48 +2,80 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 public static class AddressablesManager
 {
-    public static AsyncOperationHandle<IList<T>> LoadAssetsWithLabel<T>(AssetLabelReference label, Action<AsyncOperationHandle<IList<T>>> callback)
+    public static AsyncOperationHandle<IList<T>> LoadAssetsAsync<T>(AssetLabelReference label, 
+        Action<AsyncOperationHandle<IList<T>>> onCompleted = null, 
+        Action<T> callback = null)
     {
-        var handler = Addressables.LoadAssetsAsync<T>(label, _ => { });
-        handler.Completed += callback;
-        return handler;
+        var handle = Addressables.LoadAssetsAsync<T>(label, callback);
+        handle.Completed += onCompleted;
+        return handle;
     }
-    public static AsyncOperationHandle<IList<T>> LoadAssetsWithLabel<T>(string label, Action<AsyncOperationHandle<IList<T>>> callback)
+    public static AsyncOperationHandle<IList<T>> LoadAssetsAsync<T>(string label, 
+        Action<AsyncOperationHandle<IList<T>>> onCompleted = null,
+        Action<T> callback = null)
     {
-        var handler = Addressables.LoadAssetsAsync<T>(label, _ => { });
-        handler.Completed += callback;
-        return handler;
+        var handle = Addressables.LoadAssetsAsync<T>(label, callback);
+        handle.Completed += onCompleted;
+        return handle;
     }
     
-    public static async UniTask<IList<T>> LoadAssetsWithLabel<T>(string label)
+    public static async UniTask<IList<T>> LoadAssets<T>(AssetReference label)
     {
-        var assets = await Addressables.LoadAssetsAsync<T>(label, _ => { });
+        var handle = Addressables.LoadAssetsAsync<T>(label, _ => { });
+        var assets = await handle;
+        Addressables.Release(handle);
         return assets;
     }
-
-    public static AsyncOperationHandle<T> LoadAssetWithName<T>(string name, Action<AsyncOperationHandle<T>> callback)
+    
+    public static async UniTask<IList<T>> LoadAssets<T>(string label)
     {
-        var handler = Addressables.LoadAssetAsync<T>(name);
-        handler.Completed += callback;
-        return handler;
+        var handle = Addressables.LoadAssetsAsync<T>(label, _ => { });
+        var assets = await handle;
+        Addressables.Release(handle);
+        return assets;
     }
     
-    public static async UniTask<T> LoadAssetWithName<T>(string label)
+    public static AsyncOperationHandle<T> LoadAssetAsync<T>(AssetReference name, Action<AsyncOperationHandle<T>> onCompleted = null)
     {
-        var asset = await Addressables.LoadAssetAsync<T>(label);
+        var handle = Addressables.LoadAssetAsync<T>(name);
+        handle.Completed += onCompleted;
+        return handle;
+    }
+
+    public static AsyncOperationHandle<T> LoadAssetAsync<T>(string name, Action<AsyncOperationHandle<T>> onCompleted = null)
+    {
+        var handle = Addressables.LoadAssetAsync<T>(name);
+        handle.Completed += onCompleted;
+        return handle;
+    }
+    
+    public static async UniTask<T> LoadAsset<T>(AssetReference name)
+    {
+        var handle = Addressables.LoadAssetAsync<T>(name);
+        var asset = await handle;
+        Addressables.Release(handle);
         return asset;
     }
     
-    public static AsyncOperationHandle<GameObject> InstantiateWithName(string name, Action<AsyncOperationHandle<GameObject>> callback)
+    public static async UniTask<T> LoadAsset<T>(string name)
     {
-        var handler = Addressables.InstantiateAsync(name);
-        handler.Completed += callback;
-        return handler;
+        var handle = Addressables.LoadAssetAsync<T>(name);
+        var asset = await handle;
+        Addressables.Release(handle);
+        return asset;
+    }
+    
+    public static AsyncOperationHandle<GameObject> Instantiate(string name, Action<AsyncOperationHandle<GameObject>> onCompleted)
+    {
+        var handle = Addressables.InstantiateAsync(name);
+        handle.Completed += onCompleted;
+        return handle;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Character.Entry;
+using SaveLoad;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,8 +8,11 @@ using UnityEngine.Serialization;
 
 namespace Character
 {
-    public class CharacterAttributes : MonoBehaviour, IAttributeEntryFactory
+    public class CharacterAttributes : MonoBehaviour, IAttributeEntryFactory, IDataPersister
     {
+        [SerializeField] DataSettings dataSettings;
+        [SerializeField] string attributeFactoryID;
+        
         [Button]
         public void UpdateValues()
         {
@@ -30,8 +34,6 @@ namespace Character
         public CharacterAttribute damage = new CharacterAttribute("伤害");
 
         public UnityEvent<float, float> hpChanged;
-
-        [SerializeField] string attributeFactoryID;
         
         void OnHpChanged()
         {
@@ -72,17 +74,42 @@ namespace Character
             return GetAttribute(entryInfo.attributeName);
         }
 
-        void Start()
+        void OnEnable()
         {
             EntrySystem.RegisterEntryFactory(attributeFactoryID, this);
+        }
+
+        void OnDisable()
+        {
+            EntrySystem.UnregisterEntryFactory(attributeFactoryID);
+        }
+        
+        void Start()
+        {
             health.MaxCurrentValue();
             OnHpChanged();
             GameManager.Instance.Player.Damageable.onHurt.AddListener(GainDamage);
         }
 
-        void OnDestroy()
+        public DataSettings GetDataSettings()
         {
-            EntrySystem.UnregisterEntryFactory(attributeFactoryID);
+            return dataSettings;
+        }
+
+        public void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
+        {
+            dataSettings.dataTag = dataTag;
+            dataSettings.persistenceType = persistenceType;
+        }
+
+        public Data SaveData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LoadData(Data data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

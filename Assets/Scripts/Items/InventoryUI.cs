@@ -192,7 +192,7 @@ namespace Items
             return t;
         }
         
-        void InitCurrentItemUI()
+        async void InitCurrentItemUI()
         {
             var currentTransform = transform.Find("CurrentItemUI");
             if (currentTransform != null)
@@ -204,7 +204,7 @@ namespace Items
             }
             else
             {
-                var currentItemUI = Pool.GetNewCurrentItemUI();
+                var currentItemUI = await Pool.GetNewCurrentItemUI();
                 currentItemUI.transform.SetParent(Rect);
                 currentItemUI.name = "CurrentItemUI";
                 

@@ -113,8 +113,9 @@ namespace Items
 
         public void SetIcon(string icon)
         {
+            ReleaseHandle(_iconHandle);
             string iconPath = UIItemsName + $"{icon}";
-            _iconHandle = AddressablesManager.LoadAssetWithName<Sprite>(iconPath, handle =>
+            _iconHandle = AddressablesManager.LoadAssetAsync<Sprite>(iconPath, handle =>
             {
                 Icon.sprite = handle.Result;
                 // Addressables.Release(handle);
@@ -152,7 +153,8 @@ namespace Items
 
         public void SetBg(string bg)
         {
-            _bgHandle = AddressablesManager.LoadAssetWithName<Sprite>(bg, handle =>
+            ReleaseHandle(_bgHandle);
+            _bgHandle = AddressablesManager.LoadAssetAsync<Sprite>(bg, handle =>
             {
                 Background.sprite = handle.Result;
                 // Addressables.Release(handle);
@@ -176,7 +178,7 @@ namespace Items
         }
         
 
-        public void Release()
+        protected virtual void Release()
         {
             // Icon.sprite = null;
             // Background.sprite = null;

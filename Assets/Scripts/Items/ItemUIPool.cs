@@ -1,18 +1,25 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.Serialization;
 
 namespace Items
 {
     public class ItemUIPool : MonoBehaviour, Core.IObjectPool<ItemUI>
     {
-        [SerializeField] GameObject itemUIPrefab;
-        [SerializeField] GameObject currentItemUIPrefab;
+        [SerializeField] AssetReferenceGameObject itemUIReference;
+        [SerializeField] AssetReferenceGameObject currentItemUIReference;
         [SerializeField] int initialSize = 10;
         [SerializeField] int maxSize = 1000;
+
+        AsyncOperationHandle<GameObject> _itemUIHandle;
+        AsyncOperationHandle<GameObject> _currentItemUIHandle;
         
         Stack<ItemUI> _pool;
         
@@ -47,15 +54,19 @@ namespace Items
             return t;
         }
 
-        public CurrentItemUI GetNewCurrentItemUI()
+        public async UniTask<CurrentItemUI> GetNewCurrentItemUI()
         {
-            var obj = Instantiate(currentItemUIPrefab);
+            await _currentItemUIHandle;
+            if (_currentItemUIHandle.Result == null) return null;
+            var obj = Instantiate(_currentItemUIHandle.Result);
             return obj.GetOrAddComponent<CurrentItemUI>();
         }
-        
-        public ItemUI CreatObject()
+
+        ItemUI CreatObject()
         {
-            var obj = Instantiate(itemUIPrefab, ItemsHolder);
+            if (_itemUIHandle.Result == null) return null;
+            
+            var obj = Instantiate(_itemUIHandle.Result, ItemsHolder);
             obj.SetActive(false);
             return obj.GetOrAddComponent<ItemUI>();
         }
@@ -77,17 +88,27 @@ namespace Items
             
             obj.transform.SetParent(ItemsHolder);
             obj.gameObject.SetActive(false);
-            obj.Release();
             _pool.Push(obj);
         }
 
-        void Awake()
+        async void OnEnable()
         {
+            _itemUIHandle = AddressablesManager.LoadAssetAsync<GameObject>(itemUIReference);
+            _currentItemUIHandle = AddressablesManager.LoadAssetAsync<GameObject>(currentItemUIReference);
+            
             _pool = new Stack<ItemUI>();
+            
+            await _itemUIHandle;
             for (var i = 0; i < initialSize; i++)
             {
                 _pool.Push(CreatObject());
             }
+        }
+
+        void OnDisable()
+        {
+            Addressables.Release(_itemUIHandle);
+            Addressables.Release(_currentItemUIHandle);
         }
     }
 }

@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31a33aa37805bf42b9df6eda6b71d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: Village
+  nextSceneName: Scenes/Village
   entranceTag: right
 --- !u!1 &123752843
 GameObject:
@@ -3043,7 +3043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31a33aa37805bf42b9df6eda6b71d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: Village
+  nextSceneName: Scenes/Village
   entranceTag: left
 --- !u!61 &1472503416
 BoxCollider2D:

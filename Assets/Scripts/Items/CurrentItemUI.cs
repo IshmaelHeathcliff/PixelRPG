@@ -25,7 +25,7 @@ namespace Items
             SetBg(bg0);
         }
 
-        public new void Release()
+        protected override void Release()
         {
             base.Release();
             ReleaseHandle(_bgHandle0);
@@ -35,13 +35,13 @@ namespace Items
         protected new void Awake()
         {
             base.Awake();
-            _bgHandle0 = AddressablesManager.LoadAssetWithName<Sprite>(CurrentItemBg0, handle =>
+            _bgHandle0 = AddressablesManager.LoadAssetAsync<Sprite>(CurrentItemBg0, handle =>
             {
                 bg0 = handle.Result;
                 SetBg(bg0);
             });
             
-            _bgHandle1 = AddressablesManager.LoadAssetWithName<Sprite>(CurrentItemBg1, handle =>
+            _bgHandle1 = AddressablesManager.LoadAssetAsync<Sprite>(CurrentItemBg1, handle =>
             {
                 bg1 = handle.Result;
             });

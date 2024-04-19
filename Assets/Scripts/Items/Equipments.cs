@@ -96,7 +96,7 @@ namespace Items
                 _equipments = equipmentData;
                 foreach (var (_, equipment) in _equipments)
                 {
-                    equipment.LoadEntries();
+                    equipment?.LoadEntries();
                 }
             }
         }

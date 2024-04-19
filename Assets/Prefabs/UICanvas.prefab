@@ -110,8 +110,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -271}
-  m_SizeDelta: {x: 200, y: 100}
+  m_AnchoredPosition: {x: 0, y: -181}
+  m_SizeDelta: {x: 128, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6422064598246013776
 CanvasRenderer:
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8bd1fd6231d8c854cadff7d4a5a88999, type: 3}
+  m_Sprite: {fileID: -9183563986519500879, guid: d674a17e889553b4e8d1e7002bb7a28a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -166,6 +166,14 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   size: {x: 0, y: 0}
   equipmentType: 6
+  equipped:
+    id: 0
+    itemName: 
+    iconName: 
+    size: {x: 0, y: 0}
+    type: 0
+    rarity: 0
+    entryPool: 
 --- !u!1 &2114408620203139041
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,8 +209,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 237, y: -221}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: 150, y: -149}
+  m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2355935588719423823
 CanvasRenderer:
@@ -232,7 +240,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8bd1fd6231d8c854cadff7d4a5a88999, type: 3}
+  m_Sprite: {fileID: -9183563986519500879, guid: d674a17e889553b4e8d1e7002bb7a28a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -257,6 +265,14 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   size: {x: 0, y: 0}
   equipmentType: 3
+  equipped:
+    id: 0
+    itemName: 
+    iconName: 
+    size: {x: 0, y: 0}
+    type: 0
+    rarity: 0
+    entryPool: 
 --- !u!1 &2570535638676239491
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,8 +308,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -253, y: 326}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -150, y: 157}
+  m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2365034914140864844
 CanvasRenderer:
@@ -323,7 +339,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8bd1fd6231d8c854cadff7d4a5a88999, type: 3}
+  m_Sprite: {fileID: -9183563986519500879, guid: d674a17e889553b4e8d1e7002bb7a28a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -348,6 +364,14 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   size: {x: 0, y: 0}
   equipmentType: 7
+  equipped:
+    id: 0
+    itemName: 
+    iconName: 
+    size: {x: 0, y: 0}
+    type: 0
+    rarity: 0
+    entryPool: 
 --- !u!1 &2721753966436007764
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,8 +482,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 326}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: 0, y: 157}
+  m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &683749227846709862
 CanvasRenderer:
@@ -489,7 +513,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8bd1fd6231d8c854cadff7d4a5a88999, type: 3}
+  m_Sprite: {fileID: -9183563986519500879, guid: d674a17e889553b4e8d1e7002bb7a28a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -514,6 +538,14 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   size: {x: 0, y: 0}
   equipmentType: 0
+  equipped:
+    id: 0
+    itemName: 
+    iconName: 
+    size: {x: 0, y: 0}
+    type: 0
+    rarity: 0
+    entryPool: 
 --- !u!1 &3379162133971620153
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,8 +583,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -487, y: 600}
-  m_SizeDelta: {x: 800, y: 600}
+  m_AnchoredPosition: {x: -357, y: 324}
+  m_SizeDelta: {x: 520, y: 648}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3861803326807024568
 CanvasRenderer:
@@ -582,7 +614,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5246ac0f407f674488cc9ee4794a44d2, type: 3}
+  m_Sprite: {fileID: 905196723489439514, guid: 7b133a79d99cb90469c1864f7a15d625, type: 3}
   m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -604,8 +636,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8639beb60a794465b407eb1a7676917a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSize: 100
-  frameWidth: 20
+  tileSize: 64
+  frameWidth: 4
 --- !u!114 &5424489825168920300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -850,8 +882,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -253, y: -221}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: -150, y: -149}
+  m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &232588480791277149
 CanvasRenderer:
@@ -881,7 +913,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8bd1fd6231d8c854cadff7d4a5a88999, type: 3}
+  m_Sprite: {fileID: -9183563986519500879, guid: d674a17e889553b4e8d1e7002bb7a28a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -906,6 +938,14 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   size: {x: 0, y: 0}
   equipmentType: 2
+  equipped:
+    id: 0
+    itemName: 
+    iconName: 
+    size: {x: 0, y: 0}
+    type: 0
+    rarity: 0
+    entryPool: 
 --- !u!1 &5831773913583323965
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,8 +981,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 17}
-  m_SizeDelta: {x: 200, y: 300}
+  m_AnchoredPosition: {x: 0, y: -24}
+  m_SizeDelta: {x: 128, y: 172}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1952729431215133359
 CanvasRenderer:
@@ -972,7 +1012,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8bd1fd6231d8c854cadff7d4a5a88999, type: 3}
+  m_Sprite: {fileID: -9183563986519500879, guid: d674a17e889553b4e8d1e7002bb7a28a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -997,6 +1037,14 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   size: {x: 0, y: 0}
   equipmentType: 1
+  equipped:
+    id: 0
+    itemName: 
+    iconName: 
+    size: {x: 0, y: 0}
+    type: 0
+    rarity: 0
+    entryPool: 
 --- !u!1 &5908917724461489894
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,8 +1116,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -253, y: 76}
-  m_SizeDelta: {x: 200, y: 300}
+  m_AnchoredPosition: {x: -150, y: 30}
+  m_SizeDelta: {x: 128, y: 172}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4421286293855295487
 CanvasRenderer:
@@ -1099,7 +1147,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8bd1fd6231d8c854cadff7d4a5a88999, type: 3}
+  m_Sprite: {fileID: -9183563986519500879, guid: d674a17e889553b4e8d1e7002bb7a28a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1124,6 +1172,14 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   size: {x: 0, y: 0}
   equipmentType: 4
+  equipped:
+    id: 0
+    itemName: 
+    iconName: 
+    size: {x: 0, y: 0}
+    type: 0
+    rarity: 0
+    entryPool: 
 --- !u!1 &6463306550628145335
 GameObject:
   m_ObjectHideFlags: 0
@@ -1202,7 +1258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 0.75
+  m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
@@ -1263,8 +1319,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 237, y: 326}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 150, y: 157}
+  m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6515666323513930330
 CanvasRenderer:
@@ -1294,7 +1350,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8bd1fd6231d8c854cadff7d4a5a88999, type: 3}
+  m_Sprite: {fileID: -9183563986519500879, guid: d674a17e889553b4e8d1e7002bb7a28a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1319,6 +1375,14 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   size: {x: 0, y: 0}
   equipmentType: 8
+  equipped:
+    id: 0
+    itemName: 
+    iconName: 
+    size: {x: 0, y: 0}
+    type: 0
+    rarity: 0
+    entryPool: 
 --- !u!1 &7340782950098552935
 GameObject:
   m_ObjectHideFlags: 0
@@ -1349,7 +1413,7 @@ RectTransform:
   m_GameObject: {fileID: 7340782950098552935}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2273448916854621844}
@@ -1529,8 +1593,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -874, y: 544}
-  m_SizeDelta: {x: 628.0664, y: 75.836}
+  m_AnchoredPosition: {x: -658, y: 470}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7576591105653799049
 MonoBehaviour:
@@ -1790,8 +1854,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -487, y: -43}
-  m_SizeDelta: {x: 800, y: 600}
+  m_AnchoredPosition: {x: 218, y: -107}
+  m_SizeDelta: {x: 520, y: 328}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3417125483320608822
 CanvasRenderer:
@@ -1821,7 +1885,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5246ac0f407f674488cc9ee4794a44d2, type: 3}
+  m_Sprite: {fileID: 905196723489439514, guid: 7b133a79d99cb90469c1864f7a15d625, type: 3}
   m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1843,8 +1907,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8639beb60a794465b407eb1a7676917a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSize: 100
-  frameWidth: 10
+  tileSize: 64
+  frameWidth: 4
 --- !u!114 &4038851950223926928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1894,8 +1958,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 237, y: 76}
-  m_SizeDelta: {x: 200, y: 300}
+  m_AnchoredPosition: {x: 150, y: 30}
+  m_SizeDelta: {x: 128, y: 172}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6234104645800772080
 CanvasRenderer:
@@ -1925,7 +1989,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8bd1fd6231d8c854cadff7d4a5a88999, type: 3}
+  m_Sprite: {fileID: -9183563986519500879, guid: d674a17e889553b4e8d1e7002bb7a28a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1950,6 +2014,14 @@ MonoBehaviour:
   startPos: {x: 0, y: 0}
   size: {x: 0, y: 0}
   equipmentType: 5
+  equipped:
+    id: 0
+    itemName: 
+    iconName: 
+    size: {x: 0, y: 0}
+    type: 0
+    rarity: 0
+    entryPool: 
 --- !u!1 &8947569461066201936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,8 +2058,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 817, y: 0}
-  m_SizeDelta: {x: 800, y: 1000}
+  m_AnchoredPosition: {x: 478, y: 174}
+  m_SizeDelta: {x: 480, y: 488}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9194253639842515232
 CanvasRenderer:
