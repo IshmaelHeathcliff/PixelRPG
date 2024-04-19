@@ -16,8 +16,6 @@ namespace Character.Entry
             this.entryInfo = entryInfo;
             this.attribute = attribute;
             this.entryID = entryInfo.entryID;
-            RandomizeLevel();
-            RandomizeValue();
         }
 
         public abstract void RandomizeLevel();

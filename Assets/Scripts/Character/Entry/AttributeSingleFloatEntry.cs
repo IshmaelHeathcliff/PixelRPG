@@ -8,6 +8,8 @@ namespace Character.Entry
     {
         public AttributeSingleFloatEntry(EntryInfo entryInfo, CharacterAttribute attribute) : base(entryInfo, attribute)
         {
+            RandomizeLevel();
+            RandomizeValue();
         }
         
         public override string Description()
@@ -17,7 +19,7 @@ namespace Character.Entry
                 string.Format(entryInfo.negativeDescription, attribute.Name, -value);
         }
         
-        public override void RandomizeLevel()
+        public sealed override void RandomizeLevel()
         {
             if (entryInfo is AttributeEntryInfo info)
             {
@@ -25,7 +27,7 @@ namespace Character.Entry
             }
         }
         
-        public override void RandomizeValue()
+        public sealed override void RandomizeValue()
         {
             if (entryInfo is AttributeEntryInfo info)
             {
