@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryName: Stash
-  size: {x: 8, y: 6}
+  size: {x: 8, y: 10}
   dataSettings:
     dataTag: stash
     persistenceType: 3

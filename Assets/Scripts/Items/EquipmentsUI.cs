@@ -9,7 +9,7 @@ namespace Items
 {
     public class EquipmentsUI : MonoBehaviour
     {
-        Dictionary<Vector2Int, Equipment.EquipmentType> _equipmentPosMap =
+        readonly Dictionary<Vector2Int, Equipment.EquipmentType> _equipmentPosMap =
             new()
             {
                 [Vector2Int.zero] = Equipment.EquipmentType.Ring,

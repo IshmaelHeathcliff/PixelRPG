@@ -1,12 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using SaveLoad;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities;
-using Sirenix.Utilities.Editor;
-using Unity.VisualScripting;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 namespace Items
@@ -286,6 +281,11 @@ namespace Items
         {
             return itemPos.x >= 0 && itemPos.x < size.x - itemSize.x + 1 &&
                    itemPos.y >= 0 && itemPos.y < size.y - itemSize.y + 1;
+        }
+
+        public Vector2Int GetSize()
+        {
+            return size;
         }
 
         #region DataPersistence

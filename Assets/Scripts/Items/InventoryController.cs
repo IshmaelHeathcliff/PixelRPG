@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SaveLoad;
-using Sirenix.OdinInspector;
-using Sirenix.Utilities.Editor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Items
 {
@@ -17,42 +13,11 @@ namespace Items
     {
         [SerializeField] DataSettings dataSettings;
 
-        [SerializeField] Inventory package;
-        [SerializeField] InventoryUI packageUI;
-        
-        [SerializeField] Inventory stash;
-        [SerializeField] InventoryUI stashUI;
+        [SerializeField] List<InventoryControl> inventoryControlList;
+        Dictionary<InventoryControl.InventoryType, InventoryControl> _inventoryControls;
 
         Vector2Int _globalCurrentPos;
         ItemUIPool _pool;
-
-        public class InventoryControl
-        {
-            public Inventory Inventory { get; }
-            public InventoryUI UI { get; }
-            public InventoryUIGrid Grid { get; }
-
-            public InventoryControl(Inventory inventory, InventoryUI inventoryUI)
-            {
-                Inventory = inventory;
-                UI = inventoryUI;
-                Grid = inventoryUI.GetComponent<InventoryUIGrid>();
-
-                if (Inventory != null)
-                {
-                    Inventory.UpdateInventory += UI.Redraw;
-                    Inventory.OnUpdateInventory();
-                }
-            }
-
-            public void Update()
-            {
-                Inventory.OnUpdateInventory();
-            }
-        }
-        
-        InventoryControl _packageControl;
-        InventoryControl _stashControl;
 
         InventoryControl _currentControl;
         InventoryControl _preControl;
@@ -70,70 +35,27 @@ namespace Items
 
         void PickUp()
         {
-            _currentControl.Inventory.PickUp(LocalCurrentPos);
-            _currentControl.Update();
-            UpdateCurrentItemUI();
+            _currentControl.PickUp();
         }
 
         void PutDown()
         {
-            _currentControl.Inventory.PutDown(LocalCurrentPos);
-            _currentControl.Update();
-            UpdateCurrentItemUI();
-        }
-
-        public void UpdateCurrentItemUI()
-        {
-            if (_currentControl == null)
-            {
-                return;
-            }
-            
-            if (LocalCurrentPos.x < 0 || LocalCurrentPos.y < 0)
-            {
-                return;
-            }
-            
-            if (Inventory.PickedUp != null)
-            {
-                _currentControl.UI.SetCurrentItemUI(LocalCurrentPos, Inventory.PickedUp.Size);
-                return;
-            }
-            
-            var item = _currentControl.Inventory.GetItem(LocalCurrentPos, out var itemPos);
-            if (item != null)
-            {
-                _currentControl.UI.SetCurrentItemUI(itemPos, item.Size);
-                LocalCurrentPos = itemPos;
-            }
-            else
-            {
-                _currentControl.UI.SetCurrentItemUI(LocalCurrentPos, Vector2Int.one);
-            }
+            _currentControl.PutDown();
         }
 
         public bool AddItemToPackage(Item item)
         {
-            bool result = _packageControl.Inventory.AddItem(item);
-            _packageControl.Inventory.OnUpdateInventory();
+            var packageControl = _inventoryControls[InventoryControl.InventoryType.Package];
+            bool result = packageControl.AddItem(item);
             return result;
         }
 
         public bool AddItem(Item item)
         {
-            if (_currentControl == null)
-            {
-                return false;
-            }
-            
-            
-            bool result = _currentControl.Inventory.AddItem(item);
-            _currentControl.Inventory.OnUpdateInventory();
-
-            return result;
+            return _currentControl != null && _currentControl.AddItem(item);
         }
 
-        public void PickAndPut()
+        void PickAndPut()
         {
             if (_currentControl == null)
             {
@@ -150,23 +72,11 @@ namespace Items
             }
         }
 
-        public void AddRandomItem()
-        {
-            if (_currentControl == null)
-            {
-                return;
-            }
-            
-            _currentControl.Inventory.AddRandomItem();
-            _currentControl.Inventory.OnUpdateInventory();
-        }
-
         public void SwitchInventory(InventoryControl control)
         {
             if (control == null)
             {
-                _currentControl?.UI.DisableUI();
-                (_preControl, _currentControl) = (_currentControl, _preControl);
+                _currentControl?.Disable();
                 _currentControl = null;
                 _inventoryInput.Disable();
                 return;
@@ -176,97 +86,71 @@ namespace Items
             
             if (_currentControl == control)
             {
-                control.UI.DisableUI();
-                control.UI.gameObject.SetActive(false);
+                control.Close();
                 _currentControl = null;
             }
             else
             {
-                _currentControl?.UI.DisableUI();
-
-                (_preControl, _currentControl) = (_currentControl, _preControl);
+                _currentControl?.Disable();
                 _currentControl = control;
 
-                _currentControl.UI.EnableUI(Vector2Int.zero);
-                _currentControl.UI.gameObject.SetActive(true);
-                LocalCurrentPos = Vector2Int.zero;
-                _currentControl.Update();
-                UpdateCurrentItemUI();
+                _currentControl.Open(Vector2Int.zero);
             }
             
         }
 
-        public void SwitchPackage()
+        void SwitchPackage()
         {
+            if (!_inventoryControls.TryGetValue(InventoryControl.InventoryType.Package, out var packageControl)) return;
+            _inventoryControls.TryGetValue(InventoryControl.InventoryType.Stash, out _preControl);
             _equipmentController.SetActive(false);
-            SwitchInventory(_packageControl);
+            SwitchInventory(packageControl);
         }
 
-        public void SwitchStash()
+        void SwitchStash()
         {
-            if (_stashControl.Inventory == null)
-            {
-                return;
-            }
-            
+            if (!_inventoryControls.TryGetValue(InventoryControl.InventoryType.Stash, out var stashControl)) return;
+            _inventoryControls.TryGetValue(InventoryControl.InventoryType.Package, out _preControl);
             _equipmentController.SetActive(false);
-            SwitchInventory(_stashControl);
+            SwitchInventory(stashControl);
+
         }
 
-        public void DeleteItem()
-        {
-            if (Inventory.PickedUp != null)
-            {
-                Inventory.PickedUp = null;
-            }
-            else
-            {
-                if (_currentControl == null)
-                {
-                    return;
-                }
-                _currentControl.Inventory.RemoveItem(LocalCurrentPos);
-            }
-            
-            UpdateCurrentItemUI();
-            _currentControl.Update();
-        }
 
-        public void TransferItem()
+        void TransferItem()
         {
             if (_currentControl == null)
             {
                 return;
             }
             
-            if (_preControl == null || !_preControl.UI.gameObject.activeSelf)
+            if (_preControl == null || !_preControl.IsOpen)
             {
                 return;
             }
             
             if (Inventory.PickedUp != null)
             {
-                if (_preControl.Inventory.AddItem(Inventory.PickedUp))
+                if (_preControl.AddItem(Inventory.PickedUp))
                 {
                     Inventory.PickedUp = null;
                 }
             }
             else
             {
-                var item = _currentControl.Inventory.GetItem(LocalCurrentPos, out var itemPos);
-                if (_preControl.Inventory.AddItem(item))
+                var item = _currentControl.GetItem();
+                if (item == null) return;
+                if (_preControl.AddItem(item))
                 {
-                    _currentControl.Inventory.RemoveItem(itemPos);
-                    
+                    _currentControl.RemoveItem();
                 }
             }
             
-            UpdateCurrentItemUI();
             _currentControl.Update();
             _preControl.Update();
         }
         
-        public void EquipItem()
+        void EquipItem()
         {
             if (Inventory.PickedUp != null)
             {
@@ -282,38 +166,31 @@ namespace Items
                 {
                     return;
                 }
-                
-                var item = _currentControl.Inventory.GetItem(LocalCurrentPos, out var itemPos);
+
+                var item = _currentControl.GetItem();
                 if (item is Equipment equipment)
                 {
                     var equipped = _equipmentController.Equip(equipment);
-                    _currentControl.Inventory.RemoveItem(itemPos);
+                    _currentControl.RemoveItem();
                     if (equipped != null)
                     {
-                        _currentControl.Inventory.AddItem(equipped);
+                        _currentControl.AddItem(equipped);
                     }
                 }
             }
             
-            UpdateCurrentItemUI();
             _currentControl.Update();
         }
 
-        public void MoveCurrentPos(InputAction.CallbackContext context)
+        void MoveCurrentPos(InputAction.CallbackContext context)
         {
-            if (_currentControl == null)
-            {
-                return;
-            }
+            if (_currentControl == null) return;
             
             var inputDirection = context.ReadValue<Vector2>().normalized;
             var direction = Movement(inputDirection);
-            var newPos = LocalCurrentPos + direction;
-            if (CheckPos(newPos))
-            {
-                LocalCurrentPos = newPos;
-            }
-            UpdateCurrentItemUI();
+            var newPos = _currentControl.CurrentPos + direction;
+            _currentControl.CurrentPos = _currentControl.AlterPos(newPos);
+            _currentControl.Update();
         }
 
         Vector2Int Movement(Vector2 inputDirection)
@@ -346,30 +223,18 @@ namespace Items
 
             if (Inventory.PickedUp == null)
             {
-                if (_currentControl.Inventory == null)
-                {
-                    Debug.Log("Current Inventory null");
-                }
-                
                 if (direction == Vector2Int.right || direction == Vector2Int.up)
                 {
-                    direction *= _currentControl.UI.GetCurrentItemUISize();
+                    direction *= _currentControl.GetCurrentItemUISize();
                 }
             }
 
             return direction;
         }
 
-
-        bool CheckPos(Vector2Int pos)
-        {
-            return _currentControl.Inventory.CheckPos(pos, 
-                Inventory.PickedUp == null ? Vector2Int.one : Inventory.PickedUp.Size);
-        }
-
         void AddRandomItemAction(InputAction.CallbackContext context)
         {
-            AddRandomItem();
+            _currentControl.AddRandomItem();
         }
 
         void PickAndPutAction(InputAction.CallbackContext context)
@@ -379,7 +244,7 @@ namespace Items
 
         void DeleteItemAction(InputAction.CallbackContext context)
         {
-            DeleteItem();
+            _currentControl.DeleteItem();
         }
 
         void TransferItemAction(InputAction.CallbackContext context)
@@ -448,7 +313,7 @@ namespace Items
         {
             var pickedUpData = (Data<Item>) data;
             Inventory.PickedUp = pickedUpData.value;
-            UpdateCurrentItemUI();
+            _currentControl?.Update();
         }
         #endregion
 
@@ -457,6 +322,18 @@ namespace Items
             _equipmentController = GetComponent<EquipmentController>();
             _pool = GetComponent<ItemUIPool>();
             _currentControl = null;
+            
+            _inventoryControls = new Dictionary<InventoryControl.InventoryType, InventoryControl>();
+            foreach (var control in inventoryControlList)
+            {
+                _inventoryControls[control.GetInventoryType()] = control;
+            }
+            
+            foreach (var (_, control) in _inventoryControls)
+            {
+                control.Init(_pool);
+            }
+
             PersistentDataManager.RegisterPersister(this);
         }
 
@@ -474,12 +351,7 @@ namespace Items
 
         void Start()
         {
-            _packageControl = new InventoryControl(package, packageUI);
-            _stashControl = new InventoryControl(stash, stashUI);
-            _packageControl.UI.Pool = _pool;
-            _stashControl.UI.Pool = _pool;
-            _packageControl.UI.gameObject.SetActive(false);
-            _stashControl.UI.gameObject.SetActive(false);
+
         }
     }
 }

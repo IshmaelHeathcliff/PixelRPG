@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryName: Package
-  size: {x: 8, y: 6}
+  size: {x: 8, y: 5}
   dataSettings:
     dataTag: package
     persistenceType: 3
@@ -404,6 +404,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3aaddc7cae45b8a559c27b70f785ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dataSettings:
+    dataTag: 520daee6-d8c8-4b86-8b89-a97486caee2c
+    persistenceType: 3
+  attributeFactoryID: player
   hpChanged:
     m_PersistentCalls:
       m_Calls:

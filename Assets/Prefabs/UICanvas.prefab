@@ -1479,10 +1479,13 @@ MonoBehaviour:
   dataSettings:
     dataTag: pickUp
     persistenceType: 3
-  package: {fileID: 0}
-  packageUI: {fileID: 7461629204693388583}
-  stash: {fileID: 0}
-  stashUI: {fileID: 3468204014549250162}
+  inventoryControlList:
+  - inventoryType: 0
+    inventory: {fileID: 0}
+    inventoryUI: {fileID: 7461629204693388583}
+  - inventoryType: 1
+    inventory: {fileID: 0}
+    inventoryUI: {fileID: 3468204014549250162}
 --- !u!114 &4676507840077334245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1509,8 +1512,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e08a12ac529c754c9d0108fd17a818a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemUIPrefab: {fileID: 6192734066108017962, guid: f60e237068998434e93e2267450f9352, type: 3}
-  currentItemUIPrefab: {fileID: 340846135821034761, guid: b19459826a6b43d458c79a6644dbb9b4, type: 3}
+  itemUIReference:
+    m_AssetGUID: f60e237068998434e93e2267450f9352
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  currentItemUIReference:
+    m_AssetGUID: b19459826a6b43d458c79a6644dbb9b4
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
   initialSize: 10
   maxSize: 1000
 --- !u!1 &8312549972194198510

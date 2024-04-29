@@ -63,8 +63,13 @@ namespace Items
             }
             
         }
-        
-        public ItemUIPool Pool { private get; set; }
+
+        ItemUIPool _pool;
+
+        public void SetPool(ItemUIPool pool)
+        {
+            _pool = pool;
+        }
 
         public void Redraw(Queue<Inventory.InventoryAction> actions)
         {
@@ -78,7 +83,7 @@ namespace Items
                         {
                             foreach (var (pos, itemUI) in _itemUIs)
                             {
-                                Pool.Push(itemUI);
+                                _pool.Push(itemUI);
                             }
 
                             _itemUIs.Clear();
@@ -109,9 +114,9 @@ namespace Items
             }
         }
 
-        void AddItemUI(Vector2Int gridPos, Item item)
+        async void AddItemUI(Vector2Int gridPos, Item item)
         {
-            var itemUI = Pool.Pop();
+            var itemUI = await _pool.Pop();
             itemUI.transform.SetParent(ItemsHolder);
             _itemUIs.Add(gridPos, itemUI);
             
@@ -128,7 +133,7 @@ namespace Items
         {
             if (_itemUIs.ContainsKey(pos))
             {
-                Pool.Push(_itemUIs[pos]);
+                _pool.Push(_itemUIs[pos]);
                 _itemUIs.Remove(pos);
                 return;
             }
@@ -137,7 +142,7 @@ namespace Items
             {
                 if (Inventory.ContainPoint(itemUI.startPos, itemUI.startPos + itemUI.size, pos))
                 {
-                    Pool.Push(itemUI);
+                    _pool.Push(itemUI);
                     _itemUIs.Remove(p);
                     return;
                 }
@@ -204,7 +209,7 @@ namespace Items
             }
             else
             {
-                var currentItemUI = await Pool.GetNewCurrentItemUI();
+                var currentItemUI = await _pool.GetNewCurrentItemUI();
                 currentItemUI.transform.SetParent(Rect);
                 currentItemUI.name = "CurrentItemUI";
                 
@@ -237,6 +242,11 @@ namespace Items
         void Awake()
         {
             _rect = GetComponent<RectTransform>();
+        }
+
+        void Start()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

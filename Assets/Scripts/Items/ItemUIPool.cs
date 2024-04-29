@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Pool;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.Serialization;
 
 namespace Items
 {
-    public class ItemUIPool : MonoBehaviour, Core.IObjectPool<ItemUI>
+    public class ItemUIPool : MonoBehaviour
     {
         [SerializeField] AssetReferenceGameObject itemUIReference;
         [SerializeField] AssetReferenceGameObject currentItemUIReference;
@@ -62,8 +58,9 @@ namespace Items
             return obj.GetOrAddComponent<CurrentItemUI>();
         }
 
-        ItemUI CreatObject()
+        async UniTask<ItemUI> CreatObject()
         {
+            await _itemUIHandle;
             if (_itemUIHandle.Result == null) return null;
             
             var obj = Instantiate(_itemUIHandle.Result, ItemsHolder);
@@ -71,9 +68,17 @@ namespace Items
             return obj.GetOrAddComponent<ItemUI>();
         }
 
-        public ItemUI Pop()
+        public async UniTask<ItemUI> Pop()
         {
-            var itemUI = Count > 0 ? _pool.Pop() : CreatObject();
+            ItemUI itemUI;
+            if (Count > 0)
+            {
+                itemUI = _pool.Pop();
+            }
+            else
+            {
+                itemUI =  await CreatObject();
+            }
             itemUI.gameObject.SetActive(true);
             return itemUI;
         }
@@ -98,10 +103,9 @@ namespace Items
             
             _pool = new Stack<ItemUI>();
             
-            await _itemUIHandle;
             for (var i = 0; i < initialSize; i++)
             {
-                _pool.Push(CreatObject());
+                _pool.Push(await CreatObject());
             }
         }
 

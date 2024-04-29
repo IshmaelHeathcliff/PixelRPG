@@ -1,20 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    int _count;
+    public Vector2Int size;
+
+    public Vector2Int GetSize()
+    {
+        return size;
+    }
+
+    [Button]
+    void ChangeSize(Vector2Int newSize)
+    {
+        var s = GetSize();
+        s = newSize;
+    }
     // Start is called before the first frame update
     void Start()
     {
+        
 
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // _count++;
     }
 }

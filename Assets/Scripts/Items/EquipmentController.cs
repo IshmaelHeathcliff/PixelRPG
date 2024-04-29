@@ -78,6 +78,11 @@ namespace Items
         {
             var currentType = equipmentsUI.GetCurrentEquipmentType();
             var equipped = equipments.Takeoff(currentType);
+            if (equipped == null)
+            {
+                return;
+            }
+            
             if (_inventoryController.AddItemToPackage(equipped))
             {
                 equipmentsUI.Takeoff(currentType);
