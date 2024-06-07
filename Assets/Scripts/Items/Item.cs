@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using SaveLoad;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Items
 {
@@ -49,7 +50,7 @@ namespace Items
 
         // [SerializeField][JsonProperty] ItemType type;
         [SerializeField][JsonProperty] int id;
-        [SerializeField][JsonProperty] string itemName;
+        [SerializeField][JsonProperty] string name;
         [SerializeField][JsonProperty] string iconName;
         [SerializeField][JsonProperty] Vector2Int size;
 
@@ -58,7 +59,7 @@ namespace Items
         [JsonIgnore]
         public int ID => id;
         [JsonIgnore]
-        public string ItemName => itemName;
+        public string Name => name;
         [JsonIgnore]
         public string IconName => iconName;
         [JsonIgnore]

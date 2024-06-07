@@ -4,7 +4,7 @@
     {
       "$type": "Items.Stackable, Assembly-CSharp",
       "id": 0,
-      "itemName": "金币",
+      "name": "金币",
       "iconName": "Loots/Loots_11.png",
       "size": {
         "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
@@ -28,7 +28,7 @@
       },
       "_entries": null,
       "id": 1,
-      "itemName": "大剑",
+      "name": "大剑",
       "iconName": "Sword/Sword_02_01.png",
       "size": {
         "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",

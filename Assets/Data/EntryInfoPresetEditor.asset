@@ -141,7 +141,7 @@ MonoBehaviour:
       Data: 1
     - Name: name
       Entry: 1
-      Data: "\u751F\u547D\u63D0\u9AD8\u503C"
+      Data: "\u751F\u547D\u503C\u63D0\u9AD8"
     - Name: entryType
       Entry: 3
       Data: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
       Data: 2
     - Name: name
       Entry: 1
-      Data: "\u751F\u547D\u603B\u589E"
+      Data: "\u751F\u547D\u503C\u603B\u589E"
     - Name: entryType
       Entry: 3
       Data: 0
@@ -301,8 +301,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: EntryInfoPresetEditor+Data
-      Entry: 9
-      Data: 0
   jsonName: Entries.json
   jsonPath: Preset

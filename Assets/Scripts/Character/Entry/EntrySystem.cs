@@ -60,6 +60,12 @@ namespace Character.Entry
         {
             return Instance.CreateEntryInternal(entryInfo);
         }
+
+        public static IEntry CreateEntry(int entryId)
+        {
+            return Instance.CreateEntryInternal(entryId);
+
+        }
         
         public static IEntry CreateAttributeEntry(EntryInfo entryInfo, CharacterAttribute attribute)
         {
@@ -129,6 +135,18 @@ namespace Character.Entry
         IEntry CreateEntryInternal(EntryInfo entryInfo)
         {
             if (_entryFactories.TryGetValue(entryInfo.factoryID, out var factory))
+            {
+                return factory.CreateEntry(entryInfo);
+            }
+
+            return null;
+        }
+        
+        IEntry CreateEntryInternal(int entryId)
+        {
+            var entryInfo = GetEntryInfo(entryId);
+            
+            if (entryInfo != null && _entryFactories.TryGetValue(entryInfo.factoryID, out var factory))
             {
                 return factory.CreateEntry(entryInfo);
             }

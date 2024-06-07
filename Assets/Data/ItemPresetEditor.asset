@@ -33,7 +33,7 @@ MonoBehaviour:
     - Name: id
       Entry: 3
       Data: 0
-    - Name: itemName
+    - Name: name
       Entry: 1
       Data: "\u91D1\u5E01"
     - Name: iconName
@@ -60,7 +60,7 @@ MonoBehaviour:
     - Name: id
       Entry: 3
       Data: 1
-    - Name: itemName
+    - Name: name
       Entry: 1
       Data: "\u5927\u5251"
     - Name: iconName
@@ -117,8 +117,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: ItemPresetEditor+Data
-      Entry: 9
-      Data: 0
-  jsonName: items.json
+  jsonName: Items.json
   jsonPath: Preset

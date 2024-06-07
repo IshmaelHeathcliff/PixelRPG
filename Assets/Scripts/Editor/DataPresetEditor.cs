@@ -4,6 +4,7 @@ using System.IO;
 using Items;
 using SaveLoad;
 using Sirenix.OdinInspector;
+using Sirenix.OdinInspector.Editor;
 using Sirenix.Serialization;
 using Sirenix.Utilities.Editor;
 using UnityEngine;
@@ -23,7 +24,8 @@ namespace Editor
             AddCopiesLastElement = true,
             NumberOfItemsPerPage = 10,
             DefaultExpandedState = true,
-            OnTitleBarGUI = "DrawRefreshButton"
+            OnTitleBarGUI = "DrawRefreshButton",
+            ListElementLabelName = "name"
             )]
         public virtual List<T> Data { get; set; }
 

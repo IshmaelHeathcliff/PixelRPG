@@ -61,6 +61,7 @@ namespace Character.Entry
         public string factoryID;
         public string positiveDescription;
         public string negativeDescription;
+        
     }
 
 }

@@ -1,0 +1,19 @@
+{
+  "$type": "System.Collections.Generic.List`1[[Character.Buff.BuffInfo, Assembly-CSharp]], mscorlib",
+  "$values": [
+    {
+      "$type": "Character.Buff.BuffInfo, Assembly-CSharp",
+      "id": 0,
+      "name": "健实",
+      "description": "加强生命",
+      "entryID": {
+        "$type": "System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib",
+        "$values": [
+          0,
+          1,
+          2
+        ]
+      }
+    }
+  ]
+}

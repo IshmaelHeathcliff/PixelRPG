@@ -69,7 +69,7 @@
         ]
       },
       "entryID": 1,
-      "name": "生命提高值",
+      "name": "生命值提高",
       "entryType": 0,
       "factoryID": "player",
       "positiveDescription": "{0}提高{1}%",
@@ -101,7 +101,7 @@
         ]
       },
       "entryID": 2,
-      "name": "生命总增",
+      "name": "生命值总增",
       "entryType": 0,
       "factoryID": "player",
       "positiveDescription": "{0}总增{1}%",
