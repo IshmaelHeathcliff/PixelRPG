@@ -181,11 +181,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e3439700e7f314da5ce68616f52596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  leftBoundary: {fileID: 7838601756212198424}
-  rightBoundary: {fileID: 556124726512180140}
-  upBoundary: {fileID: 6621291631253873091}
-  downBoundary: {fileID: 5599769668147952084}
+  _speed: 5
+  _leftBoundary: {fileID: 7838601756212198424}
+  _rightBoundary: {fileID: 556124726512180140}
+  _upBoundary: {fileID: 6621291631253873091}
+  _downBoundary: {fileID: 5599769668147952084}
 --- !u!1 &5328394376596169522
 GameObject:
   m_ObjectHideFlags: 0

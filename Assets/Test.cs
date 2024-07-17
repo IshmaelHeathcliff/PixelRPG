@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Test : MonoBehaviour
 {
-    public Vector2Int size;
+    [FormerlySerializedAs("size")] public Vector2Int _size;
 
     public Vector2Int GetSize()
     {
-        return size;
+        return _size;
     }
 
     [Button]

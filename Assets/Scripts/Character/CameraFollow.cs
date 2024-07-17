@@ -1,15 +1,17 @@
 using System;
+using QFramework;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Character
 {
-    public class CameraFollow : MonoBehaviour
+    public class CameraFollow : MonoBehaviour, IController
     {
-        [SerializeField] float speed = 5;
-        [SerializeField] Transform leftBoundary;
-        [SerializeField] Transform rightBoundary;
-        [SerializeField] Transform upBoundary;
-        [SerializeField] Transform downBoundary;
+        [SerializeField] float _speed = 5;
+        [SerializeField] Transform _leftBoundary;
+        [SerializeField] Transform _rightBoundary;
+        [SerializeField] Transform _upBoundary;
+        [SerializeField] Transform _downBoundary;
 
         Camera _camera;
         Transform _transform;
@@ -24,27 +26,27 @@ namespace Character
 
         void MoveCamera()
         {
-            var playerPosition = GameManager.Instance.Player.transform.position;
-            var targetPosition = Vector3.Lerp(_transform.position, playerPosition, Time.deltaTime * speed);
+            var playerPosition = this.SendQuery(new PlayerPositionQuery());
+            var targetPosition = Vector3.Lerp(_transform.position, playerPosition, Time.deltaTime * _speed);
 
-            if (targetPosition.x - _cameraHalfSize.x < leftBoundary.position.x)
+            if (targetPosition.x - _cameraHalfSize.x < _leftBoundary.position.x)
             {
-                targetPosition.x = leftBoundary.position.x + _cameraHalfSize.x;
+                targetPosition.x = _leftBoundary.position.x + _cameraHalfSize.x;
             }
 
-            if (targetPosition.x + _cameraHalfSize.x > rightBoundary.position.x)
+            if (targetPosition.x + _cameraHalfSize.x > _rightBoundary.position.x)
             {
-                targetPosition.x = rightBoundary.position.x - _cameraHalfSize.x;
+                targetPosition.x = _rightBoundary.position.x - _cameraHalfSize.x;
             }
 
-            if (targetPosition.y - _cameraHalfSize.y < downBoundary.position.y)
+            if (targetPosition.y - _cameraHalfSize.y < _downBoundary.position.y)
             {
-                targetPosition.y = downBoundary.position.y + _cameraHalfSize.y;
+                targetPosition.y = _downBoundary.position.y + _cameraHalfSize.y;
             }
 
-            if (targetPosition.y + _cameraHalfSize.y > upBoundary.position.y)
+            if (targetPosition.y + _cameraHalfSize.y > _upBoundary.position.y)
             {
-                targetPosition.y = upBoundary.position.y - _cameraHalfSize.y;
+                targetPosition.y = _upBoundary.position.y - _cameraHalfSize.y;
             }
 
             targetPosition.z = _transform.position.z;
@@ -58,6 +60,11 @@ namespace Character
         void Update()
         {
             MoveCamera();
+        }
+
+        public IArchitecture GetArchitecture()
+        {
+            return PixelRPG.Interface;
         }
     }
 }

@@ -1,102 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
+using QFramework;
 using SaveLoad;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Character.Entry
 {
-    public class EntrySystem : MonoSingleton<EntrySystem>
+    public class EntrySystem : AbstractSystem
     {
-        #region static
-        static Dictionary<int, EntryInfo> _entryInfoCache;
+        Dictionary<int, EntryInfo> _entryInfoCache;
         const string JsonPath = "Preset";
         const string JsonName = "Entries.json";
 
-        static void LoadEntryInfo()
+        void LoadEntryInfo()
         {
-            var entryInfoList = SaveLoadManager.Load<List<EntryInfo>>(JsonName, JsonPath);
+            _entryInfoCache = new Dictionary<int, EntryInfo>();
+            var entryInfoList = this.GetUtility<SaveLoadUtility>().Load<List<EntryInfo>>(JsonName, JsonPath);
             foreach (var entryInfo in entryInfoList)
             {
-                _entryInfoCache.Add(entryInfo.entryID, entryInfo);
+                _entryInfoCache.Add(entryInfo.EntryID, entryInfo);
             }
         }
 
-        public static EntryInfo GetEntryInfo(int id)
+        public EntryInfo GetEntryInfo(int id)
         {
             if (_entryInfoCache == null)
             {
-                _entryInfoCache = new Dictionary<int, EntryInfo>();
                 LoadEntryInfo();
             }
             
-            if (!_entryInfoCache.ContainsKey(id)) return null;
-            return _entryInfoCache[id];
+            return _entryInfoCache.GetValueOrDefault(id);
         }
 
-        public static CharacterAttribute GetAttribute(AttributeEntryInfo entryInfo)
-        {
-            return Instance.GetAttributeInternal(entryInfo);
-        }
-
-        public static void RegisterEntryFactory(string factoryID, IEntryFactory factory)
-        {
-            Instance.Register(factoryID, factory);
-        }
-
-        public static void UnregisterEntryFactory(string factoryID)
-        {
-            if (!quitting)
-            {
-                Instance.Unregister(factoryID);
-            }
-        }
-
-        public static void ClearEntryFactories()
-        {
-            Instance._entryFactories.Clear();
-        }
-
-        public static IEntry CreateEntry(EntryInfo entryInfo)
-        {
-            return Instance.CreateEntryInternal(entryInfo);
-        }
-
-        public static IEntry CreateEntry(int entryId)
-        {
-            return Instance.CreateEntryInternal(entryId);
-
-        }
-        
-        public static IEntry CreateAttributeEntry(EntryInfo entryInfo, CharacterAttribute attribute)
+        public IEntry CreateAttributeEntry(EntryInfo entryInfo, CharacterAttribute attribute)
         {
             return AttributeEntryCommonFactory.CreateAttributeEntry(entryInfo, attribute);
         }
         
-        #endregion
         
-        event System.Action Schedule = null;
 
         readonly Dictionary<string, IEntryFactory> _entryFactories = new();
 
-        void Register(string factoryID, IEntryFactory factory)
+        public void ClearEntryFactories()
         {
-            Schedule += () =>
-            {
+            _entryFactories.Clear();
+        }
+        
+        public void RegisterFactory(string factoryID, IEntryFactory factory)
+        {
                 _entryFactories.Add(factoryID, factory);
-            };
         }
 
-        void Unregister(string factoryID)
+        public void UnregisterFactory(string factoryID)
         {
-            Schedule += () =>
-            {
                 _entryFactories.Remove(factoryID);
-            };
         }
 
-        CharacterAttribute GetAttributeInternal(AttributeEntryInfo entryInfo)
+        public CharacterAttribute GetAttribute(AttributeEntryInfo entryInfo)
         {
-            if (_entryFactories.TryGetValue(entryInfo.factoryID, out var factory))
+            if (_entryFactories.TryGetValue(entryInfo.FactoryID, out var factory))
             {
                 if (factory is IAttributeEntryFactory attributeFactory)
                 {
@@ -107,34 +70,9 @@ namespace Character.Entry
             return null;
         }
         
-        protected override void Awake()
+        public IEntry CreateEntry(EntryInfo entryInfo)
         {
-            if (_instance == null)
-            {
-                _instance = this;
-            }
-        
-            if(_instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            
-            DontDestroyOnLoad(gameObject);
-        }
-        
-        void Update()
-        {
-            if (Schedule != null)
-            {
-                Schedule();
-                Schedule = null;
-            }
-        }
-
-        IEntry CreateEntryInternal(EntryInfo entryInfo)
-        {
-            if (_entryFactories.TryGetValue(entryInfo.factoryID, out var factory))
+            if (_entryFactories.TryGetValue(entryInfo.FactoryID, out var factory))
             {
                 return factory.CreateEntry(entryInfo);
             }
@@ -142,16 +80,23 @@ namespace Character.Entry
             return null;
         }
         
-        IEntry CreateEntryInternal(int entryId)
+        public IEntry CreateEntry(int entryId)
         {
             var entryInfo = GetEntryInfo(entryId);
             
-            if (entryInfo != null && _entryFactories.TryGetValue(entryInfo.factoryID, out var factory))
+            if (entryInfo != null && _entryFactories.TryGetValue(entryInfo.FactoryID, out var factory))
             {
                 return factory.CreateEntry(entryInfo);
             }
+            
+            Debug.LogError("entryInfo is invalid or factory is not registered");
 
             return null;
+        }
+
+        protected override void OnInit()
+        {
+            LoadEntryInfo();
         }
     }
 }

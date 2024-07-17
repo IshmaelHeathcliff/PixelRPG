@@ -7,22 +7,22 @@ namespace Items
     {
         const string CurrentItemBg0 = "Assets/Artworks/UI/CurrentCell0.aseprite[CurrentCell0]";
         const string CurrentItemBg1 = "Assets/Artworks/UI/CurrentCell1.aseprite[CurrentCell1]";
-        Sprite bg0;
-        Sprite bg1;
+        Sprite _bg0;
+        Sprite _bg1;
         AsyncOperationHandle<Sprite> _bgHandle0;
         AsyncOperationHandle<Sprite> _bgHandle1;
         public void PickUp()
         {
             SetBgColor(Color.red);
             EnableIcon();
-            SetBg(bg1);
+            SetBg(_bg1);
         }
 
         public void PutDown()
         {
             SetBgColor(Color.blue);
             DisableIcon();
-            SetBg(bg0);
+            SetBg(_bg0);
         }
 
         protected override void Release()
@@ -37,13 +37,13 @@ namespace Items
             base.Awake();
             _bgHandle0 = AddressablesManager.LoadAssetAsync<Sprite>(CurrentItemBg0, handle =>
             {
-                bg0 = handle.Result;
-                SetBg(bg0);
+                _bg0 = handle.Result;
+                SetBg(_bg0);
             });
             
             _bgHandle1 = AddressablesManager.LoadAssetAsync<Sprite>(CurrentItemBg1, handle =>
             {
-                bg1 = handle.Result;
+                _bg1 = handle.Result;
             });
         }
         

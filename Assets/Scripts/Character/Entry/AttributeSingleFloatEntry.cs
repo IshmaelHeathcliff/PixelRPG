@@ -14,78 +14,97 @@ namespace Character.Entry
         
         public override string Description()
         {
-            return value >= 0 ? 
-                string.Format(entryInfo.positiveDescription, attribute.Name, value) : 
-                string.Format(entryInfo.negativeDescription, attribute.Name, -value);
+            return Value >= 0 ? 
+                string.Format(EntryInfo.PositiveDescription, Attribute.Name, Value) : 
+                string.Format(EntryInfo.NegativeDescription, Attribute.Name, -Value);
         }
-        
+
+        public override void Check()
+        {
+            throw new NotImplementedException();
+        }
+
         public sealed override void RandomizeLevel()
         {
-            if (entryInfo is AttributeEntryInfo info)
+            if (EntryInfo is AttributeEntryInfo info)
             {
-                level = Random.Range(0, info.maxLevel);
+                Level = Random.Range(0, info.MaxLevel);
             }
         }
         
         public sealed override void RandomizeValue()
         {
-            if (entryInfo is AttributeEntryInfo info)
+            if (EntryInfo is AttributeEntryInfo info)
             {
-                var levelRange = info.levelRanges[level];
-                value = Random.Range(levelRange.min, levelRange.max);
+                var levelRange = info.LevelRanges[Level];
+                Value = Random.Range(levelRange.Min, levelRange.Max);
             }
         }
 
         public override void Register()
         {
-            switch (((AttributeEntryInfo) entryInfo).attributeType)
+            switch (((AttributeEntryInfo) EntryInfo).AttributeType)
             {
                 case AttributeEntryType.Base:
-                    attribute.AddBaseValueModifier(instanceID, value);
+                    Attribute.AddBaseValueModifier(InstanceID, Value);
                     break;
                 case AttributeEntryType.Added:
-                    attribute.AddAddedValueModifier(instanceID, value);
+                    Attribute.AddAddedValueModifier(InstanceID, Value);
                     break;
                 case AttributeEntryType.Increase:
-                    attribute.AddIncreaseModifier(instanceID, value);
+                    Attribute.AddIncreaseModifier(InstanceID, Value);
                     break;
                 case AttributeEntryType.More:
-                    attribute.AddMoreModifier(instanceID, value);
+                    Attribute.AddMoreModifier(InstanceID, Value);
                     break;
                 case AttributeEntryType.Fixed:
-                    attribute.AddFixedValueModifier(instanceID, value);
+                    Attribute.AddFixedValueModifier(InstanceID, Value);
                     break;
                 default:
                     break;
             }
-            
-            UpdateAttribute();
         }
 
         public override void Unregister()
         {
-            switch (((AttributeEntryInfo) entryInfo).attributeType)
+            switch (((AttributeEntryInfo) EntryInfo).AttributeType)
             {
                 case AttributeEntryType.Base:
-                    attribute.RemoveBaseValueModifier(instanceID);
+                    Attribute.RemoveBaseValueModifier(InstanceID);
                     break;
                 case AttributeEntryType.Added:
-                    attribute.RemoveAddedValueModifier(instanceID);
+                    Attribute.RemoveAddedValueModifier(InstanceID);
                     break;
                 case AttributeEntryType.Increase:
-                    attribute.RemoveIncreaseModifier(instanceID);
+                    Attribute.RemoveIncreaseModifier(InstanceID);
                     break;
                 case AttributeEntryType.More:
-                    attribute.RemoveMoreModifier(instanceID);
+                    Attribute.RemoveMoreModifier(InstanceID);
                     break;
                 case AttributeEntryType.Fixed:
-                    attribute.RemoveFixedValueModifier(instanceID);
+                    Attribute.RemoveFixedValueModifier(InstanceID);
                     break;
                 default:
                     break;
             }
-            
-            UpdateAttribute();
         }
+
+        // public override EntryData ToData()
+        // {
+        //     return new EntryData<float>()
+        //     {
+        //         entryID = entryID,
+        //         instanceID = instanceID,
+        //         value = value
+        //     };
+        // }
+        //
+        // public override void FromData(EntryData data)
+        // {
+        //     if (data is EntryData<float> entryData && data.entryID == entryID && data.instanceID == instanceID)
+        //     {
+        //         value = entryData.value;
+        //     }
+        // }
     }
 }

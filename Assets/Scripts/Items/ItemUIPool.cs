@@ -4,15 +4,16 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.Serialization;
 
 namespace Items
 {
     public class ItemUIPool : MonoBehaviour
     {
-        [SerializeField] AssetReferenceGameObject itemUIReference;
-        [SerializeField] AssetReferenceGameObject currentItemUIReference;
-        [SerializeField] int initialSize = 10;
-        [SerializeField] int maxSize = 1000;
+        [SerializeField] AssetReferenceGameObject _itemUIReference;
+        [SerializeField] AssetReferenceGameObject _currentItemUIReference;
+        [SerializeField] int _initialSize = 10;
+        [SerializeField] int _maxSize = 1000;
 
         AsyncOperationHandle<GameObject> _itemUIHandle;
         AsyncOperationHandle<GameObject> _currentItemUIHandle;
@@ -85,7 +86,7 @@ namespace Items
 
         public void Push(ItemUI obj)
         {
-            if (Count > maxSize)
+            if (Count > _maxSize)
             {
                 Destroy(obj.gameObject);
                 return;
@@ -98,12 +99,12 @@ namespace Items
 
         async void OnEnable()
         {
-            _itemUIHandle = AddressablesManager.LoadAssetAsync<GameObject>(itemUIReference);
-            _currentItemUIHandle = AddressablesManager.LoadAssetAsync<GameObject>(currentItemUIReference);
+            _itemUIHandle = AddressablesManager.LoadAssetAsync<GameObject>(_itemUIReference);
+            _currentItemUIHandle = AddressablesManager.LoadAssetAsync<GameObject>(_currentItemUIReference);
             
             _pool = new Stack<ItemUI>();
             
-            for (var i = 0; i < initialSize; i++)
+            for (var i = 0; i < _initialSize; i++)
             {
                 _pool.Push(await CreatObject());
             }

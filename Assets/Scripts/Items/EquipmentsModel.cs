@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using QFramework;
 using SaveLoad;
 using UnityEngine;
 
 namespace Items
 {
-    public class Equipments : MonoBehaviour, IDataPersister
+    public class EquipmentsModel : AbstractModel, ISaveData
     {
-        Dictionary<Equipment.EquipmentType, Equipment> _equipments;
-        [SerializeField] DataSettings dataSettings;
+        Dictionary<EquipmentType, Equipment> _equipments;
 
         public Equipment Equip(Equipment equipment)
         {
@@ -25,7 +25,7 @@ namespace Items
             return equipped;
         }
 
-        public Equipment Takeoff(Equipment.EquipmentType equipmentType)
+        public Equipment Takeoff(EquipmentType equipmentType)
         {
             if (_equipments[equipmentType] == null)
             {
@@ -38,9 +38,9 @@ namespace Items
             return equipped;
         }
         
-        public Dictionary<Equipment.EquipmentType, Equipment> GetEquipments()
+        public Dictionary<EquipmentType, Equipment> GetEquipments()
         {
-            var equipments = new Dictionary<Equipment.EquipmentType, Equipment>();
+            var equipments = new Dictionary<EquipmentType, Equipment>();
             foreach (var (k, e) in _equipments)
             {
                 equipments.Add(k, e);
@@ -51,41 +51,26 @@ namespace Items
 
         void InitEquipments()
         {
-            _equipments = new Dictionary<Equipment.EquipmentType, Equipment>();
-            foreach (Equipment.EquipmentType equipmentType in Enum.GetValues(typeof(Equipment.EquipmentType)))
+            _equipments = new Dictionary<EquipmentType, Equipment>();
+            foreach (EquipmentType equipmentType in Enum.GetValues(typeof(EquipmentType)))
             {
                 _equipments[equipmentType] = null;
             }
         }
 
-        void Awake()
-        {
-            InitEquipments();
-            PersistentDataManager.RegisterPersister(this);
-        }
-
         #region DataPersister 
-        public DataSettings GetDataSettings()
-        {
-            return dataSettings;
-        }
-
-        public void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
-        {
-            dataSettings.dataTag = dataTag;
-            dataSettings.persistenceType = persistenceType;
-        }
+        public string DataTag { get; set; }
 
         public Data SaveData()
         {
-            return new Data<Dictionary<Equipment.EquipmentType, Equipment>>(_equipments);
+            return new Data<Dictionary<EquipmentType, Equipment>>(_equipments);
             
         }
 
         public void LoadData(Data data)
         {
             var equipmentData = 
-                (data as Data<Dictionary<Equipment.EquipmentType, Equipment>>)?.value;
+                (data as Data<Dictionary<EquipmentType, Equipment>>)?.Value;
 
             if (equipmentData == null)
             {
@@ -96,12 +81,17 @@ namespace Items
                 _equipments = equipmentData;
                 foreach (var (_, equipment) in _equipments)
                 {
-                    equipment?.LoadEntries();
+                    // equipment?.LoadEntries();
                 }
             }
         }
         
         #endregion
-        
+
+        protected override void OnInit()
+        {
+            InitEquipments();
+            this.GetUtility<SaveLoadUtility>().RegisterPersister(this);
+        }
     }
 }

@@ -1,17 +1,19 @@
 using System.Collections;
+using QFramework;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class Enemy : MonoBehaviour
+public class EnemyController : MonoBehaviour, IController
 {
-    public float speed;
-    public float detectRadius;
+    [SerializeField] float _speed;
+    [SerializeField] float _detectRadius;
 
     Vector2 _direction;
     Animator _animator;
     Rigidbody2D _rigidbody;
 
-    bool _isPlayerFount;
+    bool _isPlayerFound;
 
     static readonly int X = Animator.StringToHash("X");
     static readonly int Y = Animator.StringToHash("Y");
@@ -35,7 +37,7 @@ public class Enemy : MonoBehaviour
     {
         while (true)
         {
-            if (_isPlayerFount)
+            if (_isPlayerFound)
             {
                 break;
             }
@@ -47,19 +49,19 @@ public class Enemy : MonoBehaviour
 
     void Move()
     {
-        if (_isPlayerFount)
+        if (_isPlayerFound)
         {
-            Face(((Vector2) (GameManager.Instance.Player.transform.position - transform.position)).normalized);
+            Face(((Vector2) (this.SendQuery(new PlayerPositionQuery()) - transform.position)).normalized);
         }
 
-        _rigidbody.velocity = _direction * speed;
+        _rigidbody.velocity = _direction * _speed;
     }
 
     void FindPlayer()
     {
-        if (Vector2.Distance(GameManager.Instance.Player.transform.position, transform.position) < detectRadius)
+        if (Vector2.Distance(this.SendQuery(new PlayerPositionQuery()), transform.position) < _detectRadius)
         {
-            _isPlayerFount = true;
+            _isPlayerFound = true;
         }
     }
 
@@ -75,5 +77,10 @@ public class Enemy : MonoBehaviour
     {
         FindPlayer();
         Move();
+    }
+
+    public IArchitecture GetArchitecture()
+    {
+        return PixelRPG.Interface;
     }
 }

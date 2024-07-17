@@ -1,4 +1,5 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -10,8 +11,8 @@ namespace Items
     [RequireComponent(typeof(Image), typeof(RectTransform))]
     public class ItemUI : MonoBehaviour
     {
-        public Vector2Int startPos;
-        public Vector2Int size;
+        public Vector2Int StartPos { get; set; }
+        public Vector2Int Size { get; set; }
 
         const string UIItemsName = "Assets/Artworks/Items/";
 

@@ -3,17 +3,18 @@
   "$values": [
     {
       "$type": "Character.Buff.BuffInfo, Assembly-CSharp",
-      "id": 0,
-      "name": "健实",
-      "description": "加强生命",
-      "entryID": {
+      "ID": 1,
+      "Name": "健实",
+      "Description": "加强生命",
+      "EntryID": {
         "$type": "System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib",
         "$values": [
           0,
           1,
           2
         ]
-      }
+      },
+      "Icon": null
     }
   ]
 }

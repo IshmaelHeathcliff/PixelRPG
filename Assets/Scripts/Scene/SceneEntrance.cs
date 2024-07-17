@@ -1,15 +1,22 @@
 ﻿using System;
+using QFramework;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Scene
 {
-    public class SceneEntrance : MonoBehaviour
+    public class SceneEntrance : MonoBehaviour, IController
     {
-        public string entranceTag;
+        [SerializeField] string _entranceTag;
 
         void OnEnable()
         {
-            GameManager.Instance.SceneController.RegisterEntrance(entranceTag, this);
+            this.GetModel<SceneModel>().RegisterEntrance(_entranceTag, this);
+        }
+
+        public IArchitecture GetArchitecture()
+        {
+            return PixelRPG.Interface;
         }
     }
 }

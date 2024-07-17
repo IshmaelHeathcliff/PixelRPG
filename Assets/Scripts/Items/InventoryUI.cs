@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,8 +12,10 @@ namespace Items
     [RequireComponent(typeof(InventoryUIGrid))]
     public class InventoryUI : MonoBehaviour
     {
-        [SerializeField] int tileSize = 100;
-        [SerializeField] int frameWidth = 20;
+        [InfoBox("InventoryTile内部的像素边长")]
+        [SerializeField] int _tileSize = 64;
+        [InfoBox("InventoryTile框线宽度")]
+        [SerializeField] int _frameWidth = 4;
 
         Dictionary<Vector2Int, ItemUI> _itemUIs = new();
         
@@ -75,7 +78,7 @@ namespace Items
         {
             while (actions.TryDequeue(out var action))
             {
-                switch (action.type)
+                switch (action.Type)
                 {
                     case Inventory.InventoryActionType.Init:
                     {
@@ -94,17 +97,17 @@ namespace Items
                         }
 
 
-                        _gridSize = action.vec;            
-                        Rect.sizeDelta = _gridSize * tileSize + Vector2.one * (frameWidth * 2);
+                        _gridSize = action.Vec;            
+                        Rect.sizeDelta = _gridSize * _tileSize + Vector2.one * (_frameWidth * 2);
                         Rect.pivot = new Vector2(0, 1);
                         break;
                     }
                     case Inventory.InventoryActionType.Add:
                         // Debug.Log("Inventory Action Add");
-                        AddItemUI(action.vec, action.item);
+                        AddItemUI(action.Vec, action.Item);
                         break;
                     case Inventory.InventoryActionType.Delete:
-                        RemoveItemUI(action.vec);
+                        RemoveItemUI(action.Vec);
                         break;
                     case Inventory.InventoryActionType.Update:
                         break;
@@ -120,12 +123,12 @@ namespace Items
             itemUI.transform.SetParent(ItemsHolder);
             _itemUIs.Add(gridPos, itemUI);
             
-            itemUI.startPos = gridPos;
-            itemUI.size = item.Size;
+            itemUI.StartPos = gridPos;
+            itemUI.Size = item.Size;
             itemUI.SetPivot(new Vector2(0.5f, 0.5f));
             itemUI.SetAnchor(new Vector2(0, 1), new Vector2(0, 1));
-            itemUI.SetUIPosition(GridPosToUIPos(gridPos, itemUI.size));
-            itemUI.SetUISize(itemUI.size * tileSize - new Vector2Int(2, 2) * frameWidth);
+            itemUI.SetUIPosition(GridPosToUIPos(gridPos, itemUI.Size));
+            itemUI.SetUISize(itemUI.Size * _tileSize - new Vector2Int(2, 2) * _frameWidth);
             itemUI.SetIcon(item.IconName);
         }
 
@@ -140,7 +143,7 @@ namespace Items
             
             foreach (var (p, itemUI) in _itemUIs)
             {
-                if (Inventory.ContainPoint(itemUI.startPos, itemUI.startPos + itemUI.size, pos))
+                if (Inventory.ContainPoint(itemUI.StartPos, itemUI.StartPos + itemUI.Size, pos))
                 {
                     _pool.Push(itemUI);
                     _itemUIs.Remove(p);
@@ -151,16 +154,16 @@ namespace Items
         
         public void SetCurrentItemUI(Vector2Int gridPos, Vector2Int size)
         {
-            CurrentItemUI.startPos = gridPos;
-            CurrentItemUI.size = size;
+            CurrentItemUI.StartPos = gridPos;
+            CurrentItemUI.Size = size;
             CurrentItemUI.SetUIPosition(GridPosToUIPos(gridPos, size));
-            CurrentItemUI.SetUISize(size * tileSize + new Vector2Int(2, 2) * frameWidth);
+            CurrentItemUI.SetUISize(size * _tileSize + new Vector2Int(2, 2) * _frameWidth);
 
             if (Inventory.PickedUp != null)
             {
                 CurrentItemUI.PickUp();
                 CurrentItemUI.SetIcon(Inventory.PickedUp.IconName);
-                CurrentItemUI.SetIconSize(CurrentItemUI.size * tileSize - new Vector2Int(2, 2) * frameWidth);
+                CurrentItemUI.SetIconSize(CurrentItemUI.Size * _tileSize - new Vector2Int(2, 2) * _frameWidth);
             }
             else
             {
@@ -170,13 +173,13 @@ namespace Items
 
         public Vector2Int GetCurrentItemUISize()
         {
-            return CurrentItemUI.size;
+            return CurrentItemUI.Size;
         }
 
         Vector2 GridPosToUIPos(Vector2Int gridPos, Vector2Int size)
         {
-            var pos = Vector2.Scale(gridPos + (Vector2)size / 2 , new Vector2(1, -1)) * (tileSize);
-            pos += new Vector2(1, -1) * frameWidth;
+            var pos = Vector2.Scale(gridPos + (Vector2)size / 2 , new Vector2(1, -1)) * (_tileSize);
+            pos += new Vector2(1, -1) * _frameWidth;
             return pos;
         }
         

@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
+using QFramework;
 using SaveLoad;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Items
 {
-    public class Inventory : MonoBehaviour, IDataPersister
+    public abstract class Inventory : AbstractModel, ISaveData
     {
-        [SerializeField] string inventoryName;
-        [SerializeField] Vector2Int size;
-        [SerializeField] DataSettings dataSettings;
-
+        public Vector2Int Size { get; set; }
         Dictionary<Vector2Int, Item> _items;
         
         public static Item PickedUp { get; set; }
@@ -33,9 +31,9 @@ namespace Items
 
         public struct InventoryAction
         {
-            public InventoryActionType type;
-            public Vector2Int vec;
-            public Item item;
+            public InventoryActionType Type;
+            public Vector2Int Vec;
+            public Item Item;
         }
 
         Queue<InventoryAction> _actionQueue = new();
@@ -59,9 +57,9 @@ namespace Items
             _items[itemPos] = item;
             _actionQueue.Enqueue(new InventoryAction
             {
-                type = InventoryActionType.Add,
-                vec = itemPos,
-                item = item
+                Type = InventoryActionType.Add,
+                Vec = itemPos,
+                Item = item
             });
             
             // Debug.Log($"added item at {itemPos}");
@@ -71,9 +69,9 @@ namespace Items
 
         public bool AddItem(Item item)
         {
-            for (var i = 0; i < size.x; i++)
+            for (var i = 0; i < Size.x; i++)
             {
-                for (var j = 0; j < size.y; j++)
+                for (var j = 0; j < Size.y; j++)
                 {
                     if (AddItem(item, new Vector2Int(i, j)))
                     {
@@ -85,19 +83,13 @@ namespace Items
             return false;
         }
 
-        public void AddRandomItem()
-        {
-            AddItem(Item.GetFromID(0));
-            AddItem(Item.GetFromID(1));
-        }
-
-        void InitInventory()
+        public void InitInventory()
         {
             _actionQueue = new Queue<InventoryAction>();
             _actionQueue.Enqueue(new InventoryAction
             {
-                type = InventoryActionType.Init,
-                vec = size
+                Type = InventoryActionType.Init,
+                Vec = Size
             });
             
 
@@ -123,8 +115,8 @@ namespace Items
             
             _actionQueue.Enqueue(new InventoryAction()
             {
-                type = InventoryActionType.Delete,
-                vec = itemPos
+                Type = InventoryActionType.Delete,
+                Vec = itemPos
             });
             // Debug.Log($"removed item at {itemPos}");
             
@@ -279,31 +271,21 @@ namespace Items
         // 检查是否在inventory内
         public bool CheckPos(Vector2Int itemPos, Vector2Int itemSize)
         {
-            return itemPos.x >= 0 && itemPos.x < size.x - itemSize.x + 1 &&
-                   itemPos.y >= 0 && itemPos.y < size.y - itemSize.y + 1;
+            return itemPos.x >= 0 && itemPos.x < Size.x - itemSize.x + 1 &&
+                   itemPos.y >= 0 && itemPos.y < Size.y - itemSize.y + 1;
         }
 
         public Vector2Int GetSize()
         {
-            return size;
+            return Size;
         }
 
         #region DataPersistence
-
-        public DataSettings GetDataSettings()
-        {
-            return dataSettings;
-        }
-
-        public void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
-        {
-            dataSettings.dataTag = dataTag;
-            dataSettings.persistenceType = persistenceType;
-        }
+        public string DataTag { get; set; }
 
         public Data SaveData()
         {
-            var serializedInventory = new SerializedInventory(size);
+            var serializedInventory = new SerializedInventory(Size);
             serializedInventory.Serialize(_items);
 
             // SaveLoadManager.Save(serializedInventory, $"Inventory-{inventoryName}.json");
@@ -317,9 +299,9 @@ namespace Items
             // var serializedInventory = SaveLoadManager.Load<SerializedInventory>($"Inventory-{inventoryName}.json");
 
             var inventoryData = (Data<SerializedInventory>) data;
-            var serializedInventory = inventoryData.value;
+            var serializedInventory = inventoryData.Value;
 
-            size = serializedInventory.GetSize();
+            Size = serializedInventory.GetSize();
             var items = serializedInventory.Deserialize();
             foreach (var (itemPos, item) in items)
             {
@@ -331,14 +313,9 @@ namespace Items
          
         #endregion
 
-
-        void Awake()
+        protected override void OnInit()
         {
-            InitInventory();
-            OnUpdateInventory();
-            PersistentDataManager.RegisterPersister(this);
+            this.GetUtility<SaveLoadUtility>().RegisterPersister(this);
         }
-
-
     }
 }

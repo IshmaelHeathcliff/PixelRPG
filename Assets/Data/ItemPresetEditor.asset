@@ -56,7 +56,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 2|Items.Equipment, Assembly-CSharp
+      Data: 2|Items.EquipmentBase, Assembly-CSharp
     - Name: id
       Entry: 3
       Data: 1
@@ -81,32 +81,61 @@ MonoBehaviour:
     - Name: type
       Entry: 3
       Data: 4
-    - Name: rarity
-      Entry: 3
-      Data: 2
     - Name: entryPool
       Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
+      Data: 3|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 4|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
       Entry: 3
       Data: 0
+    - Name: $v
+      Entry: 3
+      Data: 10
     - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
       Entry: 3
       Data: 1
+    - Name: $v
+      Entry: 3
+      Data: 10
     - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
       Entry: 3
       Data: 2
+    - Name: $v
+      Entry: 3
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
     - Name: 
       Entry: 8
-      Data: 
-    - Name: _entries
-      Entry: 6
       Data: 
     - Name: 
       Entry: 8

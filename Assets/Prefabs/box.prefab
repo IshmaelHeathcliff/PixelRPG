@@ -66,9 +66,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 8ef895fa007a082499ee857888784f5d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7556143032896110374}
-    - targetCorrespondingSourceObject: {fileID: -2253911629886400664, guid: 8ef895fa007a082499ee857888784f5d, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1371730943598950489}
   m_SourcePrefab: {fileID: -8435245712485981826, guid: 8ef895fa007a082499ee857888784f5d, type: 3}
 --- !u!1 &7659201471933770983 stripped
@@ -76,23 +73,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -2253911629886400664, guid: 8ef895fa007a082499ee857888784f5d, type: 3}
   m_PrefabInstance: {fileID: 788847335739046799}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7556143032896110374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7659201471933770983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4557ccd6f81856542958364e3ab0b561, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryName: Stash
-  size: {x: 8, y: 10}
-  dataSettings:
-    dataTag: stash
-    persistenceType: 3
 --- !u!61 &1371730943598950489
 BoxCollider2D:
   m_ObjectHideFlags: 0

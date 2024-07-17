@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,30 +11,30 @@ namespace Items
     [Serializable]
     public class SerializedInventory
     {
-        [JsonProperty] int sizeX;
-        [JsonProperty] int sizeY;
+        [JsonProperty] int _sizeX;
+        [JsonProperty] int _sizeY;
         
-        [JsonProperty] ItemWithPos[] itemsWithPos;
+        [JsonProperty] ItemWithPos[] _itemsWithPos;
 
         [Serializable]
         public class ItemWithPos
         {
-            public int itemPosX;
-            public int itemPosY;
-            public Item item;
+            [JsonProperty] public int ItemPosX { get; set; }
+            [JsonProperty] public int ItemPosY { get; set; }
+            public Item Item;
 
             public ItemWithPos(Item item, Vector2Int pos)
             {
-                this.item = item;
-                itemPosX = pos.x;
-                itemPosY = pos.y;
+                Item = item;
+                ItemPosX = pos.x;
+                ItemPosY = pos.y;
             }
         }
 
         public SerializedInventory(Vector2Int size)
         {
-            sizeX = size.x;
-            sizeY = size.y;
+            _sizeX = size.x;
+            _sizeY = size.y;
         }
 
         public void Serialize(Dictionary<Vector2Int, Item> itemDict)
@@ -41,22 +42,22 @@ namespace Items
             var keys = itemDict.Keys.ToArray();
             var items = itemDict.Values.ToArray();
 
-            itemsWithPos = new ItemWithPos[itemDict.Count];
+            _itemsWithPos = new ItemWithPos[itemDict.Count];
 
             for (var i = 0; i < itemDict.Count; i++)
             {
                 var itemWithPos = new ItemWithPos(items[i], keys[i]);
-                itemsWithPos[i] = itemWithPos;
+                _itemsWithPos[i] = itemWithPos;
             }
         }
 
         public Dictionary<Vector2Int, Item> Deserialize()
         {
             var itemDict = new Dictionary<Vector2Int, Item>();
-            foreach (var itemWithPos in itemsWithPos)
+            foreach (var itemWithPos in _itemsWithPos)
             {
-                var pos = new Vector2Int(itemWithPos.itemPosX, itemWithPos.itemPosY);
-                itemDict[pos] = (Item)itemWithPos.item;
+                var pos = new Vector2Int(itemWithPos.ItemPosX, itemWithPos.ItemPosY);
+                itemDict[pos] = (Item)itemWithPos.Item;
             }
 
             return itemDict;
@@ -64,7 +65,7 @@ namespace Items
 
         public Vector2Int GetSize()
         {
-            return new Vector2Int(sizeX, sizeY);
+            return new Vector2Int(_sizeX, _sizeY);
         }
     }
 }

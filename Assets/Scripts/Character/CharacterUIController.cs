@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Character
 {
     public class CharacterUIController : MonoBehaviour
     {
-        [SerializeField]Slider hpSlider;
+        [SerializeField] Slider _hpSlider;
 
         public void OnHpChanged(float health, float maxHealth)
         {
-            hpSlider.value = health / maxHealth;
+            _hpSlider.value = health / maxHealth;
         }
 
     }

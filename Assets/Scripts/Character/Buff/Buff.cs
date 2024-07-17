@@ -10,38 +10,23 @@ namespace Character.Buff
     public class Buff
     {
         BuffInfo _info;
-        List<IEntry> _entries;
         
         public float Duration { get; private set; }
 
         public Buff(BuffInfo info, float time)
         {
             _info = info;
-            _entries = new List<IEntry>();
-            foreach (int id in info.entriesID)
-            {
-                var entry = EntrySystem.CreateEntry(id);
-                if (entry != null)
-                {
-                    _entries.Add(entry);
-                }
-                else
-                {
-                    Debug.LogError($"EntryID {id} not found");
-                }
-            }
-
             Duration = time;
         }
 
         public string GetName()
         {
-            return _info.name;
+            return _info.Name;
         }
 
         public string GetDescription()
         {
-            return _info.description;
+            return _info.Description;
         }
 
         public async void Activate()
@@ -53,19 +38,13 @@ namespace Character.Buff
 
         public void Enable()
         {
-            foreach (var entry in _entries)
-            {
-                entry.Register();
-            }
+
             
         }
 
         public void Disable()
         {
-            foreach (var entry in _entries)
-            {
-                entry.Unregister();
-            }
+
         }
 
 

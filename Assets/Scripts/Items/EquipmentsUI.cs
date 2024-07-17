@@ -9,21 +9,21 @@ namespace Items
 {
     public class EquipmentsUI : MonoBehaviour
     {
-        readonly Dictionary<Vector2Int, Equipment.EquipmentType> _equipmentPosMap =
+        readonly Dictionary<Vector2Int, EquipmentType> _equipmentPosMap =
             new()
             {
-                [Vector2Int.zero] = Equipment.EquipmentType.Ring,
-                [new Vector2Int(1, 0)] = Equipment.EquipmentType.Helmet,
-                [new Vector2Int(2, 0)] = Equipment.EquipmentType.Amulet,
-                [new Vector2Int(0, 1)] = Equipment.EquipmentType.MainWeapon,
-                [new Vector2Int(1, 1)] = Equipment.EquipmentType.Armour,
-                [new Vector2Int(2, 1)] = Equipment.EquipmentType.Offhand,
-                [new Vector2Int(0, 2)] = Equipment.EquipmentType.Gloves,
-                [new Vector2Int(1, 2)] = Equipment.EquipmentType.Belt,
-                [new Vector2Int(2, 2)] = Equipment.EquipmentType.Boots
+                [Vector2Int.zero] = EquipmentType.Ring,
+                [new Vector2Int(1, 0)] = EquipmentType.Helmet,
+                [new Vector2Int(2, 0)] = EquipmentType.Amulet,
+                [new Vector2Int(0, 1)] = EquipmentType.MainWeapon,
+                [new Vector2Int(1, 1)] = EquipmentType.Armour,
+                [new Vector2Int(2, 1)] = EquipmentType.Offhand,
+                [new Vector2Int(0, 2)] = EquipmentType.Gloves,
+                [new Vector2Int(1, 2)] = EquipmentType.Belt,
+                [new Vector2Int(2, 2)] = EquipmentType.Boots
             };
 
-        Dictionary<Equipment.EquipmentType, EquipmentSlotUI> _equipmentSlotMap;
+        Dictionary<EquipmentType, EquipmentSlotUI> _equipmentSlotMap;
 
         Vector2Int _currentPos = Vector2Int.one; 
 
@@ -44,21 +44,21 @@ namespace Items
         
         void InitEquipmentsUI()
         {
-            _equipmentSlotMap = new Dictionary<Equipment.EquipmentType, EquipmentSlotUI>();
+            _equipmentSlotMap = new Dictionary<EquipmentType, EquipmentSlotUI>();
 
             var equipmentSlots = GetComponentsInChildren<EquipmentSlotUI>();
             if (equipmentSlots.Length == 0)
             {
-                
+                Debug.LogError("No equipment slots found");
             }
             
             foreach (var es in equipmentSlots)
             {
-                _equipmentSlotMap.Add(es.equipmentType, es);
+                _equipmentSlotMap.Add(es.EquipmentType, es);
             }
         }
 
-        public void UpdateEquipmentsUI(Dictionary<Equipment.EquipmentType, Equipment> equipments)
+        public void UpdateEquipmentsUI(Dictionary<EquipmentType, Equipment> equipments)
         {
             foreach (var (equipmentType, equipment) in equipments)
             {
@@ -71,12 +71,12 @@ namespace Items
             _equipmentSlotMap[equipment.Type].UpdateUI(equipment);
         }
 
-        public void Takeoff(Equipment.EquipmentType equipmentType)
+        public void Takeoff(EquipmentType equipmentType)
         {
             _equipmentSlotMap[equipmentType].UpdateUI(null);
         }
 
-        public Equipment.EquipmentType GetCurrentEquipmentType()
+        public EquipmentType GetCurrentEquipmentType()
         {
             return _equipmentPosMap[_currentPos];
         }

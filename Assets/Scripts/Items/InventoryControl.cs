@@ -13,31 +13,39 @@ namespace Items
             Stash
         }
         
-        [SerializeField] InventoryType inventoryType;
-        [SerializeField] Inventory inventory;
-        [SerializeField] InventoryUI inventoryUI;
+        [SerializeField] InventoryType _inventoryType;
+        [SerializeField] InventoryUI _inventoryUI;
+        [SerializeField] Vector2Int _inventorySize;
+        Inventory _inventory;
 
         public bool IsActive { get; private set; }
         public bool IsOpen { get; private set; }
         public InventoryUIGrid Grid { get; private set; }
         public Vector2Int CurrentPos { get; set; }
 
+        public void SetInventory(Inventory inventory)
+        {
+            _inventory = inventory;
+        }
+
         public void Init(ItemUIPool pool)
         {
-            if (inventoryUI != null)
+            if (_inventoryUI != null)
             {
-                Grid = inventoryUI.GetComponent<InventoryUIGrid>();
-                inventoryUI.SetPool(pool);
+                Grid = _inventoryUI.GetComponent<InventoryUIGrid>();
+                _inventoryUI.SetPool(pool);
             }
             else
             {
                 Debug.LogError("inventoryUI is null");
             }
 
-            if (inventory != null)
+            if (_inventory != null)
             {
-                inventory.UpdateInventory += inventoryUI.Redraw;
-                inventory.OnUpdateInventory();
+                _inventory.Size = _inventorySize;
+                _inventory.UpdateInventory += _inventoryUI.Redraw;
+                _inventory.InitInventory();
+                _inventory.OnUpdateInventory();
             }
             else
             {
@@ -47,30 +55,30 @@ namespace Items
 
         public InventoryType GetInventoryType()
         {
-            return inventoryType;
+            return _inventoryType;
         }
 
         public void Update()
         {
-            inventory.OnUpdateInventory();
+            _inventory.OnUpdateInventory();
             UpdateCurrentItemUI();
         }
 
         public void PickUp()
         {
-            inventory.PickUp(CurrentPos);
+            _inventory.PickUp(CurrentPos);
             Update();
         }
 
         public Item GetItem()
         {
-            var item = inventory.GetItem(CurrentPos, out _);
+            var item = _inventory.GetItem(CurrentPos, out _);
             return item;
         }
 
         public bool AddItem(Item item)
         {
-            bool result = inventory.AddItem(item);
+            bool result = _inventory.AddItem(item);
             Update();
             return result;
         }
@@ -83,7 +91,7 @@ namespace Items
             }
             else
             {
-                inventory.RemoveItem(CurrentPos);
+                _inventory.RemoveItem(CurrentPos);
             }
             
             Update();
@@ -91,19 +99,19 @@ namespace Items
 
         public void RemoveItem()
         {
-            inventory.RemoveItem(CurrentPos);
+            _inventory.RemoveItem(CurrentPos);
             Update();
         }
         
         public void Disable()
         {
-            inventoryUI.DisableUI();
+            _inventoryUI.DisableUI();
             IsActive = false;
         }
 
         public void Enable(Vector2Int pos)
         {
-            inventoryUI.EnableUI(pos);
+            _inventoryUI.EnableUI(pos);
             IsActive = true;
             Update();
         }
@@ -112,27 +120,21 @@ namespace Items
         {
             Disable();
             IsOpen = false;
-            inventoryUI.gameObject.SetActive(false);
+            _inventoryUI.gameObject.SetActive(false);
         }
 
         public void Open(Vector2Int pos)
         {
             Enable(pos);
             IsOpen = true;
-            inventoryUI.gameObject.SetActive(true);
+            _inventoryUI.gameObject.SetActive(true);
             CurrentPos = Vector2Int.zero;
-            Update();
-        }
-
-        public void AddRandomItem()
-        {
-            inventory.AddRandomItem();
             Update();
         }
 
         public void PutDown()
         {
-            inventory.PutDown(CurrentPos);
+            _inventory.PutDown(CurrentPos);
             Update();
         }
         
@@ -145,30 +147,30 @@ namespace Items
             
             if (Inventory.PickedUp != null)
             {
-                inventoryUI.SetCurrentItemUI(CurrentPos, Inventory.PickedUp.Size);
+                _inventoryUI.SetCurrentItemUI(CurrentPos, Inventory.PickedUp.Size);
                 return;
             }
             
-            var item = inventory.GetItem(CurrentPos, out var itemPos);
+            var item = _inventory.GetItem(CurrentPos, out var itemPos);
             if (item != null)
             {
-                inventoryUI.SetCurrentItemUI(itemPos, item.Size);
+                _inventoryUI.SetCurrentItemUI(itemPos, item.Size);
                 CurrentPos = itemPos;
             }
             else
             {
-                inventoryUI.SetCurrentItemUI(CurrentPos, Vector2Int.one);
+                _inventoryUI.SetCurrentItemUI(CurrentPos, Vector2Int.one);
             }
         }
 
         public Vector2Int GetCurrentItemUISize()
         {
-            return inventoryUI.GetCurrentItemUISize();
+            return _inventoryUI.GetCurrentItemUISize();
         }
 
         public Vector2Int AlterPos(Vector2Int pos)
         {
-            var inventorySize = inventory.GetSize();
+            var inventorySize = _inventory.GetSize();
             var itemSize = Vector2Int.one;
 
             if (Inventory.PickedUp != null)

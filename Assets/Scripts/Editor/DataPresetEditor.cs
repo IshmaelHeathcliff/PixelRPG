@@ -25,7 +25,7 @@ namespace Editor
             NumberOfItemsPerPage = 10,
             DefaultExpandedState = true,
             OnTitleBarGUI = "DrawRefreshButton",
-            ListElementLabelName = "name"
+            ListElementLabelName = "Name"
             )]
         public virtual List<T> Data { get; set; }
 

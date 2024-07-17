@@ -7,41 +7,31 @@ namespace Character.Entry
     [Serializable]
     public abstract class AttributeEntry<T> : Entry<T>
     {
-        [JsonProperty]
-        protected int level;
-        protected CharacterAttribute attribute;
+        [JsonProperty] protected int Level;
+        
+        protected CharacterAttribute Attribute;
 
         protected AttributeEntry(EntryInfo entryInfo, CharacterAttribute attribute)
         {
-            this.entryInfo = entryInfo;
-            this.attribute = attribute;
-            this.entryID = entryInfo.entryID;
+            EntryInfo = entryInfo;
+            Attribute = attribute;
+            EntryID = entryInfo.EntryID;
         }
 
         public abstract void RandomizeLevel();
         public abstract void RandomizeValue();
 
-        public override void Load()
-        {
-            entryInfo = EntrySystem.GetEntryInfo(entryID);
-            attribute = EntrySystem.GetAttribute(entryInfo as AttributeEntryInfo);
-        }
-
-        public void UpdateAttribute()
-        {
-            attribute.CalculateValue();
-        }
-
         public CharacterAttribute GetAttribute()
         {
-            return attribute;
+            return Attribute;
         }
 
     }
 
+    [Serializable]
     public abstract class AttributeEntry<T1, T2> : AttributeEntry<T1>
     {
-        protected T2 value2;
+        [JsonProperty] protected T2 Value2;
         protected AttributeEntry(EntryInfo entryInfo, CharacterAttribute attribute) : base(entryInfo, attribute)
         {
         }
@@ -50,8 +40,8 @@ namespace Character.Entry
     [Serializable]
     public struct LevelRange
     {
-        public float min;
-        public float max;
+        [JsonProperty] public float Min { get; set; }
+        [JsonProperty] public float Max { get; set; }
     }
 
     public enum AttributeEntryType
@@ -67,10 +57,10 @@ namespace Character.Entry
     [Serializable]
     public class AttributeEntryInfo : EntryInfo
     {
-        public string attributeName;
-        public AttributeEntryType attributeType;
-        public int maxLevel;
-        [TableList(ShowIndexLabels = true)] public LevelRange[] levelRanges;
+        [JsonProperty][ShowInInspector] public string AttributeName { get; set; }
+        [JsonProperty][ShowInInspector] public AttributeEntryType AttributeType { get; set; }
+        [JsonProperty][ShowInInspector] public int MaxLevel { get; set; }
+        [JsonProperty][ShowInInspector][TableList(ShowIndexLabels = true)] public LevelRange[] LevelRanges { get; set; }
     }
 
     

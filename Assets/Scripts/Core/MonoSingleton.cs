@@ -24,7 +24,7 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T: MonoSingleton<T>
         }
     }
     
-    protected static bool quitting;
+    protected static bool Quitting;
 
     protected static T Create()
     {
@@ -53,7 +53,7 @@ public abstract class MonoSingleton<T> : MonoBehaviour where T: MonoSingleton<T>
     {
         if (_instance == this)
         {
-            quitting = true;
+            Quitting = true;
         }
     }
 }

@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Items
 {
     public class EquipmentSlotUI : ItemUI
     {
-        public Equipment.EquipmentType equipmentType;
+        [SerializeField] EquipmentType _equipmentType;
+        public EquipmentType EquipmentType => _equipmentType;
 
-        public Equipment equipped;
+        Equipment _equipped;
 
         public void UpdateUI(Equipment equipment)
         {
@@ -18,7 +22,7 @@ namespace Items
                 SetIconAnchor(Vector2.zero, Vector2.one);
                 SetIconPos(Vector2.zero);
                 EnableIcon();
-                equipped = equipment;
+                _equipped = equipment;
             }
             else
             {

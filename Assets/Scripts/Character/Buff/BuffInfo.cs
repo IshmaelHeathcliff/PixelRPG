@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Sirenix.OdinInspector;
 using UnityEngine.Serialization;
 
 namespace Character.Buff
@@ -7,10 +9,10 @@ namespace Character.Buff
     [Serializable]
     public class BuffInfo
     {
-        public int id;
-        public string name;
-        public string description;
-        public List<int> entriesID;
-        public string icon;
+        [JsonProperty][ShowInInspector] public int ID { get; set; }
+        [JsonProperty][ShowInInspector] public string Name { get; set; }
+        [JsonProperty][ShowInInspector] public string Description { get; set; }
+        [JsonProperty][ShowInInspector] public List<int> EntryID { get; set; }
+        [JsonProperty][ShowInInspector] public string Icon { get; set; }
     }
 }

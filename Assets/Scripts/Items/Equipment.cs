@@ -1,94 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using Character;
+using System.Reflection;
 using Character.Entry;
 using Newtonsoft.Json;
-using Sirenix.OdinInspector;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Random = System.Random;
 
 namespace Items
 {
     [Serializable]
-    public class Equipment : Item
+    public class Equipment : EquipmentBase
     {
-
-        [SerializeField][JsonProperty] EquipmentType type;
-        [JsonIgnore] public EquipmentType Type => type;
-
-        public enum EquipmentType
+        public Equipment(EquipmentBase equipmentBase)
         {
-            Helmet,
-            Armour,
-            Gloves,
-            Boots,
-            MainWeapon,
-            Offhand,
-            Belt,
-            Ring,
-            Amulet,
-        }
-
-        public enum Rarity
-        {
-            Normal,
-            Magic,
-            Rare,
-            Unique
-        }
-
-        [SerializeField][JsonProperty] Rarity rarity;
-        [SerializeField][JsonProperty] List<int> entryPool;
-        [SerializeField][JsonProperty] IEntry[] _entries;
-
-
-        public void GenerateEntries()
-        {
-            int entryCount = rarity switch
+            foreach (var prop in equipmentBase.GetType().GetProperties())
             {
-                Rarity.Normal => 0,
-                Rarity.Magic => 2,
-                Rarity.Rare => 4,
-                Rarity.Unique => 6,
-                _ => 0
-            };
-
-            _entries = new IEntry[entryCount];
-            for (int i = 0; i < entryCount; i++)
-            {
-                int entryInfoID = entryPool[UnityEngine.Random.Range(0, entryPool.Count)];
-                var entryInfo = EntrySystem.GetEntryInfo(entryInfoID);
-                _entries[i] = EntrySystem.CreateEntry(entryInfo);
+                prop.SetValue(this, prop.GetValue(equipmentBase));
             }
         }
 
-        public void LoadEntries()
-        {
-            foreach (var entry in _entries)
-            {
-                entry.Load();
-            }
-        }
+        [JsonProperty] public List<IEntry> Entries { get; set; }
 
-        protected override void Init()
-        {
-            base.Init();
-            GenerateEntries();
-        }
+        [JsonProperty] public EquipmentRarity Rarity { get; set; }
 
         public void Equip()
         {
-            foreach (var entry in _entries)
+            foreach (var entry in Entries)
             {
                 entry.Register();
             }
-
         }
 
         public void Takeoff()
         {
-            foreach (var entry in _entries)
+            foreach (var entry in Entries)
             {
                 entry.Unregister();
             }

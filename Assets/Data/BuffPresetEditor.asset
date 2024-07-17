@@ -31,36 +31,6 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 1|Character.Buff.BuffInfo, Assembly-CSharp
-    - Name: id
-      Entry: 3
-      Data: 0
-    - Name: name
-      Entry: 1
-      Data: "\u5065\u5B9E"
-    - Name: description
-      Entry: 1
-      Data: "\u52A0\u5F3A\u751F\u547D"
-    - Name: entriesID
-      Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 3
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 8
       Data: 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Character.Entry;
 using Cysharp.Threading.Tasks;
+using QFramework;
 using SaveLoad;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -9,53 +10,49 @@ using UnityEngine.SceneManagement;
 
 namespace Scene
 {
-    public class SceneController: MonoBehaviour
+    public class SceneController: MonoBehaviour, IController
     {
-        public event Action BeforeSceneLoad;
-        public event Action SceneLoaded;
+        SceneModel _model;
 
-        InputController _inputController;
-
-        Dictionary<string, SceneEntrance> _sceneEntrances;
-
-        public void Init()
-        {
-            _inputController = GetComponent<InputController>();
-        }
-
-        public void RegisterEntrance(string entranceTag, SceneEntrance entrance)
-        {
-            _sceneEntrances[entranceTag] = entrance;
-        }
-
-
-        public async void LoadScene(string sceneName, string entranceTag = null)
+        async void LoadScene(string sceneName, string entranceTag = null)
         {
             await Transition(sceneName, entranceTag);
         }
 
         async UniTask Transition(string sceneName, string entranceTag)
         {
-            BeforeSceneLoad?.Invoke();
+            _model.ClearEntrances();
             
-            PersistentDataManager.SaveAllData();
-            PersistentDataManager.ClearPersisters();
-            _sceneEntrances.Clear();
-            
-            EntrySystem.ClearEntryFactories();
+            this.GetSystem<EntrySystem>().ClearEntryFactories();
             
             await Addressables.LoadSceneAsync(sceneName);
             
-            PersistentDataManager.LoadAllData();
-            
-            GameManager.Instance.Player.PlayerController.SetPosition(_sceneEntrances[entranceTag].transform.position);
-            
-            SceneLoaded?.Invoke();
+            this.GetModel<PlayerModel>().SetPosition(_model.GetEntrance(entranceTag).transform.position);
         }
 
         void Awake()
         {
-            _sceneEntrances = new Dictionary<string, SceneEntrance>();
+            _model = this.GetModel<SceneModel>();
+        }
+
+        void Start()
+        {
+            TypeEventSystem.Global.Register<LoadSceneEvent>(e =>
+            {
+                LoadScene(e.SceneName, e.EntranceTag);
+            });
+        }
+
+        public IArchitecture GetArchitecture()
+        {
+            return PixelRPG.Interface;
         }
     }
+
+    public struct LoadSceneEvent
+    {
+        public string SceneName;
+        public string EntranceTag;
+    }
+    
 }

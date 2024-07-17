@@ -1,113 +1,138 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Character.Entry;
+using QFramework;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Character
 {
     [Serializable]
-    public class CharacterAttribute
+    public class CharacterAttribute : IReadonlyBindableProperty<float>
     {
-        
         public string Name { get; private set; }
-        [ShowInInspector][BoxGroup]
-        public float BaseValue { get; private set; } = 0f;
-        [ShowInInspector][BoxGroup]
-        public float AddedValue { get; private set; } = 0f;
-        [ShowInInspector][BoxGroup]
-        public float FixedValue { get; private set; } = 0f;
-        [ShowInInspector][BoxGroup]
-        public float Increase { get; private set; } = 0f;
-        [ShowInInspector][BoxGroup]
-        public float More { get; private set; } = 1f;
+        public float Value => GetValue();
+        public float BaseValue { get; private set; }
+        public float AddedValue { get; private set; }
+        public float FixedValue { get; private set; }
+        public float Increase { get; private set; }
+        public float More { get; private set; }
 
         Dictionary<string, float> _baseValueModifiers = new Dictionary<string, float>();
         Dictionary<string, float> _addedValueModifiers = new Dictionary<string, float>();
         Dictionary<string, float> _fixedValueModifiers = new Dictionary<string, float>();
         Dictionary<string, float> _increaseModifiers = new Dictionary<string, float>();
         Dictionary<string, float> _moreModifiers = new Dictionary<string, float>();
+        
+        EasyEvent<float> _onValueChanged = new EasyEvent<float>();
 
         public CharacterAttribute(string name)
         {
             Name = name;
-            InitValue();
+            BaseValue = 0;
+            AddedValue = 0;
+            FixedValue = 0;
+            Increase = 0;
+            More = 1;
         }
 
         public void AddBaseValueModifier(string key, float value)
         {
             _baseValueModifiers[key] = value;
+            _onValueChanged.Trigger(Value);
         }
 
         public void AddAddedValueModifier(string key, float value)
         {
             _addedValueModifiers[key] = value;
+            _onValueChanged.Trigger(Value);
         }
 
         public void AddFixedValueModifier(string key, float value)
         {
             _fixedValueModifiers[key] = value;
+            _onValueChanged.Trigger(Value);
         }
 
         public void AddIncreaseModifier(string key, float value)
         {
             _increaseModifiers[key] = value;
+            _onValueChanged.Trigger(Value);
         }
 
         public void AddMoreModifier(string key, float value)
         {
             _moreModifiers[key] = value;
+            _onValueChanged.Trigger(Value);
         }
 
         public void RemoveBaseValueModifier(string key)
         {
             _baseValueModifiers.Remove(key);
+            _onValueChanged.Trigger(Value);
         }
 
         public void RemoveAddedValueModifier(string key)
         {
             _addedValueModifiers.Remove(key);
+            _onValueChanged.Trigger(Value);
         }
 
         public void RemoveFixedValueModifier(string key)
         {
             _fixedValueModifiers.Remove(key);
+            _onValueChanged.Trigger(Value);
         }
 
         public void RemoveIncreaseModifier(string key)
         {
             _increaseModifiers.Remove(key);
+            _onValueChanged.Trigger(Value);
         }
 
         public void RemoveMoreModifier(string key)
         {
             _moreModifiers.Remove(key);
+            _onValueChanged.Trigger(Value);
         }
 
 
-        public float CalculateValue()
+        void CalculateValue()
         {
             BaseValue = _baseValueModifiers.Sum(x => x.Value);
             AddedValue = _addedValueModifiers.Sum(x => x.Value);
             FixedValue = _fixedValueModifiers.Sum(x => x.Value);
             Increase = _increaseModifiers.Sum(x => x.Value);
             More = _moreModifiers.Values.Aggregate(0f, (x, y) => (1 + x/100) * (1 + y/100));
-
-            return GetValue();
         }
 
         public float GetValue()
         {
+            CalculateValue();
             return (BaseValue + AddedValue) * (1 + Increase/100f) * More + FixedValue;
         }
 
-        public void InitValue()
+        public IUnRegister Register(Action onValueChanged)
         {
-            BaseValue = 0;
-            AddedValue = 0;
-            FixedValue = 0;
-            Increase = 0;
-            More = 1;
+            return Register(Action);
+            void Action(float _) => onValueChanged();
+        }
+        
+        public IUnRegister Register(Action<float> onValueChanged)
+        {
+            return _onValueChanged.Register(onValueChanged);
+        }
+
+        public IUnRegister RegisterWithInitValue(Action<float> onValueChanged)
+        {
+            onValueChanged(GetValue());
+            return Register(onValueChanged);
+        }
+
+        public void UnRegister(Action<float> onValueChanged)
+        {
+            _onValueChanged.UnRegister(onValueChanged);
         }
     }
 
@@ -142,7 +167,7 @@ namespace Character
             CheckCurrentValue();
         }
 
-        public void MaxCurrentValue()
+        public void SetMaxValue()
         {
             CurrentValue = GetValue();
         }

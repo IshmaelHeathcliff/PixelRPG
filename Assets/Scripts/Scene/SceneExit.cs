@@ -1,20 +1,31 @@
+using QFramework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace Scene
 {
     [RequireComponent(typeof(BoxCollider2D))]
-    public class SceneExit : MonoBehaviour
+    public class SceneExit : MonoBehaviour, IController
     {
-        [SerializeField] string nextSceneName;
-        [SerializeField] string entranceTag;
+        string _nextSceneName;
+        string _entranceTag;
 
         void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {
-                GameManager.Instance.SceneController.LoadScene(nextSceneName, entranceTag);
+                TypeEventSystem.Global.Send(new LoadSceneEvent()
+                {
+                    EntranceTag = _entranceTag,
+                    SceneName = _nextSceneName
+                });
             }
+        }
+
+        public IArchitecture GetArchitecture()
+        {
+            return PixelRPG.Interface;
         }
     }
 }

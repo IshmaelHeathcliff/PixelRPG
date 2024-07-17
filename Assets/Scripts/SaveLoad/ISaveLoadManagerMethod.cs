@@ -19,12 +19,12 @@ namespace SaveLoad
 	{
 		public string Key { get; set; } = "yourDefaultKey";
 
-        protected string saltText = "SaltTextGoesHere";
+        protected string SaltText = "SaltTextGoesHere";
 
         protected virtual void Encrypt(Stream inputStream, Stream outputStream, string sKey)
 		{
 			var algorithm = new AesManaged();
-            var key = new Rfc2898DeriveBytes(sKey, Encoding.ASCII.GetBytes(saltText), 1000, HashAlgorithmName.SHA256);
+            var key = new Rfc2898DeriveBytes(sKey, Encoding.ASCII.GetBytes(SaltText), 1000, HashAlgorithmName.SHA256);
 
 			algorithm.Key = key.GetBytes(algorithm.KeySize / 8);
 			algorithm.IV = key.GetBytes(algorithm.BlockSize / 8);
@@ -36,7 +36,7 @@ namespace SaveLoad
 		protected virtual void Decrypt(Stream inputStream, Stream outputStream, string sKey)
 		{
 			var algorithm = new AesManaged();
-			var key = new Rfc2898DeriveBytes(sKey, Encoding.ASCII.GetBytes(saltText));
+			var key = new Rfc2898DeriveBytes(sKey, Encoding.ASCII.GetBytes(SaltText));
 
 			algorithm.Key = key.GetBytes(algorithm.KeySize / 8);
 			algorithm.IV = key.GetBytes(algorithm.BlockSize / 8);
