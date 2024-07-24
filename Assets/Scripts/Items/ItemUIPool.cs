@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.Serialization;
 
 namespace Items
 {
-    public class ItemUIPool : MonoBehaviour
+    public class ItemUIPool : MonoBehaviour, IAsyncObjectPool<ItemUI>
     {
         [SerializeField] AssetReferenceGameObject _itemUIReference;
         [SerializeField] AssetReferenceGameObject _currentItemUIReference;

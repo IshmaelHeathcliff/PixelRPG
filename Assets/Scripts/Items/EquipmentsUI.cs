@@ -9,6 +9,8 @@ namespace Items
 {
     public class EquipmentsUI : MonoBehaviour
     {
+        [SerializeField][HideInInspector] ItemUIPool _pool;
+        
         readonly Dictionary<Vector2Int, EquipmentType> _equipmentPosMap =
             new()
             {
@@ -40,7 +42,6 @@ namespace Items
                 return _currentItemUI;
             }
         }
-        public ItemUIPool Pool { private get; set; }
         
         void InitEquipmentsUI()
         {
@@ -58,22 +59,9 @@ namespace Items
             }
         }
 
-        public void UpdateEquipmentsUI(Dictionary<EquipmentType, Equipment> equipments)
+        public void UpdateEquipmentUI(EquipmentType equipmentType, Equipment equipment)
         {
-            foreach (var (equipmentType, equipment) in equipments)
-            {
-                _equipmentSlotMap[equipmentType].UpdateUI(equipment);
-            }
-        }
-
-        public void Equip(Equipment equipment)
-        {
-            _equipmentSlotMap[equipment.Type].UpdateUI(equipment);
-        }
-
-        public void Takeoff(EquipmentType equipmentType)
-        {
-            _equipmentSlotMap[equipmentType].UpdateUI(null);
+            _equipmentSlotMap[equipmentType].UpdateUI(equipment);
         }
 
         public EquipmentType GetCurrentEquipmentType()
@@ -93,7 +81,7 @@ namespace Items
             }
             else
             {
-                var currentItemUI = await Pool.GetNewCurrentItemUI();
+                var currentItemUI = await _pool.GetNewCurrentItemUI();
                 currentItemUI.transform.SetParent(transform);
                 currentItemUI.name = "CurrentItemUI";
 
@@ -158,11 +146,13 @@ namespace Items
             }
         }
 
-        public void EnableUI()
+        public void EnableUI(Vector2Int pos)
         {
             if (!CurrentItemUI.gameObject.activeSelf)
             {
                 CurrentItemUI.gameObject.SetActive(true);
+                _currentPos = pos;
+                UpdateCurrentItemUI();
             }
             transform.SetAsLastSibling();
         }
@@ -183,6 +173,11 @@ namespace Items
         void Start()
         {
             InitCurrentItemUI();
+        }
+
+        void OnValidate()
+        {
+            _pool = GetComponentInParent<ItemUIPool>();
         }
     }
 }

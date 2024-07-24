@@ -1315,7 +1315,6 @@ GameObject:
   - component: {fileID: 2709542057167898467}
   - component: {fileID: 1480230539941448088}
   - component: {fileID: 5486202282392623275}
-  - component: {fileID: 4676507840077334245}
   - component: {fileID: 3530728544141555815}
   m_Layer: 5
   m_Name: ItemUI
@@ -1396,26 +1395,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c08bd322c0f44b9bbae79175f672bef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryControlList:
-  - _inventoryType: 0
-    _inventoryUI: {fileID: 7461629204693388583}
-    _inventorySize: {x: 8, y: 5}
-  - _inventoryType: 1
-    _inventoryUI: {fileID: 3468204014549250162}
-    _inventorySize: {x: 8, y: 8}
---- !u!114 &4676507840077334245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7340782950098552935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724ff16d0af4f4640b8d8761a66ae0f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _equipmentsUI: {fileID: 5321368322253021849}
+  _packageController: {fileID: 0}
+  _stashController: {fileID: 0}
+  _equipmentController: {fileID: 0}
 --- !u!114 &3530728544141555815
 MonoBehaviour:
   m_ObjectHideFlags: 0

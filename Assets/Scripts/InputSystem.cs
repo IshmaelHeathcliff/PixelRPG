@@ -8,7 +8,8 @@ public class InputSystem : AbstractSystem
 
     public PlayerInput.MenuActions MenuActionMap { get; private set; }
 
-    public PlayerInput.InventoryActions InventoryActionMap { get; private set; }
+    public PlayerInput.PackageActions PackageActionsMap { get; private set; }
+    public PlayerInput.StashActions StashActionsMap { get; private set; }
 
     public PlayerInput.EquipmentsActions EquipmentsActionMap { get; private set; }
 
@@ -19,7 +20,8 @@ public class InputSystem : AbstractSystem
         _input = new PlayerInput();
         PlayerActionMap = _input.Player;
         MenuActionMap = _input.Menu;
-        InventoryActionMap = _input.Inventory;
+        PackageActionsMap = _input.Package;
+        StashActionsMap = _input.Stash;
         EquipmentsActionMap = _input.Equipments;
         MainActionMap = _input.Main;
         MenuActionMap.Enable();

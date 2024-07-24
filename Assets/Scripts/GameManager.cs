@@ -23,6 +23,10 @@ public class GameManager : MonoSingleton<GameManager>, IController
 
     public IArchitecture GetArchitecture()
     {
-        throw new NotImplementedException();
+        return PixelRPG.Interface;
+    }
+
+    void Start()
+    {
     }
 }

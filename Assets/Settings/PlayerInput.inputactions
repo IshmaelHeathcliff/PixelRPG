@@ -889,7 +889,7 @@
             ]
         },
         {
-            "name": "Inventory",
+            "name": "Package",
             "id": "3e20328b-b065-41b0-93aa-a4b64ea34ad7",
             "actions": [
                 {
@@ -1050,6 +1050,178 @@
                 {
                     "name": "",
                     "id": "7f592c44-e80a-4ed5-a5ca-81a076ffb2c2",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Equip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Stash",
+            "id": "79019489-b55c-488d-9492-0fd57860e77c",
+            "actions": [
+                {
+                    "name": "PickAndPut",
+                    "type": "Button",
+                    "id": "c04ae29e-8c7c-4556-b043-f1fc3665be90",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Delete",
+                    "type": "Button",
+                    "id": "0e63dddb-f665-43c2-ae00-4d87092aeab5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Add",
+                    "type": "Button",
+                    "id": "87561be2-7c99-4700-b2d8-2f10fa0d1aee",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "5fd7acbc-5888-4ee9-b0ba-fcf5c1c89fc7",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "Press,Hold",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Transfer",
+                    "type": "Button",
+                    "id": "198574a8-5ff7-4989-9082-fafdac03e90a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Equip",
+                    "type": "Button",
+                    "id": "9cf95e9d-d72d-450d-a442-3cdfc51ba4dd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "89ba4997-93f7-4e1d-aa82-e85b9fc4bdee",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PickAndPut",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32959fcd-47ae-4fbb-90d4-4b64afd382cf",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Delete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d0adb9c3-0666-4ad7-ab43-294e93a3c5f9",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Add",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Arrows",
+                    "id": "c067cb28-f377-498a-b747-6b3b0d70238d",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "545b63da-ea10-4a31-989c-60cbf3aed36d",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "241ad3d5-6005-4137-bd01-5b8a930ff826",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "fa7a741e-839f-4474-bae6-5fe7a3e0ca0e",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "d25bfebc-7aa6-45e6-9b6a-231897b74ff3",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "36ab3d05-1074-4f06-9a89-f9dc2578c8bd",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Transfer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d066a95f-4826-4b37-9506-4103290ea57f",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",

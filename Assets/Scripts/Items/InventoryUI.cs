@@ -16,6 +16,9 @@ namespace Items
         [SerializeField] int _tileSize = 64;
         [InfoBox("InventoryTile框线宽度")]
         [SerializeField] int _frameWidth = 4;
+        [SerializeField][HideInInspector] ItemUIPool _pool;
+        [SerializeField][HideInInspector] RectTransform _rect;
+
 
         Dictionary<Vector2Int, ItemUI> _itemUIs = new();
         
@@ -37,20 +40,6 @@ namespace Items
 
         Vector2Int _gridSize;
 
-        RectTransform _rect;
-
-        protected RectTransform Rect
-        {
-            get
-            {
-                if (_rect == null)
-                {
-                    _rect = GetComponent<RectTransform>();
-                }
-
-                return _rect;
-            }
-        }
 
         Transform _itemsHolder;
         protected Transform ItemsHolder
@@ -67,57 +56,30 @@ namespace Items
             
         }
 
-        ItemUIPool _pool;
-
-        public void SetPool(ItemUIPool pool)
-        {
-            _pool = pool;
-        }
-
-        public void Redraw(Queue<Inventory.InventoryAction> actions)
-        {
-            while (actions.TryDequeue(out var action))
+        public void InitInventoryUI(Vector2Int size)
+        {                   
+            if(_itemUIs != null)
             {
-                switch (action.Type)
-                {
-                    case Inventory.InventoryActionType.Init:
-                    {
-                        if(_itemUIs != null)
-                        {
-                            foreach (var (pos, itemUI) in _itemUIs)
-                            {
-                                _pool.Push(itemUI);
-                            }
-
-                            _itemUIs.Clear();
-                        }
-                        else
-                        {
-                            _itemUIs = new Dictionary<Vector2Int, ItemUI>();
-                        }
-
-
-                        _gridSize = action.Vec;            
-                        Rect.sizeDelta = _gridSize * _tileSize + Vector2.one * (_frameWidth * 2);
-                        Rect.pivot = new Vector2(0, 1);
-                        break;
-                    }
-                    case Inventory.InventoryActionType.Add:
-                        // Debug.Log("Inventory Action Add");
-                        AddItemUI(action.Vec, action.Item);
-                        break;
-                    case Inventory.InventoryActionType.Delete:
-                        RemoveItemUI(action.Vec);
-                        break;
-                    case Inventory.InventoryActionType.Update:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                foreach (var (pos, itemUI) in _itemUIs)
+                { 
+                    _pool.Push(itemUI);
                 }
+
+                _itemUIs.Clear();
             }
+            else
+            {
+                _itemUIs = new Dictionary<Vector2Int, ItemUI>();
+            }
+
+            _gridSize = size;            
+            _rect.sizeDelta = _gridSize * _tileSize + Vector2.one * (_frameWidth * 2);
+            _rect.pivot = new Vector2(0, 1);
+            
         }
 
-        async void AddItemUI(Vector2Int gridPos, Item item)
+
+        public async void AddItemUI(Vector2Int gridPos, Item item)
         {
             var itemUI = await _pool.Pop();
             itemUI.transform.SetParent(ItemsHolder);
@@ -132,7 +94,7 @@ namespace Items
             itemUI.SetIcon(item.IconName);
         }
 
-        void RemoveItemUI(Vector2Int pos)
+        public void RemoveItemUI(Vector2Int pos)
         {
             if (_itemUIs.ContainsKey(pos))
             {
@@ -143,7 +105,7 @@ namespace Items
             
             foreach (var (p, itemUI) in _itemUIs)
             {
-                if (Inventory.ContainPoint(itemUI.StartPos, itemUI.StartPos + itemUI.Size, pos))
+                if (InventoryModel.ContainPoint(itemUI.StartPos, itemUI.StartPos + itemUI.Size, pos))
                 {
                     _pool.Push(itemUI);
                     _itemUIs.Remove(p);
@@ -159,10 +121,10 @@ namespace Items
             CurrentItemUI.SetUIPosition(GridPosToUIPos(gridPos, size));
             CurrentItemUI.SetUISize(size * _tileSize + new Vector2Int(2, 2) * _frameWidth);
 
-            if (Inventory.PickedUp != null)
+            if (InventoryModel.PickedUp.Value != null)
             {
                 CurrentItemUI.PickUp();
-                CurrentItemUI.SetIcon(Inventory.PickedUp.IconName);
+                CurrentItemUI.SetIcon(InventoryModel.PickedUp.Value.IconName);
                 CurrentItemUI.SetIconSize(CurrentItemUI.Size * _tileSize - new Vector2Int(2, 2) * _frameWidth);
             }
             else
@@ -213,7 +175,7 @@ namespace Items
             else
             {
                 var currentItemUI = await _pool.GetNewCurrentItemUI();
-                currentItemUI.transform.SetParent(Rect);
+                currentItemUI.transform.SetParent(_rect);
                 currentItemUI.name = "CurrentItemUI";
                 
                 var image = currentItemUI.GetComponent<Image>();
@@ -234,6 +196,7 @@ namespace Items
         public void EnableUI(Vector2Int gridPos)
         {
             CurrentItemUI.gameObject.SetActive(true);
+            SetCurrentItemUI(gridPos, Vector2Int.one);
             transform.SetAsLastSibling();
         }
 
@@ -242,9 +205,14 @@ namespace Items
             CurrentItemUI.gameObject.SetActive(false);
         }
 
+        void OnValidate()
+        {
+            _pool = GetComponentInParent<ItemUIPool>();
+            _rect = GetComponent<RectTransform>();
+        }
+
         void Awake()
         {
-            _rect = GetComponent<RectTransform>();
         }
 
         void Start()

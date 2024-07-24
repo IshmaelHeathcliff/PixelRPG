@@ -8,18 +8,19 @@ namespace Items
 {
     public class EquipmentsModel : AbstractModel, ISaveData
     {
-        Dictionary<EquipmentType, Equipment> _equipments;
+        public Dictionary<EquipmentType, BindableProperty<Equipment>> Equipments { get; set; }
 
         public Equipment Equip(Equipment equipment)
         {
+            if (equipment == null) return null;
             var equipmentType = equipment.Type;
             Equipment equipped = null;
-            if (_equipments[equipmentType] != null)
+            if (Equipments[equipmentType].Value != null)
             {
                 equipped = Takeoff(equipmentType);
             }
 
-            _equipments[equipmentType] = equipment;
+            Equipments[equipmentType].Value = equipment;
             equipment.Equip();
 
             return equipped;
@@ -27,34 +28,23 @@ namespace Items
 
         public Equipment Takeoff(EquipmentType equipmentType)
         {
-            if (_equipments[equipmentType] == null)
+            if (Equipments[equipmentType].Value == null)
             {
                 return null;
             }
             
-            var equipped = _equipments[equipmentType];
+            var equipped = Equipments[equipmentType].Value;
             equipped.Takeoff();
-            _equipments[equipmentType] = null;
+            Equipments[equipmentType].Value = null;
             return equipped;
-        }
-        
-        public Dictionary<EquipmentType, Equipment> GetEquipments()
-        {
-            var equipments = new Dictionary<EquipmentType, Equipment>();
-            foreach (var (k, e) in _equipments)
-            {
-                equipments.Add(k, e);
-            }
-
-            return equipments;
         }
 
         void InitEquipments()
         {
-            _equipments = new Dictionary<EquipmentType, Equipment>();
+            Equipments = new Dictionary<EquipmentType, BindableProperty<Equipment>>();
             foreach (EquipmentType equipmentType in Enum.GetValues(typeof(EquipmentType)))
             {
-                _equipments[equipmentType] = null;
+                Equipments[equipmentType] = new BindableProperty<Equipment>();
             }
         }
 
@@ -63,7 +53,12 @@ namespace Items
 
         public Data SaveData()
         {
-            return new Data<Dictionary<EquipmentType, Equipment>>(_equipments);
+            var equipmentsData = new Dictionary<EquipmentType, Equipment>();
+            foreach (var (et, e) in Equipments)
+            {
+                equipmentsData.Add(et, e.Value);
+            }
+            return new Data<Dictionary<EquipmentType, Equipment>>(equipmentsData);
             
         }
 
@@ -78,10 +73,9 @@ namespace Items
             }
             else
             {
-                _equipments = equipmentData;
-                foreach (var (_, equipment) in _equipments)
+                foreach (var (et, e) in equipmentData)
                 {
-                    // equipment?.LoadEntries();
+                    Equipments[et].Value = e;
                 }
             }
         }
