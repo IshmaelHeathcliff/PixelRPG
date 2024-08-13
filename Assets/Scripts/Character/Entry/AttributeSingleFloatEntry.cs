@@ -6,6 +6,10 @@ namespace Character.Entry
     [Serializable]
     public class AttributeSingleFloatEntry : AttributeEntry<float>
     {
+        public AttributeSingleFloatEntry()
+        {
+        }
+        
         public AttributeSingleFloatEntry(EntryInfo entryInfo, CharacterAttribute attribute) : base(entryInfo, attribute)
         {
             RandomizeLevel();
@@ -87,6 +91,13 @@ namespace Character.Entry
                 default:
                     break;
             }
+        }
+
+        public override void Load()
+        {
+            //TODO: 不使用全局静态调用？
+            EntryInfo = GetEntryInfo(EntryID);
+            Attribute = GetAttribute(EntryInfo as AttributeEntryInfo);
         }
 
         // public override EntryData ToData()

@@ -29,5 +29,11 @@ namespace Items
                 ItemPos = itemPos
             });
         }
+
+        protected override void OnInit()
+        {
+            DataTag = "Package";
+            base.OnInit();
+        }
     }
 }

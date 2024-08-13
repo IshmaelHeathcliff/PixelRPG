@@ -11,6 +11,11 @@ namespace Items
     [Serializable]
     public class Equipment : EquipmentBase
     {
+        public Equipment()
+        {
+            
+        }
+        
         public Equipment(EquipmentBase equipmentBase)
         {
             foreach (var prop in equipmentBase.GetType().GetProperties())
@@ -36,6 +41,14 @@ namespace Items
             foreach (var entry in Entries)
             {
                 entry.Unregister();
+            }
+        }
+
+        public void Load()
+        {
+            foreach (var entry in Entries)
+            {
+                entry.Load();
             }
         }
     }

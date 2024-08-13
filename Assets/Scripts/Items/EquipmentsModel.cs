@@ -76,6 +76,11 @@ namespace Items
                 foreach (var (et, e) in equipmentData)
                 {
                     Equipments[et].Value = e;
+                    if (e != null)
+                    {
+                        Equipments[et].Value.Load();
+                        Equipments[et].Value.Equip();
+                    }
                 }
             }
         }
@@ -85,6 +90,7 @@ namespace Items
         protected override void OnInit()
         {
             InitEquipments();
+            DataTag = "Equipments";
             this.GetUtility<SaveLoadUtility>().RegisterPersister(this);
         }
     }

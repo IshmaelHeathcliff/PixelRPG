@@ -10,28 +10,50 @@ namespace Character.Entry
         public void Check();
         public void Register();
         public void Unregister();
-        
+        public int EntryID { get; }
+        public EntryInfo EntryInfo { get; set; }
+        public string InstanceID { get; }
+        public void Load();
+
         // public EntryData ToData();
         // public void FromData(EntryData data);
     }
-    
-    public abstract class Entry<T> : IEntry
+
+    public abstract class Entry : IEntry
     {
-        [JsonProperty] protected T Value;
+        protected static EntryInfo GetEntryInfo(int entryId)
+        {
+            return PixelRPG.Interface.GetSystem<EntrySystem>().GetEntryInfo(entryId);
+        }
         
-        [JsonIgnore] protected EntryInfo EntryInfo;
+        [JsonProperty] int _entryID;
 
-        [JsonProperty] protected int EntryID;
-
-        [JsonProperty] protected readonly string InstanceID = System.Guid.NewGuid().ToString();
+        [JsonProperty] readonly string _instanceID = System.Guid.NewGuid().ToString();
 
         public abstract string Description();
         public abstract void Check();
         public abstract void Register();
         public abstract void Unregister();
-        
+        public abstract void Load();
+
+        public int EntryID
+        {
+            get => _entryID;
+            protected set => _entryID = value;
+        }
+
+        public EntryInfo EntryInfo { get; set; }
+
+        public string InstanceID => _instanceID;
+
         // public abstract EntryData ToData();
-        // public abstract void FromData(EntryData data);
+        // public abstract void FromData(EntryData data);        
+        
+    }
+    
+    public abstract class Entry<T> : Entry
+    {
+        [JsonProperty] protected T Value;
     }
 
     public abstract class Entry<T1, T2> : Entry<T1>

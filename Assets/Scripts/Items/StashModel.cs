@@ -30,6 +30,11 @@ namespace Items
             });
         }
 
+        protected override void OnInit()
+        {
+            DataTag = "Stash";
+            base.OnInit();
+        }
         
     }
 }

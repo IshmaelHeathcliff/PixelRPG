@@ -7,10 +7,19 @@ namespace Character.Entry
     [Serializable]
     public abstract class AttributeEntry<T> : Entry<T>
     {
+        protected static CharacterAttribute GetAttribute(AttributeEntryInfo entryInfo)
+        {
+            return PixelRPG.Interface.GetSystem<EntrySystem>().GetAttribute(entryInfo);
+        }
+        
         [JsonProperty] protected int Level;
         
         protected CharacterAttribute Attribute;
 
+        protected AttributeEntry()
+        {
+        }
+        
         protected AttributeEntry(EntryInfo entryInfo, CharacterAttribute attribute)
         {
             EntryInfo = entryInfo;
