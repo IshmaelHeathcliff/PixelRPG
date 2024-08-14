@@ -87,6 +87,7 @@ namespace Items
 
         public void Push(ItemUI obj)
         {
+            obj.Item = null;
             if (Count > _maxSize)
             {
                 Destroy(obj.gameObject);

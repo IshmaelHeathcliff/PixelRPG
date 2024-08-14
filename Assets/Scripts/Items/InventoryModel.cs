@@ -11,11 +11,11 @@ namespace Items
     public interface IInventoryModel
     {
         public Vector2Int Size { get; set; }
-        public bool AddItem(Item item, Vector2Int itemPos);
-        public bool AddItem(Item item);
+        public bool AddItem(IItem item, Vector2Int itemPos);
+        public bool AddItem(IItem item);
         public void RemoveItem(Vector2Int pos);
-        public void RemoveItem(Item item);
-        public Item GetItem(Vector2Int pos, out Vector2Int itemPos);
+        public void RemoveItem(IItem item);
+        public IItem GetItem(Vector2Int pos, out Vector2Int itemPos);
         public bool PickUp(Vector2Int pos);
         public bool PutDown(Vector2Int itemPos);
         public bool CheckItemPos(Vector2Int pos);
@@ -24,7 +24,7 @@ namespace Items
     
     public abstract class InventoryModel : AbstractModel, ISaveData, IInventoryModel
     {
-        public static BindableProperty<Item> PickedUp { get; set; } = new();
+        public static BindableProperty<IItem> PickedUp { get; set; } = new();
         // endPos不包含在范围内
         public static bool ContainPoint(Vector2Int startPos, Vector2Int endPos, Vector2Int point)
         {
@@ -33,16 +33,17 @@ namespace Items
         }
 
         public Vector2Int Size { get; set; }
-        Dictionary<Vector2Int, Item> _items;
+        Dictionary<Vector2Int, IItem> _items;
 
-        protected abstract void SendAddEvent(Item item, Vector2Int itemPos);
+        protected abstract void SendAddEvent(IItem item, Vector2Int itemPos);
+        protected abstract void SendUpdateEvent(IItem item, Vector2Int itemPos);
 
         protected abstract void SendRemoveEvent(Vector2Int itemPos);
 
         protected abstract void SendInitEvent(Vector2Int size);
 
         
-        public bool AddItem(Item item, Vector2Int itemPos)
+        public bool AddItem(IItem item, Vector2Int itemPos)
         {
             if (!CheckPos(itemPos, item.Size))
                 return false;
@@ -61,8 +62,22 @@ namespace Items
             return true;
         }
 
-        public bool AddItem(Item item)
+        public bool AddItem(IItem item)
         {
+            if (item is IStackableItem stackableItem)
+            {
+                foreach (var (itemPos, ite) in _items)
+                {
+                    if (stackableItem.ID != ite.ID) continue;
+                    
+                    int remain = ((IStackableItem) ite).IncreaseCount(stackableItem.Count);
+                    stackableItem.Count = remain;
+                    SendUpdateEvent(ite, itemPos);
+
+                    if (remain == 0) return true;
+                }
+            }
+            
             for (var i = 0; i < Size.x; i++)
             {
                 for (var j = 0; j < Size.y; j++)
@@ -81,7 +96,7 @@ namespace Items
         public void InitInventory()
         {
             SendInitEvent(Size);
-            _items = new Dictionary<Vector2Int, Item>();
+            _items = new Dictionary<Vector2Int, IItem>();
         }
 
         public void RemoveItem(Vector2Int pos)
@@ -104,7 +119,7 @@ namespace Items
             SendRemoveEvent(itemPos);
         }
 
-        public void RemoveItem(Item item)
+        public void RemoveItem(IItem item)
         {
             foreach (var (pos, it) in _items)
             {
@@ -114,7 +129,7 @@ namespace Items
             }
         }
 
-        public Item GetItem(Vector2Int pos, out Vector2Int itemPos)
+        public IItem GetItem(Vector2Int pos, out Vector2Int itemPos)
         {
             foreach (var (p, item) in _items)
             {

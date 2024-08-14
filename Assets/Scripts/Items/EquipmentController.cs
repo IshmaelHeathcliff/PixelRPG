@@ -8,8 +8,8 @@ namespace Items
 {
     public interface IEquipmentController : IController, IUIStatus
     {
-        Equipment Equip(Equipment equipment);
-        Equipment Takeoff(EquipmentType equipmentType);
+        IEquipment Equip(IEquipment equipment);
+        IEquipment Takeoff(EquipmentType equipmentType);
     }
     /// <summary>
     /// 根据Equipments加载UI
@@ -22,13 +22,15 @@ namespace Items
         EquipmentsModel _equipmentsModel;
         PlayerInput.EquipmentsActions _equipmentsInput;
 
+        Vector2Int _currentPos;
 
-        public Equipment Equip(Equipment equipment)
+
+        public IEquipment Equip(IEquipment equipment)
         {
             return this.SendCommand(new EquipEquipmentCommand(equipment));
         }
 
-        public Equipment Takeoff(EquipmentType equipmentType)
+        public IEquipment Takeoff(EquipmentType equipmentType)
         {
             return this.SendCommand(new TakeoffEquipmentCommand(equipmentType));
         }
@@ -49,7 +51,8 @@ namespace Items
         void MoveCurrentSlot(InputAction.CallbackContext context)
         {
             var inputDirection = context.ReadValue<Vector2>().normalized;
-            _equipmentsUI.MoveCurrentItemUI(inputDirection);
+            var type = _equipmentsUI.MoveCurrentItemUI(inputDirection);
+            _equipmentsUI.SetCurrentItemUI(type, _equipmentsModel.Equipments[type].Value);
         }
 
 
@@ -109,7 +112,9 @@ namespace Items
 
         public void Enable(Vector2Int pos)
         {
-            _equipmentsUI.EnableUI(pos);
+            var type = _equipmentsUI.GetEquipmentTypeByPos(pos);
+            var equipment = _equipmentsModel.Equipments[type].Value;
+            _equipmentsUI.EnableUI(pos, equipment);
             _equipmentsInput.Enable();
             IsActive = true;
         }

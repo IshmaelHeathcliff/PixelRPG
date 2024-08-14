@@ -6,4 +6,10 @@ namespace Character.Entry
     {
         public IEntry CreateEntry(EntryInfo entryInfo);
     }
+    
+    public interface IAttributeEntryFactory : IEntryFactory
+    {
+        public ICharacterAttribute GetAttribute(AttributeEntryInfo entryInfo);
+
+    }
 }

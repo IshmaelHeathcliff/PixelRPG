@@ -33,7 +33,7 @@ namespace Character.Entry
             return _entryInfoCache.GetValueOrDefault(id);
         }
 
-        public IEntry CreateAttributeEntry(EntryInfo entryInfo, CharacterAttribute attribute)
+        public IEntry CreateAttributeEntry(EntryInfo entryInfo, ICharacterAttribute attribute)
         {
             return AttributeEntryCommonFactory.CreateAttributeEntry(entryInfo, attribute);
         }
@@ -57,7 +57,7 @@ namespace Character.Entry
                 _entryFactories.Remove(factoryID);
         }
 
-        public CharacterAttribute GetAttribute(AttributeEntryInfo entryInfo)
+        public ICharacterAttribute GetAttribute(AttributeEntryInfo entryInfo)
         {
             if (_entryFactories.TryGetValue(entryInfo.FactoryID, out var factory))
             {

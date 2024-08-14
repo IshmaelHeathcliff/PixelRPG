@@ -45,10 +45,10 @@ namespace Items
     
     public class InventoryAddCommand : InventoryCommand<bool>
     {
-        readonly Item _item;
+        readonly IItem _item;
         readonly Vector2Int? _itemPos;
 
-        protected InventoryAddCommand(Item item, Vector2Int? itemPos = null)
+        protected InventoryAddCommand(IItem item, Vector2Int? itemPos = null)
         {
             _item = item;
             _itemPos = itemPos;
@@ -65,10 +65,10 @@ namespace Items
     
     public class InventoryRemoveCommand : InventoryCommand
     {
-        readonly Item _item;
+        readonly IItem _item;
         readonly Vector2Int _pos;
 
-        protected InventoryRemoveCommand(Item item)
+        protected InventoryRemoveCommand(IItem item)
         {
             _item = item;
         }
@@ -123,7 +123,7 @@ namespace Items
     
     public class PackageAddCommand : InventoryAddCommand
     {
-        public PackageAddCommand(Item item, Vector2Int? itemPos = null) : base(item, itemPos)
+        public PackageAddCommand(IItem item, Vector2Int? itemPos = null) : base(item, itemPos)
         {
         }
         
@@ -136,7 +136,7 @@ namespace Items
     
     public class PackageRemoveCommand : InventoryRemoveCommand
     {
-        public PackageRemoveCommand(Item item) : base(item)
+        public PackageRemoveCommand(IItem item) : base(item)
         {
         }
         
@@ -185,7 +185,7 @@ namespace Items
     
     public class StashAddCommand : InventoryAddCommand
     {
-        public StashAddCommand(Item item, Vector2Int? itemPos = null) : base(item, itemPos)
+        public StashAddCommand(IItem item, Vector2Int? itemPos = null) : base(item, itemPos)
         {
         }
         
@@ -197,7 +197,7 @@ namespace Items
     }
     public class StashRemoveCommand : InventoryRemoveCommand
     {
-        public StashRemoveCommand(Item item) : base(item)
+        public StashRemoveCommand(IItem item) : base(item)
         {
         }
         

@@ -2,22 +2,22 @@
 
 namespace Items
 {
-    public class EquipEquipmentCommand : AbstractCommand<Equipment>
+    public class EquipEquipmentCommand : AbstractCommand<IEquipment>
     {
-        readonly Equipment _equipment;
+        readonly IEquipment _equipment;
         
-        public EquipEquipmentCommand(Equipment equipment)
+        public EquipEquipmentCommand(IEquipment equipment)
         {
             _equipment = equipment;
         }
         
-        protected override Equipment OnExecute()
+        protected override IEquipment OnExecute()
         {
             return this.GetModel<EquipmentsModel>().Equip(_equipment);
         }
     }
 
-    public class TakeoffEquipmentCommand : AbstractCommand<Equipment>
+    public class TakeoffEquipmentCommand : AbstractCommand<IEquipment>
     {
         readonly EquipmentType _equipmentType;
 
@@ -26,7 +26,7 @@ namespace Items
             _equipmentType = equipmentType;
         }
         
-        protected override Equipment OnExecute()
+        protected override IEquipment OnExecute()
         {
             return this.GetModel<EquipmentsModel>().Takeoff(_equipmentType);
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -18,6 +19,7 @@ namespace Items
         [SerializeField] int _frameWidth = 4;
         [SerializeField][HideInInspector] ItemUIPool _pool;
         [SerializeField][HideInInspector] RectTransform _rect;
+        [SerializeField][HideInInspector] TextMeshProUGUI _itemInfo;
 
 
         Dictionary<Vector2Int, ItemUI> _itemUIs = new();
@@ -79,12 +81,13 @@ namespace Items
         }
 
 
-        public async void AddItemUI(Vector2Int gridPos, Item item)
+        public async void AddItemUI(Vector2Int gridPos, IItem item)
         {
             var itemUI = await _pool.Pop();
             itemUI.transform.SetParent(ItemsHolder);
             _itemUIs.Add(gridPos, itemUI);
-            
+
+            itemUI.Item = item;
             itemUI.StartPos = gridPos;
             itemUI.Size = item.Size;
             itemUI.SetPivot(new Vector2(0.5f, 0.5f));
@@ -92,6 +95,22 @@ namespace Items
             itemUI.SetUIPosition(GridPosToUIPos(gridPos, itemUI.Size));
             itemUI.SetUISize(itemUI.Size * _tileSize - new Vector2Int(2, 2) * _frameWidth);
             itemUI.SetIcon(item.IconName);
+            
+            if (item is IStackableItem stackableItem)
+            {
+               itemUI.SetCount(stackableItem.Count); 
+               itemUI.EnableCount();
+            }
+            else
+            {
+                itemUI.DisableCount();
+            }
+        }
+
+        public void UpdateItemUI(Vector2Int gridPos, IItem item)
+        {
+            RemoveItemUI(gridPos);
+            AddItemUI(gridPos, item);
         }
 
         public void RemoveItemUI(Vector2Int pos)
@@ -100,6 +119,8 @@ namespace Items
             {
                 _pool.Push(_itemUIs[pos]);
                 _itemUIs.Remove(pos);
+                ResetItemInfo();
+                SetCurrentItemUI(pos, Vector2Int.one);
                 return;
             }
             
@@ -109,9 +130,18 @@ namespace Items
                 {
                     _pool.Push(itemUI);
                     _itemUIs.Remove(p);
+                    ResetItemInfo();
+                    SetCurrentItemUI(p, Vector2Int.one);
                     return;
                 }
             }
+        }
+
+        public void SetCurrentItemUI(Vector2Int gridPos, IItem item)
+        {
+            SetCurrentItemUI(gridPos, item.Size);
+
+            SetItemInfo(item.GetDescription());
         }
         
         public void SetCurrentItemUI(Vector2Int gridPos, Vector2Int size)
@@ -126,6 +156,7 @@ namespace Items
                 CurrentItemUI.PickUp();
                 CurrentItemUI.SetIcon(InventoryModel.PickedUp.Value.IconName);
                 CurrentItemUI.SetIconSize(CurrentItemUI.Size * _tileSize - new Vector2Int(2, 2) * _frameWidth);
+                SetItemInfo(InventoryModel.PickedUp.Value.GetDescription());
             }
             else
             {
@@ -190,25 +221,50 @@ namespace Items
             _currentItemUI.SetPivot(Vector2.one / 2);
             _currentItemUI.SetUIPosition(Vector2.zero);
             _currentItemUI.DisableIcon();
+            _currentItemUI.ItemInfo = _itemInfo;
             SetCurrentItemUI(Vector2Int.one, Vector2Int.one);
+        }
+        
+        void SetItemInfo(string info)
+        {
+            _itemInfo.text = info;
+        }
+
+        void ResetItemInfo()
+        {
+            _itemInfo.text = "Item Info";
+        }
+
+        void EnableItemInfo()
+        {
+            _itemInfo.gameObject.SetActive(true);
+        }
+
+        void DisableItemInfo()
+        {
+            _itemInfo.gameObject.SetActive(false);
+            
         }
 
         public void EnableUI(Vector2Int gridPos)
         {
             CurrentItemUI.gameObject.SetActive(true);
             SetCurrentItemUI(gridPos, Vector2Int.one);
+            EnableItemInfo();
             transform.SetAsLastSibling();
         }
 
         public void DisableUI()
         {
             CurrentItemUI.gameObject.SetActive(false);
+            DisableItemInfo();
         }
 
         void OnValidate()
         {
             _pool = GetComponentInParent<ItemUIPool>();
             _rect = GetComponent<RectTransform>();
+            _itemInfo = GetComponentInChildren<TextMeshProUGUI>();
         }
 
         void Awake()

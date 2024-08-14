@@ -1,8 +1,10 @@
 {
-  "$type": "System.Collections.Generic.List`1[[Items.Item, Assembly-CSharp]], mscorlib",
+  "$type": "System.Collections.Generic.List`1[[Items.IItem, Assembly-CSharp]], mscorlib",
   "$values": [
     {
-      "$type": "Items.Stackable, Assembly-CSharp",
+      "$type": "Items.Coin, Assembly-CSharp",
+      "Count": 1,
+      "MaxCount": 50,
       "ID": 0,
       "Name": "金币",
       "IconName": "Loots/Loots_11.png",

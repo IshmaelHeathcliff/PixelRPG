@@ -12,6 +12,7 @@ namespace Character.Entry
         public void Unregister();
         public int EntryID { get; }
         public EntryInfo EntryInfo { get; set; }
+        public string GetDescription();
         public string InstanceID { get; }
         public void Load();
 
@@ -30,7 +31,7 @@ namespace Character.Entry
 
         [JsonProperty] readonly string _instanceID = System.Guid.NewGuid().ToString();
 
-        public abstract string Description();
+        public abstract string GetDescription();
         public abstract void Check();
         public abstract void Register();
         public abstract void Unregister();

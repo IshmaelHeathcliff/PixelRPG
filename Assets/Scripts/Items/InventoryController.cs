@@ -20,8 +20,8 @@ namespace Items
     {
         public void PickUp();
         public void PutDown();
-        public Item GetItem();
-        public bool AddItem(Item item);
+        public IItem GetItem();
+        public bool AddItem(IItem item);
         public void DeleteItem();
         public void RemoveItem();
     }
@@ -39,7 +39,7 @@ namespace Items
         
         public bool IsActive { get; private set; }
         public bool IsOpen { get; private set; }
-        public Vector2Int CurrentPos { get; set; }
+        protected Vector2Int CurrentPos { get; set; }
 
         public virtual void Init()
         {
@@ -48,7 +48,7 @@ namespace Items
 
         #region Basic
 
-        public Item GetItem()
+        public IItem GetItem()
         {
             var item = InventoryModel.GetItem(CurrentPos, out _);
             return item;
@@ -58,7 +58,7 @@ namespace Items
 
         public abstract void PutDown();
 
-        public abstract bool AddItem(Item item);
+        public abstract bool AddItem(IItem item);
         
         public abstract void RemoveItem();
 
@@ -111,7 +111,7 @@ namespace Items
         {
             if (InventoryModel.PickedUp.Value != null)
             {
-                if(InventoryModel.PickedUp.Value is Equipment equipment)
+                if(InventoryModel.PickedUp.Value is IEquipment equipment)
                 {
                     var equipped = this.SendCommand(new EquipEquipmentCommand(equipment));
                     InventoryModel.PickedUp.Value = equipped;
@@ -120,7 +120,7 @@ namespace Items
             else
             {
                 var item = GetItem();
-                if (item is Equipment equipment)
+                if (item is IEquipment equipment)
                 {
                     var equipped = this.SendCommand(new EquipEquipmentCommand(equipment));
                     RemoveItem();
@@ -275,14 +275,14 @@ namespace Items
             
             if (InventoryModel.PickedUp.Value != null)
             {
-                _inventoryUI.SetCurrentItemUI(CurrentPos, InventoryModel.PickedUp.Value.Size);
+                _inventoryUI.SetCurrentItemUI(CurrentPos, InventoryModel.PickedUp.Value);
                 return;
             }
             
             var item = InventoryModel.GetItem(CurrentPos, out var itemPos);
             if (item != null)
             {
-                _inventoryUI.SetCurrentItemUI(itemPos, item.Size);
+                _inventoryUI.SetCurrentItemUI(itemPos, item);
                 CurrentPos = itemPos;
             }
             else

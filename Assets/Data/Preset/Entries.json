@@ -11,28 +11,28 @@
         "$values": [
           {
             "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-            "Min": 1.0,
-            "Max": 10.0
+            "Min": 1,
+            "Max": 10
           },
           {
             "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-            "Min": 11.0,
-            "Max": 20.0
+            "Min": 11,
+            "Max": 20
           },
           {
             "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-            "Min": 21.0,
-            "Max": 30.0
+            "Min": 21,
+            "Max": 30
           },
           {
             "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-            "Min": 31.0,
-            "Max": 40.0
+            "Min": 31,
+            "Max": 40
           },
           {
             "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-            "Min": 41.0,
-            "Max": 50.0
+            "Min": 41,
+            "Max": 50
           }
         ]
       },
@@ -53,18 +53,18 @@
         "$values": [
           {
             "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-            "Min": 1.0,
-            "Max": 20.0
+            "Min": 1,
+            "Max": 20
           },
           {
             "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-            "Min": 21.0,
-            "Max": 40.0
+            "Min": 21,
+            "Max": 40
           },
           {
             "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-            "Min": 41.0,
-            "Max": 60.0
+            "Min": 41,
+            "Max": 60
           }
         ]
       },
@@ -85,18 +85,18 @@
         "$values": [
           {
             "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-            "Min": 1.0,
-            "Max": 10.0
+            "Min": 1,
+            "Max": 10
           },
           {
             "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-            "Min": 11.0,
-            "Max": 20.0
+            "Min": 11,
+            "Max": 20
           },
           {
             "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-            "Min": 21.0,
-            "Max": 30.0
+            "Min": 21,
+            "Max": 30
           }
         ]
       },

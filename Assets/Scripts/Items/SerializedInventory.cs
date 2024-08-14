@@ -21,9 +21,9 @@ namespace Items
         {
             [JsonProperty] public int ItemPosX { get; set; }
             [JsonProperty] public int ItemPosY { get; set; }
-            public Item Item;
+            public IItem Item;
 
-            public ItemWithPos(Item item, Vector2Int pos)
+            public ItemWithPos(IItem item, Vector2Int pos)
             {
                 Item = item;
                 ItemPosX = pos.x;
@@ -37,7 +37,7 @@ namespace Items
             _sizeY = size.y;
         }
 
-        public void Serialize(Dictionary<Vector2Int, Item> itemDict)
+        public void Serialize(Dictionary<Vector2Int, IItem> itemDict)
         {
             var keys = itemDict.Keys.ToArray();
             var items = itemDict.Values.ToArray();
@@ -51,13 +51,13 @@ namespace Items
             }
         }
 
-        public Dictionary<Vector2Int, Item> Deserialize()
+        public Dictionary<Vector2Int, IItem> Deserialize()
         {
-            var itemDict = new Dictionary<Vector2Int, Item>();
+            var itemDict = new Dictionary<Vector2Int, IItem>();
             foreach (var itemWithPos in _itemsWithPos)
             {
                 var pos = new Vector2Int(itemWithPos.ItemPosX, itemWithPos.ItemPosY);
-                itemDict[pos] = (Item)itemWithPos.Item;
+                itemDict[pos] = (IItem)itemWithPos.Item;
             }
 
             return itemDict;

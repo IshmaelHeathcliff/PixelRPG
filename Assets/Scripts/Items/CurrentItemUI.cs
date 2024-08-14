@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Items
@@ -11,6 +12,10 @@ namespace Items
         Sprite _bg1;
         AsyncOperationHandle<Sprite> _bgHandle0;
         AsyncOperationHandle<Sprite> _bgHandle1;
+
+
+        public TextMeshProUGUI ItemInfo { private get; set; }
+
         public void PickUp()
         {
             SetBgColor(Color.red);

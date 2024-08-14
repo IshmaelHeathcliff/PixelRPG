@@ -1,21 +1,18 @@
-﻿using System;
-using Random = UnityEngine.Random;
+﻿using Random = UnityEngine.Random;
 
 namespace Character.Entry
 {
-    [Serializable]
-    public class AttributeSingleFloatEntry : AttributeEntry<float>
+    public class AttributeSingleIntEntry : AttributeEntry<int>
     {
-        public AttributeSingleFloatEntry()
+        public AttributeSingleIntEntry()
         {
         }
         
-        public AttributeSingleFloatEntry(EntryInfo entryInfo, ICharacterAttribute attribute) : base(entryInfo, attribute)
+        public AttributeSingleIntEntry(EntryInfo entryInfo, ICharacterAttribute attribute) : base(entryInfo, attribute)
         {
             RandomizeLevel();
             RandomizeValue();
         }
-        
         public override string GetDescription()
         {
             return Value >= 0 ? 
@@ -25,24 +22,7 @@ namespace Character.Entry
 
         public override void Check()
         {
-            throw new NotImplementedException();
-        }
-
-        public sealed override void RandomizeLevel()
-        {
-            if (EntryInfo is AttributeEntryInfo info)
-            {
-                Level = Random.Range(0, info.MaxLevel);
-            }
-        }
-        
-        public sealed override void RandomizeValue()
-        {
-            if (EntryInfo is AttributeEntryInfo info)
-            {
-                var levelRange = info.LevelRanges[Level];
-                Value = Random.Range(levelRange.Min, levelRange.Max);
-            }
+            throw new System.NotImplementedException();
         }
 
         public override void Register()
@@ -56,10 +36,10 @@ namespace Character.Entry
                     Attribute.AddAddedValueModifier(InstanceID, Value);
                     break;
                 case AttributeEntryType.Increase:
-                    Attribute.AddIncreaseModifier(InstanceID, Value);
+                    Attribute.AddIncreaseModifier(InstanceID, Value/100f);
                     break;
                 case AttributeEntryType.More:
-                    Attribute.AddMoreModifier(InstanceID, Value);
+                    Attribute.AddMoreModifier(InstanceID, Value/100f);
                     break;
                 case AttributeEntryType.Fixed:
                     Attribute.AddFixedValueModifier(InstanceID, Value);
@@ -67,6 +47,7 @@ namespace Character.Entry
                 default:
                     break;
             }
+
         }
 
         public override void Unregister()
@@ -91,6 +72,7 @@ namespace Character.Entry
                 default:
                     break;
             }
+
         }
 
         public override void Load()
@@ -98,24 +80,26 @@ namespace Character.Entry
             //TODO: 不使用全局静态调用？
             EntryInfo = GetEntryInfo(EntryID);
             Attribute = GetAttribute(EntryInfo as AttributeEntryInfo);
+
         }
 
-        // public override EntryData ToData()
-        // {
-        //     return new EntryData<float>()
-        //     {
-        //         entryID = entryID,
-        //         instanceID = instanceID,
-        //         value = value
-        //     };
-        // }
-        //
-        // public override void FromData(EntryData data)
-        // {
-        //     if (data is EntryData<float> entryData && data.entryID == entryID && data.instanceID == instanceID)
-        //     {
-        //         value = entryData.value;
-        //     }
-        // }
+        public sealed override void RandomizeLevel()
+        {
+            if (EntryInfo is AttributeEntryInfo info)
+            {
+                Level = Random.Range(0, info.MaxLevel);
+            }
+
+        }
+
+        public sealed override void RandomizeValue()
+        {
+            if (EntryInfo is AttributeEntryInfo info)
+            {
+                var levelRange = info.LevelRanges[Level];
+                Value = Random.Range(levelRange.Min, levelRange.Max+1);
+            }
+
+        }
     }
 }

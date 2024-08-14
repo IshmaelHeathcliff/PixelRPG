@@ -5,9 +5,18 @@ namespace Items
 {
     public class PackageModel : InventoryModel
     {
-        protected override void SendAddEvent(Item item, Vector2Int itemPos)
+        protected override void SendAddEvent(IItem item, Vector2Int itemPos)
         {
             this.SendEvent(new PackageAddEvent()
+            {
+                ItemPos = itemPos,
+                Item = item
+            });
+        }
+
+        protected override void SendUpdateEvent(IItem item, Vector2Int itemPos)
+        {
+            this.SendEvent(new PackageUpdateEvent()
             {
                 ItemPos = itemPos,
                 Item = item

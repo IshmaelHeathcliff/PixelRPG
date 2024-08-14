@@ -7,30 +7,30 @@ namespace Character.Entry
     [Serializable]
     public abstract class AttributeEntry<T> : Entry<T>
     {
-        protected static CharacterAttribute GetAttribute(AttributeEntryInfo entryInfo)
+        protected static ICharacterAttribute GetAttribute(AttributeEntryInfo entryInfo)
         {
             return PixelRPG.Interface.GetSystem<EntrySystem>().GetAttribute(entryInfo);
         }
         
         [JsonProperty] protected int Level;
         
-        protected CharacterAttribute Attribute;
+        protected ICharacterAttribute Attribute;
 
         protected AttributeEntry()
         {
         }
         
-        protected AttributeEntry(EntryInfo entryInfo, CharacterAttribute attribute)
+        protected AttributeEntry(EntryInfo entryInfo, ICharacterAttribute attribute)
         {
             EntryInfo = entryInfo;
             Attribute = attribute;
             EntryID = entryInfo.EntryID;
         }
-
+        
         public abstract void RandomizeLevel();
         public abstract void RandomizeValue();
 
-        public CharacterAttribute GetAttribute()
+        public ICharacterAttribute GetAttribute()
         {
             return Attribute;
         }
@@ -41,7 +41,7 @@ namespace Character.Entry
     public abstract class AttributeEntry<T1, T2> : AttributeEntry<T1>
     {
         [JsonProperty] protected T2 Value2;
-        protected AttributeEntry(EntryInfo entryInfo, CharacterAttribute attribute) : base(entryInfo, attribute)
+        protected AttributeEntry(EntryInfo entryInfo, ICharacterAttribute attribute) : base(entryInfo, attribute)
         {
         }
     }
@@ -49,8 +49,8 @@ namespace Character.Entry
     [Serializable]
     public struct LevelRange
     {
-        [JsonProperty] public float Min { get; set; }
-        [JsonProperty] public float Max { get; set; }
+        [JsonProperty][ShowInInspector] public int Min { get; set; }
+        [JsonProperty][ShowInInspector] public int Max { get; set; }
     }
 
     public enum AttributeEntryType

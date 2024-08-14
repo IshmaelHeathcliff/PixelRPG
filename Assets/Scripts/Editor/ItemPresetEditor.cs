@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Editor
 {
     [CreateAssetMenu(menuName = "Tools/Item Preset Editor", fileName = "ItemPresetEditor")]
-    public class ItemPresetEditor : DataPresetEditor<Item>
+    public class ItemPresetEditor : DataPresetEditor<IItem>
     {
     }
 

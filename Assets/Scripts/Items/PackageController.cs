@@ -11,6 +11,7 @@ namespace Items
             this.RegisterEvent<PackageInitEvent>(e => _inventoryUI.InitInventoryUI(e.Size)).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<PackageAddEvent>(e => _inventoryUI.AddItemUI(e.ItemPos, e.Item)).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<PackageRemoveEvent>(e => _inventoryUI.RemoveItemUI(e.ItemPos)).UnRegisterWhenCurrentSceneUnloaded();
+            this.RegisterEvent<PackageUpdateEvent>(e => _inventoryUI.UpdateItemUI(e.ItemPos, e.Item)).UnRegisterWhenCurrentSceneUnloaded();
             
             InventoryModel.InitInventory();
         }
@@ -25,7 +26,7 @@ namespace Items
             this.SendCommand(new PackagePutDownCommand(CurrentPos));
         }
 
-        public override bool AddItem(Item item)
+        public override bool AddItem(IItem item)
         {
             return this.SendCommand(new PackageAddCommand(item));
         }

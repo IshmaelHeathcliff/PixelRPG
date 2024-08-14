@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 using Character.Entry;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -8,15 +9,23 @@ using Random = System.Random;
 
 namespace Items
 {
+    public interface IEquipment : IEquipmentBase
+    {
+        public List<IEntry> Entries { get; set; }
+        public EquipmentBase.EquipmentRarity Rarity { get; set; }
+        public void Equip();
+        public void Takeoff();
+        public void Load();
+    }
     [Serializable]
-    public class Equipment : EquipmentBase
+    public class Equipment : EquipmentBase, IEquipment
     {
         public Equipment()
         {
             
         }
         
-        public Equipment(EquipmentBase equipmentBase)
+        public Equipment(IEquipmentBase equipmentBase)
         {
             foreach (var prop in equipmentBase.GetType().GetProperties())
             {
@@ -50,6 +59,16 @@ namespace Items
             {
                 entry.Load();
             }
+        }
+
+        public override string GetDescription()
+        {
+            var entriesInfo = new StringBuilder();
+            foreach (var entry in Entries)
+            {
+                entriesInfo.Append(entry.GetDescription() + "\n");
+            }
+            return $"{Name}\n{Rarity} {Type}\n\n{entriesInfo}";
         }
     }
 }

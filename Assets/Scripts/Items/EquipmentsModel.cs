@@ -8,13 +8,13 @@ namespace Items
 {
     public class EquipmentsModel : AbstractModel, ISaveData
     {
-        public Dictionary<EquipmentType, BindableProperty<Equipment>> Equipments { get; set; }
+        public Dictionary<EquipmentType, BindableProperty<IEquipment>> Equipments { get; set; }
 
-        public Equipment Equip(Equipment equipment)
+        public IEquipment Equip(IEquipment equipment)
         {
             if (equipment == null) return null;
             var equipmentType = equipment.Type;
-            Equipment equipped = null;
+            IEquipment equipped = null;
             if (Equipments[equipmentType].Value != null)
             {
                 equipped = Takeoff(equipmentType);
@@ -26,7 +26,7 @@ namespace Items
             return equipped;
         }
 
-        public Equipment Takeoff(EquipmentType equipmentType)
+        public IEquipment Takeoff(EquipmentType equipmentType)
         {
             if (Equipments[equipmentType].Value == null)
             {
@@ -41,10 +41,10 @@ namespace Items
 
         void InitEquipments()
         {
-            Equipments = new Dictionary<EquipmentType, BindableProperty<Equipment>>();
+            Equipments = new Dictionary<EquipmentType, BindableProperty<IEquipment>>();
             foreach (EquipmentType equipmentType in Enum.GetValues(typeof(EquipmentType)))
             {
-                Equipments[equipmentType] = new BindableProperty<Equipment>();
+                Equipments[equipmentType] = new BindableProperty<IEquipment>();
             }
         }
 
@@ -53,19 +53,19 @@ namespace Items
 
         public Data SaveData()
         {
-            var equipmentsData = new Dictionary<EquipmentType, Equipment>();
+            var equipmentsData = new Dictionary<EquipmentType, IEquipment>();
             foreach (var (et, e) in Equipments)
             {
                 equipmentsData.Add(et, e.Value);
             }
-            return new Data<Dictionary<EquipmentType, Equipment>>(equipmentsData);
+            return new Data<Dictionary<EquipmentType, IEquipment>>(equipmentsData);
             
         }
 
         public void LoadData(Data data)
         {
             var equipmentData = 
-                (data as Data<Dictionary<EquipmentType, Equipment>>)?.Value;
+                (data as Data<Dictionary<EquipmentType, IEquipment>>)?.Value;
 
             if (equipmentData == null)
             {

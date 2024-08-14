@@ -6,8 +6,18 @@ using UnityEngine;
 
 namespace Character.Buff
 {
+    public interface IBuff
+    {
+        public float Duration { get; }
+        public void Activate();
+        public string GetName();
+        public string GetDescription();
+        public void Enable();
+        public void Disable();
+    }
+    
     [Serializable]
-    public class Buff
+    public class Buff : IBuff
     {
         BuffInfo _info;
         

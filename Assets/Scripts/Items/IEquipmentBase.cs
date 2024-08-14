@@ -23,9 +23,16 @@ namespace Items
         Ring,
         Amulet,
     }
+
+    public interface IEquipmentBase : IItem
+    {
+        public EquipmentType Type { get; set; }
+        public Dictionary<int, int> EntryPool { get; set; }
+        public int GetRandomEntryID();
+    }
     
     [Serializable]
-    public class EquipmentBase : Item
+    public class EquipmentBase : Item, IEquipmentBase
     {
         [JsonProperty][ShowInInspector] public EquipmentType Type { get; set; }
 
@@ -39,9 +46,14 @@ namespace Items
 
         [JsonProperty][ShowInInspector] public Dictionary<int, int> EntryPool { get; set; }
 
-        public int RandomEntryID()
+        public int GetRandomEntryID()
         {
             return WeightRandom<int>.GetRandom(EntryPool);
+        }
+
+        public override string GetDescription()
+        {
+            return $"{Name}\n{Type}";
         }
     }
 }

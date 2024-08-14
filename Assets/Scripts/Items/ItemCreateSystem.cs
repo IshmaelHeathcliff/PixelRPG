@@ -12,7 +12,7 @@ namespace Items
 {
     public class ItemCreateSystem: AbstractSystem
     {
-        Dictionary<int, Item> _lookupCache;
+        Dictionary<int, IItem> _lookupCache;
 
         const string JsonPath = "Preset";
         const string JsonName = "Items.json";
@@ -29,15 +29,15 @@ namespace Items
 
         void Load()
         {
-            _lookupCache = new Dictionary<int, Item>();
-            var itemList = this.GetUtility<SaveLoadUtility>().Load<List<Item>>(JsonName, JsonPath);
+            _lookupCache = new Dictionary<int, IItem>();
+            var itemList = this.GetUtility<SaveLoadUtility>().Load<List<IItem>>(JsonName, JsonPath);
             foreach (var item in itemList)
             {
                 _lookupCache.Add(item.ID, item);
             }
         }
         
-        public Item CreateFromID(int itemID)
+        public IItem CreateFromID(int itemID)
         {
             if (_lookupCache == null)
             {
@@ -49,12 +49,12 @@ namespace Items
 
             return item switch
             {
-                EquipmentBase equipmentBase => CreateEquipment(equipmentBase),
-                _ => item.Clone() as Item
+                IEquipmentBase equipmentBase => CreateEquipment(equipmentBase),
+                _ => item.Clone() as IItem
             };
         }
 
-        Equipment CreateEquipment(EquipmentBase equipmentBase)
+        IEquipment CreateEquipment(IEquipmentBase equipmentBase)
         {
             var equipment = new Equipment(equipmentBase)
             {
@@ -75,9 +75,9 @@ namespace Items
             int minEntryCount = equipment.Rarity switch
             {
                 EquipmentBase.EquipmentRarity.Normal => 0,
-                EquipmentBase.EquipmentRarity.Magic => 2,
-                EquipmentBase.EquipmentRarity.Rare => 3,
-                EquipmentBase.EquipmentRarity.Unique => 4,
+                EquipmentBase.EquipmentRarity.Magic => 3,
+                EquipmentBase.EquipmentRarity.Rare => 5,
+                EquipmentBase.EquipmentRarity.Unique => 7,
                 _ => 0
             };
             
@@ -85,7 +85,7 @@ namespace Items
 
             for (int i = 0; i < entryCount; i++)
             {
-                var entry = _entrySystem.CreateEntry(equipment.RandomEntryID());
+                var entry = _entrySystem.CreateEntry(equipment.GetRandomEntryID());
                 equipment.Entries.Add(entry);
             }
             

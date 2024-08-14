@@ -10,9 +10,9 @@ namespace Items
         [SerializeField] EquipmentType _equipmentType;
         public EquipmentType EquipmentType => _equipmentType;
 
-        Equipment _equipped;
+        IEquipment _equipped;
 
-        public void UpdateUI(Equipment equipment)
+        public void UpdateUI(IEquipment equipment)
         {
             if (equipment != null)
             {

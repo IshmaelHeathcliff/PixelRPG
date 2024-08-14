@@ -4,10 +4,10 @@ namespace Character.Entry
 {
     public static class AttributeEntryCommonFactory
     {
-        public static IEntry CreateAttributeEntry(EntryInfo entryInfo, CharacterAttribute attribute)
+        public static IEntry CreateAttributeEntry(EntryInfo entryInfo, ICharacterAttribute attribute)
         {
             return entryInfo is not AttributeEntryInfo? null : 
-                new AttributeSingleFloatEntry(entryInfo, attribute);
+                new AttributeSingleIntEntry(entryInfo, attribute);
         }
     }
 }

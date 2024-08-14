@@ -1,5 +1,6 @@
 ﻿using System;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -11,6 +12,7 @@ namespace Items
     [RequireComponent(typeof(Image), typeof(RectTransform))]
     public class ItemUI : MonoBehaviour
     {
+        public IItem Item { get; set; }
         public Vector2Int StartPos { get; set; }
         public Vector2Int Size { get; set; }
 
@@ -58,6 +60,21 @@ namespace Items
                 }
 
                 return _icon;
+            }
+        }
+
+        TextMeshProUGUI _countText;
+
+        protected TextMeshProUGUI Count
+        {
+            get
+            {
+                if (_countText == null && transform.childCount != 0)
+                {
+                    _countText = transform.Find("Count").GetComponent<TextMeshProUGUI>();
+                }
+
+                return _countText;
             }
         }
 
@@ -125,6 +142,11 @@ namespace Items
             // Icon.sprite = sprite;
         }
 
+        public void SetCount(int count)
+        {
+            Count.text = count.ToString();
+        }
+
         public void SetIconSize(Vector2 iconSize)
         {
             IconRect.sizeDelta = iconSize;
@@ -172,6 +194,22 @@ namespace Items
             Icon.enabled = true;
         }
 
+        public void DisableIcon()
+        {
+            Icon.enabled = false;
+        }
+
+        public void EnableCount()
+        {
+            Count.enabled = true;
+
+        }
+
+        public void DisableCount()
+        {
+            Count.enabled = false;
+        }
+        
         protected void ReleaseHandle(AsyncOperationHandle<Sprite> handle)
         {
             if(handle.IsValid())
@@ -188,10 +226,7 @@ namespace Items
             ReleaseHandle(_bgHandle);
         }
 
-        public void DisableIcon()
-        {
-            Icon.enabled = false;
-        }
+
 
         void OnDestroy()
         {

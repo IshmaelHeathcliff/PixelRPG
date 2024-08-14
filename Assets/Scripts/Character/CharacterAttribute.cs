@@ -8,8 +8,27 @@ using UnityEngine;
 
 namespace Character
 {
+    public interface ICharacterAttribute
+    {
+        public string Name { get; }
+        public float BaseValue { get; }
+        public float AddedValue { get; }
+        public float FixedValue { get; }
+        public float Increase { get; }
+        public float More { get; }
+        public void AddBaseValueModifier(string key, float value);
+        public void AddAddedValueModifier(string key, float value);
+        public void AddFixedValueModifier(string key, float value);
+        public void AddIncreaseModifier(string key, float value);
+        public void AddMoreModifier(string key, float value);
+        public void RemoveBaseValueModifier(string key);
+        public void RemoveAddedValueModifier(string key);
+        public void RemoveFixedValueModifier(string key);
+        public void RemoveIncreaseModifier(string key);
+        public void RemoveMoreModifier(string key);
+    }
     [Serializable]
-    public class CharacterAttribute : IReadonlyBindableProperty<float>
+    public class CharacterAttribute : IReadonlyBindableProperty<float>, ICharacterAttribute
     {
         public string Name { get; private set; }
         public float Value => GetValue();
@@ -136,8 +155,17 @@ namespace Character
         }
     }
 
+    public interface IConsumableAttribute : ICharacterAttribute
+    {
+        public float CurrentValue { get; }
+        public void CheckCurrentValue();
+        public void ChangeCurrentValue(float value);
+        public void SetCurrentValue(float value);
+        public void SetMaxValue();
+    }
+
     [Serializable]
-    public class ConsumableAttribute : CharacterAttribute
+    public class ConsumableAttribute : CharacterAttribute, IConsumableAttribute
     {
         public float CurrentValue { get; private set; }
 

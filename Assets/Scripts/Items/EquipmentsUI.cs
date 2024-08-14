@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ namespace Items
     public class EquipmentsUI : MonoBehaviour
     {
         [SerializeField][HideInInspector] ItemUIPool _pool;
+        [SerializeField][HideInInspector] TextMeshProUGUI _itemInfo;
         
         readonly Dictionary<Vector2Int, EquipmentType> _equipmentPosMap =
             new()
@@ -59,7 +61,13 @@ namespace Items
             }
         }
 
-        public void UpdateEquipmentUI(EquipmentType equipmentType, Equipment equipment)
+        public EquipmentType GetEquipmentTypeByPos(Vector2Int pos)
+        {
+            return _equipmentPosMap[pos];
+
+        }
+
+        public void UpdateEquipmentUI(EquipmentType equipmentType, IEquipment equipment)
         {
             _equipmentSlotMap[equipmentType].UpdateUI(equipment);
         }
@@ -98,25 +106,39 @@ namespace Items
             _currentItemUI.SetUIPosition(Vector2.zero);
             _currentItemUI.PutDown();
             _currentItemUI.DisableIcon();
+            _currentItemUI.ItemInfo = _itemInfo;
             
-            UpdateCurrentItemUI();
+            SetCurrentItemUI(EquipmentType.Armour, null);
         }
 
-        void UpdateCurrentItemUI()
+        public void SetCurrentItemUI(EquipmentType type, IEquipment equipment)
         {
             if (_currentPos.x < 0 || _currentPos.x > 2 ||
                 _currentPos.y < 0 || _currentPos.y > 2)
             {
+                _currentPos = Vector2Int.zero;
                 return;
             }
+            
 
-            var slotRect = _equipmentSlotMap[_equipmentPosMap[_currentPos]].Rect;
+            var slotRect = _equipmentSlotMap[type].Rect;
+            CurrentItemUI.Item = equipment;
             CurrentItemUI.SetUIPosition(slotRect.anchoredPosition);
             CurrentItemUI.SetUISize(slotRect.sizeDelta);
             CurrentItemUI.DisableIcon();
+
+            if (equipment != null)
+            {
+                EnableItemInfo();
+                SetItemInfo(equipment.GetDescription());
+            }
+            else
+            {
+                DisableItemInfo();
+            }
         }
 
-        public void MoveCurrentItemUI(Vector2 inputDirection)
+        public EquipmentType MoveCurrentItemUI(Vector2 inputDirection)
         {
             var direction = Vector2Int.zero;
             if (Mathf.Abs(inputDirection.x) >= Mathf.Abs(inputDirection.y))
@@ -142,27 +164,45 @@ namespace Items
             if (_equipmentPosMap.ContainsKey(newPos))
             {
                 _currentPos = newPos;
-                UpdateCurrentItemUI();
+                return _equipmentPosMap[_currentPos];
+            }
+            else
+            {
+                _currentPos = Vector2Int.one;
+                return EquipmentType.Armour;
             }
         }
 
-        public void EnableUI(Vector2Int pos)
+        void SetItemInfo(string info)
         {
-            if (!CurrentItemUI.gameObject.activeSelf)
-            {
-                CurrentItemUI.gameObject.SetActive(true);
-                _currentPos = pos;
-                UpdateCurrentItemUI();
-            }
+            _itemInfo.text = info;
+        }
+
+        void EnableItemInfo()
+        {
+            _itemInfo.gameObject.SetActive(true);
+        }
+
+        void DisableItemInfo()
+        {
+            _itemInfo.gameObject.SetActive(false);
+            
+        }
+
+        public void EnableUI(Vector2Int pos, IEquipment item)
+        {
+            var type = _equipmentPosMap[pos];
+            _currentPos = pos;
+            CurrentItemUI.gameObject.SetActive(true);
+            SetCurrentItemUI(type, item);
             transform.SetAsLastSibling();
         }
 
         public void DisableUI()
         {
-            if (CurrentItemUI.gameObject.activeSelf)
-            {
-                CurrentItemUI.gameObject.SetActive(false);
-            }
+            CurrentItemUI.gameObject.SetActive(false);
+            DisableItemInfo();
+
         }
 
         void Awake()
@@ -178,6 +218,7 @@ namespace Items
         void OnValidate()
         {
             _pool = GetComponentInParent<ItemUIPool>();
+            _itemInfo = GetComponentInChildren<TextMeshProUGUI>();
         }
     }
 }

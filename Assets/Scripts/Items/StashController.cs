@@ -10,6 +10,7 @@ namespace Items
             this.RegisterEvent<StashInitEvent>(e => _inventoryUI.InitInventoryUI(e.Size)).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<StashAddEvent>(e => _inventoryUI.AddItemUI(e.ItemPos, e.Item)).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<StashRemoveEvent>(e => _inventoryUI.RemoveItemUI(e.ItemPos)).UnRegisterWhenCurrentSceneUnloaded();
+            this.RegisterEvent<StashUpdateEvent>(e => _inventoryUI.UpdateItemUI(e.ItemPos, e.Item)).UnRegisterWhenCurrentSceneUnloaded();
             
             InventoryModel.InitInventory();
         }
@@ -23,7 +24,7 @@ namespace Items
              this.SendCommand(new StashPutDownCommand(CurrentPos));
          }
  
-         public override bool AddItem(Item item)
+         public override bool AddItem(IItem item)
          {
              return this.SendCommand(new StashAddCommand(item));
          }
