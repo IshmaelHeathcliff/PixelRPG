@@ -6,9 +6,6 @@
 
 using System;
 using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Modules.Addressables.Editor.Internal;
-using Sirenix.Reflection.Editor;
-using UnityEditor.U2D;
 using UnityEngine;
 
 [assembly: RegisterAssetReferenceAttributeForwardToChild(typeof(InlineEditorAttribute))]
@@ -74,6 +71,8 @@ namespace Sirenix.OdinInspector.Modules.Addressables.Editor
     using Sirenix.Serialization;
     using Sirenix.Utilities;
     using Sirenix.Utilities.Editor;
+    using Sirenix.OdinInspector.Modules.Addressables.Editor.Internal;
+    using Sirenix.Reflection.Editor;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -85,6 +84,7 @@ namespace Sirenix.OdinInspector.Modules.Addressables.Editor
     using UnityEngine.AddressableAssets;
 	using System.Runtime.Serialization;
     using UnityEngine.U2D;
+    using UnityEditor.U2D;
     using System.IO;
 
     /// <summary>
