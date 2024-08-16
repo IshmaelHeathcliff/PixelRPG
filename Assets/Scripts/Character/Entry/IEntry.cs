@@ -62,11 +62,6 @@ namespace Character.Entry
         protected T2 Value2;
     }
     
-    public abstract class Entry<T1, T2, T3> : Entry<T1, T2>
-    {
-        protected T3 Value3;
-    }
-    
     public interface IEntryContainer
     {
         
@@ -76,8 +71,6 @@ namespace Character.Entry
     {
         PlayerAttribute,
         EnemyAttribute,
-        Bool,
-        Int,
     }
 
     /// <summary>

@@ -1,18 +1,27 @@
-﻿using Random = UnityEngine.Random;
+﻿using System;
+using Random = UnityEngine.Random;
 
 namespace Character.Entry
 {
+    [Serializable]
     public class AttributeSingleIntEntry : AttributeEntry<int>
     {
         public AttributeSingleIntEntry()
         {
+            
         }
         
         public AttributeSingleIntEntry(EntryInfo entryInfo, ICharacterAttribute attribute) : base(entryInfo, attribute)
         {
-            RandomizeLevel();
-            RandomizeValue();
         }
+
+        public AttributeSingleIntEntry(EntryInfo entryInfo, ICharacterAttribute attribute, int value) : base(entryInfo,
+            attribute)
+        {
+            Level = 1;
+            Value = value;
+        }
+        
         public override string GetDescription()
         {
             return Value >= 0 ? 
@@ -83,7 +92,7 @@ namespace Character.Entry
 
         }
 
-        public sealed override void RandomizeLevel()
+        public override void RandomizeLevel()
         {
             if (EntryInfo is AttributeEntryInfo info)
             {
@@ -92,7 +101,7 @@ namespace Character.Entry
 
         }
 
-        public sealed override void RandomizeValue()
+        public override void RandomizeValue()
         {
             if (EntryInfo is AttributeEntryInfo info)
             {
@@ -101,5 +110,12 @@ namespace Character.Entry
             }
 
         }
+    }
+
+    [Serializable]
+    public class AttributeDoubleIntEntry : AttributeSingleIntEntry
+    {
+        int Value2 { get; set; }
+
     }
 }

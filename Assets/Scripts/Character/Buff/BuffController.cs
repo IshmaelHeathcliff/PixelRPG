@@ -1,7 +1,13 @@
-﻿namespace Character.Buff
+﻿using QFramework;
+using UnityEngine;
+
+namespace Character.Buff
 {
-    public class BuffController
+    public class BuffController : MonoBehaviour, IController
     {
-        
+        public IArchitecture GetArchitecture()
+        {
+            return PixelRPG.Interface;
+        }
     }
 }

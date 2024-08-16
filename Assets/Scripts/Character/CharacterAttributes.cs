@@ -46,6 +46,8 @@ namespace Character
             return GetAttribute(entryInfo.AttributeName);
         }
 
+
+
         public void Init()
         {
             Health.SetMaxValue();
@@ -56,8 +58,61 @@ namespace Character
             if (entryInfo is not AttributeEntryInfo info) return null;
             
             var attribute = GetAttribute(info.AttributeName);
-            return attribute != null ? 
-                AttributeEntryCommonFactory.CreateAttributeEntry(info, attribute) : null;
+            IEntry entry = null;
+            if (attribute != null)
+            {
+                entry = AttributeEntryCommonFactory.CreateAttributeEntry(info, attribute);
+            }
+            else
+            {
+                Debug.LogError("entry attribute name is not valid: " + info.AttributeName );
+            }
+
+            if (entry is AttributeEntry<int> attributeEntry)
+            {
+                attributeEntry.RandomizeLevel();
+                attributeEntry.RandomizeValue();
+            }
+
+            return entry;
+
         }
+        
+        public AttributeEntry<int> CreateEntry(EntryInfo entryInfo, int value)
+        {
+            if (entryInfo is not AttributeEntryInfo info) return null;
+            
+            var attribute = GetAttribute(info.AttributeName);
+            AttributeEntry<int> entry = null;
+            if (attribute != null)
+            {
+                entry = AttributeEntryCommonFactory.CreateAttributeEntry(info, attribute, value);
+            }
+            else
+            {
+                Debug.LogError("entry attribute name is not valid: " + info.AttributeName);
+            }
+
+            return entry;
+        }
+        
+        // public AttributeEntry<int> CreateEntry(EntryInfo entryInfo, int value1, int value2)
+        // {
+        //     if (entryInfo is not AttributeEntryInfo info) return null;
+        //     
+        //     var attribute = GetAttribute(info.AttributeName);
+        //     AttributeEntry<int> entry = null;
+        //     if (attribute != null)
+        //     {
+        //         entry = AttributeEntryCommonFactory.CreateAttributeEntry(info, attribute, value1, value2);
+        //     }
+        //     else
+        //     {
+        //         Debug.LogError("entry attribute name is not valid: " + info.AttributeName);
+        //     }
+        //
+        //     return entry;
+        //
+        // }
     }
 }

@@ -8,25 +8,31 @@ namespace Character.Buff
 {
     public interface IBuff
     {
-        public float Duration { get; }
-        public void Activate();
         public string GetName();
+        public int GetID();
         public string GetDescription();
         public void Enable();
         public void Disable();
+    }
+
+    public interface IBuffWithTime
+    {
+        public float Duration { get; set; }
+        public void ResetTime();
+        public void DecreaseTime(float time);
     }
     
     [Serializable]
     public class Buff : IBuff
     {
         BuffInfo _info;
-        
-        public float Duration { get; private set; }
 
-        public Buff(BuffInfo info, float time)
+        List<IEntry> _entries;
+        
+        public Buff(BuffInfo info, List<IEntry> entries)
         {
             _info = info;
-            Duration = time;
+            _entries = entries;
         }
 
         public string GetName()
@@ -34,16 +40,14 @@ namespace Character.Buff
             return _info.Name;
         }
 
+        public int GetID()
+        {
+            return _info.ID;
+        }
+
         public string GetDescription()
         {
             return _info.Description;
-        }
-
-        public async void Activate()
-        {
-            Enable();
-            await UniTask.Delay(TimeSpan.FromSeconds(Duration), ignoreTimeScale: true);
-            Disable();
         }
 
         public void Enable()
@@ -56,7 +60,31 @@ namespace Character.Buff
         {
 
         }
+    }
+    
+    public class BuffWithTime : Buff, IBuffWithTime
+    {
+        public float Duration { get; set; }
+        float _timeLeft;
+        public BuffWithTime(BuffInfo info, List<IEntry> entries, float time) : base(info, entries)
+        {
+            Duration = time;
+            _timeLeft = time;
+        }
 
+        public void ResetTime()
+        {
+            _timeLeft = Duration;
+        }
 
+        public void DecreaseTime(float time)
+        {
+            _timeLeft -= time;
+            if (_timeLeft <= 0)
+            {
+                Disable();
+            }
+            
+        }
     }
 }

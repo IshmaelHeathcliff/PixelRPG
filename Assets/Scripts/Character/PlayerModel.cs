@@ -1,5 +1,6 @@
 ﻿using System;
 using Character;
+using Character.Buff;
 using Character.Entry;
 using QFramework;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class PlayerModel : AbstractModel
     }
  
     public CharacterAttributes PlayerAttributes { get; } = new CharacterAttributes();
+    public IBuffContainer PlayerBuff { get; } = new BuffContainer();
     protected override void OnInit()
     {
         PlayerAttributes.Init();
