@@ -85,7 +85,8 @@ namespace Items
 
             for (int i = 0; i < entryCount; i++)
             {
-                var entry = _entrySystem.CreateEntry(equipment.GetRandomEntryID());
+                // TODO: 装备只有玩家拥有，所以指定了factoryID为player。让所有对象都可以拥有装备？
+                var entry = _entrySystem.CreateAttributeEntry(equipment.GetRandomEntryID(), "player");
                 equipment.Entries.Add(entry);
             }
             

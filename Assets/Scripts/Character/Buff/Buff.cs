@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Character.Entry;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -29,10 +30,10 @@ namespace Character.Buff
 
         List<IEntry> _entries;
         
-        public Buff(BuffInfo info, List<IEntry> entries)
+        public Buff(BuffInfo info, IEnumerable<IEntry> entries)
         {
             _info = info;
-            _entries = entries;
+            _entries = entries.ToList();
         }
 
         public string GetName()

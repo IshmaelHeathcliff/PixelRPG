@@ -10,8 +10,8 @@ namespace Character.Entry
     public interface IAttributeEntryFactory : IEntryFactory
     {
         public ICharacterAttribute GetAttribute(AttributeEntryInfo entryInfo);
-        public AttributeEntry<int> CreateEntry(EntryInfo entryInfo, int value);
+        public IAttributeEntry CreateEntry(AttributeEntryInfo entryInfo, int value);
+        public IAttributeEntry CreateEntry(AttributeEntryInfo entryInfo);
         // public AttributeEntry<int> CreateEntry(EntryInfo entryInfo, int value1, int value2);
-
     }
 }

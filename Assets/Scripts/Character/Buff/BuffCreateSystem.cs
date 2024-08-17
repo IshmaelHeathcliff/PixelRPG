@@ -32,12 +32,12 @@ namespace Character.Buff
             return _buffInfoCache.GetValueOrDefault(id);
         }
 
-        public IBuff CreateBuff(int id, int[] values)
+        public IBuff CreateBuff(int id, string factoryID, int[] values)
         {
             var buffInfo = GetBuffInfo(id);
             var entrySystem = this.GetSystem<EntrySystem>();
             var entries = buffInfo.EntryID.Select(
-                    (entryId, i) => entrySystem.CreateEntry(entryId, values[i])).Cast<IEntry>().ToList();
+                    (entryId, i) => entrySystem.CreateAttributeEntry(entryId, factoryID, values[i]));
 
             return new Buff(buffInfo, entries);
         }

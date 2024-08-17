@@ -4,12 +4,19 @@ using Sirenix.OdinInspector;
 
 namespace Character.Entry
 {
-    [Serializable]
-    public abstract class AttributeEntry<T> : Entry<T>
+    public interface IAttributeEntry : IEntry
     {
-        protected static ICharacterAttribute GetAttribute(AttributeEntryInfo entryInfo)
+        public ICharacterAttribute GetAttribute();
+        public void RandomizeLevel();
+        public void RandomizeValue();
+    }
+    
+    [Serializable]
+    public abstract class AttributeEntry<T> : Entry<T>, IAttributeEntry
+    {
+        protected static ICharacterAttribute GetAttribute(IAttributeEntry entry)
         {
-            return PixelRPG.Interface.GetSystem<EntrySystem>().GetAttribute(entryInfo);
+            return PixelRPG.Interface.GetSystem<EntrySystem>().GetAttribute(entry);
         }
         
         [JsonProperty] protected int Level;
@@ -20,7 +27,7 @@ namespace Character.Entry
         {
         }
         
-        protected AttributeEntry(EntryInfo entryInfo, ICharacterAttribute attribute)
+        protected AttributeEntry(AttributeEntryInfo entryInfo, ICharacterAttribute attribute)
         {
             EntryInfo = entryInfo;
             Attribute = attribute;
@@ -41,7 +48,7 @@ namespace Character.Entry
     public abstract class AttributeEntry<T1, T2> : AttributeEntry<T1>
     {
         [JsonProperty] protected T2 Value2;
-        protected AttributeEntry(EntryInfo entryInfo, ICharacterAttribute attribute) : base(entryInfo, attribute)
+        protected AttributeEntry(AttributeEntryInfo entryInfo, ICharacterAttribute attribute) : base(entryInfo, attribute)
         {
         }
     }

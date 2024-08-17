@@ -51,45 +51,86 @@ namespace Character.Entry
                 _entryFactories.Remove(factoryID);
         }
 
-        public ICharacterAttribute GetAttribute(AttributeEntryInfo entryInfo)
+        public ICharacterAttribute GetAttribute(IAttributeEntry entry)
         {
-            if (_entryFactories.TryGetValue(entryInfo.FactoryID, out var factory))
+            if (_entryFactories.TryGetValue(entry.FactoryID, out var factory))
             {
                 if (factory is IAttributeEntryFactory attributeFactory)
                 {
-                    return attributeFactory.GetAttribute(entryInfo);
+                    return attributeFactory.GetAttribute(entry.EntryInfo as AttributeEntryInfo);
                 }
             }
 
             return null;
         }
         
-        public IEntry CreateEntry(int entryId)
-        {
-            var entryInfo = GetEntryInfo(entryId);
-            if (entryInfo != null && _entryFactories.TryGetValue(entryInfo.FactoryID, out var factory))
-            {
-                return factory.CreateEntry(entryInfo);
-            }
-            
-            Debug.LogError("entryInfo is invalid or factory is not registered");
+        // public IEntry CreateEntry(int entryId)
+        // {
+        //     var entryInfo = GetEntryInfo(entryId);
+        //     if (entryInfo == null)
+        //     {
+        //         Debug.LogError("entryId is invalid");
+        //         return null;
+        //     }
+        //
+        //     if (!_entryFactories.TryGetValue(entryInfo.FactoryID, out var factory))
+        //     {
+        //         Debug.LogError("factory is not registered");
+        //         return null;
+        //     }
+        //     
+        //     return factory.CreateEntry(entryInfo);
+        // }
 
-            return null;
+        public IAttributeEntry CreateAttributeEntry(int entryId, string factoryID)
+        {
+            if (!_entryFactories.TryGetValue(factoryID, out var factory))
+            {
+                Debug.LogError("factoryID is invalid");
+                return null;
+            }
+
+            if (factory is not IAttributeEntryFactory attributeFactory)
+            {
+                Debug.LogError("factory is invalid");
+                return null;
+            }
+
+            return CreateAttributeEntry(entryId, attributeFactory);
         }
 
-        public AttributeEntry<int> CreateEntry(int entryId, int value)
+        public IAttributeEntry CreateAttributeEntry(int entryId, IAttributeEntryFactory factory)
         {
-            var entryInfo = GetEntryInfo(entryId);
-            if (entryInfo != null && _entryFactories.TryGetValue(entryInfo.FactoryID, out var factory))
+            if (GetEntryInfo(entryId) is not AttributeEntryInfo entryInfo)
             {
-                if(factory is IAttributeEntryFactory attributeEntryFactory)
-                    return attributeEntryFactory.CreateEntry(entryInfo, value);
+                Debug.LogError("entryId is invalid");
+                return null;
             }
             
-            Debug.LogError("entryInfo is invalid or factory is not registered");
+            return factory.CreateEntry(entryInfo);
+        }
+        
+        public IAttributeEntry CreateAttributeEntry(int entryId, string factoryID, int value)
+        {
+            if (GetEntryInfo(entryId) is not AttributeEntryInfo entryInfo )
+            {
+                Debug.LogError("entryId is invalid");
+                return null;
+            }
 
-            return null;
-            
+            if (!_entryFactories.TryGetValue(factoryID, out var factory))
+            {
+                Debug.LogError("factory is not registered");
+                return null;
+            }
+
+            if (factory is not IAttributeEntryFactory attributeEntryFactory)
+            {
+                Debug.LogError("factory is invalid");
+                return null;
+            }
+                
+            return attributeEntryFactory.CreateEntry(entryInfo, value);
         }
 
         protected override void OnInit()

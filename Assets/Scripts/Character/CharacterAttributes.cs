@@ -26,6 +26,12 @@ namespace Character
 
         public CharacterAttribute Damage { get; set; } = new CharacterAttribute(DamageName);
 
+        public void Init()
+        {
+            Health.SetMaxValue();
+        }
+
+        #region AttributeEntry
 
         public ICharacterAttribute GetAttribute(string attributeName)
         {
@@ -45,57 +51,50 @@ namespace Character
         {
             return GetAttribute(entryInfo.AttributeName);
         }
-
-
-
-        public void Init()
-        {
-            Health.SetMaxValue();
-        }
         
         public IEntry CreateEntry(EntryInfo entryInfo)
         {
-            if (entryInfo is not AttributeEntryInfo info) return null;
-            
-            var attribute = GetAttribute(info.AttributeName);
-            IEntry entry = null;
-            if (attribute != null)
-            {
-                entry = AttributeEntryCommonFactory.CreateAttributeEntry(info, attribute);
-            }
-            else
-            {
-                Debug.LogError("entry attribute name is not valid: " + info.AttributeName );
-            }
-
-            if (entry is AttributeEntry<int> attributeEntry)
-            {
-                attributeEntry.RandomizeLevel();
-                attributeEntry.RandomizeValue();
-            }
-
-            return entry;
-
+            return entryInfo is not AttributeEntryInfo info ? null : CreateEntry(info);
         }
         
-        public AttributeEntry<int> CreateEntry(EntryInfo entryInfo, int value)
+        public IAttributeEntry CreateEntry(AttributeEntryInfo entryInfo, int value)
         {
-            if (entryInfo is not AttributeEntryInfo info) return null;
-            
-            var attribute = GetAttribute(info.AttributeName);
+            var attribute = GetAttribute(entryInfo.AttributeName);
             AttributeEntry<int> entry = null;
             if (attribute != null)
             {
-                entry = AttributeEntryCommonFactory.CreateAttributeEntry(info, attribute, value);
+                entry = new AttributeSingleIntEntry(entryInfo, attribute, value);
             }
             else
             {
-                Debug.LogError("entry attribute name is not valid: " + info.AttributeName);
+                Debug.LogError("entry attribute name is not valid: " + entryInfo.AttributeName);
             }
 
             return entry;
         }
-        
+
+        public IAttributeEntry CreateEntry(AttributeEntryInfo entryInfo)
+        {
+            var attribute = GetAttribute(entryInfo.AttributeName);
+            IAttributeEntry entry = null;
+            if (attribute != null)
+            {
+                entry = new AttributeSingleIntEntry(entryInfo, attribute); 
+            }
+            else
+            {
+                Debug.LogError("entry attribute name is not valid: " + entryInfo.AttributeName );
+            }
+
+            if (entry != null)
+            {
+                entry.RandomizeLevel();
+                entry.RandomizeValue();
+            }
+
+            return entry;
+        }
+
         // public AttributeEntry<int> CreateEntry(EntryInfo entryInfo, int value1, int value2)
         // {
         //     if (entryInfo is not AttributeEntryInfo info) return null;
@@ -114,5 +113,6 @@ namespace Character
         //     return entry;
         //
         // }
+        #endregion
     }
 }

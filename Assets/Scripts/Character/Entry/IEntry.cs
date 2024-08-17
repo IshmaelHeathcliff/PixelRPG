@@ -11,6 +11,7 @@ namespace Character.Entry
         public void Register();
         public void Unregister();
         public int EntryID { get; }
+        public string FactoryID { get; set; }
         public EntryInfo EntryInfo { get; set; }
         public string GetDescription();
         public string InstanceID { get; }
@@ -30,6 +31,7 @@ namespace Character.Entry
         [JsonProperty] int _entryID;
 
         [JsonProperty] readonly string _instanceID = System.Guid.NewGuid().ToString();
+        [JsonProperty][ShowInInspector] public string FactoryID { get; set; }
 
         public abstract string GetDescription();
         public abstract void Check();
@@ -67,12 +69,6 @@ namespace Character.Entry
         
     }
 
-    public enum EntryType
-    {
-        PlayerAttribute,
-        EnemyAttribute,
-    }
-
     /// <summary>
     /// Entry的生成信息
     /// </summary>
@@ -81,8 +77,6 @@ namespace Character.Entry
     {
         [JsonProperty][ShowInInspector] public int EntryID { get; set; }
         [JsonProperty][ShowInInspector] public string Name { get; set; }
-        [JsonProperty][ShowInInspector] public EntryType EntryType { get; set; }
-        [JsonProperty][ShowInInspector] public string FactoryID { get; set; }
         [JsonProperty][ShowInInspector] public string PositiveDescription { get; set; }
         [JsonProperty][ShowInInspector] public string NegativeDescription { get; set; }
     }

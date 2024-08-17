@@ -11,11 +11,11 @@ namespace Character.Entry
             
         }
         
-        public AttributeSingleIntEntry(EntryInfo entryInfo, ICharacterAttribute attribute) : base(entryInfo, attribute)
+        public AttributeSingleIntEntry(AttributeEntryInfo entryInfo, ICharacterAttribute attribute) : base(entryInfo, attribute)
         {
         }
 
-        public AttributeSingleIntEntry(EntryInfo entryInfo, ICharacterAttribute attribute, int value) : base(entryInfo,
+        public AttributeSingleIntEntry(AttributeEntryInfo entryInfo, ICharacterAttribute attribute, int value) : base(entryInfo,
             attribute)
         {
             Level = 1;
@@ -88,7 +88,7 @@ namespace Character.Entry
         {
             //TODO: 不使用全局静态调用？
             EntryInfo = GetEntryInfo(EntryID);
-            Attribute = GetAttribute(EntryInfo as AttributeEntryInfo);
+            Attribute = GetAttribute(this);
 
         }
 
