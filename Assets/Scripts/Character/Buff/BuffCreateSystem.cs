@@ -41,6 +41,16 @@ namespace Character.Buff
 
             return new Buff(buffInfo, entries);
         }
+
+        public IBuffWithTime CreateBuff(int id, string factoryID, int[] values, int time)
+        {
+            var buffInfo = GetBuffInfo(id);
+            var entrySystem = this.GetSystem<EntrySystem>();
+            var entries = buffInfo.EntryID.Select(
+                    (entryId, i) => entrySystem.CreateAttributeEntry(entryId, factoryID, values[i]));
+            
+            return new BuffWithTime(buffInfo, entries, time);
+        }
         
         
         

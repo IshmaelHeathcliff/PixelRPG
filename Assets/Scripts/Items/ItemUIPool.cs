@@ -19,7 +19,7 @@ namespace Items
         AsyncOperationHandle<GameObject> _itemUIHandle;
         AsyncOperationHandle<GameObject> _currentItemUIHandle;
         
-        Stack<ItemUI> _pool;
+        readonly Stack<ItemUI> _pool = new();
         
         Transform _itemsHolder;
 
@@ -103,8 +103,6 @@ namespace Items
         {
             _itemUIHandle = AddressablesManager.LoadAssetAsync<GameObject>(_itemUIReference);
             _currentItemUIHandle = AddressablesManager.LoadAssetAsync<GameObject>(_currentItemUIReference);
-            
-            _pool = new Stack<ItemUI>();
             
             for (var i = 0; i < _initialSize; i++)
             {

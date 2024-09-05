@@ -1,10 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using QFramework;
 
 namespace Character.Buff
 {
     public interface IBuffContainer
     {
+        public event Action<IBuff> OnBuffAdded;
+        public event Action<int> OnBuffRemoved;
+        public event Action<IBuffWithTime> OnBuffTimeChanged;
+        public event Action<IBuffWithCount> OnBuffCountChanged;
         public void AddBuff(IBuff buff);
         public void RemoveBuff(int id);
         public void RemoveBuff(IBuff buff);
@@ -12,13 +17,16 @@ namespace Character.Buff
         public bool HasBuff(IBuff buff);
         public void ResetBuffTime(float time);
         public void DecreaseBuffTime(float time);
-
     }
     
     
     public class BuffContainer : IBuffContainer
     {
         Dictionary<int, IBuff> _buffs;
+        public event Action<IBuff> OnBuffAdded;
+        public event Action<int> OnBuffRemoved;
+        public event Action<IBuffWithTime> OnBuffTimeChanged;
+        public event Action<IBuffWithCount> OnBuffCountChanged;
 
         public void AddBuff(IBuff buff)
         {
@@ -36,6 +44,8 @@ namespace Character.Buff
                 _buffs.Add(buff.GetID(), buff);
                 buff.Enable();
             }
+            
+            OnBuffAdded?.Invoke(buff);
         }
 
         public bool HasBuff(int id)
@@ -59,6 +69,7 @@ namespace Character.Buff
             {
                 _buffs[id].Disable();
                 _buffs.Remove(id);
+                OnBuffRemoved?.Invoke(id);
             }
         }
         
@@ -69,6 +80,7 @@ namespace Character.Buff
                 if (buff is IBuffWithTime bt)
                 {
                     bt.ResetTime();
+                    OnBuffTimeChanged?.Invoke(bt);
                 }
             }
         }
@@ -77,11 +89,28 @@ namespace Character.Buff
         {
             foreach (var buff in _buffs.Values)
             {
-                if (buff is IBuffWithTime bt)
+                if (buff is not IBuffWithTime bt) continue;
+                
+                bt.DecreaseTime(time);
+                OnBuffTimeChanged?.Invoke(bt);
+                if (bt.TimeLeft <= 0)
                 {
-                    bt.DecreaseTime(time);
+                    RemoveBuff(buff);
                 }
             }
         }
+
+        public void ChangeBuffCount(int id, int count)
+        {
+            if (_buffs.TryGetValue(id, out var buff))
+            {
+                if (buff is IBuffWithCount bc)
+                {
+                    bc.Count = count;
+                    OnBuffCountChanged?.Invoke(bc);
+                }
+            }
+        }
+
     }
 }

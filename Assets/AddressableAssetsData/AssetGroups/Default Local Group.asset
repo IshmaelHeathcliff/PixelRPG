@@ -1498,12 +1498,12 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5dc6341a7efa11f45bb92ce1e5fa8a7b
-    m_Address: Assets/Artworks/UI/CurrentCell0.aseprite
+    m_Address: Assets/Artworks/UI/Frame8.aseprite
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 37fe16e64a0aebe42bb9adc3974b3254
-    m_Address: Assets/Artworks/UI/CurrentCell1.aseprite
+    m_Address: Assets/Artworks/UI/FrameT8.aseprite
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -1534,6 +1534,21 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f60e237068998434e93e2267450f9352
     m_Address: Assets/Prefabs/ItemUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e206bdfea77b2e8499a627db04aa6176
+    m_Address: Assets/Artworks/UI/Frame2.aseprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 424adfee9de12c84e9bf9c04d6d1fa86
+    m_Address: Assets/Prefabs/Buff.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 752f1ff38490d84499b3295ee5c555cd
+    m_Address: Assets/Artworks/UI/buff.aseprite
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

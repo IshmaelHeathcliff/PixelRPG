@@ -1,5 +1,6 @@
 ﻿using System;
 using Character;
+using Character.Buff;
 using QFramework;
 using SaveLoad;
 using Scene;
@@ -19,6 +20,13 @@ public class GameManager : MonoSingleton<GameManager>, IController
     public void Load()
     {
         this.GetUtility<SaveLoadUtility>().LoadAllDataFromFile();
+    }
+
+    [Button]
+    public void AddBuff()
+    {
+        var buff = this.GetSystem<BuffCreateSystem>().CreateBuff(1, "player",new []{20, 20, 20});
+        this.GetModel<PlayerModel>().PlayerBuff.AddBuff(buff);
     }
 
     public IArchitecture GetArchitecture()

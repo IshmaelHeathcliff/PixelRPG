@@ -72,10 +72,18 @@ public static class AddressablesManager
         return asset;
     }
     
-    public static AsyncOperationHandle<GameObject> Instantiate(string name, Action<AsyncOperationHandle<GameObject>> onCompleted)
+    public static AsyncOperationHandle<GameObject> Instantiate(string name, Action<AsyncOperationHandle<GameObject>> onCompleted = null)
     {
         var handle = Addressables.InstantiateAsync(name);
         handle.Completed += onCompleted;
         return handle;
+    }
+
+    public static void Release(AsyncOperationHandle handle)
+    {
+        if (handle.IsValid())
+        {
+           Addressables.Release(handle); 
+        }
     }
 }
