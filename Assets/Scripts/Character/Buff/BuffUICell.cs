@@ -76,7 +76,7 @@ namespace Character.Buff
 
         void OnDisable()
         {
-            Addressables.Release(_iconHandle);
+            AddressablesManager.Release(_iconHandle);
         }
         
         void OnValidate()

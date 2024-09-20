@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using QFramework;
+using Sirenix.Utilities;
 
 namespace Character.Buff
 {
@@ -22,7 +23,7 @@ namespace Character.Buff
     
     public class BuffContainer : IBuffContainer
     {
-        Dictionary<int, IBuff> _buffs;
+        readonly Dictionary<int, IBuff> _buffs = new();
         public event Action<IBuff> OnBuffAdded;
         public event Action<int> OnBuffRemoved;
         public event Action<IBuffWithTime> OnBuffTimeChanged;
@@ -65,7 +66,7 @@ namespace Character.Buff
 
         public void RemoveBuff(int id)
         {
-            if (_buffs.ContainsKey(id))
+            if (HasBuff(id))
             {
                 _buffs[id].Disable();
                 _buffs.Remove(id);
@@ -87,7 +88,10 @@ namespace Character.Buff
         
         public void DecreaseBuffTime(float time)
         {
-            foreach (var buff in _buffs.Values)
+
+            List<IBuff> buffs = new();
+            _buffs.Values.ForEach(buff => buffs.Add(buff));
+            foreach (var buff in buffs)
             {
                 if (buff is not IBuffWithTime bt) continue;
                 

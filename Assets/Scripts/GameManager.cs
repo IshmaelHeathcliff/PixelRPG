@@ -25,7 +25,7 @@ public class GameManager : MonoSingleton<GameManager>, IController
     [Button]
     public void AddBuff()
     {
-        var buff = this.GetSystem<BuffCreateSystem>().CreateBuff(1, "player",new []{20, 20, 20});
+        var buff = this.GetSystem<BuffCreateSystem>().CreateBuff(1, "player",new []{20, 20, 20}, 4);
         this.GetModel<PlayerModel>().PlayerBuff.AddBuff(buff);
     }
 

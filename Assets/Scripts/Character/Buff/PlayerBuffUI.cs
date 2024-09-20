@@ -17,6 +17,12 @@ namespace Character.Buff
         public override async void AddBuff(IBuff buff)
         {
             var buffUICell = await _pool.Pop();
+            
+            if (_buffUICells.ContainsKey(buff.GetID()))
+            {
+                RemoveBuff(buff.GetID());
+            }
+            
             _buffUICells.Add(buff.GetID(), buffUICell);
             buffUICell.InitBuffUICell(buff);
         }

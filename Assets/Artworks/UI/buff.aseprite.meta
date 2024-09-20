@@ -123,15 +123,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: buff
     originalName: 
-    pivot: {x: 0.5, y: -0.125}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 54
-      height: 48
+      width: 64
+      height: 64
     spriteID: 050661e6d5892b64b8b80f00db7181c9
     spriteBone: []
     spriteOutline: []
@@ -153,10 +153,10 @@ ScriptedImporter:
     - name: buff
       frameIndex: 0
       cellRect:
-        x: 5
-        y: 6
-        width: 54
-        height: 48
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       spriteId: 050661e6d5892b64b8b80f00db7181c9
     linkedCells: []
     parentIndex: -1
