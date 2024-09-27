@@ -156,8 +156,9 @@ namespace Items
             
             if(_items.TryGetValue(pos, out var item))
             {
-                PickedUp.Value = item;
+                // 先Remove再PickUP，顺序不能反
                 RemoveItem(pos);
+                PickedUp.Value = item;
                 return true;
             }
 
@@ -167,8 +168,9 @@ namespace Items
                 return false;
             }
 
-            PickedUp.Value = item;
+            // 先Remove再PickUP，顺序不能反
             RemoveItem(itemPos);
+            PickedUp.Value = item;
             return true;
         }
 

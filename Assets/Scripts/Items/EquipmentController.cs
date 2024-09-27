@@ -141,7 +141,6 @@ namespace Items
         void Start()
         {
             _equipmentsModel = this.GetModel<EquipmentsModel>();
-            _equipmentsUI.gameObject.SetActive(false);
             RegisterUI();
         }
 

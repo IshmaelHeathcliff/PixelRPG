@@ -108,7 +108,7 @@ namespace Items
             _currentItemUI.DisableIcon();
             _currentItemUI.ItemInfo = _itemInfo;
             
-            SetCurrentItemUI(EquipmentType.Armour, null);
+            // SetCurrentItemUI(EquipmentType.Armour, null);
         }
 
         public void SetCurrentItemUI(EquipmentType type, IEquipment equipment)
@@ -213,6 +213,7 @@ namespace Items
         void Start()
         {
             InitCurrentItemUI();
+            gameObject.SetActive(false);
         }
 
         void OnValidate()

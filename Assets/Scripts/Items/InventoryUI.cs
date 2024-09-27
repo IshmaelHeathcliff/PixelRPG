@@ -120,7 +120,6 @@ namespace Items
                 _pool.Push(_itemUIs[pos]);
                 _itemUIs.Remove(pos);
                 ResetItemInfo();
-                SetCurrentItemUI(pos, Vector2Int.one);
                 return;
             }
             
@@ -131,7 +130,6 @@ namespace Items
                     _pool.Push(itemUI);
                     _itemUIs.Remove(p);
                     ResetItemInfo();
-                    SetCurrentItemUI(p, Vector2Int.one);
                     return;
                 }
             }

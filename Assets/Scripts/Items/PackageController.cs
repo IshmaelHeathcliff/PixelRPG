@@ -16,29 +16,29 @@ namespace Items
             InventoryModel.InitInventory();
         }
         
-        public override void PickUp()
+        protected override void PickUpInternal()
         {
             this.SendCommand(new PackagePickUpCommand(CurrentPos));
         }
 
-        public override void PutDown()
+        protected override void PutDownInternal()
         {
             this.SendCommand(new PackagePutDownCommand(CurrentPos));
         }
 
-        public override bool AddItem(IItem item)
+        protected override bool AddItemInternal(IItem item)
         {
             return this.SendCommand(new PackageAddCommand(item));
         }
 
-        public override void RemoveItem()
+        protected override void RemoveItemInternal()
         {
             this.SendCommand(new PackageRemoveCommand(CurrentPos));
         }
 
-        public override void DeleteItem()
+        protected override void DeleteItemInternal()
         {
-            base.DeleteItem();
+            base.DeleteItemInternal();
             this.SendCommand(new PackageRemoveCommand(CurrentPos));
         }
 

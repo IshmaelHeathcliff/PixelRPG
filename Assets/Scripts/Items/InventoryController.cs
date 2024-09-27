@@ -54,21 +54,52 @@ namespace Items
             return item;
         }
 
-        public abstract void PickUp();
+        protected abstract void PickUpInternal();
 
-        public abstract void PutDown();
+        protected abstract void PutDownInternal();
 
-        public abstract bool AddItem(IItem item);
+        protected abstract bool AddItemInternal(IItem item);
         
-        public abstract void RemoveItem();
+        protected abstract void RemoveItemInternal();
 
-        public virtual void DeleteItem()
+        protected virtual void DeleteItemInternal()
         {
             if (InventoryModel.PickedUp.Value != null)
             {
                 InventoryModel.PickedUp.Value = null;
                 return;
             }
+        }
+
+        public void PickUp()
+        {
+            PickUpInternal();
+            UpdateCurrentItemUI();
+        }
+
+        public void PutDown()
+        {
+            PutDownInternal();
+            UpdateCurrentItemUI();
+        }
+
+        public bool AddItem(IItem item)
+        {
+            bool result = AddItemInternal(item);
+            UpdateCurrentItemUI();
+            return result;
+        }
+
+        public void RemoveItem()
+        {
+            RemoveItemInternal();
+            UpdateCurrentItemUI();
+        }
+
+        public void DeleteItem()
+        {
+            DeleteItemInternal();
+            UpdateCurrentItemUI();
         }
         
         #endregion
@@ -130,6 +161,8 @@ namespace Items
                     }
                 }
             }
+            
+            UpdateCurrentItemUI();
         }
         #endregion
 
@@ -337,7 +370,7 @@ namespace Items
 
         protected virtual void Awake()
         {
-            InventoryModel.PickedUp.Register(_ => UpdateCurrentItemUI());
+            // InventoryModel.PickedUp.Register(_ => UpdateCurrentItemUI());
             Init();
             RegisterInput();
         }
