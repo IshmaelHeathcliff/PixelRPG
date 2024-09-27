@@ -114,6 +114,14 @@ namespace Character
             Move();
         }
 
+        void Start()
+        {
+            // foreach (var attribute in _model.PlayerAttributes.GetAllAttributes())
+            // {
+            //     attribute.GetValue();
+            // }
+        }
+
         public IArchitecture GetArchitecture()
         {
             return PixelRPG.Interface;

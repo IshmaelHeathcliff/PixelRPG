@@ -45,10 +45,10 @@ namespace Character.Entry
                     Attribute.AddAddedValueModifier(InstanceID, Value);
                     break;
                 case AttributeEntryType.Increase:
-                    Attribute.AddIncreaseModifier(InstanceID, Value/100f);
+                    Attribute.AddIncreaseModifier(InstanceID, Value);
                     break;
                 case AttributeEntryType.More:
-                    Attribute.AddMoreModifier(InstanceID, Value/100f);
+                    Attribute.AddMoreModifier(InstanceID, Value);
                     break;
                 case AttributeEntryType.Fixed:
                     Attribute.AddFixedValueModifier(InstanceID, Value);

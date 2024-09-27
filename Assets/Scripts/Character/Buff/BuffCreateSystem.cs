@@ -3,6 +3,7 @@ using System.Linq;
 using Character.Entry;
 using QFramework;
 using SaveLoad;
+using UnityEngine;
 
 namespace Character.Buff
 {
@@ -46,8 +47,19 @@ namespace Character.Buff
         {
             var buffInfo = GetBuffInfo(id);
             var entrySystem = this.GetSystem<EntrySystem>();
-            var entries = buffInfo.EntryID.Select(
-                    (entryId, i) => entrySystem.CreateAttributeEntry(entryId, factoryID, values[i]));
+
+            if (buffInfo.EntryID.Count != values.Length)
+            {
+                Debug.LogError("values.Length != buffInfo.EntryID.Count");
+                return null;
+            }
+            
+            var entries = new List<IEntry>();
+
+            for (int i = 0; i < buffInfo.EntryID.Count; i++)
+            {
+                entries.Add(entrySystem.CreateAttributeEntry(buffInfo.EntryID[i], factoryID, values[i]));
+            }
             
             return new BuffWithTime(buffInfo, entries, time);
         }

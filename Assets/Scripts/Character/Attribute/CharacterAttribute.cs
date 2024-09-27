@@ -5,10 +5,11 @@ using Character.Entry;
 using QFramework;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Character
 {
-    public interface ICharacterAttribute
+    public interface ICharacterAttribute : IReadonlyBindableProperty<float>
     {
         public string Name { get; }
         public float BaseValue { get; }
@@ -16,6 +17,7 @@ namespace Character
         public float FixedValue { get; }
         public float Increase { get; }
         public float More { get; }
+        public float GetValue();
         public void AddBaseValueModifier(string key, float value);
         public void AddAddedValueModifier(string key, float value);
         public void AddFixedValueModifier(string key, float value);
@@ -27,8 +29,9 @@ namespace Character
         public void RemoveIncreaseModifier(string key);
         public void RemoveMoreModifier(string key);
     }
+    
     [Serializable]
-    public class CharacterAttribute : IReadonlyBindableProperty<float>, ICharacterAttribute
+    public class CharacterAttribute :  ICharacterAttribute
     {
         public string Name { get; private set; }
         public float Value => GetValue();
@@ -123,7 +126,12 @@ namespace Character
             AddedValue = _addedValueModifiers.Sum(x => x.Value);
             FixedValue = _fixedValueModifiers.Sum(x => x.Value);
             Increase = _increaseModifiers.Sum(x => x.Value);
-            More = _moreModifiers.Values.Aggregate(0f, (x, y) => (1 + x/100) * (1 + y/100));
+
+            More = 1;
+            foreach (var mod in _moreModifiers)
+            {
+                More *= mod.Value / 100 + 1;
+            }
         }
 
         public float GetValue()

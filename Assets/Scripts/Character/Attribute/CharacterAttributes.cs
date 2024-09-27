@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Character.Entry;
 using SaveLoad;
 using Sirenix.OdinInspector;
@@ -15,7 +16,7 @@ namespace Character
         const string StrengthName = "力量";
         const string DexterityName = "敏捷";
         const string IntelligenceName = "智力";
-        const string DamageName = "生命";
+        const string DamageName = "伤害";
         
         public ConsumableAttribute Health { get; set; } = new ConsumableAttribute(HealthName);
         public ConsumableAttribute Mana { get; set; } = new ConsumableAttribute(ManaName);
@@ -26,9 +27,23 @@ namespace Character
 
         public CharacterAttribute Damage { get; set; } = new CharacterAttribute(DamageName);
 
+        public List<ICharacterAttribute> GetAllAttributes()
+        {
+            return new List<ICharacterAttribute>
+            {
+                Health, 
+                Mana, 
+                Strength, 
+                Dexterity, 
+                Intelligence, 
+                Damage
+            };
+        }
+
         public void Init()
         {
             Health.SetMaxValue();
+            Mana.SetMaxValue();
         }
 
         #region AttributeEntry
