@@ -166,7 +166,6 @@ namespace Character
     public interface IConsumableAttribute : ICharacterAttribute
     {
         public float CurrentValue { get; }
-        public void CheckCurrentValue();
         public void ChangeCurrentValue(float value);
         public void SetCurrentValue(float value);
         public void SetMaxValue();
@@ -175,32 +174,44 @@ namespace Character
     [Serializable]
     public class ConsumableAttribute : CharacterAttribute, IConsumableAttribute
     {
-        public float CurrentValue { get; private set; }
+        float _currentValue;
+        public float CurrentValue
+        {
+            get => _currentValue;
+            private set
+            {
+                _currentValue = value;
+                _onValueChanged.Trigger(value, Value);
+            }
+        }
 
-        public void CheckCurrentValue()
+        EasyEvent<float, float> _onValueChanged = new();
+
+        public float CheckValue(float value)
         {
             float maxValue = GetValue();
-            if (CurrentValue < 0)
+            if (value < 0)
             {
-                CurrentValue = 0;
+                value = 0;
             }
 
-            if (CurrentValue > maxValue)
+            if (value > maxValue)
             {
-                CurrentValue = maxValue;
+                value = maxValue;
             }
+
+            return value;
         }
 
         public void ChangeCurrentValue(float value)
         {
-            CurrentValue += value;
-            CheckCurrentValue();
+            float newCurrentValue = CurrentValue + value;
+            CurrentValue = CheckValue(newCurrentValue);
         }
         
         public void SetCurrentValue(float value)
         {
-            CurrentValue = value;
-            CheckCurrentValue();
+            CurrentValue = CheckValue(value);
         }
 
         public void SetMaxValue()
@@ -211,6 +222,22 @@ namespace Character
         public ConsumableAttribute(string name) : base(name)
         {
             CurrentValue = GetValue();
+        }
+        
+        public IUnRegister Register(Action<float, float> onValueChanged)
+        {
+            return _onValueChanged.Register(onValueChanged);
+        }
+
+        public IUnRegister RegisterWithInitValue(Action<float, float> onValueChanged)
+        {
+            onValueChanged(CurrentValue, GetValue());
+            return Register(onValueChanged);
+        }
+
+        public void UnRegister(Action<float, float> onValueChanged)
+        {
+            _onValueChanged.UnRegister(onValueChanged);
         }
     }
 }

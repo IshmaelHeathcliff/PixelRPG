@@ -18,7 +18,6 @@ public class PlayerModel : AbstractModel
     public IBuffContainer PlayerBuff { get; } = new BuffContainer();
     protected override void OnInit()
     {
-        PlayerAttributes.Init();
     }
 }
 public class PlayerPositionQuery : AbstractQuery<Vector3>

@@ -40,12 +40,6 @@ namespace Character
             };
         }
 
-        public void Init()
-        {
-            Health.SetMaxValue();
-            Mana.SetMaxValue();
-        }
-
         #region AttributeEntry
 
         public ICharacterAttribute GetAttribute(string attributeName)

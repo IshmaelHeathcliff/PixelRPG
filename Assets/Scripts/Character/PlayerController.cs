@@ -12,15 +12,12 @@ namespace Character
     {
         [SerializeField] float _speed = 10;
         [SerializeField] float _acceleration = 10;
-        [SerializeField] string _entryFactoryID = "player";
         
         bool _isMoving;
         Vector2 _direction;
         Rigidbody2D _rigidbody;
         Animator _animator;
         PlayerInput.PlayerActions _playerInput;
-        
-        PlayerModel _model;
         
         static readonly int Walking = Animator.StringToHash("Walking");
         static readonly int Y = Animator.StringToHash("Y");
@@ -88,8 +85,7 @@ namespace Character
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
-            _model = this.GetModel<PlayerModel>();
-            _model.PlayerTransform = transform;
+            this.GetModel<PlayerModel>().PlayerTransform = transform;
         }
 
         void OnEnable()
@@ -98,15 +94,12 @@ namespace Character
             RegisterActions();
             _playerInput.Enable();
             
-            this.GetSystem<EntrySystem>().RegisterFactory(_entryFactoryID, _model.PlayerAttributes);
         }
 
         void OnDisable()
         {
             UnregisterActions();
             _playerInput.Disable();
-            
-            this.GetSystem<EntrySystem>().UnregisterFactory(_entryFactoryID);
         }
 
         void FixedUpdate()

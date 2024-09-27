@@ -5,7 +5,7 @@
       "$type": "Items.Coin, Assembly-CSharp",
       "Count": 1,
       "MaxCount": 50,
-      "ID": 0,
+      "ID": 1,
       "Name": "金币",
       "IconName": "Loots/Loots_11.png",
       "Size": {
@@ -21,11 +21,11 @@
       "Type": 4,
       "EntryPool": {
         "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32, mscorlib]], mscorlib",
-        "0": 10,
         "1": 10,
-        "2": 5
+        "2": 10,
+        "3": 10
       },
-      "ID": 1,
+      "ID": 2,
       "Name": "大剑",
       "IconName": "Sword/Sword_02_01.png",
       "Size": {

@@ -218,8 +218,8 @@ namespace Items
         }
         void AddRandomItemAction(InputAction.CallbackContext context)
         {
-            var item1 = this.GetSystem<ItemCreateSystem>().CreateFromID(0);
-            var item2 = this.GetSystem<ItemCreateSystem>().CreateFromID(1);
+            var item1 = this.GetSystem<ItemCreateSystem>().CreateFromID(1);
+            var item2 = this.GetSystem<ItemCreateSystem>().CreateFromID(2);
             AddItem(item1);
             AddItem(item2);
         }

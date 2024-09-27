@@ -9,9 +9,9 @@
       "EntryID": {
         "$type": "System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib",
         "$values": [
-          0,
           1,
-          2
+          2,
+          3
         ]
       },
       "Icon": "Assets/Artworks/UI/buff.aseprite[buff]"
