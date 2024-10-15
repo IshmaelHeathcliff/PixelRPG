@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Character.Entry;
+using Character.Modifier;
 using QFramework;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,7 +9,7 @@ using UnityEngine.Tilemaps;
 
 namespace Character
 {
-    public interface ICharacterAttribute : IReadonlyBindableProperty<float>
+    public interface IStat : IReadonlyBindableProperty<float>
     {
         public string Name { get; }
         public float BaseValue { get; }
@@ -31,7 +31,7 @@ namespace Character
     }
     
     [Serializable]
-    public class CharacterAttribute :  ICharacterAttribute
+    public class Stat :  IStat
     {
         public string Name { get; private set; }
         public float Value => GetValue();
@@ -49,7 +49,7 @@ namespace Character
         
         EasyEvent<float> _onValueChanged = new EasyEvent<float>();
 
-        public CharacterAttribute(string name)
+        public Stat(string name)
         {
             Name = name;
             BaseValue = 0;
@@ -163,7 +163,7 @@ namespace Character
         }
     }
 
-    public interface IConsumableAttribute : ICharacterAttribute
+    public interface IConsumableStat : IStat
     {
         public float CurrentValue { get; }
         public void ChangeCurrentValue(float value);
@@ -172,7 +172,7 @@ namespace Character
     }
 
     [Serializable]
-    public class ConsumableAttribute : CharacterAttribute, IConsumableAttribute
+    public class ConsumableStat : Stat, IConsumableStat
     {
         float _currentValue;
         public float CurrentValue
@@ -219,7 +219,7 @@ namespace Character
             CurrentValue = GetValue();
         }
 
-        public ConsumableAttribute(string name) : base(name)
+        public ConsumableStat(string name) : base(name)
         {
             CurrentValue = GetValue();
         }

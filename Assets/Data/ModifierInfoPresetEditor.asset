@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b702bf5b3b1166449ca20d8577554f5, type: 3}
-  m_Name: EntryInfoPresetEditor
+  m_Name: ModifierInfoPresetEditor
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -23,32 +23,32 @@ MonoBehaviour:
     SerializationNodes:
     - Name: Data
       Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[Character.Entry.EntryInfo, Assembly-CSharp]],
-        mscorlib
+      Data: 0|System.Collections.Generic.List`1[[Character.Modifier.ModifierInfo,
+        Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
       Data: 4
     - Name: 
       Entry: 7
-      Data: 1|Character.Entry.AttributeEntryInfo, Assembly-CSharp
+      Data: 1|Character.Modifier.StatModifierInfo, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 2|Character.Entry.AttributeEntryInfo, Assembly-CSharp
+      Data: 2|Character.Modifier.StatModifierInfo, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 3|Character.Entry.AttributeEntryInfo, Assembly-CSharp
+      Data: 3|Character.Modifier.StatModifierInfo, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 4|Character.Entry.AttributeEntryInfo, Assembly-CSharp
+      Data: 4|Character.Modifier.StatModifierInfo, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -58,5 +58,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  jsonName: Entries.json
+  jsonName: Modifiers.json
   jsonPath: Preset

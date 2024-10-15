@@ -8,13 +8,13 @@ namespace Character.Buff
     public interface IBuffContainer
     {
         public event Action<IBuff> OnBuffAdded;
-        public event Action<int> OnBuffRemoved;
+        public event Action<string> OnBuffRemoved;
         public event Action<IBuffWithTime> OnBuffTimeChanged;
         public event Action<IBuffWithCount> OnBuffCountChanged;
         public void AddBuff(IBuff buff);
-        public void RemoveBuff(int id);
+        public void RemoveBuff(string id);
         public void RemoveBuff(IBuff buff);
-        public bool HasBuff(int id);
+        public bool HasBuff(string id);
         public bool HasBuff(IBuff buff);
         public void ResetBuffTime(float time);
         public void DecreaseBuffTime(float time);
@@ -23,9 +23,9 @@ namespace Character.Buff
     
     public class BuffContainer : IBuffContainer
     {
-        readonly Dictionary<int, IBuff> _buffs = new();
+        readonly Dictionary<string, IBuff> _buffs = new();
         public event Action<IBuff> OnBuffAdded;
-        public event Action<int> OnBuffRemoved;
+        public event Action<string> OnBuffRemoved;
         public event Action<IBuffWithTime> OnBuffTimeChanged;
         public event Action<IBuffWithCount> OnBuffCountChanged;
 
@@ -49,7 +49,7 @@ namespace Character.Buff
             OnBuffAdded?.Invoke(buff);
         }
 
-        public bool HasBuff(int id)
+        public bool HasBuff(string id)
         {
             return _buffs.ContainsKey(id);
         }
@@ -64,7 +64,7 @@ namespace Character.Buff
             RemoveBuff(buff.GetID());
         }
 
-        public void RemoveBuff(int id)
+        public void RemoveBuff(string id)
         {
             if (HasBuff(id))
             {
@@ -104,7 +104,7 @@ namespace Character.Buff
             }
         }
 
-        public void ChangeBuffCount(int id, int count)
+        public void ChangeBuffCount(string id, int count)
         {
             if (_buffs.TryGetValue(id, out var buff))
             {

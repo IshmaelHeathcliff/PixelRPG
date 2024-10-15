@@ -1,7 +1,7 @@
 ﻿using System;
 using Character;
 using Character.Buff;
-using Character.Entry;
+using Character.Modifier;
 using QFramework;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ public class PlayerModel : AbstractModel
         PlayerTransform.position = position;
     }
  
-    public CharacterAttributes PlayerAttributes { get; } = new CharacterAttributes();
+    public Stats PlayerStats { get; } = new Stats();
     public IBuffContainer PlayerBuff { get; } = new BuffContainer();
     protected override void OnInit()
     {

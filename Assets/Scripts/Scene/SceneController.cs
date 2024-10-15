@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Character.Entry;
+using Character.Modifier;
 using Cysharp.Threading.Tasks;
 using QFramework;
 using SaveLoad;
@@ -23,7 +23,7 @@ namespace Scene
         {
             _model.ClearEntrances();
             
-            this.GetSystem<EntrySystem>().ClearEntryFactories();
+            this.GetSystem<ModifierSystem>().ClearModifierFactories();
             
             await Addressables.LoadSceneAsync(sceneName);
             

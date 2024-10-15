@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Character.Entry;
+using Character.Modifier;
 using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
@@ -11,7 +11,7 @@ namespace Items
 {
     public interface IEquipment : IEquipmentBase
     {
-        public List<IEntry> Entries { get; set; }
+        public List<IModifier> Entries { get; set; }
         public EquipmentBase.EquipmentRarity Rarity { get; set; }
         public void Equip();
         public void Takeoff();
@@ -33,7 +33,7 @@ namespace Items
             }
         }
 
-        [JsonProperty] public List<IEntry> Entries { get; set; }
+        [JsonProperty] public List<IModifier> Entries { get; set; }
 
         [JsonProperty] public EquipmentRarity Rarity { get; set; }
 

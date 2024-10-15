@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Character.Entry;
+using Character.Modifier;
 using QFramework;
 using SaveLoad;
 using UnityEngine;
@@ -9,13 +9,13 @@ namespace Character.Buff
 {
     public class BuffCreateSystem : AbstractSystem
     {
-        Dictionary<int, BuffInfo> _buffInfoCache;
+        Dictionary<string, BuffInfo> _buffInfoCache;
         const string JsonPath = "Preset";
         const string JsonName = "Buffs.json";
 
         void Load()
         {
-            _buffInfoCache = new Dictionary<int, BuffInfo>();
+            _buffInfoCache = new Dictionary<string, BuffInfo>();
             var buffInfoList = this.GetUtility<SaveLoadUtility>().Load<List<BuffInfo>>(JsonName, JsonPath);
             foreach (var buffInfo in buffInfoList)
             {
@@ -23,7 +23,7 @@ namespace Character.Buff
             }
         }
 
-        public BuffInfo GetBuffInfo(int id)
+        public BuffInfo GetBuffInfo(string id)
         {
             if (_buffInfoCache == null)
             {
@@ -33,32 +33,32 @@ namespace Character.Buff
             return _buffInfoCache.GetValueOrDefault(id);
         }
 
-        public IBuff CreateBuff(int id, string factoryID, int[] values)
+        public IBuff CreateBuff(string id, string factoryID, int[] values)
         {
             var buffInfo = GetBuffInfo(id);
-            var entrySystem = this.GetSystem<EntrySystem>();
-            var entries = buffInfo.EntryID.Select(
-                    (entryId, i) => entrySystem.CreateAttributeEntry(entryId, factoryID, values[i]));
+            var entrySystem = this.GetSystem<ModifierSystem>();
+            var entries = buffInfo.ModifierID.Select(
+                    (entryId, i) => entrySystem.CreateStatModifier(entryId, factoryID, values[i]));
 
             return new Buff(buffInfo, entries);
         }
 
-        public IBuffWithTime CreateBuff(int id, string factoryID, int[] values, int time)
+        public IBuffWithTime CreateBuff(string id, string factoryID, int[] values, int time)
         {
             var buffInfo = GetBuffInfo(id);
-            var entrySystem = this.GetSystem<EntrySystem>();
+            var entrySystem = this.GetSystem<ModifierSystem>();
 
-            if (buffInfo.EntryID.Count != values.Length)
+            if (buffInfo.ModifierID.Count != values.Length)
             {
                 Debug.LogError("values.Length != buffInfo.EntryID.Count");
                 return null;
             }
             
-            var entries = new List<IEntry>();
+            var entries = new List<IModifier>();
 
-            for (int i = 0; i < buffInfo.EntryID.Count; i++)
+            for (int i = 0; i < buffInfo.ModifierID.Count; i++)
             {
-                entries.Add(entrySystem.CreateAttributeEntry(buffInfo.EntryID[i], factoryID, values[i]));
+                entries.Add(entrySystem.CreateStatModifier(buffInfo.ModifierID[i], factoryID, values[i]));
             }
             
             return new BuffWithTime(buffInfo, entries, time);
@@ -68,7 +68,7 @@ namespace Character.Buff
         
         protected override void OnInit()
         {
-            _buffInfoCache = new Dictionary<int, BuffInfo>();
+            _buffInfoCache = new Dictionary<string, BuffInfo>();
             Load();
         }
     }

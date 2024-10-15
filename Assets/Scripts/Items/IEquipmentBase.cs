@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Character;
-using Character.Entry;
+using Character.Modifier;
 using Newtonsoft.Json;
 using QFramework.Tool;
 using Sirenix.OdinInspector;
@@ -27,8 +27,8 @@ namespace Items
     public interface IEquipmentBase : IItem
     {
         public EquipmentType Type { get; set; }
-        public Dictionary<int, int> EntryPool { get; set; }
-        public int GetRandomEntryID();
+        public Dictionary<string, int> ModifierPool { get; set; }
+        public string GetRandomModifierID();
     }
     
     [Serializable]
@@ -44,11 +44,11 @@ namespace Items
             Unique
         }
 
-        [JsonProperty][ShowInInspector] public Dictionary<int, int> EntryPool { get; set; }
+        [JsonProperty][ShowInInspector] public Dictionary<string, int> ModifierPool { get; set; }
 
-        public int GetRandomEntryID()
+        public string GetRandomModifierID()
         {
-            return WeightRandom<int>.GetRandom(EntryPool);
+            return WeightRandom<string>.GetRandom(ModifierPool);
         }
 
         public override string GetDescription()

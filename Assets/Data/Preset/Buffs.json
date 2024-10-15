@@ -3,15 +3,15 @@
   "$values": [
     {
       "$type": "Character.Buff.BuffInfo, Assembly-CSharp",
-      "ID": 1,
+      "ID": "1",
       "Name": "健实",
       "Description": "加强生命",
-      "EntryID": {
-        "$type": "System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib",
+      "ModifierID": {
+        "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
         "$values": [
-          1,
-          2,
-          3
+          "1",
+          "2",
+          "3"
         ]
       },
       "Icon": "Assets/Artworks/UI/buff.aseprite[buff]"

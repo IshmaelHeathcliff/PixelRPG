@@ -1,6 +1,6 @@
 ﻿using System;
 using Character.Buff;
-using Character.Entry;
+using Character.Modifier;
 using Items;
 using QFramework;
 using SaveLoad;
@@ -17,7 +17,7 @@ public class PixelRPG : Architecture<PixelRPG>
         RegisterModel(new PackageModel());
         
         RegisterSystem(new InputSystem());
-        RegisterSystem(new EntrySystem());
+        RegisterSystem(new ModifierSystem());
         RegisterSystem(new ItemCreateSystem());
         RegisterSystem(new BuffCreateSystem());
         

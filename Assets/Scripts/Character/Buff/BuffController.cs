@@ -8,7 +8,7 @@ namespace Character.Buff
     public interface IBuffUI
     {
         public void AddBuff(IBuff buff);
-        public void RemoveBuff(int id);
+        public void RemoveBuff(string id);
         public void ChangeBuffTime(IBuffWithTime buff);
         public void ChangeBuffCount(IBuffWithCount buff);
     }
@@ -16,7 +16,7 @@ namespace Character.Buff
     public abstract class BuffUI: MonoBehaviour, IBuffUI
     {
         public abstract void AddBuff(IBuff buff);
-        public abstract void RemoveBuff(int id);
+        public abstract void RemoveBuff(string id);
         public abstract void ChangeBuffTime(IBuffWithTime buff);
         public abstract void ChangeBuffCount(IBuffWithCount buff);
     }

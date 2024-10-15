@@ -55,8 +55,8 @@ namespace Character
 
         void OnEnable()
         {
-            var health = _model.PlayerAttributes.Health;
-            var mana = _model.PlayerAttributes.Mana;
+            var health = _model.PlayerStats.Health;
+            var mana = _model.PlayerStats.Mana;
             health.Register(OnMaxHealthChanged).UnRegisterWhenDisabled(this);
             mana.Register(OnMaxManaChanged).UnRegisterWhenDisabled(this);
             health.RegisterWithInitValue(OnHealthChanged).UnRegisterWhenDisabled(this);

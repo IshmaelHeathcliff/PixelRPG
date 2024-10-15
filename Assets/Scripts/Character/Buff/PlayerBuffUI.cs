@@ -11,7 +11,7 @@ namespace Character.Buff
     [RequireComponent(typeof(BuffUICellPool))]
     public class PlayerBuffUI : BuffUI
     {
-        readonly Dictionary<int, BuffUICell> _buffUICells = new();
+        readonly Dictionary<string, BuffUICell> _buffUICells = new();
         [SerializeField] BuffUICellPool _pool;
 
         public override async void AddBuff(IBuff buff)
@@ -27,7 +27,7 @@ namespace Character.Buff
             buffUICell.InitBuffUICell(buff);
         }
 
-        public override void RemoveBuff(int id)
+        public override void RemoveBuff(string id)
         {
             if (_buffUICells.Remove(id, out var buffUICell))
             {

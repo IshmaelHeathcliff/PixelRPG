@@ -1,5 +1,5 @@
 using System;
-using Character.Entry;
+using Character.Modifier;
 using QFramework;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -109,10 +109,7 @@ namespace Character
 
         void Start()
         {
-            // foreach (var attribute in _model.PlayerAttributes.GetAllAttributes())
-            // {
-            //     attribute.GetValue();
-            // }
+
         }
 
         public IArchitecture GetArchitecture()

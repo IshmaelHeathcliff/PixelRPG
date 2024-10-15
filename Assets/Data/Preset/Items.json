@@ -19,11 +19,11 @@
     {
       "$type": "Items.EquipmentBase, Assembly-CSharp",
       "Type": 4,
-      "EntryPool": {
-        "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32, mscorlib]], mscorlib",
-        "1": 10,
-        "2": 10,
-        "3": 10
+      "ModifierPool": {
+        "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int32, mscorlib]], mscorlib",
+        "1": 1,
+        "2": 1,
+        "3": 1
       },
       "ID": 2,
       "Name": "大剑",

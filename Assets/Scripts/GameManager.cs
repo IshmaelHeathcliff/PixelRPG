@@ -1,7 +1,7 @@
 ﻿using System;
 using Character;
 using Character.Buff;
-using Character.Entry;
+using Character.Modifier;
 using QFramework;
 using SaveLoad;
 using Scene;
@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour, IController
 {
     PlayerModel _playerModel;
-    EntrySystem _entrySystem;
+    ModifierSystem _modifierSystem;
     BuffCreateSystem _buffCreateSystem;
     SaveLoadUtility _saveLoadUtility;
     
@@ -31,40 +31,40 @@ public class GameManager : MonoBehaviour, IController
     [Button]
     public void AddBuff()
     {
-        var buff = _buffCreateSystem.CreateBuff(1, "player",new []{20, 20, 20}, 4);
+        var buff = _buffCreateSystem.CreateBuff("1", "player",new []{20, 20, 20}, 4);
         _playerModel.PlayerBuff.AddBuff(buff);
     }
 
     [Button]
     public void LoseHealthAndMana()
     {
-        _playerModel.PlayerAttributes.Health.ChangeCurrentValue(-10);
-        _playerModel.PlayerAttributes.Mana.ChangeCurrentValue(-10);
+        _playerModel.PlayerStats.Health.ChangeCurrentValue(-10);
+        _playerModel.PlayerStats.Mana.ChangeCurrentValue(-10);
     }
     
     [Button]
     public void GainHealthAndMana()
     {
-        _playerModel.PlayerAttributes.Health.ChangeCurrentValue(10);
-        _playerModel.PlayerAttributes.Mana.ChangeCurrentValue(10);
+        _playerModel.PlayerStats.Health.ChangeCurrentValue(10);
+        _playerModel.PlayerStats.Mana.ChangeCurrentValue(10);
     }
 
     void Awake()
     {
         _playerModel = this.GetModel<PlayerModel>();
-        _entrySystem = this.GetSystem<EntrySystem>();
+        _modifierSystem = this.GetSystem<ModifierSystem>();
         _buffCreateSystem = this.GetSystem<BuffCreateSystem>();
         _saveLoadUtility = this.GetUtility<SaveLoadUtility>();
     }
     
     void Start()
     {
-        var healthEntry = _entrySystem.CreateAttributeEntry(1, "player", 100);
-        var manaEntry = _entrySystem.CreateAttributeEntry(4, "player", 100);
-        healthEntry.Register();
-        manaEntry.Register();
-        _playerModel.PlayerAttributes.Health.SetMaxValue();
-        _playerModel.PlayerAttributes.Mana.SetMaxValue();
+        var healthModifier = _modifierSystem.CreateStatModifier("1", "player", 100);
+        var manaModifier = _modifierSystem.CreateStatModifier("4", "player", 100);
+        healthModifier.Register();
+        manaModifier.Register();
+        _playerModel.PlayerStats.Health.SetMaxValue();
+        _playerModel.PlayerStats.Mana.SetMaxValue();
     }
 
     public IArchitecture GetArchitecture()

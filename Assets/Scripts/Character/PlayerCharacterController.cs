@@ -1,5 +1,5 @@
 ﻿using System;
-using Character.Entry;
+using Character.Modifier;
 using QFramework;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,7 +8,7 @@ namespace Character
 {
     public class PlayerCharacterController : MonoBehaviour, IController
     {
-        [SerializeField] string _entryFactoryID = "player";
+        [SerializeField] string _modifierFactoryID = "player";
         [SerializeField] PlayerController _playerController;
 
         PlayerModel _model;
@@ -26,13 +26,13 @@ namespace Character
 
         void OnEnable()
         {
-            this.GetSystem<EntrySystem>().RegisterFactory(_entryFactoryID, _model.PlayerAttributes);
+            this.GetSystem<ModifierSystem>().RegisterFactory(_modifierFactoryID, _model.PlayerStats);
 
         }
 
         void OnDisable()
         {
-            this.GetSystem<EntrySystem>().UnregisterFactory(_entryFactoryID);
+            this.GetSystem<ModifierSystem>().UnregisterFactory(_modifierFactoryID);
         }
 
         public IArchitecture GetArchitecture()

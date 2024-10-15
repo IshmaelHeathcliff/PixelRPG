@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Character.Entry;
+using Character.Modifier;
 using QFramework;
 using QFramework.Tool;
 using SaveLoad;
@@ -25,7 +25,7 @@ namespace Items
             {EquipmentBase.EquipmentRarity.Unique, 1}
         };
 
-        EntrySystem _entrySystem;
+        ModifierSystem _modifierSystem;
 
         void Load()
         {
@@ -59,7 +59,7 @@ namespace Items
             var equipment = new Equipment(equipmentBase)
             {
                 Rarity = WeightRandom<EquipmentBase.EquipmentRarity>.GetRandom(_rarityWeights),
-                Entries = new List<IEntry>()
+                Entries = new List<IModifier>()
             };
 
 
@@ -86,7 +86,7 @@ namespace Items
             for (int i = 0; i < entryCount; i++)
             {
                 // TODO: 装备只有玩家拥有，所以指定了factoryID为player。让所有对象都可以拥有装备？
-                var entry = _entrySystem.CreateAttributeEntry(equipment.GetRandomEntryID(), "player");
+                var entry = _modifierSystem.CreateStatModifier(equipment.GetRandomModifierID(), "player");
                 equipment.Entries.Add(entry);
             }
             
@@ -98,7 +98,7 @@ namespace Items
         protected override void OnInit()
         {
             Load();
-            _entrySystem = this.GetSystem<EntrySystem>();
+            _modifierSystem = this.GetSystem<ModifierSystem>();
         }
     }
 }

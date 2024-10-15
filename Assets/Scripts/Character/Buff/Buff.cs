@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Character.Entry;
+using Character.Modifier;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace Character.Buff
     public interface IBuff
     {
         public string GetName();
-        public int GetID();
+        public string GetID();
         public string GetDescription();
         public string GetIconPath();
         public void Enable();
@@ -36,12 +36,12 @@ namespace Character.Buff
     {
         BuffInfo _info;
 
-        List<IEntry> _entries;
+        List<IModifier> _modifiers;
         
-        public Buff(BuffInfo info, IEnumerable<IEntry> entries)
+        public Buff(BuffInfo info, IEnumerable<IModifier> entries)
         {
             _info = info;
-            _entries = entries.ToList();
+            _modifiers = entries.ToList();
             Enable();
         }
 
@@ -50,7 +50,7 @@ namespace Character.Buff
             return _info.Name;
         }
 
-        public int GetID()
+        public string GetID()
         {
             return _info.ID;
         }
@@ -67,17 +67,17 @@ namespace Character.Buff
 
         public void Enable()
         {
-            foreach (var entry in _entries)
+            foreach (var modifier in _modifiers)
             {
-                entry.Register();
+                modifier.Register();
             }
         }
 
         public void Disable()
         {
-            foreach (var entry in _entries)
+            foreach (var modifier in _modifiers)
             {
-                entry.Unregister();
+                modifier.Unregister();
             }
         }
     }
@@ -86,7 +86,7 @@ namespace Character.Buff
     {
         public float Duration { get; set; }
         public float TimeLeft { get; private set; }
-        public BuffWithTime(BuffInfo info, IEnumerable<IEntry> entries, float time) : base(info, entries)
+        public BuffWithTime(BuffInfo info, IEnumerable<IModifier> entries, float time) : base(info, entries)
         {
             Duration = time;
             TimeLeft = time;
@@ -112,7 +112,7 @@ namespace Character.Buff
     {
         public int Count { get; set; }
         public int MaxCount { get; set; }
-        public BuffWithCount(BuffInfo info, IEnumerable<IEntry> entries, int maxCount) : base(info, entries)
+        public BuffWithCount(BuffInfo info, IEnumerable<IModifier> entries, int maxCount) : base(info, entries)
         {
             Count = 1;
             MaxCount = maxCount;
@@ -124,7 +124,7 @@ namespace Character.Buff
     {
         public int Count { get; set; }
         public int MaxCount { get; set; }
-        public BuffWithTimeAndCount(BuffInfo info, IEnumerable<IEntry> entries, float time, int maxCount) : base(info, entries, time)
+        public BuffWithTimeAndCount(BuffInfo info, IEnumerable<IModifier> entries, float time, int maxCount) : base(info, entries, time)
         {
             Count = 1;
             MaxCount = maxCount;
