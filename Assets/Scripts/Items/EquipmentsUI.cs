@@ -1,9 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Items

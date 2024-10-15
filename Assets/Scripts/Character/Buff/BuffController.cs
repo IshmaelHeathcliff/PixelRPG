@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using QFramework;
+﻿using QFramework;
 using UnityEngine;
 
 namespace Character.Buff

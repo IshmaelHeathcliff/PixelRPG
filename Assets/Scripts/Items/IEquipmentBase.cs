@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Character;
-using Character.Modifier;
 using Newtonsoft.Json;
 using QFramework.Tool;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Items
 {

@@ -1,8 +1,6 @@
-﻿using System;
-using Character.Modifier;
+﻿using Character.Modifier;
 using QFramework;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Character
 {

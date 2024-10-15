@@ -1,5 +1,4 @@
-﻿using System;
-using QFramework;
+﻿using QFramework;
 
 namespace Items
 {

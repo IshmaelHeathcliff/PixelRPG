@@ -1,10 +1,6 @@
-﻿using System;
-using Sirenix.OdinInspector;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Items

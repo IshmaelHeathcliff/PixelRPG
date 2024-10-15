@@ -1,8 +1,5 @@
-﻿using System;
-using TMPro;
-using Unity.Collections.LowLevel.Unsafe;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 

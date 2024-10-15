@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Core;
-using Cysharp.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Character.Buff
 {

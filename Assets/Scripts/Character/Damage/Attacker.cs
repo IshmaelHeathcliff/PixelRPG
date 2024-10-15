@@ -1,7 +1,5 @@
 ﻿using Character;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public interface IAttacker
 {

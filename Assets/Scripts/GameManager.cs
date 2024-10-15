@@ -1,13 +1,9 @@
-﻿using System;
-using Character;
-using Character.Buff;
+﻿using Character.Buff;
 using Character.Modifier;
 using QFramework;
 using SaveLoad;
-using Scene;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour, IController
 {

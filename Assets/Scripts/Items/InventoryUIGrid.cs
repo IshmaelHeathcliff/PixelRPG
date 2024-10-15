@@ -1,6 +1,4 @@
-﻿using Sirenix.OdinInspector;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
 namespace Items
 {

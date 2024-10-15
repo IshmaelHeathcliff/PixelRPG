@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using QFramework;
 using Sirenix.Utilities;
 
 namespace Character.Buff

@@ -1,5 +1,3 @@
-using System;
-using UnityEditor;
 using UnityEngine;
 
 public abstract class MonoSingleton<T> : MonoBehaviour where T: MonoSingleton<T>

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Character.Modifier
+﻿namespace Character.Modifier
 {
     public interface IModifierFactory
     {

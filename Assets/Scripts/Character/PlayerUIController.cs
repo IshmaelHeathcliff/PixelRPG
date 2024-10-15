@@ -1,7 +1,5 @@
-﻿using System;
-using QFramework;
+﻿using QFramework;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Character

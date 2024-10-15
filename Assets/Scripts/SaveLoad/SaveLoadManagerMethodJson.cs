@@ -1,8 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using Newtonsoft.Json;
-using UnityEngine;
 
 namespace SaveLoad
 {

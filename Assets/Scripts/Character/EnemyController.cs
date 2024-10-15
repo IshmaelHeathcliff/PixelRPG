@@ -1,7 +1,6 @@
 using System.Collections;
 using QFramework;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour, IController

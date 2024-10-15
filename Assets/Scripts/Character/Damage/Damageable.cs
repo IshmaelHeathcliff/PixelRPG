@@ -1,9 +1,6 @@
-﻿using System;
-using Character;
+﻿using Character;
 using QFramework;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public interface IDamageable
 {
