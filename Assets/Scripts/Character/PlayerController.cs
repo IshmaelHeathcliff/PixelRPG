@@ -27,26 +27,26 @@ namespace Character
         {
             if (_isMoving)
             {
-                if ((_rigidbody.velocity - _direction * _speed).sqrMagnitude > 0.01f)
+                if ((_rigidbody.linearVelocity - _direction * _speed).sqrMagnitude > 0.01f)
                 {
-                    _rigidbody.velocity = Vector2.Lerp(_rigidbody.velocity, _direction * _speed,
+                    _rigidbody.linearVelocity = Vector2.Lerp(_rigidbody.linearVelocity, _direction * _speed,
                         Time.fixedDeltaTime * _acceleration);
                 }
                 else
                 {
-                    _rigidbody.velocity = _direction * _speed;
+                    _rigidbody.linearVelocity = _direction * _speed;
                 }
             }
             else
             {
-                if (_rigidbody.velocity.sqrMagnitude > 0.01f)
+                if (_rigidbody.linearVelocity.sqrMagnitude > 0.01f)
                 {
-                    _rigidbody.velocity = Vector2.Lerp(_rigidbody.velocity, Vector2.zero,
+                    _rigidbody.linearVelocity = Vector2.Lerp(_rigidbody.linearVelocity, Vector2.zero,
                         Time.fixedDeltaTime * _acceleration);
                 }
                 else
                 {
-                    _rigidbody.velocity = Vector2.zero;
+                    _rigidbody.linearVelocity = Vector2.zero;
                 }
             }
         }

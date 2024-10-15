@@ -54,7 +54,7 @@ public class EnemyController : MonoBehaviour, IController
             Face(((Vector2) (this.SendQuery(new PlayerPositionQuery()) - transform.position)).normalized);
         }
 
-        _rigidbody.velocity = _direction * _speed;
+        _rigidbody.linearVelocity = _direction * _speed;
     }
 
     void FindPlayer()
