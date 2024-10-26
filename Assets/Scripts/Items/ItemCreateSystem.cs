@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Character.Modifier;
-using QFramework;
-using QFramework.Tool;
 using SaveLoad;
+using Tool;
 
 namespace Items
 {

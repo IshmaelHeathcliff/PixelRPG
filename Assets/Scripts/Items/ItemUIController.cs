@@ -1,5 +1,4 @@
-﻿using QFramework;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Items

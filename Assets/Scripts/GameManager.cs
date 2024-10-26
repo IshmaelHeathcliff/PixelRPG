@@ -1,6 +1,6 @@
-﻿using Character.Buff;
+﻿using Character;
+using Character.Buff;
 using Character.Modifier;
-using QFramework;
 using SaveLoad;
 using Sirenix.OdinInspector;
 using UnityEngine;

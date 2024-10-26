@@ -1,6 +1,6 @@
-﻿using Character.Modifier;
+﻿using Character;
+using Character.Modifier;
 using Cysharp.Threading.Tasks;
-using QFramework;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 

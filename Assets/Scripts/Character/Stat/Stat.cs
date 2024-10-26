@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using QFramework;
+using Character.Modifier;
 
-namespace Character
+namespace Character.Stat
 {
     public interface IStat : IReadonlyBindableProperty<float>
     {
@@ -14,11 +14,11 @@ namespace Character
         public float Increase { get; }
         public float More { get; }
         public float GetValue();
-        public void AddBaseValueModifier(string key, float value);
-        public void AddAddedValueModifier(string key, float value);
-        public void AddFixedValueModifier(string key, float value);
-        public void AddIncreaseModifier(string key, float value);
-        public void AddMoreModifier(string key, float value);
+        public void AddBaseValueModifier(string key, Modifier<int> mod);
+        public void AddAddedValueModifier(string key, Modifier<int> mod);
+        public void AddFixedValueModifier(string key, Modifier<int> mod);
+        public void AddIncreaseModifier(string key, Modifier<int> mod);
+        public void AddMoreModifier(string key, Modifier<int> mod);
         public void RemoveBaseValueModifier(string key);
         public void RemoveAddedValueModifier(string key);
         public void RemoveFixedValueModifier(string key);
@@ -31,19 +31,19 @@ namespace Character
     {
         public string Name { get; private set; }
         public float Value => GetValue();
-        public float BaseValue { get; private set; }
-        public float AddedValue { get; private set; }
-        public float FixedValue { get; private set; }
-        public float Increase { get; private set; }
-        public float More { get; private set; }
+        public float BaseValue { get; protected set; }
+        public float AddedValue { get; protected set; }
+        public float FixedValue { get; protected set; }
+        public float Increase { get; protected set; }
+        public float More { get; protected set; }
 
-        Dictionary<string, float> _baseValueModifiers = new Dictionary<string, float>();
-        Dictionary<string, float> _addedValueModifiers = new Dictionary<string, float>();
-        Dictionary<string, float> _fixedValueModifiers = new Dictionary<string, float>();
-        Dictionary<string, float> _increaseModifiers = new Dictionary<string, float>();
-        Dictionary<string, float> _moreModifiers = new Dictionary<string, float>();
+        protected Dictionary<string, Modifier<int>> BaseValueModifiers = new();
+        protected Dictionary<string, Modifier<int>> AddedValueModifiers = new();
+        protected Dictionary<string, Modifier<int>> FixedValueModifiers = new();
+        protected Dictionary<string, Modifier<int>> IncreaseModifiers = new();
+        protected Dictionary<string, Modifier<int>> MoreModifiers = new();
         
-        EasyEvent<float> _onValueChanged = new EasyEvent<float>();
+        EasyEvent<float> _onValueChanged = new();
 
         public Stat(string name)
         {
@@ -55,85 +55,90 @@ namespace Character
             More = 1;
         }
 
-        public void AddBaseValueModifier(string key, float value)
+        public void AddBaseValueModifier(string key, Modifier<int> mod)
         {
-            _baseValueModifiers[key] = value;
+            BaseValueModifiers[key] = mod;
             _onValueChanged.Trigger(Value);
         }
 
-        public void AddAddedValueModifier(string key, float value)
+        public void AddAddedValueModifier(string key, Modifier<int> mod)
         {
-            _addedValueModifiers[key] = value;
+            AddedValueModifiers[key] = mod;
             _onValueChanged.Trigger(Value);
         }
 
-        public void AddFixedValueModifier(string key, float value)
+        public void AddFixedValueModifier(string key, Modifier<int> mod)
         {
-            _fixedValueModifiers[key] = value;
+            FixedValueModifiers[key] = mod;
             _onValueChanged.Trigger(Value);
         }
 
-        public void AddIncreaseModifier(string key, float value)
+        public void AddIncreaseModifier(string key, Modifier<int> mod)
         {
-            _increaseModifiers[key] = value;
+            IncreaseModifiers[key] = mod;
             _onValueChanged.Trigger(Value);
         }
 
-        public void AddMoreModifier(string key, float value)
+        public void AddMoreModifier(string key, Modifier<int> mod)
         {
-            _moreModifiers[key] = value;
+            MoreModifiers[key] = mod;
             _onValueChanged.Trigger(Value);
         }
 
         public void RemoveBaseValueModifier(string key)
         {
-            _baseValueModifiers.Remove(key);
+            BaseValueModifiers.Remove(key);
             _onValueChanged.Trigger(Value);
         }
 
         public void RemoveAddedValueModifier(string key)
         {
-            _addedValueModifiers.Remove(key);
+            AddedValueModifiers.Remove(key);
             _onValueChanged.Trigger(Value);
         }
 
         public void RemoveFixedValueModifier(string key)
         {
-            _fixedValueModifiers.Remove(key);
+            FixedValueModifiers.Remove(key);
             _onValueChanged.Trigger(Value);
         }
 
         public void RemoveIncreaseModifier(string key)
         {
-            _increaseModifiers.Remove(key);
+            IncreaseModifiers.Remove(key);
             _onValueChanged.Trigger(Value);
         }
 
         public void RemoveMoreModifier(string key)
         {
-            _moreModifiers.Remove(key);
+            MoreModifiers.Remove(key);
             _onValueChanged.Trigger(Value);
         }
 
-
-        void CalculateValue()
+        protected float Calculate(float addedMultiplier = 1)
         {
-            BaseValue = _baseValueModifiers.Sum(x => x.Value);
-            AddedValue = _addedValueModifiers.Sum(x => x.Value);
-            FixedValue = _fixedValueModifiers.Sum(x => x.Value);
-            Increase = _increaseModifiers.Sum(x => x.Value);
+            return (BaseValue + AddedValue * addedMultiplier) * (1 + Increase/100f) * More + FixedValue;
+        }
+
+        void SetValues()
+        {
+            BaseValue = BaseValueModifiers.Sum(x => x.Value.Value);
+            AddedValue = AddedValueModifiers.Sum(x => x.Value.Value);
+            FixedValue = FixedValueModifiers.Sum(x => x.Value.Value);
+            Increase = IncreaseModifiers.Sum(x => x.Value.Value);
 
             More = 1;
-            foreach (var mod in _moreModifiers)
+            foreach (var mod in MoreModifiers)
             {
-                More *= mod.Value / 100 + 1;
+                More *= (float)(mod.Value.Value) / 100 + 1;
             }
+            
         }
 
         public float GetValue()
         {
-            CalculateValue();
-            return (BaseValue + AddedValue) * (1 + Increase/100f) * More + FixedValue;
+            SetValues();
+            return Calculate();
         }
 
         public IUnRegister Register(Action onValueChanged)
@@ -234,6 +239,61 @@ namespace Character
         public void UnRegister(Action<float, float> onValueChanged)
         {
             _onValueChanged.UnRegister(onValueChanged);
+        }
+    }
+
+
+    public interface IKeywordStat : IStat
+    {
+        public float GetValueByKeywords(IEnumerable<string> keywords);
+        public float GetValueByKeywords(float baseValue, IEnumerable<string> keywords, float addedMultiplier=1);
+    }
+    
+    [Serializable]
+    public class KeywordStat : Stat, IKeywordStat
+    {
+        public KeywordStat(string name) : base(name)
+        {
+        }
+
+        void SetValuesByKeywords(IEnumerable<string> keywords)
+        {
+            var effectiveBaseValueModifiers =
+                BaseValueModifiers.Values.Where(x => x.ModifierInfo.Keywords.All(keywords.Contains));
+            var effectiveAddedValueModifiers = 
+                AddedValueModifiers.Values.Where(x => x.ModifierInfo.Keywords.All(keywords.Contains));
+            var effectiveFixedValueModifiers = 
+                FixedValueModifiers.Values.Where(x => x.ModifierInfo.Keywords.All(keywords.Contains));
+            var effectiveIncreaseModifiers = 
+                IncreaseModifiers.Values.Where(x => x.ModifierInfo.Keywords.All(keywords.Contains));
+            var effectiveMoreModifiers = 
+                MoreModifiers.Values.Where(x => x.ModifierInfo.Keywords.All(keywords.Contains));
+
+            
+            BaseValue = effectiveBaseValueModifiers.Sum(x => x.Value);
+            AddedValue = effectiveAddedValueModifiers.Sum(x => x.Value);
+            FixedValue = effectiveFixedValueModifiers.Sum(x => x.Value);
+            Increase = effectiveIncreaseModifiers.Sum(x => x.Value);
+
+            More = 1;
+            foreach (var mod in effectiveMoreModifiers)
+            {
+                More *= (float)(mod.Value) / 100 + 1;
+            }
+        }
+
+        
+        public float GetValueByKeywords(IEnumerable<string> keywords)
+        {
+            SetValuesByKeywords(keywords);
+            return Calculate();
+        }
+
+        public float GetValueByKeywords(float baseValue, IEnumerable<string> keywords, float addedMultiplier=1)
+        {
+            SetValuesByKeywords(keywords);
+            BaseValue = baseValue;
+            return Calculate(addedMultiplier);
         }
     }
 }

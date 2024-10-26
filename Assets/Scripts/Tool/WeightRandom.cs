@@ -2,7 +2,7 @@
 using System.Linq;
 using Random = System.Random;
 
-namespace QFramework.Tool
+namespace Tool
 {
     public static class WeightRandom<T>
     {

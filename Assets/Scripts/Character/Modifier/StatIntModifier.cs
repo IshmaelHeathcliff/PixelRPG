@@ -1,4 +1,5 @@
 ﻿using System;
+using Character.Stat;
 using Random = UnityEngine.Random;
 
 namespace Character.Modifier
@@ -39,19 +40,19 @@ namespace Character.Modifier
             switch (((StatModifierInfo) ModifierInfo).StatModifierType)
             {
                 case StatModifierType.Base:
-                    Stat.AddBaseValueModifier(InstanceID, Value);
+                    Stat.AddBaseValueModifier(InstanceID, this);
                     break;
                 case StatModifierType.Added:
-                    Stat.AddAddedValueModifier(InstanceID, Value);
+                    Stat.AddAddedValueModifier(InstanceID, this);
                     break;
                 case StatModifierType.Increase:
-                    Stat.AddIncreaseModifier(InstanceID, Value);
+                    Stat.AddIncreaseModifier(InstanceID, this);
                     break;
                 case StatModifierType.More:
-                    Stat.AddMoreModifier(InstanceID, Value);
+                    Stat.AddMoreModifier(InstanceID, this);
                     break;
                 case StatModifierType.Fixed:
-                    Stat.AddFixedValueModifier(InstanceID, Value);
+                    Stat.AddFixedValueModifier(InstanceID, this);
                     break;
                 default:
                     break;

@@ -1,29 +1,32 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyFactory : MonoBehaviour
+namespace Character
 {
-    GameObject _enemyPrefab;
-
-    [SerializeField] int _maxCount;
-    [SerializeField] float _generateGap;
-
-    void CreateEnemy()
+    public class EnemyFactory : MonoBehaviour
     {
-        Instantiate(_enemyPrefab, transform);
-    }
+        GameObject _enemyPrefab;
 
-    IEnumerator ProduceEnemies()
-    {
-        while (transform.childCount < _maxCount)
+        [SerializeField] int _maxCount;
+        [SerializeField] float _generateGap;
+
+        void CreateEnemy()
         {
-            CreateEnemy();
-            yield return new WaitForSeconds(_generateGap);
+            Instantiate(_enemyPrefab, transform);
         }
-    }
 
-    void Start()
-    {
-        StartCoroutine(ProduceEnemies());
+        IEnumerator ProduceEnemies()
+        {
+            while (transform.childCount < _maxCount)
+            {
+                CreateEnemy();
+                yield return new WaitForSeconds(_generateGap);
+            }
+        }
+
+        void Start()
+        {
+            StartCoroutine(ProduceEnemies());
+        }
     }
 }

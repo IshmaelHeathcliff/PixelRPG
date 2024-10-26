@@ -1,7 +1,7 @@
-﻿using Character.Buff;
+﻿using Character;
+using Character.Buff;
 using Character.Modifier;
 using Items;
-using QFramework;
 using SaveLoad;
 using Scene;
 

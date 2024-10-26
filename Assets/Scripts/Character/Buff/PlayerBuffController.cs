@@ -1,6 +1,4 @@
-﻿using QFramework;
-
-namespace Character.Buff
+﻿namespace Character.Buff
 {
     public class PlayerBuffController : BuffController
     {

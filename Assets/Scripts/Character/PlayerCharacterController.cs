@@ -1,25 +1,29 @@
-﻿using Character.Modifier;
-using QFramework;
+﻿using Character.Damage;
+using Character.Modifier;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Character
 {
     public class PlayerCharacterController : MonoBehaviour, IController
     {
         [SerializeField] string _modifierFactoryID = "player";
-        [SerializeField] PlayerController _playerController;
+        [FormerlySerializedAs("_playerController")]
+        [SerializeField] PlayerMoveController _playerMoveController;
+        [SerializeField] PlayerAttacker _playerAttacker;
 
         PlayerModel _model;
 
         void OnValidate()
         {
-            _playerController = GetComponent<PlayerController>();
+            _playerMoveController = GetComponentInChildren<PlayerMoveController>();
+            _playerAttacker = GetComponentInChildren<PlayerAttacker>();
         }
 
         protected void Awake()
         {
             _model = this.GetModel<PlayerModel>();
-            _playerController = GetComponent<PlayerController>();
+            _playerMoveController = GetComponent<PlayerMoveController>();
         }
 
         void OnEnable()

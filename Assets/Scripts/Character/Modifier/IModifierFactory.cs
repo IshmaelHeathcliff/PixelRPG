@@ -1,4 +1,6 @@
-﻿namespace Character.Modifier
+﻿using Character.Stat;
+
+namespace Character.Modifier
 {
     public interface IModifierFactory
     {

@@ -8,7 +8,9 @@
         "Sirenix.OdinInspector.Editor",
         "Sirenix.Utilities.Editor",
         "Sirenix.Utilities",
-        "Sirenix.OdinValidator.Editor"
+        "Sirenix.OdinValidator.Editor",
+        "UnityEditor.UI",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

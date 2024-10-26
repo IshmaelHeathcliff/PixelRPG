@@ -1,9 +1,9 @@
-﻿using System.Text;
-using QFramework;
+﻿using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
-namespace Character
+namespace Character.Stat
 {
     public class PlayerStatsUIController : MonoBehaviour, IController
     {
@@ -11,18 +11,18 @@ namespace Character
         
         PlayerModel _playerModel;
 
-        void UpdateAttributesInfo()
+        // TODO: 优化属性更新方式，不再一次性更新所有
+        void UpdateStatsInfo()
         {
             var info = new StringBuilder();
-            foreach (var attribute in _playerModel.PlayerStats.GetAllStats())
+            foreach (var stat in _playerModel.PlayerStats.GetAllStats())
             {
-                info.Append($"{attribute.Name}: {(int)attribute.Value}\n");
-                info.Append($"  {attribute.Name}基础值: {(int)attribute.BaseValue}\n");
-                info.Append($"  {attribute.Name}附加值: {(int)attribute.AddedValue}\n");
-                info.Append($"  {attribute.Name}固定值: {(int)attribute.FixedValue}\n");
-                info.Append($"  {attribute.Name}提高: {(int)attribute.Increase}%\n");
-                info.Append($"  {attribute.Name}总增: {attribute.More}\n");
-                info.Append($"  {attribute.Name}总增: {(int)((attribute.More-1)*100)}%\n");
+                info.Append($"{stat.Name}: {(int)stat.Value}\n");
+                info.Append($"  {stat.Name}基础值: {(int)stat.BaseValue}\n");
+                info.Append($"  {stat.Name}附加值: {(int)stat.AddedValue}\n");
+                info.Append($"  {stat.Name}固定值: {(int)stat.FixedValue}\n");
+                info.Append($"  {stat.Name}提高: {(int)stat.Increase}%\n");
+                info.Append($"  {stat.Name}总增: {(int)((stat.More-1)*100)}%\n");
             }
             
             _text.text = info.ToString();
@@ -31,11 +31,11 @@ namespace Character
         void OnEnable()
         {
             _playerModel = this.GetModel<PlayerModel>();
-            foreach (var attribute in _playerModel.PlayerStats.GetAllStats())
+            foreach (var stat in _playerModel.PlayerStats.GetAllStats())
             {
-                attribute.Register(UpdateAttributesInfo);
+                stat.Register(UpdateStatsInfo);
             }
-            UpdateAttributesInfo();
+            UpdateStatsInfo();
         }
 
         void OnValidate()

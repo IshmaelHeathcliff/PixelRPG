@@ -1,4 +1,5 @@
 ﻿using System;
+using Character.Stat;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 

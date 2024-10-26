@@ -1,57 +1,60 @@
 using UnityEngine;
 
-public abstract class MonoSingleton<T> : MonoBehaviour where T: MonoSingleton<T>
+namespace Core
 {
-    protected static T _instance;
-
-    public static T Instance
+    public abstract class MonoSingleton<T> : MonoBehaviour where T: MonoSingleton<T>
     {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<T>();
-            }
+        protected static T _instance;
 
-            if (_instance == null)
+        public static T Instance
+        {
+            get
             {
-                _instance = Create();
-            }
+                if (_instance == null)
+                {
+                    _instance = FindFirstObjectByType<T>();
+                }
+
+                if (_instance == null)
+                {
+                    _instance = Create();
+                }
             
-            return _instance;
+                return _instance;
+            }
         }
-    }
     
-    protected static bool Quitting;
+        protected static bool Quitting;
 
-    protected static T Create()
-    {
-        var obj = new GameObject(typeof(T).ToString());
-        // DontDestroyOnLoad(obj);
-        return obj.AddComponent<T>();
-    }
+        protected static T Create()
+        {
+            var obj = new GameObject(typeof(T).ToString());
+            // DontDestroyOnLoad(obj);
+            return obj.AddComponent<T>();
+        }
 
-    protected virtual void Awake()
-    {
-        if (_instance == null)
+        protected virtual void Awake()
         {
-            _instance = (T)this;
-        }
+            if (_instance == null)
+            {
+                _instance = (T)this;
+            }
         
-        if(_instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+            if(_instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
         
-        DontDestroyOnLoad(gameObject);
-    }
+            DontDestroyOnLoad(gameObject);
+        }
     
-    protected void OnDestroy()
-    {
-        if (_instance == this)
+        protected void OnDestroy()
         {
-            Quitting = true;
+            if (_instance == this)
+            {
+                Quitting = true;
+            }
         }
     }
 }

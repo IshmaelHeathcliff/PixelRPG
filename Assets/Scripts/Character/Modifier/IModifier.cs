@@ -53,7 +53,7 @@ namespace Character.Modifier
     
     public abstract class Modifier<T> : Modifier
     {
-        [JsonProperty] protected T Value;
+        [JsonProperty] public T Value;
     }
 
     public abstract class Modifier<T1, T2> : Modifier<T1>

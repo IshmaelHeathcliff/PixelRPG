@@ -1,11 +1,10 @@
-using QFramework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Character
 {
     [RequireComponent( typeof(Animator), typeof(Rigidbody2D))]
-    public class PlayerController : MonoBehaviour, IController
+    public class PlayerMoveController : MonoBehaviour, IController
     {
         [SerializeField] float _speed = 10;
         [SerializeField] float _acceleration = 10;

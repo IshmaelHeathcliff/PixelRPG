@@ -1,5 +1,3 @@
-using QFramework;
-
 public class InputSystem : AbstractSystem
 {
     PlayerInput _input;

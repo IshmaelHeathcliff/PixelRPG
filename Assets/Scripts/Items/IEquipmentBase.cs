@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using QFramework.Tool;
 using Sirenix.OdinInspector;
+using Tool;
 
 namespace Items
 {

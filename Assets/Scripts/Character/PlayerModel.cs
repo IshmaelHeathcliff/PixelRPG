@@ -1,27 +1,29 @@
-﻿using Character;
-using Character.Buff;
-using QFramework;
+﻿using Character.Buff;
+using Character.Stat;
 using UnityEngine;
 
-public class PlayerModel : AbstractModel
+namespace Character
 {
-    public Transform PlayerTransform;
+    public class PlayerModel : AbstractModel
+    {
+        public Transform PlayerTransform;
 
-    public void SetPosition(Vector3 position)
-    {
-        PlayerTransform.position = position;
-    }
+        public void SetPosition(Vector3 position)
+        {
+            PlayerTransform.position = position;
+        }
  
-    public Stats PlayerStats { get; } = new Stats();
-    public IBuffContainer PlayerBuff { get; } = new BuffContainer();
-    protected override void OnInit()
-    {
+        public Stats PlayerStats { get; } = new Stats();
+        public IBuffContainer PlayerBuff { get; } = new BuffContainer();
+        protected override void OnInit()
+        {
+        }
     }
-}
-public class PlayerPositionQuery : AbstractQuery<Vector3>
-{
-    protected override Vector3 OnDo()
+    public class PlayerPositionQuery : AbstractQuery<Vector3>
     {
-        return this.GetModel<PlayerModel>().PlayerTransform.position;
+        protected override Vector3 OnDo()
+        {
+            return this.GetModel<PlayerModel>().PlayerTransform.position;
+        }
     }
 }

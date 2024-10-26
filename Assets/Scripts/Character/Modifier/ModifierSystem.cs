@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using QFramework;
+using Character.Stat;
 using SaveLoad;
 using UnityEngine;
 

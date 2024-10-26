@@ -1,6 +1,4 @@
-﻿using QFramework;
-
-namespace Items
+﻿namespace Items
 {
     public class PackageController : InventoryController
     {
