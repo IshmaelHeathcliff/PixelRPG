@@ -1,3 +1,5 @@
+using System;
+using Character.Damage;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,13 +10,15 @@ namespace Character
     {
         [SerializeField] float _speed = 10;
         [SerializeField] float _acceleration = 10;
-        
+        [SerializeField] PlayerAttacker _playerAttacker;
+
         bool _isMoving;
         Vector2 _direction;
         Rigidbody2D _rigidbody;
         Animator _animator;
         PlayerInput.PlayerActions _playerInput;
-        
+
+
         static readonly int Walking = Animator.StringToHash("Walking");
         static readonly int Y = Animator.StringToHash("Y");
         static readonly int X = Animator.StringToHash("X");
@@ -55,6 +59,7 @@ namespace Character
                 _animator.SetFloat(X, _direction.x);
                 _animator.SetFloat(Y, _direction.y);
                 _animator.SetBool(Walking, true);
+                _playerAttacker.Face(_direction);
                 _isMoving = true;
             }
 
@@ -75,6 +80,11 @@ namespace Character
         {
             _playerInput.Move.performed -= MoveAction;
             _playerInput.Move.canceled -= MoveAction;
+        }
+
+        void OnValidate()
+        {
+            _playerAttacker = GetComponentInChildren<PlayerAttacker>();
         }
 
         void Awake()

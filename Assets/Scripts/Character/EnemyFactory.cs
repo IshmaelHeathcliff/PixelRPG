@@ -1,11 +1,12 @@
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Character
 {
     public class EnemyFactory : MonoBehaviour
     {
-        GameObject _enemyPrefab;
+        [SerializeField] GameObject _enemyPrefab;
 
         [SerializeField] int _maxCount;
         [SerializeField] float _generateGap;
@@ -15,18 +16,19 @@ namespace Character
             Instantiate(_enemyPrefab, transform);
         }
 
-        IEnumerator ProduceEnemies()
+        async UniTask ProduceEnemies()
         {
             while (transform.childCount < _maxCount)
             {
                 CreateEnemy();
-                yield return new WaitForSeconds(_generateGap);
+                await UniTask.Delay((int)(_generateGap * 1000)); // ms
             }
         }
 
-        void Start()
+        async void Start()
         {
-            StartCoroutine(ProduceEnemies());
+            // _enemyPrefab = await AddressablesManager.LoadAsset<GameObject>("Enemy101");
+            await ProduceEnemies();
         }
     }
 }

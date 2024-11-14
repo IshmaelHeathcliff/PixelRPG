@@ -8,9 +8,9 @@ namespace Character
     public class PlayerCharacterController : MonoBehaviour, IController
     {
         [SerializeField] string _modifierFactoryID = "player";
-        [FormerlySerializedAs("_playerController")]
         [SerializeField] PlayerMoveController _playerMoveController;
         [SerializeField] PlayerAttacker _playerAttacker;
+        [SerializeField] PlayerDamageable _playerDamageable;
 
         PlayerModel _model;
 
@@ -18,6 +18,7 @@ namespace Character
         {
             _playerMoveController = GetComponentInChildren<PlayerMoveController>();
             _playerAttacker = GetComponentInChildren<PlayerAttacker>();
+            _playerDamageable = GetComponentInChildren<PlayerDamageable>();
         }
 
         protected void Awake()

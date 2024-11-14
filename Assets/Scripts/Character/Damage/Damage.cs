@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Character.Damage
 {
@@ -11,7 +12,7 @@ namespace Character.Damage
         Chaos
     }
     
-    public class Damage
+    public abstract class Damage
     {
         public List<string> Keywords { get; set; }
         public IAttacker Attacker { get; set; }
@@ -22,6 +23,12 @@ namespace Character.Damage
         protected float AddedMultiplier;
 
         protected DamageCalculator DamageCalculator;
+
+        public virtual void Apply()
+        {
+            float damage = DamageCalculator.Calculate();
+            Damageable.TakeDamage(damage);
+        }
 
         protected Damage(IAttacker attacker, IDamageable damageable, List<string> keywords, DamageType type, float baseDamage, float addedMultiplier)
         {
@@ -38,6 +45,48 @@ namespace Character.Damage
     public class AttackDamage : Damage
     {
         float _baseMultiplier;
+
+        public override void Apply()
+        {
+            if (!IsHit())
+            {
+                return;
+            }
+
+            float damage = DamageCalculator.Calculate();
+
+            if (IsCritical())
+            {
+                float criticalMultiplier = Attacker.CriticalMultiplier.Value;
+                damage *= criticalMultiplier / 100f;
+            }
+
+            Damageable.TakeDamage(damage);
+        }
+
+        bool IsCritical()
+        {
+            float critical = Attacker.CriticalChance.Value;
+
+            switch (critical)
+            {
+                case < 0:
+                    Debug.LogError("Critical chance cannot be negative");
+                    return false;
+                case >= 100f:
+                    return true;
+                default:
+                    return Random.Range(0f, 1f) < critical/100f;
+            }
+        }
+
+        bool IsHit()
+        {
+            float accuracy = Attacker.Accuracy.Value;
+            float evasion = Damageable.Evasion.Value;
+            float chance = accuracy / (accuracy + 0.2f * evasion);
+            return Random.Range(0f, 1f) < chance;
+        }
 
         public AttackDamage(IAttacker attacker, IDamageable damageable, List<string> keywords, DamageType type, float baseDamage, float addedMultiplier, float baseMultiplier) : base(attacker, damageable, keywords, type, baseDamage, addedMultiplier)
         {

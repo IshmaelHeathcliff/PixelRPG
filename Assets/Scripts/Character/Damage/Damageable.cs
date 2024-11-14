@@ -28,9 +28,15 @@ namespace Character.Damage
         public IStat LightningResistance { get; }
         public IStat ColdResistance { get; }
         public IStat ChaosResistance { get; }
-        public void TakeDamage(float damage)
+        public virtual void TakeDamage(float damage)
         {
-            throw new System.NotImplementedException();
+            Health.ChangeCurrentValue(-damage);
+            OnHurt.Trigger();
+
+            if (Health.Value <= 0)
+            {
+                OnDeath.Trigger();
+            }
         }
     }
 }
