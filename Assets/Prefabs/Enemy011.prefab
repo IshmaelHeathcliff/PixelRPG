@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5127406793987639472}
   - component: {fileID: 1010290526563039376}
   - component: {fileID: 7640364434506254027}
+  - component: {fileID: 4845172182476740846}
   m_Layer: 6
   m_Name: Enemy011
   m_TagString: Enemy
@@ -193,6 +194,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 2
   _detectRadius: 6
+  _lostRadius: 8
+  _freezeTime: 1
 --- !u!114 &1010290526563039376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,5 +218,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41b7e17aedd74612aef7a158f38709ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4845172182476740846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911632385849321556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dd92c5427564ae4a9a70ec279174df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

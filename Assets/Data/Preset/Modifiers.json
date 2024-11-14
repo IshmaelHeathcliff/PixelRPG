@@ -26,7 +26,7 @@
           }
         ]
       },
-      "ModifierID": "1",
+      "ModifierID": "health_base",
       "Name": "生命基础值",
       "PositiveDescription": "增加{0}基础值{1}点",
       "NegativeDescription": "减少{0}基础值{1}点",
@@ -62,7 +62,7 @@
           }
         ]
       },
-      "ModifierID": "2",
+      "ModifierID": "health_increase",
       "Name": "生命值提高",
       "PositiveDescription": "{0}提高{1}%",
       "NegativeDescription": "{0}降低{1}%",
@@ -98,7 +98,7 @@
           }
         ]
       },
-      "ModifierID": "3",
+      "ModifierID": "health_more",
       "Name": "生命值总增",
       "PositiveDescription": "{0}总增{1}%",
       "NegativeDescription": "{0}总降{1}%",
@@ -134,7 +134,7 @@
           }
         ]
       },
-      "ModifierID": "4",
+      "ModifierID": "mana_base",
       "Name": "魔力基础值",
       "PositiveDescription": "增加{0}基础值{1}点",
       "NegativeDescription": "减少{0}基础值{1}点",
@@ -142,6 +142,78 @@
         "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
         "$values": [
           "Mana"
+        ]
+      }
+    },
+    {
+      "$type": "Character.Modifier.StatModifierInfo, Assembly-CSharp",
+      "StatName": "Accuracy",
+      "StatModifierType": 0,
+      "MaxLevel": 3,
+      "LevelRanges": {
+        "$type": "Character.Modifier.LevelRange[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "Character.Modifier.LevelRange, Assembly-CSharp",
+            "Min": 1,
+            "Max": 20
+          },
+          {
+            "$type": "Character.Modifier.LevelRange, Assembly-CSharp",
+            "Min": 21,
+            "Max": 40
+          },
+          {
+            "$type": "Character.Modifier.LevelRange, Assembly-CSharp",
+            "Min": 41,
+            "Max": 60
+          }
+        ]
+      },
+      "ModifierID": "accuracy_base",
+      "Name": "命中基础值",
+      "PositiveDescription": "增加{0}基础值{1}点",
+      "NegativeDescription": "减少{0}基础值{1}点",
+      "Keywords": {
+        "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+        "$values": [
+          "Accuracy"
+        ]
+      }
+    },
+    {
+      "$type": "Character.Modifier.StatModifierInfo, Assembly-CSharp",
+      "StatName": "CriticalChance",
+      "StatModifierType": 0,
+      "MaxLevel": 3,
+      "LevelRanges": {
+        "$type": "Character.Modifier.LevelRange[], Assembly-CSharp",
+        "$values": [
+          {
+            "$type": "Character.Modifier.LevelRange, Assembly-CSharp",
+            "Min": 1,
+            "Max": 20
+          },
+          {
+            "$type": "Character.Modifier.LevelRange, Assembly-CSharp",
+            "Min": 21,
+            "Max": 40
+          },
+          {
+            "$type": "Character.Modifier.LevelRange, Assembly-CSharp",
+            "Min": 41,
+            "Max": 60
+          }
+        ]
+      },
+      "ModifierID": "critical_chance_base",
+      "Name": "暴击率基础值",
+      "PositiveDescription": "增加{0}基础值{1}点",
+      "NegativeDescription": "减少{0}基础值{1}点",
+      "Keywords": {
+        "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+        "$values": [
+          "Critical"
         ]
       }
     }

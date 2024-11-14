@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace Character
 {
-    public class PlayerCharacterController : MonoBehaviour, IController
+    public class PlayerController : MonoBehaviour, IController
     {
         [SerializeField] string _modifierFactoryID = "player";
         [SerializeField] PlayerMoveController _playerMoveController;

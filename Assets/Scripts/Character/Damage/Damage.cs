@@ -48,8 +48,11 @@ namespace Character.Damage
 
         public override void Apply()
         {
+            Debug.Log("Damage Applied");
+            
             if (!IsHit())
             {
+                Debug.Log("Damage Not Hit");
                 return;
             }
 
@@ -57,6 +60,7 @@ namespace Character.Damage
 
             if (IsCritical())
             {
+                Debug.Log("Damage Critical");
                 float criticalMultiplier = Attacker.CriticalMultiplier.Value;
                 damage *= criticalMultiplier / 100f;
             }

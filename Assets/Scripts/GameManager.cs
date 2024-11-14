@@ -55,10 +55,12 @@ public class GameManager : MonoBehaviour, IController
     
     void Start()
     {
-        var healthModifier = _modifierSystem.CreateStatModifier("1", "player", 100);
-        var manaModifier = _modifierSystem.CreateStatModifier("4", "player", 100);
+        var healthModifier = _modifierSystem.CreateStatModifier("health_base", "player", 100);
+        var manaModifier = _modifierSystem.CreateStatModifier("mana_base", "player", 100);
+        var accuracyModifier = _modifierSystem.CreateStatModifier("accuracy_base", "player", 100);
         healthModifier.Register();
         manaModifier.Register();
+        accuracyModifier.Register();
         _playerModel.PlayerStats.Health.SetMaxValue();
         _playerModel.PlayerStats.Mana.SetMaxValue();
     }

@@ -27,7 +27,7 @@ MonoBehaviour:
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 6
     - Name: 
       Entry: 7
       Data: 1|Character.Modifier.StatModifierInfo, Assembly-CSharp
@@ -49,6 +49,18 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 4|Character.Modifier.StatModifierInfo, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|Character.Modifier.StatModifierInfo, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|Character.Modifier.StatModifierInfo, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

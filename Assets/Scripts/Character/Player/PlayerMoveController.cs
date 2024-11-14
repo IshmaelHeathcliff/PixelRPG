@@ -10,14 +10,14 @@ namespace Character
     {
         [SerializeField] float _speed = 10;
         [SerializeField] float _acceleration = 10;
-        [SerializeField] PlayerAttacker _playerAttacker;
 
         bool _isMoving;
-        Vector2 _direction;
         Rigidbody2D _rigidbody;
         Animator _animator;
+        PlayerModel _model;
         PlayerInput.PlayerActions _playerInput;
 
+        Vector2 Direction => _model.Direction;
 
         static readonly int Walking = Animator.StringToHash("Walking");
         static readonly int Y = Animator.StringToHash("Y");
@@ -27,14 +27,14 @@ namespace Character
         {
             if (_isMoving)
             {
-                if ((_rigidbody.linearVelocity - _direction * _speed).sqrMagnitude > 0.01f)
+                if ((_rigidbody.linearVelocity - Direction * _speed).sqrMagnitude > 0.01f)
                 {
-                    _rigidbody.linearVelocity = Vector2.Lerp(_rigidbody.linearVelocity, _direction * _speed,
+                    _rigidbody.linearVelocity = Vector2.Lerp(_rigidbody.linearVelocity, Direction * _speed,
                         Time.fixedDeltaTime * _acceleration);
                 }
                 else
                 {
-                    _rigidbody.linearVelocity = _direction * _speed;
+                    _rigidbody.linearVelocity = Direction * _speed;
                 }
             }
             else
@@ -53,13 +53,12 @@ namespace Character
 
         public void MoveAction(InputAction.CallbackContext context)
         {
-            _direction = context.ReadValue<Vector2>().normalized;
             if (context.performed)
             {
-                _animator.SetFloat(X, _direction.x);
-                _animator.SetFloat(Y, _direction.y);
+                _model.Direction = context.ReadValue<Vector2>().normalized;
+                _animator.SetFloat(X, Direction.x);
+                _animator.SetFloat(Y, Direction.y);
                 _animator.SetBool(Walking, true);
-                _playerAttacker.Face(_direction);
                 _isMoving = true;
             }
 
@@ -84,14 +83,14 @@ namespace Character
 
         void OnValidate()
         {
-            _playerAttacker = GetComponentInChildren<PlayerAttacker>();
         }
 
         void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
-            this.GetModel<PlayerModel>().PlayerTransform = transform;
+            _model = this.GetModel<PlayerModel>();
+            _model.BindTransform(transform);
         }
 
         void OnEnable()
