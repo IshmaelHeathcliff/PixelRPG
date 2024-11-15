@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Character.Stat;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -110,6 +111,9 @@ namespace Character.Damage
             _collider.enabled = true;
             _canAttack = false;
             Face(_model.Direction);
+            transform.DOLocalMove(transform.right * (1 + _animationSpeed), _animationTime/2)
+                .SetEase(Ease.Linear)
+                .SetLoops(2, LoopType.Yoyo);
             await UniTask.Delay((int)(_animationTime*1000));
             _renderer.enabled = false;
             _collider.enabled = false;

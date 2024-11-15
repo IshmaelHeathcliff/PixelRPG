@@ -139,6 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 1
   _animationTime: 1
+  _animationSpeed: 0
   _collider: {fileID: 41436205575599886}
   _renderer: {fileID: 2791473101608371746}
 --- !u!61 &41436205575599886
@@ -452,4 +453,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _acceleration: 10
-  _playerAttacker: {fileID: 1210222412640216350}
