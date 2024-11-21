@@ -31,7 +31,7 @@ namespace Character.Damage
         public virtual void TakeDamage(float damage)
         {
             Health.ChangeCurrentValue(-damage);
-            Debug.Log("Left Health:" + Health.CurrentValue);
+            // Debug.Log("Left Health:" + Health.CurrentValue);
             OnHurt.Trigger();
 
             if (Health.CurrentValue<= 0)

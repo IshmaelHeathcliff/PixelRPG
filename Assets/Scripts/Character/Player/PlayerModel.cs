@@ -8,8 +8,10 @@ namespace Character
     {
         Transform _playerTransform;
 
-        public Vector3 Position => _playerTransform.position;
+        public bool IsDetectable{ get; set; } = true;
+        public bool IsAttackable { get; set; } = true;
 
+        public Vector3 Position => _playerTransform.position;
         public Vector2 Direction { get; set; }
 
         public Stats PlayerStats { get; } = new Stats();
@@ -29,21 +31,6 @@ namespace Character
         
         protected override void OnInit()
         {
-        }
-    }
-    public class PlayerPositionQuery : AbstractQuery<Vector3>
-    {
-        protected override Vector3 OnDo()
-        {
-            return this.GetModel<PlayerModel>().Position;
-        }
-    }
-    
-    public class PlayerDirectionQuery : AbstractQuery<Vector2>
-    {
-        protected override Vector2 OnDo()
-        {
-            return this.GetModel<PlayerModel>().Direction;
         }
     }
 }

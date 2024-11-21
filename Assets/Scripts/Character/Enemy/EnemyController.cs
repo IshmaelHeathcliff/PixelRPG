@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace Character.Enemy
 {
-    [RequireComponent(typeof(EnemyAttacker), typeof(EnemyMoveController), typeof(EnemyDamageable))]
+    [RequireComponent(typeof(EnemyMoveController))]
     public class EnemyController: MonoBehaviour, IController
     {
         [ShowInInspector] readonly string _modifierFactoryID = "enemy" + Guid.NewGuid();
@@ -55,7 +55,9 @@ namespace Character.Enemy
         void SetStats()
         {
             var healthModifier = _modifierSystem.CreateStatModifier("health_base", _modifierFactoryID, 100);
+            var accuracyModifier = _modifierSystem.CreateStatModifier("accuracy_base", _modifierFactoryID, 100);
             healthModifier.Register();
+            accuracyModifier.Register();
             EnemyStats.Health.SetMaxValue();
         }
 

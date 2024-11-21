@@ -23,6 +23,11 @@ namespace Character
         static readonly int Y = Animator.StringToHash("Y");
         static readonly int X = Animator.StringToHash("X");
 
+        void Hurt()
+        {
+            
+        }
+
         void Move()
         {
             if (_isMoving)
@@ -30,7 +35,7 @@ namespace Character
                 if ((_rigidbody.linearVelocity - Direction * _speed).sqrMagnitude > 0.01f)
                 {
                     _rigidbody.linearVelocity = Vector2.Lerp(_rigidbody.linearVelocity, Direction * _speed,
-                        Time.fixedDeltaTime * _acceleration);
+                    Time.fixedDeltaTime * _acceleration);
                 }
                 else
                 {

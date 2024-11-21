@@ -11,59 +11,53 @@ namespace Character.Damage
 {
     public class PlayerAttacker: Attacker, IController
     {
-        [SerializeField] float _radius;
 	    [SerializeField] float _animationTime;
 	    [SerializeField] float _animationSpeed;
 
-        [SerializeField][HideInInspector] Collider2D _collider;
-        [SerializeField][HideInInspector] SpriteRenderer _renderer;
+        Collider2D _collider;
+        SpriteRenderer _renderer;
 
         PlayerModel _model;
-        // readonly List<Collider2D> _triggers = new List<Collider2D>();
-        PlayerInput.PlayerActions _playerInput;
-        bool _canAttack = true;
 
-        void RegisterActions()
+        void Awake()
         {
-            _playerInput.Attack.performed += AttackAction;
-
-        }
-
-        void UnregisterActions()
-        {
-            _playerInput.Attack.performed -= AttackAction;
+            _collider = GetComponent<Collider2D>();
+            _renderer = GetComponent<SpriteRenderer>();
         }
 
         void OnEnable()
         {
-            _playerInput = this.GetSystem<InputSystem>().PlayerActionMap;
-            RegisterActions();
             _model = this.GetModel<PlayerModel>();
         }
 
         void OnDisable()
         {
-            UnregisterActions();
         }
 
-        void Start()
+        async void Start()
         {
-            Damage = _model.PlayerStats.Damage as IKeywordStat;
-            CriticalChance = _model.PlayerStats.CriticalChance;
-            CriticalMultiplier = _model.PlayerStats.CriticalMultiplier;
-            Accuracy = _model.PlayerStats.Accuracy;
-            FireResistanceDecrease = _model.PlayerStats.FireResistanceDecrease;
-            ColdResistanceDecrease = _model.PlayerStats.ColdResistanceDecrease;
-            LightningResistanceDecrease = _model.PlayerStats.LightningResistanceDecrease;
-            ChaosResistanceDecrease = _model.PlayerStats.ChaosResistanceDecrease;
-            FireResistancePenetrate = _model.PlayerStats.FireResistancePenetrate;
-            ColdResistancePenetrate = _model.PlayerStats.ColdResistancePenetrate;
-            LightningResistancePenetrate = _model.PlayerStats.LightningResistancePenetrate;
-            ChaosResistancePenetrate = _model.PlayerStats.ChaosResistancePenetrate;
+            var stats = _model.PlayerStats;
+            Damage = stats.Damage as IKeywordStat;
+            CriticalChance = stats.CriticalChance;
+            CriticalMultiplier = stats.CriticalMultiplier;
+            Accuracy = stats.Accuracy;
+            FireResistanceDecrease = stats.FireResistanceDecrease;
+            ColdResistanceDecrease = stats.ColdResistanceDecrease;
+            LightningResistanceDecrease = stats.LightningResistanceDecrease;
+            ChaosResistanceDecrease = stats.ChaosResistanceDecrease;
+            FireResistancePenetrate = stats.FireResistancePenetrate;
+            ColdResistancePenetrate = stats.ColdResistancePenetrate;
+            LightningResistancePenetrate = stats.LightningResistancePenetrate;
+            ChaosResistancePenetrate = stats.ChaosResistancePenetrate;
 
-            // _triggers.Clear();
-            _renderer.enabled = false;
-            _collider.enabled = false;
+            try
+            {
+                await Attack();
+            }
+            catch (OperationCanceledException)
+            {
+                
+            }
         }
 
         public IArchitecture GetArchitecture()
@@ -73,51 +67,43 @@ namespace Character.Damage
 
         void OnValidate()
         {
-            _collider = GetComponent<Collider2D>();
-            _renderer = GetComponent<SpriteRenderer>();
+
         }
 
         void OnTriggerEnter2D(Collider2D other)
         {
+            var damageable = other.GetComponent<Damageable>();
+
+            if (damageable == null || damageable.CompareTag("Player"))
+            {
+                return;
+            }
+            
             var keywords = new List<string>()
             {
                 "Damage", "Attack", "Physical",
             };
 
 
-            var damageable = other.GetComponent<Damageable>();
             var damage = new AttackDamage(this, damageable, keywords, DamageType.Physical, 10, 1, 1);
             damage.Apply();
         }
 
-        void Face(Vector2 direction)
+        protected override async UniTask Play()
         {
-            transform.localPosition= direction * _radius;
-            // transform.localRotation = Quaternion.Euler(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-            transform.right = direction;
+            var leftTime = _animationTime;
+            while (leftTime > 0)
+            {
+                transform.Translate(Vector3.right * (1+_animationSpeed) * Time.fixedDeltaTime);
+                leftTime -= Time.fixedDeltaTime;
+                await UniTask.WaitForFixedUpdate(this.GetCancellationTokenOnDestroy());
+            }
         }
 
-        void MoveForward()
+        protected override async UniTask Attack()
         {
-            transform.Translate(Vector2.right * _animationSpeed * Time.deltaTime);
-        }
-
-
-        async void AttackAction(InputAction.CallbackContext context)
-        {
-            if (!_canAttack) return;
-
-            _renderer.enabled = true;
-            _collider.enabled = true;
-            _canAttack = false;
-            Face(_model.Direction);
-            transform.DOLocalMove(transform.right * (1 + _animationSpeed), _animationTime/2)
-                .SetEase(Ease.Linear)
-                .SetLoops(2, LoopType.Yoyo);
-            await UniTask.Delay((int)(_animationTime*1000));
-            _renderer.enabled = false;
-            _collider.enabled = false;
-            _canAttack = true;
+            await base.Attack();
+            Destroy(gameObject);
         }
     }
 }

@@ -22,8 +22,12 @@ namespace Character
         bool _isFrozen;
         bool _isDisabled;
 
+        public bool IsAttacking { get; set; }
+
+
         static readonly int X = Animator.StringToHash("X");
         static readonly int Y = Animator.StringToHash("Y");
+        static readonly int Walking = Animator.StringToHash("Walking");
 
         void Face(Vector2 direction)
         {
@@ -39,7 +43,6 @@ namespace Character
             _isFrozen = false;
         }
 
-
         static Vector2 RandomDirection()
         {
             float x = Random.Range(-1f, 1f);
@@ -47,7 +50,7 @@ namespace Character
             return new Vector2(x, y);
         }
 
-        async void ChangeDirection()
+        async UniTask ChangeDirection()
         {
             while (true)
             {
@@ -62,21 +65,26 @@ namespace Character
                 {
                     continue;
                 }
-                else
-                {
-                    Face(RandomDirection());
-                }
+
+                Face(RandomDirection());
             }
         }
 
         void Move()
         {
+            if (IsAttacking)
+            {
+                return;
+            }
+            
             if (_isFrozen)
             {
+                _animator.SetBool(Walking, false);
                 _rigidbody.linearVelocity = Vector2.zero;
                 return;
             }
             
+            _animator.SetBool(Walking, true);
             if (_isPlayerFound)
             {
                 Face(((Vector2) (this.SendQuery(new PlayerPositionQuery()) - transform.position)).normalized);
@@ -92,7 +100,8 @@ namespace Character
             {
                 _isPlayerFound = true;
             }
-            else if(Vector2.Distance(playerPos, transform.position) > _lostRadius)
+            
+            if(Vector2.Distance(playerPos, transform.position) > _lostRadius)
             {
                 _isPlayerFound = false;
             }
@@ -118,13 +127,13 @@ namespace Character
             Move();
         }
 
-        void OnEnable()
+        async void OnEnable()
         {
             _animator = GetComponent<Animator>();
             _rigidbody = GetComponent<Rigidbody2D>();
             
             _isDisabled = false;
-            ChangeDirection();
+            await ChangeDirection();
         }
 
         void OnDisable()

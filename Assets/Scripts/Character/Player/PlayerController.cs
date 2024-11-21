@@ -8,11 +8,18 @@ namespace Character
     public class PlayerController : MonoBehaviour, IController
     {
         [SerializeField] string _modifierFactoryID = "player";
+        [SerializeField] Vector3 _initialPosition;
         [SerializeField] PlayerMoveController _playerMoveController;
         [SerializeField] PlayerAttacker _playerAttacker;
         [SerializeField] PlayerDamageable _playerDamageable;
 
         PlayerModel _model;
+
+        public void Respawn()
+        {
+            transform.position = _initialPosition;
+            _model.PlayerStats.Health.SetMaxValue();
+        }
 
         void OnValidate()
         {

@@ -1,4 +1,5 @@
 ﻿using Character.Stat;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Character.Damage
@@ -18,7 +19,7 @@ namespace Character.Damage
         public IStat LightningResistancePenetrate { get; }
         public IStat ChaosResistancePenetrate { get; }
     }
-    public class Attacker : MonoBehaviour, IAttacker
+    public abstract class Attacker : MonoBehaviour, IAttacker
     {
         public IKeywordStat Damage { get; protected set; }
         public IStat CriticalChance { get; protected set; }
@@ -32,5 +33,11 @@ namespace Character.Damage
         public IStat ColdResistancePenetrate { get; protected set; }
         public IStat LightningResistancePenetrate { get; protected set; }
         public IStat ChaosResistancePenetrate { get; protected set; }
+
+        protected abstract UniTask Play();
+        protected virtual async UniTask Attack()
+        {
+            await Play();
+        }
     }
 }

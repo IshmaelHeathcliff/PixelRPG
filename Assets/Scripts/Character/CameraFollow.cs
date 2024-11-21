@@ -11,20 +11,18 @@ namespace Character
         [SerializeField] Transform _downBoundary;
 
         Camera _camera;
-        Transform _transform;
         Vector2 _cameraHalfSize;
 
         void Awake()
         {
             _camera = GetComponent<Camera>();
-            _transform = GetComponent<Transform>();
             _cameraHalfSize = new Vector2(_camera.orthographicSize * _camera.aspect, _camera.orthographicSize);
         }
 
         void MoveCamera()
         {
             var playerPosition = this.SendQuery(new PlayerPositionQuery());
-            var targetPosition = Vector3.Lerp(_transform.position, playerPosition, Time.deltaTime * _speed);
+            var targetPosition = Vector3.Lerp(transform.position, playerPosition, Time.fixedDeltaTime * _speed);
 
             if (targetPosition.x - _cameraHalfSize.x < _leftBoundary.position.x)
             {
@@ -46,15 +44,15 @@ namespace Character
                 targetPosition.y = _upBoundary.position.y - _cameraHalfSize.y;
             }
 
-            targetPosition.z = _transform.position.z;
-            _transform.position = targetPosition;
+            targetPosition.z = transform.position.z;
+            transform.position = targetPosition;
         }
 
         void Start()
         {
         }
 
-        void Update()
+        void FixedUpdate()
         {
             MoveCamera();
         }

@@ -1,22 +1,23 @@
 ﻿using System;
 using Character.Enemy;
+using UnityEngine;
 
 namespace Character.Damage
 {
     public class EnemyDamageable : Damageable
     {
-        EnemyController _enemyController;
+        [SerializeField] EnemyController _enemyController;
 
         void OnValidate()
         {
-            _enemyController = GetComponent<EnemyController>();
+            _enemyController = GetComponentInParent<EnemyController>();
         }
 
         void Awake()
         {
             if (_enemyController == null)
             {
-                _enemyController = GetComponent<EnemyController>();
+                _enemyController = GetComponentInParent<EnemyController>();
             }
 
             OnHurt = new EasyEvent();
@@ -35,8 +36,8 @@ namespace Character.Damage
             ColdResistance = stats.ColdResistance;
             ChaosResistance = stats.ChaosResistance;
 
-            OnHurt.Register(_enemyController.MoveController.Freeze);
-            OnDeath.Register(() => Destroy(gameObject));
+            OnHurt.Register(_enemyController.MoveController.Freeze).UnRegisterWhenDisabled(this);
+            OnDeath.Register(() => Destroy(gameObject)).UnRegisterWhenDisabled(this);
         }
     }
 }
