@@ -8,11 +8,11 @@ namespace Items
 {
     public interface IEquipment : IEquipmentBase
     {
-        public List<IModifier> Entries { get; set; }
-        public EquipmentBase.EquipmentRarity Rarity { get; set; }
-        public void Equip();
-        public void Takeoff();
-        public void Load();
+        List<IModifier> Entries { get; set; }
+        EquipmentBase.EquipmentRarity Rarity { get; set; }
+        void Equip();
+        void Takeoff();
+        void Load();
     }
     [Serializable]
     public class Equipment : EquipmentBase, IEquipment

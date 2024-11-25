@@ -40,17 +40,11 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Ground
+  - name: BackGround
     uniqueID: 3104351053
-    locked: 0
-  - name: UnderEntity
-    uniqueID: 3414631889
     locked: 0
   - name: Entity
     uniqueID: 3695264197
-    locked: 0
-  - name: OverEntity
-    uniqueID: 4280424989
     locked: 0
   - name: Default
     uniqueID: 0

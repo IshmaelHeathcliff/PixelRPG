@@ -100,8 +100,8 @@ namespace Items
 
         async void OnEnable()
         {
-            _itemUIHandle = AddressablesManager.LoadAssetAsync<GameObject>(_itemUIReference);
-            _currentItemUIHandle = AddressablesManager.LoadAssetAsync<GameObject>(_currentItemUIReference);
+            _itemUIHandle = Addressables.LoadAssetAsync<GameObject>(_itemUIReference);
+            _currentItemUIHandle = Addressables.LoadAssetAsync<GameObject>(_currentItemUIReference);
             
             for (var i = 0; i < _initialSize; i++)
             {

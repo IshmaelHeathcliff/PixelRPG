@@ -7,25 +7,23 @@ namespace Items
 {
     public interface IItem : ICloneable
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string IconName { get; set; }
-        public Vector2Int Size { get; set; }
-        public string GetDescription();
+        int ID { get; set; }
+        string Name { get; set; }
+        string IconName { get; set; }
+        Vector2Int Size { get; set; }
+        string GetDescription();
     }
     
     public interface IStackableItem : IItem
     {
-        public int Count { get; set; }
-        public int MaxCount { get; }
-        public int IncreaseCount(int count);
-        
+        int Count { get; set; }
+        int MaxCount { get; }
+        int IncreaseCount(int count);
     }
 
     public interface IConsumableItem : IItem
     {
-        public void Consume();
-
+        void Consume();
     }
     
     [Serializable]

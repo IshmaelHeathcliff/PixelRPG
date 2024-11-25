@@ -15,6 +15,7 @@ namespace Character.Player
         PlayerInput.PlayerActions _playerInput;
         PlayerModel _model;
         bool _canAttack = true;
+        
 
         void RegisterActions()
         {
@@ -45,8 +46,8 @@ namespace Character.Player
 
         void Face(Vector2 direction)
         {
-            transform.localPosition= direction * _distanceToPlayer;
-            transform.right = direction;
+            transform.localPosition= direction.normalized * _distanceToPlayer;
+            transform.right = direction.normalized;
         }
 
         async void AttackAction(InputAction.CallbackContext context)
@@ -57,7 +58,7 @@ namespace Character.Player
             }
             
             _canAttack = false;
-            Face(_model.Direction);
+            Face(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position);
             Instantiate(_playerAttacker, transform);
             transform.DetachChildren();
             await UniTask.Delay((int)(_attackInterval*1000));

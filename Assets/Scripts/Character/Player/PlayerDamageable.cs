@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Character.Damage
@@ -32,7 +33,16 @@ namespace Character.Damage
             ChaosResistance = stats.ChaosResistance;
 
             OnHurt.Register(() => { }).UnRegisterWhenDisabled(this);
-            OnDeath.Register( _playerController.Respawn).UnRegisterWhenDisabled(this);
+            OnDeath.Register(Dead).UnRegisterWhenDisabled(this);
+        }
+
+        async void Dead()
+        {
+            IsDamageable = false;
+            await UniTask.Delay((int)(1000 * 0.5f));
+            _playerController.Respawn();
+            await UniTask.Delay((int)(1000 * 0.5f));
+            IsDamageable = true;
         }
         
         

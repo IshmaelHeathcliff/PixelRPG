@@ -21,9 +21,9 @@ namespace Items
 
     public interface IEquipmentBase : IItem
     {
-        public EquipmentType Type { get; set; }
-        public Dictionary<string, int> ModifierPool { get; set; }
-        public string GetRandomModifierID();
+        EquipmentType Type { get; set; }
+        Dictionary<string, int> ModifierPool { get; set; }
+        string GetRandomModifierID();
     }
     
     [Serializable]

@@ -5,16 +5,17 @@ namespace Character.Damage
 {
     public interface IDamageable
     {
-        public EasyEvent OnHurt { get; }
-        public EasyEvent OnDeath { get; }
-        public IConsumableStat Health { get; }
-        public IStat Defence { get; }
-        public IStat Evasion { get; }
-        public IStat FireResistance { get; }
-        public IStat LightningResistance { get; }
-        public IStat ColdResistance { get; }
-        public IStat ChaosResistance { get; }
-        public void TakeDamage(float damage);
+        EasyEvent OnHurt { get; }
+        EasyEvent OnDeath { get; }
+        IConsumableStat Health { get; }
+        IStat Defence { get; }
+        IStat Evasion { get; }
+        IStat FireResistance { get; }
+        IStat LightningResistance { get; }
+        IStat ColdResistance { get; }
+        IStat ChaosResistance { get; }
+        bool IsDamageable { get; }
+        void TakeDamage(float damage);
 
     }
     public class Damageable : MonoBehaviour, IDamageable
@@ -28,8 +29,15 @@ namespace Character.Damage
         public IStat LightningResistance { get; protected set; }
         public IStat ColdResistance { get; protected set; }
         public IStat ChaosResistance { get; protected set; }
+        public bool IsDamageable { get; set; } = true;
+
         public virtual void TakeDamage(float damage)
         {
+            if (!IsDamageable)
+            {
+                return;
+            }
+            
             Health.ChangeCurrentValue(-damage);
             // Debug.Log("Left Health:" + Health.CurrentValue);
             OnHurt.Trigger();

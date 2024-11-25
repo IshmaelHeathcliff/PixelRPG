@@ -7,26 +7,26 @@ namespace Character.Buff
 {
     public interface IBuff
     {
-        public string GetName();
-        public string GetID();
-        public string GetDescription();
-        public string GetIconPath();
-        public void Enable();
-        public void Disable();
+        string GetName();
+        string GetID();
+        string GetDescription();
+        string GetIconPath();
+        void Enable();
+        void Disable();
     }
 
     public interface IBuffWithTime: IBuff
     {
-        public float Duration { get; set; }
-        public float TimeLeft { get;}
-        public void ResetTime();
-        public void DecreaseTime(float time);
+        float Duration { get; set; }
+        float TimeLeft { get;}
+        void ResetTime();
+        void DecreaseTime(float time);
     }
 
     public interface IBuffWithCount : IBuff
     {
-        public int Count { get; set; }
-        public int MaxCount { get; set; }
+        int Count { get; set; }
+        int MaxCount { get; set; }
     }
     
     [Serializable]

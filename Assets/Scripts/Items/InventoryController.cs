@@ -6,22 +6,22 @@ namespace Items
 {
     public interface IUIStatus
     {
-        public bool IsActive { get; }
-        public bool IsOpen { get; }
-        public void Close();
-        public void Open(Vector2Int pos);
-        public void Disable();
-        public void Enable(Vector2Int pos);
+        bool IsActive { get; }
+        bool IsOpen { get; }
+        void Close();
+        void Open(Vector2Int pos);
+        void Disable();
+        void Enable(Vector2Int pos);
         
     }
     public interface IInventoryController: IController, IUIStatus
     {
-        public void PickUp();
-        public void PutDown();
-        public IItem GetItem();
-        public bool AddItem(IItem item);
-        public void DeleteItem();
-        public void RemoveItem();
+        void PickUp();
+        void PutDown();
+        IItem GetItem();
+        bool AddItem(IItem item);
+        void DeleteItem();
+        void RemoveItem();
     }
     
     [Serializable]

@@ -5,16 +5,14 @@ namespace Core
 {
     public interface IObjectPool<T> where T: class
     {
-        public T Pop();
-        
-        public void Push(T obj);
+        T Pop();
+        void Push(T obj);
     }
     
     public interface IAsyncObjectPool<T> where T: class
     {
-        public UniTask<T> Pop();
-        
-        public void Push(T obj);
+        UniTask<T> Pop();
+        void Push(T obj);
     }
     
     public abstract class PoolSystem<T> : AbstractSystem, IObjectPool<T> where T: class

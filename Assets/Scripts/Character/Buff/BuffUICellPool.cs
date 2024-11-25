@@ -58,7 +58,7 @@ namespace Character.Buff
         
         async void OnEnable()
         {
-            _buffHandle = AddressablesManager.LoadAssetAsync<GameObject>(_buffUICellReference);
+            _buffHandle = Addressables.LoadAssetAsync<GameObject>(_buffUICellReference);
             
             for (var i = 0; i < _initialSize; i++)
             {

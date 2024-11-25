@@ -1,5 +1,7 @@
-﻿using TMPro;
+﻿using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
@@ -125,17 +127,13 @@ namespace Items
             Rect.localScale = Vector3.one;
         }
 
-        public void SetIcon(string icon)
+        public async void SetIcon(string icon)
         {
             AddressablesManager.Release(_iconHandle);
-            string iconPath = UIItemsName + $"{icon}";
-            _iconHandle = AddressablesManager.LoadAssetAsync<Sprite>(iconPath, handle =>
-            {
-                Icon.sprite = handle.Result;
-                // Addressables.Release(handle);
-            });
-            // var sprite = await AddressablesManager.LoadAssetWithName<Sprite>(iconPath);
-            // Icon.sprite = sprite;
+            var iconPath = UIItemsName + $"{icon}";
+            _iconHandle = Addressables.LoadAssetAsync<Sprite>(iconPath);
+            Icon.sprite = await _iconHandle;
+
         }
 
         public void SetCount(int count)
@@ -170,14 +168,11 @@ namespace Items
             Background.color = color;
         }
 
-        public void SetBg(string bg)
+        public async void SetBg(string bg)
         {
             AddressablesManager.Release(_bgHandle);
-            _bgHandle = AddressablesManager.LoadAssetAsync<Sprite>(bg, handle =>
-            {
-                Background.sprite = handle.Result;
-                // Addressables.Release(handle);
-            });
+            _bgHandle = Addressables.LoadAssetAsync<Sprite>(bg);
+            Background.sprite = await _bgHandle;
         }
 
         public void SetBg(Sprite sprite)

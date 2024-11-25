@@ -6,16 +6,16 @@ namespace Items
 {
     public interface IInventoryModel
     {
-        public Vector2Int Size { get; set; }
-        public bool AddItem(IItem item, Vector2Int itemPos);
-        public bool AddItem(IItem item);
-        public void RemoveItem(Vector2Int pos);
-        public void RemoveItem(IItem item);
-        public IItem GetItem(Vector2Int pos, out Vector2Int itemPos);
-        public bool PickUp(Vector2Int pos);
-        public bool PutDown(Vector2Int itemPos);
-        public bool CheckItemPos(Vector2Int pos);
-        public bool CheckPos(Vector2Int itemPos, Vector2Int itemSize);
+        Vector2Int Size { get; set; }
+        bool AddItem(IItem item, Vector2Int itemPos);
+        bool AddItem(IItem item);
+        void RemoveItem(Vector2Int pos);
+        void RemoveItem(IItem item);
+        IItem GetItem(Vector2Int pos, out Vector2Int itemPos);
+        bool PickUp(Vector2Int pos);
+        bool PutDown(Vector2Int itemPos);
+        bool CheckItemPos(Vector2Int pos);
+        bool CheckPos(Vector2Int itemPos, Vector2Int itemSize);
     }
     
     public abstract class InventoryModel : AbstractModel, ISaveData, IInventoryModel

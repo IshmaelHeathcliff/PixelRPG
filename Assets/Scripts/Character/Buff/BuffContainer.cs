@@ -6,17 +6,17 @@ namespace Character.Buff
 {
     public interface IBuffContainer
     {
-        public event Action<IBuff> OnBuffAdded;
-        public event Action<string> OnBuffRemoved;
-        public event Action<IBuffWithTime> OnBuffTimeChanged;
-        public event Action<IBuffWithCount> OnBuffCountChanged;
-        public void AddBuff(IBuff buff);
-        public void RemoveBuff(string id);
-        public void RemoveBuff(IBuff buff);
-        public bool HasBuff(string id);
-        public bool HasBuff(IBuff buff);
-        public void ResetBuffTime(float time);
-        public void DecreaseBuffTime(float time);
+        event Action<IBuff> OnBuffAdded;
+        event Action<string> OnBuffRemoved;
+        event Action<IBuffWithTime> OnBuffTimeChanged;
+        event Action<IBuffWithCount> OnBuffCountChanged;
+        void AddBuff(IBuff buff);
+        void RemoveBuff(string id);
+        void RemoveBuff(IBuff buff);
+        bool HasBuff(string id);
+        bool HasBuff(IBuff buff);
+        void ResetBuffTime(float time);
+        void DecreaseBuffTime(float time);
     }
     
     

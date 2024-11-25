@@ -21,9 +21,9 @@
       "Type": 4,
       "ModifierPool": {
         "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Int32, mscorlib]], mscorlib",
-        "1": 1,
-        "2": 1,
-        "3": 1
+        "health_base": 10,
+        "health_increase": 20,
+        "health_more": 30
       },
       "ID": 2,
       "Name": "大剑",

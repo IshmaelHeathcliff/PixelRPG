@@ -1,5 +1,7 @@
-﻿using TMPro;
+﻿using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
@@ -39,10 +41,11 @@ namespace Character.Buff
             _info.gameObject.SetActive(false);
         }
 
-        public void SetIcon(string iconPath)
+        public async void SetIcon(string iconPath)
         {
             AddressablesManager.Release(_iconHandle);
-            _iconHandle = AddressablesManager.LoadAssetAsync<Sprite>(iconPath, handle => _icon.sprite = handle.Result);
+            _iconHandle = Addressables.LoadAssetAsync<Sprite>(iconPath);
+            _icon.sprite = await _iconHandle;
         }
         
         public void InitBuffUICell(IBuff buff)

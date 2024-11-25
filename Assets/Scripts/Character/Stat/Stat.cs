@@ -7,23 +7,23 @@ namespace Character.Stat
 {
     public interface IStat : IReadonlyBindableProperty<float>
     {
-        public string Name { get; }
-        public float BaseValue { get; }
-        public float AddedValue { get; }
-        public float FixedValue { get; }
-        public float Increase { get; }
-        public float More { get; }
-        public float GetValue();
-        public void AddBaseValueModifier(string key, Modifier<int> mod);
-        public void AddAddedValueModifier(string key, Modifier<int> mod);
-        public void AddFixedValueModifier(string key, Modifier<int> mod);
-        public void AddIncreaseModifier(string key, Modifier<int> mod);
-        public void AddMoreModifier(string key, Modifier<int> mod);
-        public void RemoveBaseValueModifier(string key);
-        public void RemoveAddedValueModifier(string key);
-        public void RemoveFixedValueModifier(string key);
-        public void RemoveIncreaseModifier(string key);
-        public void RemoveMoreModifier(string key);
+        string Name { get; }
+        float BaseValue { get; }
+        float AddedValue { get; }
+        float FixedValue { get; }
+        float Increase { get; }
+        float More { get; }
+        float GetValue();
+        void AddBaseValueModifier(string key, Modifier<int> mod);
+        void AddAddedValueModifier(string key, Modifier<int> mod);
+        void AddFixedValueModifier(string key, Modifier<int> mod);
+        void AddIncreaseModifier(string key, Modifier<int> mod);
+        void AddMoreModifier(string key, Modifier<int> mod);
+        void RemoveBaseValueModifier(string key);
+        void RemoveAddedValueModifier(string key);
+        void RemoveFixedValueModifier(string key);
+        void RemoveIncreaseModifier(string key);
+        void RemoveMoreModifier(string key);
     }
     
     [Serializable]

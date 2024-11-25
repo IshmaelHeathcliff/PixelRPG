@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Character.Enemy;
 using Character.Stat;
+using Core;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -9,13 +10,16 @@ namespace Character.Damage
 {
     public class EnemyAttacker : Attacker, IController
     {
-        static readonly int Walking = Animator.StringToHash("Walking");
         [SerializeField] float _attackSpeed = 1f;
         [SerializeField] float _attackRadius = 1f;
-        [SerializeField] float _attackInterval = 1f;
-        EnemyController _enemyController;
+        
+        [SerializeField] EnemyController _enemyController;
+        
         Rigidbody2D _rigidbody;
         Animator _animator;
+        FSM<EnemyStateId> _fsm;
+        
+        static readonly int Walking = Animator.StringToHash("Walking");
 
         void OnValidate()
         {
@@ -29,6 +33,7 @@ namespace Character.Damage
                 _enemyController = GetComponent<EnemyController>();
             }
 
+            _fsm = _enemyController.FSM;
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
         }
@@ -52,32 +57,29 @@ namespace Character.Damage
 
         protected override async UniTask Play()
         {
-            _enemyController.MoveController.IsAttacking = true;
-            _animator.SetBool(Walking, false);
             var initialPosition = transform.position;
             var playerPosition = this.SendQuery(new PlayerPositionQuery());
             while (Vector2.Distance(playerPosition, transform.position) > 0.1f)
             {
                 _rigidbody.linearVelocity = (playerPosition - transform.position).normalized * _attackSpeed;
-                await UniTask.WaitForFixedUpdate();
+                await UniTask.WaitForFixedUpdate(this.GetCancellationTokenOnDestroy());
             }
             
                 
             while (Vector2.Distance(initialPosition, transform.position) > 0.1f)
             {
                 _rigidbody.MovePosition(Vector2.Lerp(transform.position, initialPosition, _attackSpeed * Time.fixedDeltaTime));
-                await UniTask.WaitForFixedUpdate();
+                await UniTask.WaitForFixedUpdate(this.GetCancellationTokenOnDestroy());
             }
             
             _rigidbody.MovePosition(initialPosition);
-            _animator.SetBool(Walking, true);
-            await UniTask.Delay((int)(1000*_attackInterval));
-            _enemyController.MoveController.IsAttacking = false;
+            // await UniTask.Delay((int)(1000*_attackInterval), false, PlayerLoopTiming.Update, this.GetCancellationTokenOnDestroy());
+            _fsm.ChangeState(EnemyStateId.Idle);
         }
 
-        async void CheckAttack()
+        void CheckAttack()
         {
-            if (_enemyController.MoveController.IsAttacking)
+            if (_fsm.CurrentStateId is EnemyStateId.Attack)
             {
                 return;
             }
@@ -85,7 +87,7 @@ namespace Character.Damage
             var playerPosition = this.SendQuery(new PlayerPositionQuery());
             if (Vector2.Distance(playerPosition, transform.position) < _attackRadius)
             {
-                await Attack();
+                _fsm.ChangeState(EnemyStateId.Attack);
             }
         }
 
@@ -96,6 +98,11 @@ namespace Character.Damage
 
         void OnTriggerEnter2D(Collider2D other)
         {
+            if (_fsm.CurrentStateId is EnemyStateId.Dead)
+            {
+                return;
+            }
+            
             var damageable = other.GetComponent<Damageable>();
 
             if (damageable == null || !damageable.CompareTag("Player"))

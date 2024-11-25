@@ -7,9 +7,9 @@ namespace SaveLoad
 {
     public interface ISaveLoadManagerMethod
     {
-        public void Save(object saveObject, FileStream saveFile);
+        void Save(object saveObject, FileStream saveFile);
 
-        public T Load<T>(FileStream saveFile, JsonConverter converter = null);
+        T Load<T>(FileStream saveFile, JsonConverter converter = null);
     }
     
 	public enum SaveLoadManagerMethods { Json, JsonEncrypted };

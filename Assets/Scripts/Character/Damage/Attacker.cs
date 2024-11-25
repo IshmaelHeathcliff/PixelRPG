@@ -6,18 +6,19 @@ namespace Character.Damage
 {
     public interface IAttacker
     {
-        public IKeywordStat Damage { get; }
-        public IStat CriticalChance { get; }
-        public IStat CriticalMultiplier { get; }
-        public IStat Accuracy { get; }
-        public IStat FireResistanceDecrease { get; }
-        public IStat ColdResistanceDecrease { get; }
-        public IStat LightningResistanceDecrease { get; }
-        public IStat ChaosResistanceDecrease { get; }
-        public IStat FireResistancePenetrate { get; }
-        public IStat ColdResistancePenetrate { get; }
-        public IStat LightningResistancePenetrate { get; }
-        public IStat ChaosResistancePenetrate { get; }
+        IKeywordStat Damage { get; }
+        IStat CriticalChance { get; }
+        IStat CriticalMultiplier { get; }
+        IStat Accuracy { get; }
+        IStat FireResistanceDecrease { get; }
+        IStat ColdResistanceDecrease { get; }
+        IStat LightningResistanceDecrease { get; }
+        IStat ChaosResistanceDecrease { get; }
+        IStat FireResistancePenetrate { get; }
+        IStat ColdResistancePenetrate { get; }
+        IStat LightningResistancePenetrate { get; }
+        IStat ChaosResistancePenetrate { get; }
+        UniTask Attack();
     }
     public abstract class Attacker : MonoBehaviour, IAttacker
     {
@@ -35,7 +36,7 @@ namespace Character.Damage
         public IStat ChaosResistancePenetrate { get; protected set; }
 
         protected abstract UniTask Play();
-        protected virtual async UniTask Attack()
+        public virtual async UniTask Attack()
         {
             await Play();
         }

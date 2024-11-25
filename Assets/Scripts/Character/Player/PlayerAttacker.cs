@@ -100,7 +100,7 @@ namespace Character.Damage
             }
         }
 
-        protected override async UniTask Attack()
+        public override async UniTask Attack()
         {
             await base.Attack();
             Destroy(gameObject);

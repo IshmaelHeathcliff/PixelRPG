@@ -7,16 +7,16 @@ namespace Character.Modifier
 {
     public interface IModifier
     {
-        public void Check();
-        public void Register();
-        public void Unregister();
-        public string ModifierID { get; }
-        public string FactoryID { get; set; }
-        public ModifierInfo ModifierInfo { get; set; }
-        public string GetDescription();
-        public List<string> Keywords { get; }
-        public string InstanceID { get; }
-        public void Load();
+        void Check();
+        void Register();
+        void Unregister();
+        string ModifierID { get; }
+        string FactoryID { get; set; }
+        ModifierInfo ModifierInfo { get; set; }
+        string GetDescription();
+        List<string> Keywords { get; }
+        string InstanceID { get; }
+        void Load();
     }
 
     public abstract class Modifier : IModifier

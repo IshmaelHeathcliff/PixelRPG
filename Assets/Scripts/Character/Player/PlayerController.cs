@@ -1,5 +1,6 @@
 ﻿using Character.Damage;
 using Character.Modifier;
+using Character.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,7 +11,7 @@ namespace Character
         [SerializeField] string _modifierFactoryID = "player";
         [SerializeField] Vector3 _initialPosition;
         [SerializeField] PlayerMoveController _playerMoveController;
-        [SerializeField] PlayerAttacker _playerAttacker;
+        [SerializeField] PlayerAttackerController _playerAttackerController;
         [SerializeField] PlayerDamageable _playerDamageable;
 
         PlayerModel _model;
@@ -24,7 +25,7 @@ namespace Character
         void OnValidate()
         {
             _playerMoveController = GetComponentInChildren<PlayerMoveController>();
-            _playerAttacker = GetComponentInChildren<PlayerAttacker>();
+            _playerAttackerController = GetComponentInChildren<PlayerAttackerController>();
             _playerDamageable = GetComponentInChildren<PlayerDamageable>();
         }
 

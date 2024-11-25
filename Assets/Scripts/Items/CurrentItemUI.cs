@@ -1,5 +1,7 @@
-﻿using TMPro;
+﻿using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Items
@@ -37,19 +39,14 @@ namespace Items
             AddressablesManager.Release(_bgHandle1);
         }
 
-        protected new void Awake()
+        protected new async void Awake()
         {
             base.Awake();
-            _bgHandle0 = AddressablesManager.LoadAssetAsync<Sprite>(_currentItemBg0, handle =>
-            {
-                _bg0 = handle.Result;
-                SetBg(_bg0);
-            });
-            
-            _bgHandle1 = AddressablesManager.LoadAssetAsync<Sprite>(_currentItemBg1, handle =>
-            {
-                _bg1 = handle.Result;
-            });
+            _bgHandle0 = Addressables.LoadAssetAsync<Sprite>(_currentItemBg0);
+            _bg0 = await _bgHandle0;
+            _bgHandle1 = Addressables.LoadAssetAsync<Sprite>(_currentItemBg1);
+            _bg1 = await _bgHandle1;
+            SetBg(_bg0);
         }
         
     }
