@@ -89,7 +89,21 @@ namespace Items
             }
         }
     }
-     
+    
+    public class InventoryChangeSizeCommand : InventoryCommand
+    {
+        readonly Vector2Int _size;
+        protected InventoryChangeSizeCommand(Vector2Int size)
+        {
+            _size = size;
+        }
+
+        protected override void OnExecute()
+        {
+            InventoryModel.Size = _size;
+        }
+    }
+
     #endregion
 
     #region Package
@@ -149,6 +163,20 @@ namespace Items
             base.OnExecute();
         }
     }
+    
+    public class PackageChangeSizeCommand : InventoryChangeSizeCommand
+    {
+        public PackageChangeSizeCommand(Vector2Int size) : base(size)
+        {
+        }
+
+        protected override void OnExecute()
+        {
+            InventoryModel = this.GetModel<PackageModel>();
+            base.OnExecute();
+        }
+    }
+
     #endregion
 
 
@@ -204,6 +232,19 @@ namespace Items
         {
         }
         
+        protected override void OnExecute()
+        {
+            InventoryModel = this.GetModel<StashModel>();
+            base.OnExecute();
+        }
+    }
+    
+    public class StashChangeSizeCommand : InventoryChangeSizeCommand
+    {
+        public StashChangeSizeCommand(Vector2Int size) : base(size)
+        {
+        }
+
         protected override void OnExecute()
         {
             InventoryModel = this.GetModel<StashModel>();

@@ -4,13 +4,16 @@
     {
         public override void Init()
         {
-            base.Init();
-            this.RegisterEvent<StashInitEvent>(e => _inventoryUI.InitInventoryUI(e.Size)).UnRegisterWhenCurrentSceneUnloaded();
+            this.RegisterEvent<StashSizeChangedEvent>(e => _inventoryUI.InitInventoryUI(e.Size)).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<StashAddEvent>(e => _inventoryUI.AddItemUI(e.ItemPos, e.Item)).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<StashRemoveEvent>(e => _inventoryUI.RemoveItemUI(e.ItemPos)).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<StashUpdateEvent>(e => _inventoryUI.UpdateItemUI(e.ItemPos, e.Item)).UnRegisterWhenCurrentSceneUnloaded();
             
-            InventoryModel.InitInventory();
+            this.RegisterEvent<StashAddEvent>(e => UpdatePickUpItemUI()).UnRegisterWhenCurrentSceneUnloaded();
+            this.RegisterEvent<StashRemoveEvent>(e => UpdatePickUpItemUI()).UnRegisterWhenCurrentSceneUnloaded();
+            this.RegisterEvent<StashUpdateEvent>(e => UpdatePickUpItemUI()).UnRegisterWhenCurrentSceneUnloaded();
+            
+            this.SendCommand(new StashChangeSizeCommand(_inventorySize));
         }
         protected override void PickUpInternal()
          {

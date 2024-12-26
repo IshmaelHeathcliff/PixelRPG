@@ -21,16 +21,15 @@ namespace Items
         public Vector2Int ItemPos { get; set; }
     }
 
-
-
-    public interface IInventoryInitEvent
+    public interface IInventorySizeChangedEvent
     {
         public Vector2Int Size { get; set; }
     }
+
     #endregion
     
     #region Package
-    public struct PackageInitEvent: IInventoryInitEvent
+    public struct PackageSizeChangedEvent: IInventorySizeChangedEvent
     {
         public Vector2Int Size { get; set; }
     }
@@ -55,7 +54,7 @@ namespace Items
     
     
     #region Stash
-    public struct StashInitEvent: IInventoryInitEvent
+    public struct StashSizeChangedEvent: IInventorySizeChangedEvent
     {
         public Vector2Int Size { get; set; }
     }

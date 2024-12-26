@@ -24,7 +24,7 @@ namespace Items
         // 用于仓库定位
         CurrentItemUI _currentItemUI;
 
-        CurrentItemUI CurrentItemUI
+        public CurrentItemUI CurrentItemUI
         {
             get
             {
@@ -132,36 +132,25 @@ namespace Items
             }
         }
 
-        public void SetCurrentItemUI(Vector2Int gridPos, IItem item)
+        public void SetCurrentItemUI(Vector2Int gridPos, IItem item, bool onlySize = true)
         {
             SetCurrentItemUI(gridPos, item.Size);
 
+            if (!onlySize)
+            {
+                CurrentItemUI.SetIcon(item.IconName);
+                CurrentItemUI.SetIconSize(CurrentItemUI.Size * _tileSize - new Vector2Int(2, 2) * _frameWidth);
+            }
+            
             SetItemInfo(item.GetDescription());
         }
-        
+
         public void SetCurrentItemUI(Vector2Int gridPos, Vector2Int size)
         {
             CurrentItemUI.StartPos = gridPos;
             CurrentItemUI.Size = size;
             CurrentItemUI.SetUIPosition(GridPosToUIPos(gridPos, size));
             CurrentItemUI.SetUISize(size * _tileSize + new Vector2Int(2, 2) * _frameWidth);
-
-            if (InventoryModel.PickedUp.Value != null)
-            {
-                CurrentItemUI.PickUp();
-                CurrentItemUI.SetIcon(InventoryModel.PickedUp.Value.IconName);
-                CurrentItemUI.SetIconSize(CurrentItemUI.Size * _tileSize - new Vector2Int(2, 2) * _frameWidth);
-                SetItemInfo(InventoryModel.PickedUp.Value.GetDescription());
-            }
-            else
-            {
-                CurrentItemUI.PutDown();
-            }
-        }
-
-        public Vector2Int GetCurrentItemUISize()
-        {
-            return CurrentItemUI.Size;
         }
 
         Vector2 GridPosToUIPos(Vector2Int gridPos, Vector2Int size)

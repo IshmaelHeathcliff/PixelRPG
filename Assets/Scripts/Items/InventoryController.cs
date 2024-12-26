@@ -27,12 +27,13 @@ namespace Items
     [Serializable]
     public abstract class InventoryController : MonoBehaviour,  IInventoryController
     {
-        [SerializeField] Vector2Int _inventorySize;
-        [SerializeField][HideInInspector] protected InventoryUI _inventoryUI;
         [SerializeField][HideInInspector] InventoryUIGrid _grid;
+        
+        [SerializeField][HideInInspector] protected InventoryUI _inventoryUI;
+        [SerializeField] protected Vector2Int _inventorySize;
+        
         protected InventoryModel InventoryModel { get; set; }
         protected InventoryModel OtherInventoryModel { get; set; }
-
         protected InputActionMap InventoryInput { get; set; }
         
         public bool IsActive { get; private set; }
@@ -41,8 +42,9 @@ namespace Items
 
         public virtual void Init()
         {
-            InventoryModel.Size = _inventorySize;
         }
+        
+        bool IsPickUp => InventoryModel.PickedUp.Value != null;
 
         #region Basic
 
@@ -62,7 +64,7 @@ namespace Items
 
         protected virtual void DeleteItemInternal()
         {
-            if (InventoryModel.PickedUp.Value != null)
+            if (IsPickUp)
             {
                 InventoryModel.PickedUp.Value = null;
                 return;
@@ -72,32 +74,27 @@ namespace Items
         public void PickUp()
         {
             PickUpInternal();
-            UpdateCurrentItemUI();
         }
 
         public void PutDown()
         {
             PutDownInternal();
-            UpdateCurrentItemUI();
         }
 
         public bool AddItem(IItem item)
         {
             bool result = AddItemInternal(item);
-            UpdateCurrentItemUI();
             return result;
         }
 
         public void RemoveItem()
         {
             RemoveItemInternal();
-            UpdateCurrentItemUI();
         }
 
         public void DeleteItem()
         {
             DeleteItemInternal();
-            UpdateCurrentItemUI();
         }
         
         #endregion
@@ -106,7 +103,7 @@ namespace Items
         #region Advance
         void PickAndPut()
         {
-            if (InventoryModel.PickedUp.Value == null)
+            if (!IsPickUp)
             {
                 PickUp();
             }
@@ -118,7 +115,7 @@ namespace Items
         
         void TransferItem()
         {
-            if (InventoryModel.PickedUp.Value != null)
+            if (IsPickUp)
             {
                 if (OtherInventoryModel.AddItem(InventoryModel.PickedUp.Value))
                 {
@@ -138,7 +135,7 @@ namespace Items
         
         void EquipItem()
         {
-            if (InventoryModel.PickedUp.Value != null)
+            if (IsPickUp)
             {
                 if(InventoryModel.PickedUp.Value is IEquipment equipment)
                 {
@@ -159,8 +156,6 @@ namespace Items
                     }
                 }
             }
-            
-            UpdateCurrentItemUI();
         }
         #endregion
 
@@ -194,11 +189,11 @@ namespace Items
                 }
             }
 
-            if (InventoryModel.PickedUp.Value == null)
+            if (!IsPickUp)
             {
                 if (direction == Vector2Int.right || direction == Vector2Int.up)
                 {
-                    direction *= _inventoryUI.GetCurrentItemUISize();
+                    direction *= _inventoryUI.CurrentItemUI.Size;
                 }
             }
 
@@ -212,8 +207,9 @@ namespace Items
             var direction = Movement(inputDirection);
             var newPos = CurrentPos + direction;
             CurrentPos = AlterPos(newPos);
-            UpdateCurrentItemUI();
+            UpdatePickUpItemUI();
         }
+        
         void AddRandomItemAction(InputAction.CallbackContext context)
         {
             var item1 = this.GetSystem<ItemCreateSystem>().CreateFromID(1);
@@ -270,6 +266,7 @@ namespace Items
             _inventoryUI.DisableUI();
             InventoryInput.Disable();
             IsActive = false;
+            InventoryModel.PickedUp.UnRegister(OnPickUpChanged);
         }
 
         public void Enable(Vector2Int pos)
@@ -277,7 +274,8 @@ namespace Items
             _inventoryUI.EnableUI(pos);
             InventoryInput.Enable();
             CurrentPos = pos;
-            UpdateCurrentItemUI();
+            InventoryModel.PickedUp.Register(OnPickUpChanged);
+            UpdatePickUpItemUI();
             IsActive = true;
         }
 
@@ -296,6 +294,24 @@ namespace Items
             CurrentPos = Vector2Int.zero;
         }
         #endregion
+
+        public void UpdatePickUpItemUI()
+        {
+            OnPickUpChanged(InventoryModel.PickedUp.Value);
+        }
+        
+        void OnPickUpChanged(IItem pickedUp)
+        {
+            if (pickedUp != null)
+            {
+                _inventoryUI.CurrentItemUI.PickUp();
+                _inventoryUI.SetCurrentItemUI(CurrentPos, pickedUp, false);
+            }
+            else
+            {
+                UpdateCurrentItemUI();
+            }
+        }
         
         public void UpdateCurrentItemUI()
         {
@@ -304,13 +320,8 @@ namespace Items
                 return;
             }
             
-            if (InventoryModel.PickedUp.Value != null)
-            {
-                _inventoryUI.SetCurrentItemUI(CurrentPos, InventoryModel.PickedUp.Value);
-                return;
-            }
-            
             var item = InventoryModel.GetItem(CurrentPos, out var itemPos);
+            _inventoryUI.CurrentItemUI.PutDown();
             if (item != null)
             {
                 _inventoryUI.SetCurrentItemUI(itemPos, item);
@@ -328,7 +339,7 @@ namespace Items
             var inventorySize = InventoryModel.Size;
             var itemSize = Vector2Int.one;
 
-            if (InventoryModel.PickedUp.Value != null)
+            if (IsPickUp)
             {
                 itemSize = InventoryModel.PickedUp.Value.Size;
             }

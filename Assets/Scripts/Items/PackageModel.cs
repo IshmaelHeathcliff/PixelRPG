@@ -22,9 +22,9 @@ namespace Items
             });
         }
 
-        protected override void SendInitEvent(Vector2Int size)
+        protected override void SendSizeChangedEvent(Vector2Int size)
         {
-            this.SendEvent(new PackageInitEvent()
+            this.SendEvent(new PackageSizeChangedEvent()
             {
                 Size = size
             });

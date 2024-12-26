@@ -28,7 +28,17 @@ namespace Items
                    endPos.x > point.x && endPos.y > point.y;
         }
 
-        public Vector2Int Size { get; set; }
+        Vector2Int _size;
+        public Vector2Int Size
+        {
+            get => _size;
+            set
+            {
+                _size = value;
+                SendSizeChangedEvent(_size);
+            }
+        }
+
         Dictionary<Vector2Int, IItem> _items;
 
         protected abstract void SendAddEvent(IItem item, Vector2Int itemPos);
@@ -36,7 +46,7 @@ namespace Items
 
         protected abstract void SendRemoveEvent(Vector2Int itemPos);
 
-        protected abstract void SendInitEvent(Vector2Int size);
+        protected abstract void SendSizeChangedEvent(Vector2Int size);
 
         
         public bool AddItem(IItem item, Vector2Int itemPos)
@@ -89,9 +99,9 @@ namespace Items
             return false;
         }
 
-        public void InitInventory()
+        void InitInventory()
         {
-            SendInitEvent(Size);
+            Size = new Vector2Int(10, 5);
             _items = new Dictionary<Vector2Int, IItem>();
         }
 
@@ -298,6 +308,7 @@ namespace Items
 
         protected override void OnInit()
         {
+            InitInventory();
             this.GetUtility<SaveLoadUtility>().RegisterPersister(this);
         }
     }
