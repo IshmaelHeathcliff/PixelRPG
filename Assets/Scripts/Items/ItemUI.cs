@@ -127,7 +127,7 @@ namespace Items
             Rect.localScale = Vector3.one;
         }
 
-        public async void SetIcon(string icon)
+        public async UniTaskVoid SetIcon(string icon)
         {
             AddressablesManager.Release(_iconHandle);
             var iconPath = UIItemsName + $"{icon}";
@@ -168,7 +168,7 @@ namespace Items
             Background.color = color;
         }
 
-        public async void SetBg(string bg)
+        public async UniTaskVoid SetBg(string bg)
         {
             AddressablesManager.Release(_bgHandle);
             _bgHandle = Addressables.LoadAssetAsync<Sprite>(bg);

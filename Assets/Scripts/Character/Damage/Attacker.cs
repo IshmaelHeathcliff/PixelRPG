@@ -18,7 +18,7 @@ namespace Character.Damage
         IStat ColdResistancePenetrate { get; }
         IStat LightningResistancePenetrate { get; }
         IStat ChaosResistancePenetrate { get; }
-        UniTask Attack();
+        UniTaskVoid Attack();
     }
     public abstract class Attacker : MonoBehaviour, IAttacker
     {
@@ -36,9 +36,6 @@ namespace Character.Damage
         public IStat ChaosResistancePenetrate { get; protected set; }
 
         protected abstract UniTask Play();
-        public virtual async UniTask Attack()
-        {
-            await Play();
-        }
+        public abstract UniTaskVoid Attack();
     }
 }

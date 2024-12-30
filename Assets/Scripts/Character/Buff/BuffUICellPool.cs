@@ -55,8 +55,8 @@ namespace Character.Buff
             }
             _pool.Push(obj);
         }
-        
-        async void OnEnable()
+
+        async UniTaskVoid Init()
         {
             _buffHandle = Addressables.LoadAssetAsync<GameObject>(_buffUICellReference);
             
@@ -64,6 +64,11 @@ namespace Character.Buff
             {
                 _pool.Push(await CreatObject());
             }
+        }
+        
+        void OnEnable()
+        {
+            Init().Forget();
         }
 
         void OnDisable()

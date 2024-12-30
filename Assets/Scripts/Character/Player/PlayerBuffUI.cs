@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Character.Buff
@@ -9,7 +10,7 @@ namespace Character.Buff
         readonly Dictionary<string, BuffUICell> _buffUICells = new();
         [SerializeField] BuffUICellPool _pool;
 
-        public override async void AddBuff(IBuff buff)
+        async UniTaskVoid AddBuffAsync(IBuff buff)
         {
             var buffUICell = await _pool.Pop();
             
@@ -20,6 +21,12 @@ namespace Character.Buff
             
             _buffUICells.Add(buff.GetID(), buffUICell);
             buffUICell.InitBuffUICell(buff);
+        }
+
+        public override void AddBuff(IBuff buff)
+        {
+            AddBuffAsync(buff).Forget();
+
         }
 
         public override void RemoveBuff(string id)

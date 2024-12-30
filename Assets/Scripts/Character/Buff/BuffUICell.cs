@@ -41,7 +41,7 @@ namespace Character.Buff
             _info.gameObject.SetActive(false);
         }
 
-        public async void SetIcon(string iconPath)
+        public async UniTaskVoid SetIcon(string iconPath)
         {
             AddressablesManager.Release(_iconHandle);
             _iconHandle = Addressables.LoadAssetAsync<Sprite>(iconPath);
@@ -63,7 +63,7 @@ namespace Character.Buff
             }
             
             SetInfo(buff.GetName(), buff.GetDescription());
-            SetIcon(buff.GetIconPath());
+            SetIcon(buff.GetIconPath()).Forget();
         }
 
 

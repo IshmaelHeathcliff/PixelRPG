@@ -17,11 +17,11 @@ namespace Character.Enemy
             return FSM.CurrentStateId is EnemyStateId.Idle;
         }
 
-        protected override async void OnEnter()
+        protected override void OnEnter()
         {
             _quitting = false;
             Target.PlayAnimation(EnemyController.Patrol);
-            await ChangeDirection();
+            ChangeDirection().Forget();
         }
 
         protected override void OnUpdate()
@@ -51,7 +51,7 @@ namespace Character.Enemy
             return new Vector2(x, y);
         }
         
-        async UniTask ChangeDirection()
+        async UniTaskVoid ChangeDirection()
         {
             while (!_quitting)
             {

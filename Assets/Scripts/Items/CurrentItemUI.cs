@@ -32,6 +32,15 @@ namespace Items
             SetBg(_bg0);
         }
 
+        async UniTaskVoid Init()
+        {
+            _bgHandle0 = Addressables.LoadAssetAsync<Sprite>(_currentItemBg0);
+            _bg0 = await _bgHandle0;
+            _bgHandle1 = Addressables.LoadAssetAsync<Sprite>(_currentItemBg1);
+            _bg1 = await _bgHandle1;
+            SetBg(_bg0);
+        }
+
         protected override void Release()
         {
             base.Release();
@@ -39,14 +48,10 @@ namespace Items
             AddressablesManager.Release(_bgHandle1);
         }
 
-        protected new async void Awake()
+        protected new void Awake()
         {
             base.Awake();
-            _bgHandle0 = Addressables.LoadAssetAsync<Sprite>(_currentItemBg0);
-            _bg0 = await _bgHandle0;
-            _bgHandle1 = Addressables.LoadAssetAsync<Sprite>(_currentItemBg1);
-            _bg1 = await _bgHandle1;
-            SetBg(_bg0);
+            Init().Forget();
         }
         
     }

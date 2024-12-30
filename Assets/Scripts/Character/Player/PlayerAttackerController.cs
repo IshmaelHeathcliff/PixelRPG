@@ -50,7 +50,7 @@ namespace Character.Player
             transform.right = direction.normalized;
         }
 
-        async void AttackAction(InputAction.CallbackContext context)
+        async UniTaskVoid Attack()
         {
             if (!_canAttack)
             {
@@ -58,11 +58,17 @@ namespace Character.Player
             }
             
             _canAttack = false;
-            Face(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position);
+            if (Camera.main != null)
+                Face(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position);
             Instantiate(_playerAttacker, transform);
             transform.DetachChildren();
             await UniTask.Delay((int)(_attackInterval*1000));
             _canAttack = true;
+        }
+
+        void AttackAction(InputAction.CallbackContext context)
+        {
+            Attack().Forget();
         }       
         
         public IArchitecture GetArchitecture()

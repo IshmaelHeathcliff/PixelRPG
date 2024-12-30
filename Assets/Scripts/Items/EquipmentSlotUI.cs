@@ -13,7 +13,7 @@ namespace Items
         {
             if (equipment != null)
             {
-                SetIcon(equipment.IconName);
+                SetIcon(equipment.IconName).Forget();
                 SetIconSize(Vector2.zero);
                 SetIconPivot(new Vector2(0.5f, 0.5f));
                 SetIconAnchor(Vector2.zero, Vector2.one);

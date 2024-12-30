@@ -5,7 +5,7 @@
         public override void Init()
         {
             this.RegisterEvent<PackageSizeChangedEvent>(e => _inventoryUI.InitInventoryUI(e.Size)).UnRegisterWhenCurrentSceneUnloaded();
-            this.RegisterEvent<PackageAddEvent>(e => _inventoryUI.AddItemUI(e.ItemPos, e.Item)).UnRegisterWhenCurrentSceneUnloaded();
+            this.RegisterEvent<PackageAddEvent>(e => _inventoryUI.AddItemUI(e.ItemPos, e.Item).Forget()).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<PackageRemoveEvent>(e => _inventoryUI.RemoveItemUI(e.ItemPos)).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<PackageUpdateEvent>(e => _inventoryUI.UpdateItemUI(e.ItemPos, e.Item)).UnRegisterWhenCurrentSceneUnloaded();
             

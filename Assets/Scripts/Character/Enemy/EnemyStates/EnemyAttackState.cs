@@ -14,17 +14,10 @@ namespace Character.Enemy
             return FSM.CurrentStateId is EnemyStateId.Chase;
         }
 
-        protected override async void OnEnter()
+        protected override void OnEnter()
         {
             Target.PlayAnimation(EnemyController.Attack);
-            try
-            {
-                await Target.Attacker.Attack();
-            }
-            catch (OperationCanceledException)
-            {
-                
-            }
+            Target.Attacker.Attack().Forget();
         }
 
         protected override void OnExit()

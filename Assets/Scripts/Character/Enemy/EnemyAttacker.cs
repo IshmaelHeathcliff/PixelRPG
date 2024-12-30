@@ -77,6 +77,11 @@ namespace Character.Damage
             _fsm.ChangeState(EnemyStateId.Idle);
         }
 
+        public override async UniTaskVoid Attack()
+        {
+            await Play().SuppressCancellationThrow();
+        }
+
         void CheckAttack()
         {
             if (_fsm.CurrentStateId is EnemyStateId.Attack)

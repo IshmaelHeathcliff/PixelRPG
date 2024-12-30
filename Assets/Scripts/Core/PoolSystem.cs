@@ -79,7 +79,7 @@ namespace Core
             return obj;
         }
 
-        public new virtual async void InitPool(int size)
+        public new virtual async UniTask InitPool(int size)
         {
             Pool = new Stack<T>();
 

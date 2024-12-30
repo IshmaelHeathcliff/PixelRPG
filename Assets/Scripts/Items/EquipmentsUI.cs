@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UI;
@@ -30,18 +31,7 @@ namespace Items
         Vector2Int _currentPos = Vector2Int.one; 
 
         CurrentItemUI _currentItemUI;
-        CurrentItemUI CurrentItemUI
-        {
-            get
-            {
-                if (_currentItemUI == null)
-                {
-                    InitCurrentItemUI();
-                }
-                
-                return _currentItemUI;
-            }
-        }
+        CurrentItemUI CurrentItemUI => _currentItemUI;
         
         void InitEquipmentsUI()
         {
@@ -75,7 +65,7 @@ namespace Items
             return _equipmentPosMap[_currentPos];
         }
 
-        async void InitCurrentItemUI()
+        async UniTaskVoid InitCurrentItemUI()
         {
             var currentTransform = transform.Find("CurrentItemUI");
             if (currentTransform != null)
@@ -210,7 +200,7 @@ namespace Items
 
         void Start()
         {
-            InitCurrentItemUI();
+            InitCurrentItemUI().Forget();
             gameObject.SetActive(false);
         }
 

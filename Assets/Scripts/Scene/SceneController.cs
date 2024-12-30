@@ -10,7 +10,7 @@ namespace Scene
     {
         SceneModel _model;
 
-        async void LoadScene(string sceneName, string entranceTag = null)
+        async UniTaskVoid LoadScene(string sceneName, string entranceTag = null)
         {
             await Transition(sceneName, entranceTag);
         }
@@ -35,7 +35,7 @@ namespace Scene
         {
             TypeEventSystem.Global.Register<LoadSceneEvent>(e =>
             {
-                LoadScene(e.SceneName, e.EntranceTag);
+                LoadScene(e.SceneName, e.EntranceTag).Forget();
             });
         }
 

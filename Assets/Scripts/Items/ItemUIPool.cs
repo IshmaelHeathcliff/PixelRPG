@@ -98,15 +98,19 @@ namespace Items
             _pool.Push(obj);
         }
 
-        async void OnEnable()
+        async UniTaskVoid InitPool()
         {
-            _itemUIHandle = Addressables.LoadAssetAsync<GameObject>(_itemUIReference);
-            _currentItemUIHandle = Addressables.LoadAssetAsync<GameObject>(_currentItemUIReference);
-            
             for (var i = 0; i < _initialSize; i++)
             {
                 _pool.Push(await CreatObject());
             }
+        }
+
+        void OnEnable()
+        {
+            _itemUIHandle = Addressables.LoadAssetAsync<GameObject>(_itemUIReference);
+            _currentItemUIHandle = Addressables.LoadAssetAsync<GameObject>(_currentItemUIReference);
+            InitPool().Forget();
         }
 
         void OnDisable()

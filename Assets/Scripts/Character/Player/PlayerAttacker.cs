@@ -34,7 +34,7 @@ namespace Character.Damage
         {
         }
 
-        async void Start()
+        void Start()
         {
             var stats = _model.PlayerStats;
             Damage = stats.Damage as IKeywordStat;
@@ -50,14 +50,7 @@ namespace Character.Damage
             LightningResistancePenetrate = stats.LightningResistancePenetrate;
             ChaosResistancePenetrate = stats.ChaosResistancePenetrate;
 
-            try
-            {
-                await Attack();
-            }
-            catch (OperationCanceledException)
-            {
-                
-            }
+            Attack().Forget();
         }
 
         public IArchitecture GetArchitecture()
@@ -100,9 +93,9 @@ namespace Character.Damage
             }
         }
 
-        public override async UniTask Attack()
+        public override async UniTaskVoid Attack()
         {
-            await base.Attack();
+            await Play().SuppressCancellationThrow();
             Destroy(gameObject);
         }
     }

@@ -25,10 +25,10 @@ namespace Character
             }
         }
 
-        async void Start()
+        void Start()
         {
             // _enemyPrefab = await AddressablesManager.LoadAsset<GameObject>("Enemy101");
-            await ProduceEnemies();
+            ProduceEnemies().Forget();
         }
     }
 }

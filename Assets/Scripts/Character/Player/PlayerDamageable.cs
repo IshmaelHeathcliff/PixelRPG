@@ -33,10 +33,10 @@ namespace Character.Damage
             ChaosResistance = stats.ChaosResistance;
 
             OnHurt.Register(() => { }).UnRegisterWhenDisabled(this);
-            OnDeath.Register(Dead).UnRegisterWhenDisabled(this);
+            OnDeath.Register(() => Dead().Forget()).UnRegisterWhenDisabled(this);
         }
 
-        async void Dead()
+        async UniTaskVoid Dead()
         {
             IsDamageable = false;
             await UniTask.Delay((int)(1000 * 0.5f));

@@ -2,6 +2,7 @@
 using Character.Enemy;
 using Core;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -43,7 +44,7 @@ namespace Character.Damage
             ColdResistance = stats.ColdResistance;
             ChaosResistance = stats.ChaosResistance;
 
-            OnHurt.Register(Hurt).UnRegisterWhenDisabled(this);
+            OnHurt.Register(()=>Hurt().Forget()).UnRegisterWhenDisabled(this);
             OnDeath.Register(Dead).UnRegisterWhenDisabled(this);
         }
 
@@ -59,7 +60,7 @@ namespace Character.Damage
             OnHurt.Trigger();
         }
 
-        async void Hurt()
+        async UniTaskVoid Hurt()
         {
             _fsm.ChangeState(EnemyStateId.Hurt);
             await UniTask.Delay((int) (_hurtTime * 1000));

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
 using TMPro;
 using Unity.VisualScripting;
@@ -22,20 +23,9 @@ namespace Items
         Dictionary<Vector2Int, ItemUI> _itemUIs = new();
         
         // 用于仓库定位
-        CurrentItemUI _currentItemUI;
 
-        public CurrentItemUI CurrentItemUI
-        {
-            get
-            {
-                if (_currentItemUI == null)
-                {
-                    InitCurrentItemUI();
-                }
-                
-                return _currentItemUI;
-            }
-        }
+        CurrentItemUI _currentItemUI;
+        public CurrentItemUI CurrentItemUI => _currentItemUI;
 
         Vector2Int _gridSize;
 
@@ -78,7 +68,7 @@ namespace Items
         }
 
 
-        public async void AddItemUI(Vector2Int gridPos, IItem item)
+        public async UniTaskVoid AddItemUI(Vector2Int gridPos, IItem item)
         {
             var itemUI = await _pool.Pop();
             itemUI.transform.SetParent(ItemsHolder);
@@ -91,7 +81,7 @@ namespace Items
             itemUI.SetAnchor(new Vector2(0, 1), new Vector2(0, 1));
             itemUI.SetUIPosition(GridPosToUIPos(gridPos, itemUI.Size));
             itemUI.SetUISize(itemUI.Size * _tileSize - new Vector2Int(2, 2) * _frameWidth);
-            itemUI.SetIcon(item.IconName);
+            itemUI.SetIcon(item.IconName).Forget();
             
             if (item is IStackableItem stackableItem)
             {
@@ -107,7 +97,7 @@ namespace Items
         public void UpdateItemUI(Vector2Int gridPos, IItem item)
         {
             RemoveItemUI(gridPos);
-            AddItemUI(gridPos, item);
+            AddItemUI(gridPos, item).Forget();
         }
 
         public void RemoveItemUI(Vector2Int pos)
@@ -138,7 +128,7 @@ namespace Items
 
             if (!onlySize)
             {
-                CurrentItemUI.SetIcon(item.IconName);
+                CurrentItemUI.SetIcon(item.IconName).Forget();
                 CurrentItemUI.SetIconSize(CurrentItemUI.Size * _tileSize - new Vector2Int(2, 2) * _frameWidth);
             }
             
@@ -177,7 +167,7 @@ namespace Items
             return t;
         }
         
-        async void InitCurrentItemUI()
+        async UniTaskVoid InitCurrentItemUI()
         {
             var currentTransform = transform.Find("CurrentItemUI");
             if (currentTransform != null)
@@ -257,6 +247,7 @@ namespace Items
 
         void Start()
         {
+            InitCurrentItemUI().Forget();
             gameObject.SetActive(false);
         }
     }
