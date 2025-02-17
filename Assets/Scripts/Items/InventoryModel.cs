@@ -120,6 +120,10 @@ namespace Items
                 {
                     _items.Remove(itemPos);
                 }
+                else
+                {
+                    return;
+                }
             }
             
             SendRemoveEvent(itemPos);
