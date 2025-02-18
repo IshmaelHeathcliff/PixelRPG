@@ -107,23 +107,14 @@ namespace Items
 
         public void RemoveItem(Vector2Int pos)
         {
-            Vector2Int itemPos;
-            if (_items.ContainsKey(pos))
+            var item = GetItem(pos, out var itemPos);
+            if (item != null)
             {
-                _items.Remove(pos);
-                itemPos = pos;
+                _items.Remove(itemPos);
             }
             else
             {
-                var item = GetItem(pos, out itemPos);
-                if (item != null)
-                {
-                    _items.Remove(itemPos);
-                }
-                else
-                {
-                    return;
-                }
+                return;
             }
             
             SendRemoveEvent(itemPos);
@@ -141,6 +132,12 @@ namespace Items
 
         public IItem GetItem(Vector2Int pos, out Vector2Int itemPos)
         {
+            if (_items.ContainsKey(pos))
+            {
+                itemPos = pos;
+                return _items[pos]; 
+            }
+
             foreach (var (p, item) in _items)
             {
                 var itemSize = item.Size;
@@ -163,16 +160,8 @@ namespace Items
             {
                 return false;
             }
-            
-            if(_items.TryGetValue(pos, out var item))
-            {
-                // 先Remove再PickUP，顺序不能反
-                RemoveItem(pos);
-                PickedUp.Value = item;
-                return true;
-            }
 
-            item = GetItem(pos, out var itemPos);
+            var item = GetItem(pos, out var itemPos);
             if (item == null)
             {
                 return false;
