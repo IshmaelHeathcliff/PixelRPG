@@ -37,7 +37,6 @@
 
         protected override void DeleteItemInternal()
         {
-            base.DeleteItemInternal();
             this.SendCommand(new StashRemoveCommand(CurrentPos));
         }
 

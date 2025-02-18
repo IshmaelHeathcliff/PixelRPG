@@ -44,7 +44,7 @@ namespace Items
         {
         }
         
-        bool IsPickUp => InventoryModel.PickedUp.Value != null;
+        protected bool IsPickUp => InventoryModel.PickedUp.Value != null;
 
         #region Basic
 
@@ -62,14 +62,7 @@ namespace Items
         
         protected abstract void RemoveItemInternal();
 
-        protected virtual void DeleteItemInternal()
-        {
-            if (IsPickUp)
-            {
-                InventoryModel.PickedUp.Value = null;
-                return;
-            }
-        }
+        protected abstract void DeleteItemInternal();
 
         public void PickUp()
         {
@@ -94,6 +87,12 @@ namespace Items
 
         public void DeleteItem()
         {
+            if (IsPickUp)
+            {
+                InventoryModel.PickedUp.Value = null;
+                return;
+            }
+ 
             DeleteItemInternal();
         }
         
