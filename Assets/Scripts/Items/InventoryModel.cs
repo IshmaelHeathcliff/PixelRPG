@@ -17,7 +17,7 @@ namespace Items
         bool CheckItemPos(Vector2Int pos);
         bool CheckPos(Vector2Int itemPos, Vector2Int itemSize);
     }
-    
+
     public abstract class InventoryModel : AbstractModel, ISaveData, IInventoryModel
     {
         public static BindableProperty<IItem> PickedUp { get; set; } = new();
@@ -48,13 +48,13 @@ namespace Items
 
         protected abstract void SendSizeChangedEvent(Vector2Int size);
 
-        
+
         public bool AddItem(IItem item, Vector2Int itemPos)
         {
             if (!CheckPos(itemPos, item.Size))
                 return false;
-            
-            if(_items.ContainsKey(itemPos))
+
+            if (_items.ContainsKey(itemPos))
                 return false;
 
             if (!CheckItemPos(itemPos))
@@ -75,15 +75,15 @@ namespace Items
                 foreach (var (itemPos, ite) in _items)
                 {
                     if (stackableItem.ID != ite.ID) continue;
-                    
-                    int remain = ((IStackableItem) ite).IncreaseCount(stackableItem.Count);
+
+                    int remain = ((IStackableItem)ite).IncreaseCount(stackableItem.Count);
                     stackableItem.Count = remain;
                     SendUpdateEvent(ite, itemPos);
 
                     if (remain == 0) return true;
                 }
             }
-            
+
             for (var i = 0; i < Size.x; i++)
             {
                 for (var j = 0; j < Size.y; j++)
@@ -116,7 +116,7 @@ namespace Items
             {
                 return;
             }
-            
+
             SendRemoveEvent(itemPos);
         }
 
@@ -135,17 +135,17 @@ namespace Items
             if (_items.ContainsKey(pos))
             {
                 itemPos = pos;
-                return _items[pos]; 
+                return _items[pos];
             }
 
             foreach (var (p, item) in _items)
             {
                 var itemSize = item.Size;
                 var endPos = p + itemSize;
-                
-                if (!ContainPoint(p, endPos,pos))
+
+                if (!ContainPoint(p, endPos, pos))
                     continue;
-                
+
                 itemPos = p;
                 return item;
             }
@@ -210,10 +210,10 @@ namespace Items
                     return false;
                 }
             }
-            
+
             return true;
         }
-        
+
         /// <summary>
         /// 检查item要放置的位置是否与已放置的item重叠
         /// </summary>
@@ -223,9 +223,9 @@ namespace Items
         /// 重叠的item的起始位置
         /// </returns>
         List<Vector2Int> CheckOverlap(Vector2Int itemPos, Vector2Int itemSize)
-        {          
+        {
             var overlap = new List<Vector2Int>();
-             
+
             var posToCheck = new List<Vector2Int>();
             for (var i = 0; i < itemSize.x; i++)
             {
@@ -249,15 +249,15 @@ namespace Items
                         p.y += j;
                         if (posToCheck.Contains(p))
                         {
-                            if(!overlap.Contains(pos))
+                            if (!overlap.Contains(pos))
                                 overlap.Add(pos);
                             goto @continue;
                         }
                     }
                 }
-                @continue: ;
+            @continue:;
             }
-            
+
             return overlap;
         }
 
@@ -283,10 +283,10 @@ namespace Items
         public void LoadData(Data data)
         {
             InitInventory();
-            
+
             // var serializedInventory = SaveLoadManager.Load<SerializedInventory>($"Inventory-{inventoryName}.json");
 
-            var inventoryData = (Data<SerializedInventory>) data;
+            var inventoryData = (Data<SerializedInventory>)data;
             var serializedInventory = inventoryData.Value;
 
             Size = serializedInventory.GetSize();
@@ -296,7 +296,7 @@ namespace Items
                 AddItem(item, itemPos);
             }
         }
-         
+
         #endregion
 
         protected override void OnInit()
