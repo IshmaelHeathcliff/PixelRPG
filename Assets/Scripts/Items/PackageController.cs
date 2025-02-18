@@ -8,14 +8,14 @@
             this.RegisterEvent<PackageAddEvent>(e => _inventoryUI.AddItemUI(e.ItemPos, e.Item).Forget()).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<PackageRemoveEvent>(e => _inventoryUI.RemoveItemUI(e.ItemPos)).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<PackageUpdateEvent>(e => _inventoryUI.UpdateItemUI(e.ItemPos, e.Item)).UnRegisterWhenCurrentSceneUnloaded();
-            
+
             this.RegisterEvent<PackageAddEvent>(e => UpdatePickUpItemUI()).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<PackageRemoveEvent>(e => UpdatePickUpItemUI()).UnRegisterWhenCurrentSceneUnloaded();
             this.RegisterEvent<PackageUpdateEvent>(e => UpdatePickUpItemUI()).UnRegisterWhenCurrentSceneUnloaded();
-            
+
             this.SendCommand(new PackageChangeSizeCommand(_inventorySize));
         }
-        
+
         protected override void PickUpInternal()
         {
             this.SendCommand(new PackagePickUpCommand(CurrentPos));
@@ -47,7 +47,7 @@
             InventoryModel = this.GetModel<PackageModel>();
             OtherInventoryModel = this.GetModel<StashModel>();
             InventoryInput = this.GetSystem<InputSystem>().PackageActionsMap;
-            
+
             base.Awake();
         }
     }
