@@ -23,11 +23,6 @@ namespace Character
         static readonly int Y = Animator.StringToHash("Y");
         static readonly int X = Animator.StringToHash("X");
 
-        void Hurt()
-        {
-            
-        }
-
         void Move()
         {
             if (_isMoving)
@@ -56,7 +51,7 @@ namespace Character
             }
         }
 
-        public void MoveAction(InputAction.CallbackContext context)
+        void MoveAction(InputAction.CallbackContext context)
         {
             if (context.performed)
             {

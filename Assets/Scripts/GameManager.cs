@@ -1,5 +1,5 @@
 ﻿using Character;
-using Character.Buff;
+using Character.State;
 using Character.Modifier;
 using SaveLoad;
 using Sirenix.OdinInspector;
@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour, IController
 {
     PlayerModel _playerModel;
     ModifierSystem _modifierSystem;
-    BuffCreateSystem _buffCreateSystem;
+    StateCreateSystem _stateCreateSystem;
     SaveLoadUtility _saveLoadUtility;
     
     [Button]
@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour, IController
     [Button]
     public void AddBuff()
     {
-        var buff = _buffCreateSystem.CreateBuff("1", "player",new []{20, 20, 20}, 4);
-        _playerModel.PlayerBuff.AddBuff(buff);
+        var state = _stateCreateSystem.CreateState("1", "player",new []{20, 20, 20}, 4);
+        _playerModel.PlayerState.AddState(state);
     }
 
     [Button]
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour, IController
     {
         _playerModel = this.GetModel<PlayerModel>();
         _modifierSystem = this.GetSystem<ModifierSystem>();
-        _buffCreateSystem = this.GetSystem<BuffCreateSystem>();
+        _stateCreateSystem = this.GetSystem<StateCreateSystem>();
         _saveLoadUtility = this.GetUtility<SaveLoadUtility>();
     }
     

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 
-namespace Character.Buff
+namespace Character.State
 {
     [Serializable]
-    public class BuffInfo
+    public class StateInfo
     {
         [JsonProperty][ShowInInspector] public string ID { get; set; }
         [JsonProperty][ShowInInspector] public string Name { get; set; }

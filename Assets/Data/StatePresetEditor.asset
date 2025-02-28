@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1c0146ee80b75e42a66e80d49513131, type: 3}
-  m_Name: BuffPresetEditor
+  m_Name: StatePresetEditor
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -23,14 +23,14 @@ MonoBehaviour:
     SerializationNodes:
     - Name: Data
       Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[Character.Buff.BuffInfo, Assembly-CSharp]],
+      Data: 0|System.Collections.Generic.List`1[[Character.State.StateInfo, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 1|Character.Buff.BuffInfo, Assembly-CSharp
+      Data: 1|Character.State.StateInfo, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -40,5 +40,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  jsonName: Buffs.json
+  jsonName: States.json
   jsonPath: Preset

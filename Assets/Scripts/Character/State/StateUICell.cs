@@ -5,9 +5,9 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
-namespace Character.Buff
+namespace Character.State
 {
-    public class BuffUICell : MonoBehaviour
+    public class StateUICell : MonoBehaviour
     {
         [SerializeField] Slider _slider;
         [SerializeField] TextMeshProUGUI _info;
@@ -26,9 +26,9 @@ namespace Character.Buff
            _count.text = $"{count}";
         }
 
-        public void SetInfo(string buffName, string description)
+        public void SetInfo(string stateName, string description)
         {
-            _info.text = $"{buffName}\n<size=60%>{description}";
+            _info.text = $"{stateName}\n<size=60%>{description}";
         }
 
         public void EnableInfo()
@@ -48,22 +48,22 @@ namespace Character.Buff
             _icon.sprite = await _iconHandle;
         }
         
-        public void InitBuffUICell(IBuff buff)
+        public void InitStateUICell(IState state)
         {
-            if (buff is IBuffWithTime bt)
+            if (state is IStateWithTime bt)
             {
                 _slider.gameObject.SetActive(true);
                 SetTime(bt.TimeLeft, bt.Duration);
             }
 
-            if (buff is IBuffWithCount bc)
+            if (state is IStateWithCount bc)
             {
                _count.gameObject.SetActive(true);
                SetCount(bc.Count);
             }
             
-            SetInfo(buff.GetName(), buff.GetDescription());
-            SetIcon(buff.GetIconPath()).Forget();
+            SetInfo(state.GetName(), state.GetDescription());
+            SetIcon(state.GetIconPath()).Forget();
         }
 
 
