@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Character.Modifier;
 
-namespace Character.Buff
+namespace Character.State
 {
-    public interface IBuff
+    public interface IState
     {
         string GetName();
         string GetID();
@@ -15,7 +15,7 @@ namespace Character.Buff
         void Disable();
     }
 
-    public interface IBuffWithTime: IBuff
+    public interface IStateWithTime: IState
     {
         float Duration { get; set; }
         float TimeLeft { get;}
@@ -23,20 +23,20 @@ namespace Character.Buff
         void DecreaseTime(float time);
     }
 
-    public interface IBuffWithCount : IBuff
+    public interface IStateWithCount : IState
     {
         int Count { get; set; }
         int MaxCount { get; set; }
     }
     
     [Serializable]
-    public class Buff : IBuff
+    public class State : IState
     {
-        BuffInfo _info;
+        StateInfo _info;
 
         List<IModifier> _modifiers;
         
-        public Buff(BuffInfo info, IEnumerable<IModifier> entries)
+        public State(StateInfo info, IEnumerable<IModifier> entries)
         {
             _info = info;
             _modifiers = entries.ToList();
@@ -80,11 +80,11 @@ namespace Character.Buff
         }
     }
     
-    public class BuffWithTime : Buff, IBuffWithTime
+    public class StateWithTime : State, IStateWithTime
     {
         public float Duration { get; set; }
         public float TimeLeft { get; private set; }
-        public BuffWithTime(BuffInfo info, IEnumerable<IModifier> entries, float time) : base(info, entries)
+        public StateWithTime(StateInfo info, IEnumerable<IModifier> entries, float time) : base(info, entries)
         {
             Duration = time;
             TimeLeft = time;
@@ -106,11 +106,11 @@ namespace Character.Buff
         }
     }
     
-    public class BuffWithCount : Buff, IBuffWithCount
+    public class StateWithCount : State, IStateWithCount
     {
         public int Count { get; set; }
         public int MaxCount { get; set; }
-        public BuffWithCount(BuffInfo info, IEnumerable<IModifier> entries, int maxCount) : base(info, entries)
+        public StateWithCount(StateInfo info, IEnumerable<IModifier> entries, int maxCount) : base(info, entries)
         {
             Count = 1;
             MaxCount = maxCount;
@@ -118,11 +118,11 @@ namespace Character.Buff
         }
     }
     
-    public class BuffWithTimeAndCount : BuffWithTime, IBuffWithCount
+    public class StateWithTimeAndCount : StateWithTime, IStateWithCount
     {
         public int Count { get; set; }
         public int MaxCount { get; set; }
-        public BuffWithTimeAndCount(BuffInfo info, IEnumerable<IModifier> entries, float time, int maxCount) : base(info, entries, time)
+        public StateWithTimeAndCount(StateInfo info, IEnumerable<IModifier> entries, float time, int maxCount) : base(info, entries, time)
         {
             Count = 1;
             MaxCount = maxCount;

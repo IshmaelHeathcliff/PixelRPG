@@ -1,5 +1,5 @@
 ﻿using Character;
-using Character.Buff;
+using Character.State;
 using Character.Modifier;
 using Items;
 using SaveLoad;
@@ -18,7 +18,7 @@ public class PixelRPG : Architecture<PixelRPG>
         RegisterSystem(new InputSystem());
         RegisterSystem(new ModifierSystem());
         RegisterSystem(new ItemCreateSystem());
-        RegisterSystem(new BuffCreateSystem());
+        RegisterSystem(new StateCreateSystem());
         
         RegisterUtility(new SaveLoadUtility());
     }

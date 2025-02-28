@@ -5,47 +5,48 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.Serialization;
 
-namespace Character.Buff
+namespace Character.State
 {
-    public class BuffUICellPool : MonoBehaviour, IAsyncObjectPool<BuffUICell>
+    public class StateUICellPool : MonoBehaviour, IAsyncObjectPool<StateUICell>
     {
-        [SerializeField] AssetReferenceGameObject _buffUICellReference;
+        [SerializeField] AssetReferenceGameObject _stateUICellReference;
         [SerializeField] int _initialSize = 10;
         [SerializeField] int _maxSize = 100;
         
-        AsyncOperationHandle<GameObject> _buffHandle;
-        readonly Stack<BuffUICell> _pool = new();
+        AsyncOperationHandle<GameObject> _stateHandle;
+        readonly Stack<StateUICell> _pool = new();
         
         public int Count => _pool.Count;
         
-        async UniTask<BuffUICell> CreatObject()
+        async UniTask<StateUICell> CreatObject()
         {
-            await _buffHandle;
-            if (_buffHandle.Result == null) return null;
+            await _stateHandle;
+            if (_stateHandle.Result == null) return null;
             
-            var obj = Instantiate(_buffHandle.Result, transform);
+            var obj = Instantiate(_stateHandle.Result, transform);
             obj.SetActive(false);
-            return obj.GetOrAddComponent<BuffUICell>();
+            return obj.GetOrAddComponent<StateUICell>();
         }
         
-        public async UniTask<BuffUICell> Pop()
+        public async UniTask<StateUICell> Pop()
         {
-            BuffUICell buffUICell;
+            StateUICell stateUICell;
             if (Count > 0)
             {
-                buffUICell = _pool.Pop();
+                stateUICell = _pool.Pop();
             }
             else
             {
-                buffUICell = await CreatObject();
+                stateUICell = await CreatObject();
             }
             
-            buffUICell.gameObject.SetActive(true);
-            return buffUICell;
+            stateUICell.gameObject.SetActive(true);
+            return stateUICell;
         }
 
-        public void Push(BuffUICell obj)
+        public void Push(StateUICell obj)
         {
             obj.gameObject.SetActive(false);
             if (Count > _maxSize)
@@ -58,7 +59,7 @@ namespace Character.Buff
 
         async UniTaskVoid Init()
         {
-            _buffHandle = Addressables.LoadAssetAsync<GameObject>(_buffUICellReference);
+            _stateHandle = Addressables.LoadAssetAsync<GameObject>(_stateUICellReference);
             
             for (var i = 0; i < _initialSize; i++)
             {
@@ -73,7 +74,7 @@ namespace Character.Buff
 
         void OnDisable()
         {
-            Addressables.Release(_buffHandle);
+            Addressables.Release(_stateHandle);
         }
     }
 }

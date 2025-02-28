@@ -481,7 +481,7 @@ GameObject:
   - component: {fileID: 8337213437896329084}
   - component: {fileID: 6016626389992170192}
   m_Layer: 5
-  m_Name: BuffUICell
+  m_Name: StateUICell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
