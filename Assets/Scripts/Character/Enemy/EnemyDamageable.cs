@@ -1,4 +1,5 @@
-﻿using Character.Enemy;
+﻿using System;
+using Character.Enemy;
 using Core;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -7,39 +8,21 @@ namespace Character.Damage
 {
     public class EnemyDamageable : Damageable
     {
-        [SerializeField] EnemyController _enemyController;
         [SerializeField] float _hurtTime = 1f;
 
         FSM<EnemyStateId> _fsm;
 
-        void OnValidate()
-        {
-            _enemyController = GetComponentInParent<EnemyController>();
-        }
-
         void Awake()
         {
-            if (_enemyController == null)
-            {
-                _enemyController = GetComponentInParent<EnemyController>();
-            }
-
-            _fsm = _enemyController.FSM;
             OnHurt = new EasyEvent();
             OnDeath = new EasyEvent();
         }
 
         void Start()
         {
-            Stat.Stats stats = _enemyController.Stats;
+            SetStats(CharacterController.Stats);
 
-            Health = stats.Health;
-            Defence = stats.Defence;
-            Evasion = stats.Evasion;
-            FireResistance = stats.FireResistance;
-            LightningResistance = stats.LightningResistance;
-            ColdResistance = stats.ColdResistance;
-            ChaosResistance = stats.ChaosResistance;
+            _fsm = (CharacterController as IHasFSM<EnemyStateId>).FSM;
 
             OnHurt.Register(() => Hurt().Forget()).UnRegisterWhenDisabled(this);
             OnDeath.Register(Dead).UnRegisterWhenDisabled(this);
@@ -60,7 +43,7 @@ namespace Character.Damage
         async UniTaskVoid Hurt()
         {
             _fsm.ChangeState(EnemyStateId.Hurt);
-            await UniTask.Delay((int)(_hurtTime * 1000));
+            await UniTask.Delay(TimeSpan.FromSeconds(_hurtTime));
 
             if (Health.CurrentValue <= 0)
             {

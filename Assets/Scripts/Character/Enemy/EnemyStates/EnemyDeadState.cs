@@ -1,4 +1,7 @@
-﻿using Core;
+﻿using System;
+using Core;
+using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 
 namespace Character.Enemy
 {
@@ -13,12 +16,15 @@ namespace Character.Enemy
             return FSM.CurrentStateId is EnemyStateId.Hurt;
         }
 
-        protected override void OnEnter()
+        protected async override void OnEnter()
         {
             Target.Damageable.IsDamageable = false;
             Target.AttackerController.CanAttack = false;
             MoveController.PlayAnimation(EnemyMoveController.Dead);
             MoveController.Freeze();
+
+            await UniTask.Delay(TimeSpan.FromSeconds(2f));
+            Target.DestroyController();
         }
     }
 }

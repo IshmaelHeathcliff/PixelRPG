@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dd92c5427564ae4a9a70ec279174df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterId: 
+  _characterId: 26b02ca859ce323488b415d569c936ce
 --- !u!114 &3381499209618292972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,9 +207,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 2
-  _attackSpeed: 8
-  _detectRadius: 8
-  _attackRadius: 2
+  _attackSpeed: 4
+  _detectRadius: 10
+  _attackRadius: 4
   _idleTime: 1
 --- !u!114 &3079868575710765256
 MonoBehaviour:
@@ -280,7 +280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b7e17aedd74612aef7a158f38709ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyController: {fileID: 0}
   _hurtTime: 0.2
 --- !u!61 &3525671692513469292
 BoxCollider2D:

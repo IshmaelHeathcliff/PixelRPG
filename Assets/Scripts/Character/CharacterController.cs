@@ -13,6 +13,7 @@ namespace Character
         IMoveController MoveController { get; }
         ICharacterModel Model { get; }
         Stats Stats { get; }
+        void DestroyController();
     }
 
 
@@ -48,6 +49,11 @@ namespace Character
         }
 
         protected abstract void SetStats();
+
+        public void DestroyController()
+        {
+            Destroy(gameObject);
+        }
 
         protected virtual void Awake()
         {

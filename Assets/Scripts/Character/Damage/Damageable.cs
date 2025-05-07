@@ -33,6 +33,17 @@ namespace Character.Damage
         public IStat ChaosResistance { get; protected set; }
         public bool IsDamageable { get; set; } = true;
 
+        public void SetStats(Stats stats)
+        {
+            Health = stats.Health;
+            Defence = stats.Defence;
+            Evasion = stats.Evasion;
+            FireResistance = stats.FireResistance;
+            LightningResistance = stats.LightningResistance;
+            ColdResistance = stats.ColdResistance;
+            ChaosResistance = stats.ChaosResistance;
+        }
+
         public virtual void TakeDamage(float damage)
         {
             if (!IsDamageable)

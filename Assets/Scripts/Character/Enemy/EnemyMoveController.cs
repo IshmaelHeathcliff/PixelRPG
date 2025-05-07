@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 namespace Character.Enemy
 {
@@ -62,21 +63,22 @@ namespace Character.Enemy
             }
         }
 
-        public async UniTask AttackPlayer()
+        public async UniTask AttackPlayer(CancellationToken ct)
         {
+            CancellationToken combinedToken = CancellationTokenSource.CreateLinkedTokenSource(ct, this.GetCancellationTokenOnDestroy()).Token;
             Vector3 initialPosition = transform.position;
             Vector3 playerPosition = this.SendQuery(new PlayerPositionQuery());
             while (Vector2.Distance(playerPosition, transform.position) > 0.1f)
             {
                 Rigidbody.linearVelocity = (playerPosition - transform.position).normalized * _attackSpeed;
-                await UniTask.WaitForFixedUpdate(this.GetCancellationTokenOnDestroy());
+                await UniTask.WaitForFixedUpdate(combinedToken);
             }
 
 
             while (Vector2.Distance(initialPosition, transform.position) > 0.1f)
             {
                 Rigidbody.MovePosition(Vector2.Lerp(transform.position, initialPosition, _attackSpeed * Time.fixedDeltaTime));
-                await UniTask.WaitForFixedUpdate(this.GetCancellationTokenOnDestroy());
+                await UniTask.WaitForFixedUpdate(combinedToken);
             }
 
             Rigidbody.MovePosition(initialPosition);
