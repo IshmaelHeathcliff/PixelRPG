@@ -1,27 +1,13 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Test : MonoBehaviour
 {
-    [FormerlySerializedAs("size")] public Vector2Int _size;
+    public GameObject _testObject;
 
-    public Vector2Int GetSize()
-    {
-        return _size;
-    }
-
-    [Button]
-    void ChangeSize(Vector2Int newSize)
-    {
-        var s = GetSize();
-        s = newSize;
-    }
-    // Start is called before the first frame update
     void Start()
     {
-        
-
-
+        // _testObject.GetComponent<TestObject>()._testString = "Test 1";
+        // var obj = Instantiate(_testObject);
+        // obj.GetComponent<TestObject>()._testString = "Test 1";
     }
 }

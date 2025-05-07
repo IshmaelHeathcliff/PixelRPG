@@ -12,9 +12,9 @@ namespace Items
         void Open(Vector2Int pos);
         void Disable();
         void Enable(Vector2Int pos);
-        
+
     }
-    public interface IInventoryController: IController, IUIStatus
+    public interface IInventoryController : IController, IUIStatus
     {
         void PickUp();
         void PutDown();
@@ -23,19 +23,19 @@ namespace Items
         void DeleteItem();
         void RemoveItem();
     }
-    
+
     [Serializable]
-    public abstract class InventoryController : MonoBehaviour,  IInventoryController
+    public abstract class InventoryController : MonoBehaviour, IInventoryController
     {
         [SerializeField][HideInInspector] InventoryUIGrid _grid;
-        
+
         [SerializeField][HideInInspector] protected InventoryUI _inventoryUI;
         [SerializeField] protected Vector2Int _inventorySize;
-        
+
         protected InventoryModel InventoryModel { get; set; }
         protected InventoryModel OtherInventoryModel { get; set; }
         protected InputActionMap InventoryInput { get; set; }
-        
+
         public bool IsActive { get; private set; }
         public bool IsOpen { get; private set; }
         protected Vector2Int CurrentPos { get; set; }
@@ -43,14 +43,14 @@ namespace Items
         public virtual void Init()
         {
         }
-        
+
         protected bool IsPickUp => InventoryModel.PickedUp.Value != null;
 
         #region Basic
 
         public IItem GetItem()
         {
-            var item = InventoryModel.GetItem(CurrentPos, out _);
+            IItem item = InventoryModel.GetItem(CurrentPos, out _);
             return item;
         }
 
@@ -59,7 +59,7 @@ namespace Items
         protected abstract void PutDownInternal();
 
         protected abstract bool AddItemInternal(IItem item);
-        
+
         protected abstract void RemoveItemInternal();
 
         protected abstract void DeleteItemInternal();
@@ -92,10 +92,10 @@ namespace Items
                 InventoryModel.PickedUp.Value = null;
                 return;
             }
- 
+
             DeleteItemInternal();
         }
-        
+
         #endregion
 
 
@@ -111,7 +111,7 @@ namespace Items
                 PutDown();
             }
         }
-        
+
         void TransferItem()
         {
             if (IsPickUp)
@@ -123,7 +123,7 @@ namespace Items
             }
             else
             {
-                var item = GetItem();
+                IItem item = GetItem();
                 if (item == null) return;
                 if (OtherInventoryModel.AddItem(item))
                 {
@@ -131,23 +131,23 @@ namespace Items
                 }
             }
         }
-        
+
         void EquipItem()
         {
             if (IsPickUp)
             {
-                if(InventoryModel.PickedUp.Value is IEquipment equipment)
+                if (InventoryModel.PickedUp.Value is IEquipment equipment)
                 {
-                    var equipped = this.SendCommand(new EquipEquipmentCommand(equipment));
+                    IEquipment equipped = this.SendCommand(new EquipEquipmentCommand(equipment));
                     InventoryModel.PickedUp.Value = equipped;
                 }
             }
             else
             {
-                var item = GetItem();
+                IItem item = GetItem();
                 if (item is IEquipment equipment)
                 {
-                    var equipped = this.SendCommand(new EquipEquipmentCommand(equipment));
+                    IEquipment equipped = this.SendCommand(new EquipEquipmentCommand(equipment));
                     RemoveItem();
                     if (equipped != null)
                     {
@@ -162,7 +162,7 @@ namespace Items
         #region Input
         Vector2Int Movement(Vector2 inputDirection)
         {
-            var direction = Vector2Int.zero;
+            Vector2Int direction = Vector2Int.zero;
             if (Mathf.Abs(inputDirection.x) >= Mathf.Abs(inputDirection.y))
             {
                 if (inputDirection.x > 0)
@@ -199,20 +199,20 @@ namespace Items
             return direction;
         }
 
-        void MoveCurrentPos(InputAction.CallbackContext context) 
+        void MoveCurrentPos(InputAction.CallbackContext context)
         {
-            
-            var inputDirection = context.ReadValue<Vector2>().normalized;
-            var direction = Movement(inputDirection);
-            var newPos = CurrentPos + direction;
+
+            Vector2 inputDirection = context.ReadValue<Vector2>().normalized;
+            Vector2Int direction = Movement(inputDirection);
+            Vector2Int newPos = CurrentPos + direction;
             CurrentPos = AlterPos(newPos);
             UpdatePickUpItemUI();
         }
-        
+
         void AddRandomItemAction(InputAction.CallbackContext context)
         {
-            var item1 = this.GetSystem<ItemCreateSystem>().CreateFromID(1);
-            var item2 = this.GetSystem<ItemCreateSystem>().CreateFromID(2);
+            IItem item1 = this.GetSystem<ItemCreateSystem>().CreateFromID(1);
+            IItem item2 = this.GetSystem<ItemCreateSystem>().CreateFromID(2);
             AddItem(item1);
             AddItem(item2);
         }
@@ -246,7 +246,7 @@ namespace Items
             InventoryInput.FindAction("Transfer").performed += TransferItemAction;
             InventoryInput.FindAction("Equip").performed += EquipItemAction;
         }
-        
+
         void UnregisterInput()
         {
             InventoryInput.FindAction("Move").performed -= MoveCurrentPos;
@@ -298,7 +298,7 @@ namespace Items
         {
             OnPickUpChanged(InventoryModel.PickedUp.Value);
         }
-        
+
         void OnPickUpChanged(IItem pickedUp)
         {
             if (pickedUp != null)
@@ -311,15 +311,15 @@ namespace Items
                 UpdateCurrentItemUI();
             }
         }
-        
+
         public void UpdateCurrentItemUI()
         {
             if (CurrentPos.x < 0 || CurrentPos.y < 0)
             {
                 return;
             }
-            
-            var item = InventoryModel.GetItem(CurrentPos, out var itemPos);
+
+            IItem item = InventoryModel.GetItem(CurrentPos, out Vector2Int itemPos);
             _inventoryUI.CurrentItemUI.PutDown();
             if (item != null)
             {
@@ -335,15 +335,15 @@ namespace Items
         // 从边缘移动物品指示光标时，在物品栏内循环其位置，若当前有拿起物品，根据物品大小调整位置
         public Vector2Int AlterPos(Vector2Int pos)
         {
-            var inventorySize = InventoryModel.Size;
-            var itemSize = Vector2Int.one;
+            Vector2Int inventorySize = InventoryModel.Size;
+            Vector2Int itemSize = Vector2Int.one;
 
             if (IsPickUp)
             {
                 itemSize = InventoryModel.PickedUp.Value.Size;
             }
-            
-            var posRange = inventorySize - itemSize + Vector2Int.one;
+
+            Vector2Int posRange = inventorySize - itemSize + Vector2Int.one;
             while (pos.x < 0 || pos.y < 0 || pos.x >= posRange.x || pos.y >= posRange.y)
             {
                 if (pos.x < 0)
@@ -360,7 +360,7 @@ namespace Items
                 {
                     pos.x -= posRange.x;
                 }
-                
+
                 if (pos.y >= posRange.y)
                 {
                     pos.y -= posRange.y;
@@ -382,7 +382,7 @@ namespace Items
             Init();
             RegisterInput();
         }
-        
+
         void OnDestroy()
         {
             UnregisterInput();

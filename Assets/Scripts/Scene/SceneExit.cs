@@ -5,8 +5,8 @@ namespace Scene
     [RequireComponent(typeof(BoxCollider2D))]
     public class SceneExit : MonoBehaviour, IController
     {
-        string _nextSceneName;
-        string _entranceTag;
+        [SerializeField] string _nextSceneName;
+        [SerializeField] string _entranceTag;
 
         void OnTriggerEnter2D(Collider2D other)
         {

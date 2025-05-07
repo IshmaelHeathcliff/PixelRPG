@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Character.Player;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Character
@@ -15,12 +16,12 @@ namespace Character
             _healthSlider.value = health;
             _healthSlider.maxValue = maxHealth;
         }
-        
+
         void OnMaxHealthChanged(float maxHealth)
         {
             _healthSlider.maxValue = maxHealth;
         }
-        
+
         void OnManaChanged(float mana, float maxMana)
         {
             _manaSlider.value = mana;
@@ -38,7 +39,7 @@ namespace Character
             {
                 _healthSlider = transform.Find("Health").GetComponent<Slider>();
             }
-            
+
             if (_manaSlider == null)
             {
                 _manaSlider = transform.Find("Mana").GetComponent<Slider>();
@@ -47,13 +48,13 @@ namespace Character
 
         void Awake()
         {
-            _model = this.GetModel<PlayerModel>();
+            _model = this.GetModel<PlayersModel>().Default();
         }
 
         void OnEnable()
         {
-            var health = _model.PlayerStats.Health;
-            var mana = _model.PlayerStats.Mana;
+            Stat.ConsumableStat health = _model.Stats.Health;
+            Stat.ConsumableStat mana = _model.Stats.Mana;
             health.Register(OnMaxHealthChanged).UnRegisterWhenDisabled(this);
             mana.Register(OnMaxManaChanged).UnRegisterWhenDisabled(this);
             health.RegisterWithInitValue(OnHealthChanged).UnRegisterWhenDisabled(this);

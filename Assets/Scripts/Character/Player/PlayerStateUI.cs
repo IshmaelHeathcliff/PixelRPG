@@ -12,13 +12,13 @@ namespace Character.State
 
         async UniTaskVoid AddStateAsync(IState state)
         {
-            var stateUICell = await _pool.Pop();
-            
+            StateUICell stateUICell = await _pool.Pop();
+
             if (_stateUICells.ContainsKey(state.GetID()))
             {
                 RemoveState(state.GetID());
             }
-            
+
             _stateUICells.Add(state.GetID(), stateUICell);
             stateUICell.InitStateUICell(state);
         }
@@ -31,7 +31,7 @@ namespace Character.State
 
         public override void RemoveState(string id)
         {
-            if (_stateUICells.Remove(id, out var  stateUICell))
+            if (_stateUICells.Remove(id, out StateUICell stateUICell))
             {
                 _pool.Push(stateUICell);
             }
@@ -39,7 +39,7 @@ namespace Character.State
 
         public override void ChangeStateTime(IStateWithTime state)
         {
-            if (_stateUICells.TryGetValue(state.GetID(), out var stateUICell))
+            if (_stateUICells.TryGetValue(state.GetID(), out StateUICell stateUICell))
             {
                 stateUICell.SetTime(state.TimeLeft, state.Duration);
             }
@@ -47,7 +47,7 @@ namespace Character.State
 
         public override void ChangeStateCount(IStateWithCount state)
         {
-            if (_stateUICells.TryGetValue(state.GetID(), out var stateUICell))
+            if (_stateUICells.TryGetValue(state.GetID(), out StateUICell stateUICell))
             {
                 stateUICell.SetCount(state.Count);
             }

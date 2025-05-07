@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Character.Damage
@@ -14,7 +13,7 @@ namespace Character.Damage
 
         public abstract float Calculate();
 
-        public DamageCalculator(IAttacker attacker, IDamageable damageable, float baseDamage, List<string> keywords, float addedMultiplier=1)
+        public DamageCalculator(IAttacker attacker, IDamageable damageable, float baseDamage, List<string> keywords, float addedMultiplier = 1)
         {
             Attacker = attacker;
             Damageable = damageable;
@@ -23,7 +22,7 @@ namespace Character.Damage
             Keywords = keywords;
         }
     }
-    
+
     public class PhysicalHitCalculator : DamageCalculator
     {
         public override float Calculate()
@@ -37,7 +36,7 @@ namespace Character.Damage
         {
         }
     }
-    
+
     public class ElementalHitCalculator : DamageCalculator
     {
         DamageType Type { get; set; }
@@ -86,7 +85,7 @@ namespace Character.Damage
             Type = type;
         }
     }
-    
+
     public class PhysicalDoTCalculator : DamageCalculator
     {
 
@@ -100,7 +99,7 @@ namespace Character.Damage
         {
         }
     }
-    
+
     public class ElementalDoTCalculator : DamageCalculator
     {
 

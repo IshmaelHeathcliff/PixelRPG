@@ -2,7 +2,7 @@
 
 namespace Character.Enemy
 {
-    public class EnemyDeadState : AbstractState<EnemyStateId, EnemyController>
+    public class EnemyDeadState : EnemyState
     {
         public EnemyDeadState(FSM<EnemyStateId> fsm, EnemyController target) : base(fsm, target)
         {
@@ -16,8 +16,9 @@ namespace Character.Enemy
         protected override void OnEnter()
         {
             Target.Damageable.IsDamageable = false;
-            Target.PlayAnimation(EnemyController.Dead);
-            Target.Freeze();
+            Target.AttackerController.CanAttack = false;
+            MoveController.PlayAnimation(EnemyMoveController.Dead);
+            MoveController.Freeze();
         }
     }
 }

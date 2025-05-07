@@ -6,6 +6,7 @@ namespace Character.Damage
 {
     public interface IAttacker
     {
+        IAttackerController AttackerController { get; set; }
         IKeywordStat Damage { get; }
         IStat CriticalChance { get; }
         IStat CriticalMultiplier { get; }
@@ -20,8 +21,12 @@ namespace Character.Damage
         IStat ChaosResistancePenetrate { get; }
         UniTaskVoid Attack();
     }
-    public abstract class Attacker : MonoBehaviour, IAttacker
+
+
+
+    public abstract class Attacker : MonoBehaviour, IAttacker, IController
     {
+        public IAttackerController AttackerController { get; set; }
         public IKeywordStat Damage { get; protected set; }
         public IStat CriticalChance { get; protected set; }
         public IStat CriticalMultiplier { get; protected set; }
@@ -35,7 +40,27 @@ namespace Character.Damage
         public IStat LightningResistancePenetrate { get; protected set; }
         public IStat ChaosResistancePenetrate { get; protected set; }
 
+        public void SetStats(Stats stats)
+        {
+            Damage = stats.Damage as IKeywordStat;
+            CriticalChance = stats.CriticalChance;
+            CriticalMultiplier = stats.CriticalMultiplier;
+            Accuracy = stats.Accuracy;
+            FireResistanceDecrease = stats.FireResistanceDecrease;
+            ColdResistanceDecrease = stats.ColdResistanceDecrease;
+            LightningResistanceDecrease = stats.LightningResistanceDecrease;
+            ChaosResistanceDecrease = stats.ChaosResistanceDecrease;
+            FireResistancePenetrate = stats.FireResistancePenetrate;
+            ColdResistancePenetrate = stats.ColdResistancePenetrate;
+            LightningResistancePenetrate = stats.LightningResistancePenetrate;
+            ChaosResistancePenetrate = stats.ChaosResistancePenetrate;
+        }
+
         protected abstract UniTask Play();
         public abstract UniTaskVoid Attack();
+        public IArchitecture GetArchitecture()
+        {
+            return PixelRPG.Interface;
+        }
     }
 }

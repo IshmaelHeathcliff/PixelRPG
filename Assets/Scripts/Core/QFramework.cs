@@ -21,8 +21,8 @@
  *
  * Community
  *  QQ Group: 623597263
- * 
- * Latest Update: 2024.5.12 20:17 add UnRegisterWhenCurrentSceneUnloaded(Suggested by misakiMeiii) 
+ *
+ * Latest Update: 2024.5.12 20:17 add UnRegisterWhenCurrentSceneUnloaded(Suggested by misakiMeiii)
  ****************************************************************************/
 
 using System;
@@ -64,7 +64,7 @@ public interface IArchitecture
 
 public abstract class Architecture<T> : IArchitecture where T : Architecture<T>, new()
 {
-    private bool _mInited = false;
+    bool _mInited = false;
 
 
     public static Action<T> OnRegisterPatch = architecture => { };
@@ -75,7 +75,8 @@ public abstract class Architecture<T> : IArchitecture where T : Architecture<T>,
     {
         get
         {
-            if (MArchitecture == null) MakeSureArchitecture();
+            if (MArchitecture == null)
+                MakeSureArchitecture();
             return MArchitecture;
         }
     }
@@ -90,13 +91,13 @@ public abstract class Architecture<T> : IArchitecture where T : Architecture<T>,
 
             OnRegisterPatch?.Invoke(MArchitecture);
 
-            foreach (var model in MArchitecture._mContainer.GetInstancesByType<IModel>().Where(m => !m.Initialized))
+            foreach (IModel model in MArchitecture._mContainer.GetInstancesByType<IModel>().Where(m => !m.Initialized))
             {
                 model.Init();
                 model.Initialized = true;
             }
 
-            foreach (var system in MArchitecture._mContainer.GetInstancesByType<ISystem>()
+            foreach (ISystem system in MArchitecture._mContainer.GetInstancesByType<ISystem>()
                          .Where(m => !m.Initialized))
             {
                 system.Init();
@@ -112,8 +113,10 @@ public abstract class Architecture<T> : IArchitecture where T : Architecture<T>,
     public void Deinit()
     {
         OnDeinit();
-        foreach (var system in _mContainer.GetInstancesByType<ISystem>().Where(s => s.Initialized)) system.Deinit();
-        foreach (var model in _mContainer.GetInstancesByType<IModel>().Where(m => m.Initialized)) model.Deinit();
+        foreach (ISystem system in _mContainer.GetInstancesByType<ISystem>().Where(s => s.Initialized))
+            system.Deinit();
+        foreach (IModel model in _mContainer.GetInstancesByType<IModel>().Where(m => m.Initialized))
+            model.Deinit();
         _mContainer.Clear();
         MArchitecture = null;
     }
@@ -122,7 +125,7 @@ public abstract class Architecture<T> : IArchitecture where T : Architecture<T>,
     {
     }
 
-    private IocContainer _mContainer = new IocContainer();
+    IocContainer _mContainer = new IocContainer();
 
     public void RegisterSystem<TSystem>(TSystem system) where TSystem : ISystem
     {
@@ -181,7 +184,7 @@ public abstract class Architecture<T> : IArchitecture where T : Architecture<T>,
         return query.Do();
     }
 
-    private TypeEventSystem _mTypeEventSystem = new TypeEventSystem();
+    TypeEventSystem _mTypeEventSystem = new TypeEventSystem();
 
     public void SendEvent<TEvent>() where TEvent : new() => _mTypeEventSystem.Send<TEvent>();
 
@@ -226,13 +229,16 @@ public interface ISystem : IBelongToArchitecture, ICanSetArchitecture, ICanGetMo
 
 public abstract class AbstractSystem : ISystem
 {
-    private IArchitecture _mArchitecture;
+    IArchitecture _mArchitecture;
 
     IArchitecture IBelongToArchitecture.GetArchitecture() => _mArchitecture;
 
     void ICanSetArchitecture.SetArchitecture(IArchitecture architecture) => _mArchitecture = architecture;
 
-    public bool Initialized { get; set; }
+    public bool Initialized
+    {
+        get; set;
+    }
     void ICanInit.Init() => OnInit();
 
     public void Deinit() => OnDeinit();
@@ -254,13 +260,16 @@ public interface IModel : IBelongToArchitecture, ICanSetArchitecture, ICanGetUti
 
 public abstract class AbstractModel : IModel
 {
-    private IArchitecture _mArchitecturel;
+    IArchitecture _mArchitecturel;
 
     IArchitecture IBelongToArchitecture.GetArchitecture() => _mArchitecturel;
 
     void ICanSetArchitecture.SetArchitecture(IArchitecture architecture) => _mArchitecturel = architecture;
 
-    public bool Initialized { get; set; }
+    public bool Initialized
+    {
+        get; set;
+    }
     void ICanInit.Init() => OnInit();
     public void Deinit() => OnDeinit();
 
@@ -298,7 +307,7 @@ public interface ICommand<TResult> : IBelongToArchitecture, ICanSetArchitecture,
 
 public abstract class AbstractCommand : ICommand
 {
-    private IArchitecture _mArchitecture;
+    IArchitecture _mArchitecture;
 
     IArchitecture IBelongToArchitecture.GetArchitecture() => _mArchitecture;
 
@@ -311,7 +320,7 @@ public abstract class AbstractCommand : ICommand
 
 public abstract class AbstractCommand<TResult> : ICommand<TResult>
 {
-    private IArchitecture _mArchitecture;
+    IArchitecture _mArchitecture;
 
     IArchitecture IBelongToArchitecture.GetArchitecture() => _mArchitecture;
 
@@ -339,7 +348,7 @@ public abstract class AbstractQuery<T> : IQuery<T>
     protected abstract T OnDo();
 
 
-    private IArchitecture _mArchitecture;
+    IArchitecture _mArchitecture;
 
     public IArchitecture GetArchitecture() => _mArchitecture;
 
@@ -443,7 +452,10 @@ public static class CanSendQueryExtension
 
 public interface ICanInit
 {
-    bool Initialized { get; set; }
+    bool Initialized
+    {
+        get; set;
+    }
     void Init();
     void Deinit();
 }
@@ -459,7 +471,10 @@ public interface IUnRegister
 
 public interface IUnRegisterList
 {
-    List<IUnRegister> UnregisterList { get; }
+    List<IUnRegister> UnregisterList
+    {
+        get;
+    }
 }
 
 public static class UnRegisterListExtension
@@ -469,7 +484,7 @@ public static class UnRegisterListExtension
 
     public static void UnRegisterAll(this IUnRegisterList self)
     {
-        foreach (var unRegister in self.UnregisterList)
+        foreach (IUnRegister unRegister in self.UnregisterList)
         {
             unRegister.UnRegister();
         }
@@ -480,7 +495,10 @@ public static class UnRegisterListExtension
 
 public struct CustomUnRegister : IUnRegister
 {
-    private Action MOnUnRegister { get; set; }
+    Action MOnUnRegister
+    {
+        get; set;
+    }
     public CustomUnRegister(Action onUnRegister) => MOnUnRegister = onUnRegister;
 
     public void UnRegister()
@@ -493,7 +511,7 @@ public struct CustomUnRegister : IUnRegister
 #if UNITY_5_6_OR_NEWER
 public abstract class UnRegisterTrigger : UnityEngine.MonoBehaviour
 {
-    private readonly HashSet<IUnRegister> _mUnRegisters = new HashSet<IUnRegister>();
+    readonly HashSet<IUnRegister> _mUnRegisters = new HashSet<IUnRegister>();
 
     public IUnRegister AddUnRegister(IUnRegister unRegister)
     {
@@ -505,7 +523,7 @@ public abstract class UnRegisterTrigger : UnityEngine.MonoBehaviour
 
     public void UnRegister()
     {
-        foreach (var unRegister in _mUnRegisters)
+        foreach (IUnRegister unRegister in _mUnRegisters)
         {
             unRegister.UnRegister();
         }
@@ -516,7 +534,7 @@ public abstract class UnRegisterTrigger : UnityEngine.MonoBehaviour
 
 public class UnRegisterOnDestroyTrigger : UnRegisterTrigger
 {
-    private void OnDestroy()
+    void OnDestroy()
     {
         UnRegister();
     }
@@ -524,7 +542,7 @@ public class UnRegisterOnDestroyTrigger : UnRegisterTrigger
 
 public class UnRegisterOnDisableTrigger : UnRegisterTrigger
 {
-    private void OnDisable()
+    void OnDisable()
     {
         UnRegister();
     }
@@ -532,7 +550,7 @@ public class UnRegisterOnDisableTrigger : UnRegisterTrigger
 
 public class UnRegisterCurrentSceneUnloadedTrigger : UnRegisterTrigger
 {
-    private static UnRegisterCurrentSceneUnloadedTrigger _mDefault;
+    static UnRegisterCurrentSceneUnloadedTrigger _mDefault;
 
     public static UnRegisterCurrentSceneUnloadedTrigger Get
     {
@@ -548,14 +566,14 @@ public class UnRegisterCurrentSceneUnloadedTrigger : UnRegisterTrigger
         }
     }
 
-    private void Awake()
+    void Awake()
     {
         DontDestroyOnLoad(this);
         hideFlags = HideFlags.HideInHierarchy;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
-    private void OnDestroy() => SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    void OnDestroy() => SceneManager.sceneUnloaded -= OnSceneUnloaded;
     void OnSceneUnloaded(UnityEngine.SceneManagement.Scene scene) => UnRegister();
 }
 #endif
@@ -566,7 +584,7 @@ public static class UnRegisterExtension
 
     static T GetOrAddComponent<T>(GameObject gameObject) where T : Component
     {
-        var trigger = gameObject.GetComponent<T>();
+        T trigger = gameObject.GetComponent<T>();
 
         if (!trigger)
         {
@@ -593,7 +611,7 @@ public static class UnRegisterExtension
         UnityEngine.GameObject gameObject) =>
         GetOrAddComponent<UnRegisterOnDisableTrigger>(gameObject)
             .AddUnRegister(unRegister);
-        
+
     public static IUnRegister UnRegisterWhenCurrentSceneUnloaded(this IUnRegister self) =>
         UnRegisterCurrentSceneUnloadedTrigger.Get.AddUnRegister(self);
 #endif
@@ -610,7 +628,7 @@ public static class UnRegisterExtension
 
 public class TypeEventSystem
 {
-    private readonly EasyEvents _mEvents = new EasyEvents();
+    readonly EasyEvents _mEvents = new EasyEvents();
 
     public static readonly TypeEventSystem Global = new TypeEventSystem();
 
@@ -622,7 +640,7 @@ public class TypeEventSystem
 
     public void UnRegister<T>(Action<T> onEvent)
     {
-        var e = _mEvents.GetEvent<EasyEvent<T>>();
+        EasyEvent<T> e = _mEvents.GetEvent<EasyEvent<T>>();
         e?.UnRegister(onEvent);
     }
 }
@@ -633,11 +651,11 @@ public class TypeEventSystem
 
 public class IocContainer
 {
-    private Dictionary<Type, object> _mInstances = new Dictionary<Type, object>();
+    Dictionary<Type, object> _mInstances = new Dictionary<Type, object>();
 
     public void Register<T>(T instance)
     {
-        var key = typeof(T);
+        Type key = typeof(T);
 
         if (_mInstances.ContainsKey(key))
         {
@@ -651,9 +669,9 @@ public class IocContainer
 
     public T Get<T>() where T : class
     {
-        var key = typeof(T);
+        Type key = typeof(T);
 
-        if (_mInstances.TryGetValue(key, out var retInstance))
+        if (_mInstances.TryGetValue(key, out object retInstance))
         {
             return retInstance as T;
         }
@@ -663,7 +681,7 @@ public class IocContainer
 
     public IEnumerable<T> GetInstancesByType<T>()
     {
-        var type = typeof(T);
+        Type type = typeof(T);
         return _mInstances.Values.Where(instance => type.IsInstanceOfType(instance)).Cast<T>();
     }
 
@@ -676,13 +694,19 @@ public class IocContainer
 
 public interface IBindableProperty<T> : IReadonlyBindableProperty<T>
 {
-    new T Value { get; set; }
+    new T Value
+    {
+        get; set;
+    }
     void SetValueWithoutEvent(T newValue);
 }
 
 public interface IReadonlyBindableProperty<T> : IEasyEvent
 {
-    T Value { get; }
+    T Value
+    {
+        get;
+    }
 
     IUnRegister RegisterWithInitValue(Action<T> action);
     void UnRegister(Action<T> onValueChanged);
@@ -708,8 +732,10 @@ public class BindableProperty<T> : IBindableProperty<T>
         get => GetValue();
         set
         {
-            if (value == null && MValue == null) return;
-            if (value != null && Comparer(value, MValue)) return;
+            if (value == null && MValue == null)
+                return;
+            if (value != null && Comparer(value, MValue))
+                return;
 
             SetValue(value);
             _mOnValueChanged.Trigger(value);
@@ -722,7 +748,7 @@ public class BindableProperty<T> : IBindableProperty<T>
 
     public void SetValueWithoutEvent(T newValue) => MValue = newValue;
 
-    private EasyEvent<T> _mOnValueChanged = new EasyEvent<T>();
+    EasyEvent<T> _mOnValueChanged = new EasyEvent<T>();
 
     public IUnRegister Register(Action<T> onValueChanged)
     {
@@ -746,7 +772,7 @@ public class BindableProperty<T> : IBindableProperty<T>
     public override string ToString() => Value.ToString();
 }
 
-internal class ComparerAutoRegister
+class ComparerAutoRegister
 {
 #if UNITY_5_6_OR_NEWER
     [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -786,7 +812,7 @@ public interface IEasyEvent
 
 public class EasyEvent : IEasyEvent
 {
-    private Action _mOnEvent = () => { };
+    Action _mOnEvent = () => { };
 
     public IUnRegister Register(Action onEvent)
     {
@@ -801,7 +827,7 @@ public class EasyEvent : IEasyEvent
 
 public class EasyEvent<T> : IEasyEvent
 {
-    private Action<T> _mOnEvent = e => { };
+    Action<T> _mOnEvent = e => { };
 
     public IUnRegister Register(Action<T> onEvent)
     {
@@ -822,7 +848,7 @@ public class EasyEvent<T> : IEasyEvent
 
 public class EasyEvent<T, TK> : IEasyEvent
 {
-    private Action<T, TK> _mOnEvent = (t, k) => { };
+    Action<T, TK> _mOnEvent = (t, k) => { };
 
     public IUnRegister Register(Action<T, TK> onEvent)
     {
@@ -843,7 +869,7 @@ public class EasyEvent<T, TK> : IEasyEvent
 
 public class EasyEvent<T, TK, TS> : IEasyEvent
 {
-    private Action<T, TK, TS> _mOnEvent = (t, k, s) => { };
+    Action<T, TK, TS> _mOnEvent = (t, k, s) => { };
 
     public IUnRegister Register(Action<T, TK, TS> onEvent)
     {
@@ -864,25 +890,25 @@ public class EasyEvent<T, TK, TS> : IEasyEvent
 
 public class EasyEvents
 {
-    private static readonly EasyEvents MGlobalEvents = new EasyEvents();
+    static readonly EasyEvents MGlobalEvents = new EasyEvents();
 
     public static T Get<T>() where T : IEasyEvent => MGlobalEvents.GetEvent<T>();
 
     public static void Register<T>() where T : IEasyEvent, new() => MGlobalEvents.AddEvent<T>();
 
-    private readonly Dictionary<Type, IEasyEvent> _mTypeEvents = new Dictionary<Type, IEasyEvent>();
+    readonly Dictionary<Type, IEasyEvent> _mTypeEvents = new Dictionary<Type, IEasyEvent>();
 
     public void AddEvent<T>() where T : IEasyEvent, new() => _mTypeEvents.Add(typeof(T), new T());
 
     public T GetEvent<T>() where T : IEasyEvent
     {
-        return _mTypeEvents.TryGetValue(typeof(T), out var e) ? (T)e : default;
+        return _mTypeEvents.TryGetValue(typeof(T), out IEasyEvent e) ? (T)e : default;
     }
 
     public T GetOrAddEvent<T>() where T : IEasyEvent, new()
     {
-        var eType = typeof(T);
-        if (_mTypeEvents.TryGetValue(eType, out var e))
+        Type eType = typeof(T);
+        if (_mTypeEvents.TryGetValue(eType, out IEasyEvent e))
         {
             return (T)e;
         }
@@ -906,7 +932,7 @@ public class OrEvent : IUnRegisterList
         return this;
     }
 
-    private Action _mOnEvent = () => { };
+    Action _mOnEvent = () => { };
 
     public IUnRegister Register(Action onEvent)
     {
@@ -920,7 +946,7 @@ public class OrEvent : IUnRegisterList
         this.UnRegisterAll();
     }
 
-    private void Trigger() => _mOnEvent?.Invoke();
+    void Trigger() => _mOnEvent?.Invoke();
 
     public List<IUnRegister> UnregisterList { get; } = new List<IUnRegister>();
 }
@@ -933,7 +959,7 @@ public static class OrEventExtensions
 #endregion
 
 #if UNITY_EDITOR
-internal class EditorMenus
+class EditorMenus
 {
     [UnityEditor.MenuItem("QFramework/Install QFrameworkWithToolKits")]
     public static void InstallPackageKit() => UnityEngine.Application.OpenURL("https://qframework.cn/qf");

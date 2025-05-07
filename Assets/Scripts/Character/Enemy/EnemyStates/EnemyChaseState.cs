@@ -1,39 +1,51 @@
 ﻿using Core;
-using UnityEngine;
 
 namespace Character.Enemy
 {
-    public class EnemyChaseState : AbstractState<EnemyStateId, EnemyController>
+    public class EnemyChaseState : EnemyState
     {
         public EnemyChaseState(FSM<EnemyStateId> fsm, EnemyController target) : base(fsm, target)
         {
         }
-        
+
+        float _attackRadius;
+
+
+
+        void CheckPlayer()
+        {
+            if (MoveController.SqrDistanceToPlayer() < _attackRadius * _attackRadius)
+            {
+                FSM.ChangeState(EnemyStateId.Attack);
+            }
+        }
+
         protected override bool OnCondition()
         {
             return FSM.CurrentStateId is EnemyStateId.Idle or EnemyStateId.Patrol;
         }
 
+        protected override void OnEnter()
+        {
+            MoveController.PlayAnimation(EnemyMoveController.Chase);
+            _attackRadius = MoveController.AttackRadius;
+        }
+
         protected override void OnUpdate()
         {
         }
-        
+
         protected override void OnFixedUpdate()
         {
-            if (Target.LosePlayer())
+            if (MoveController.LosePlayer())
             {
                 FSM.ChangeState(EnemyStateId.Idle);
                 return;
             }
-            
-            Target.FindPlayer();
-            Target.Move();
-        }
-        
 
-        protected override void OnEnter()
-        {
-            Target.PlayAnimation(EnemyController.Chase);
+            MoveController.FindPlayer();
+            MoveController.Move();
+            CheckPlayer();
         }
     }
 }

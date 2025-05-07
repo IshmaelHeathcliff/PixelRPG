@@ -11,7 +11,7 @@ namespace Items
     {
         [SerializeField][HideInInspector] ItemUIPool _pool;
         [SerializeField][HideInInspector] TextMeshProUGUI _itemInfo;
-        
+
         readonly Dictionary<Vector2Int, EquipmentType> _equipmentPosMap =
             new()
             {
@@ -28,22 +28,22 @@ namespace Items
 
         Dictionary<EquipmentType, EquipmentSlotUI> _equipmentSlotMap;
 
-        Vector2Int _currentPos = Vector2Int.one; 
+        Vector2Int _currentPos = Vector2Int.one;
 
         CurrentItemUI _currentItemUI;
         CurrentItemUI CurrentItemUI => _currentItemUI;
-        
+
         void InitEquipmentsUI()
         {
             _equipmentSlotMap = new Dictionary<EquipmentType, EquipmentSlotUI>();
 
-            var equipmentSlots = GetComponentsInChildren<EquipmentSlotUI>();
+            EquipmentSlotUI[] equipmentSlots = GetComponentsInChildren<EquipmentSlotUI>();
             if (equipmentSlots.Length == 0)
             {
                 Debug.LogError("No equipment slots found");
             }
-            
-            foreach (var es in equipmentSlots)
+
+            foreach (EquipmentSlotUI es in equipmentSlots)
             {
                 _equipmentSlotMap.Add(es.EquipmentType, es);
             }
@@ -67,7 +67,7 @@ namespace Items
 
         async UniTaskVoid InitCurrentItemUI()
         {
-            var currentTransform = transform.Find("CurrentItemUI");
+            Transform currentTransform = transform.Find("CurrentItemUI");
             if (currentTransform != null)
             {
                 if (!currentTransform.TryGetComponent(out _currentItemUI))
@@ -77,25 +77,25 @@ namespace Items
             }
             else
             {
-                var currentItemUI = await _pool.GetNewCurrentItemUI();
+                CurrentItemUI currentItemUI = await _pool.GetNewCurrentItemUI();
                 currentItemUI.transform.SetParent(transform);
                 currentItemUI.name = "CurrentItemUI";
 
-                var image = currentItemUI.GetComponent<Image>();
+                Image image = currentItemUI.GetComponent<Image>();
                 image.raycastTarget = false;
 
                 currentItemUI.transform.SetAsLastSibling();
                 currentItemUI.gameObject.SetActive(false);
                 _currentItemUI = currentItemUI;
             }
-            
+
             _currentItemUI.SetAnchor(Vector2.one / 2, Vector2.one / 2);
             _currentItemUI.SetPivot(Vector2.one / 2);
             _currentItemUI.SetUIPosition(Vector2.zero);
             _currentItemUI.PutDown();
             _currentItemUI.DisableIcon();
             _currentItemUI.ItemInfo = _itemInfo;
-            
+
             // SetCurrentItemUI(EquipmentType.Armour, null);
         }
 
@@ -107,9 +107,9 @@ namespace Items
                 _currentPos = Vector2Int.zero;
                 return;
             }
-            
 
-            var slotRect = _equipmentSlotMap[type].Rect;
+
+            RectTransform slotRect = _equipmentSlotMap[type].Rect;
             CurrentItemUI.Item = equipment;
             CurrentItemUI.SetUIPosition(slotRect.anchoredPosition);
             CurrentItemUI.SetUISize(slotRect.sizeDelta);
@@ -128,7 +128,7 @@ namespace Items
 
         public EquipmentType MoveCurrentItemUI(Vector2 inputDirection)
         {
-            var direction = Vector2Int.zero;
+            Vector2Int direction = Vector2Int.zero;
             if (Mathf.Abs(inputDirection.x) >= Mathf.Abs(inputDirection.y))
             {
                 direction = inputDirection.x switch
@@ -147,8 +147,8 @@ namespace Items
                     _ => direction
                 };
             }
-            
-            var newPos = _currentPos + direction;
+
+            Vector2Int newPos = _currentPos + direction;
             if (_equipmentPosMap.ContainsKey(newPos))
             {
                 _currentPos = newPos;
@@ -174,12 +174,12 @@ namespace Items
         void DisableItemInfo()
         {
             _itemInfo.gameObject.SetActive(false);
-            
+
         }
 
         public void EnableUI(Vector2Int pos, IEquipment item)
         {
-            var type = _equipmentPosMap[pos];
+            EquipmentType type = _equipmentPosMap[pos];
             _currentPos = pos;
             CurrentItemUI.gameObject.SetActive(true);
             SetCurrentItemUI(type, item);

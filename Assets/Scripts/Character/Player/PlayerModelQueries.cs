@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Character.Player;
+using UnityEngine;
 
 namespace Character
 {
@@ -6,7 +7,7 @@ namespace Character
     {
         protected override Vector3 OnDo()
         {
-            return this.GetModel<PlayerModel>().Position;
+            return this.GetModel<PlayersModel>().Default().Position;
         }
     }
     
@@ -14,7 +15,7 @@ namespace Character
     {
         protected override Vector2 OnDo()
         {
-            return this.GetModel<PlayerModel>().Direction;
+            return this.GetModel<PlayersModel>().Default().Direction;
         }
     }
 }

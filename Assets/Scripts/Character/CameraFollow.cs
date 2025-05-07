@@ -21,7 +21,7 @@ namespace Character
 
         void MoveCamera()
         {
-            var playerPosition = this.SendQuery(new PlayerPositionQuery());
+            Vector3 playerPosition = this.SendQuery(new PlayerPositionQuery());
             var targetPosition = Vector3.Lerp(transform.position, playerPosition, Time.fixedDeltaTime * _speed);
 
             if (targetPosition.x - _cameraHalfSize.x < _leftBoundary.position.x)

@@ -14,8 +14,8 @@ namespace Character.Modifier
         void Load()
         {
             _modifierInfoCache = new Dictionary<string, ModifierInfo>();
-            var modifierInfoList = this.GetUtility<SaveLoadUtility>().Load<List<ModifierInfo>>(JsonName, JsonPath);
-            foreach (var modifierInfo in modifierInfoList)
+            List<ModifierInfo> modifierInfoList = this.GetUtility<SaveLoadUtility>().Load<List<ModifierInfo>>(JsonName, JsonPath);
+            foreach (ModifierInfo modifierInfo in modifierInfoList)
             {
                 _modifierInfoCache.Add(modifierInfo.ModifierID, modifierInfo);
             }
@@ -27,7 +27,7 @@ namespace Character.Modifier
             {
                 Load();
             }
-            
+
             return _modifierInfoCache.GetValueOrDefault(id);
         }
 
@@ -38,7 +38,7 @@ namespace Character.Modifier
         {
             _modifierFactories.Clear();
         }
-        
+
         public void RegisterFactory(string factoryID, IModifierFactory factory)
         {
             _modifierFactories.Add(factoryID, factory);
@@ -51,7 +51,7 @@ namespace Character.Modifier
 
         public IStat GetStat(IStatModifier modifier)
         {
-            if (_modifierFactories.TryGetValue(modifier.FactoryID, out var factory))
+            if (_modifierFactories.TryGetValue(modifier.FactoryID, out IModifierFactory factory))
             {
                 if (factory is IStatModifierFactory statFactory)
                 {
@@ -61,11 +61,11 @@ namespace Character.Modifier
 
             return null;
         }
-        
+
 
         public IStatModifier CreateStatModifier(string modifierId, string factoryID)
         {
-            if (!_modifierFactories.TryGetValue(factoryID, out var factory))
+            if (!_modifierFactories.TryGetValue(factoryID, out IModifierFactory factory))
             {
                 Debug.LogError("factoryID is invalid");
                 return null;
@@ -87,19 +87,19 @@ namespace Character.Modifier
                 Debug.LogError("modifierId is invalid");
                 return null;
             }
-            
+
             return factory.CreateModifier(modifierInfo);
         }
-        
+
         public IStatModifier CreateStatModifier(string modifierId, string factoryID, int value)
         {
-            if (GetModifierInfo(modifierId) is not StatModifierInfo modifierInfo )
+            if (GetModifierInfo(modifierId) is not StatModifierInfo modifierInfo)
             {
                 Debug.LogError("modifierId is invalid");
                 return null;
             }
 
-            if (!_modifierFactories.TryGetValue(factoryID, out var factory))
+            if (!_modifierFactories.TryGetValue(factoryID, out IModifierFactory factory))
             {
                 Debug.LogError("factory is not registered");
                 return null;
@@ -110,7 +110,7 @@ namespace Character.Modifier
                 Debug.LogError("factory is invalid");
                 return null;
             }
-                
+
             return statModifierFactory.CreateModifier(modifierInfo, value);
         }
 

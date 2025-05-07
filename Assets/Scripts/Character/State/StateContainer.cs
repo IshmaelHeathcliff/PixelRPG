@@ -18,8 +18,8 @@ namespace Character.State
         void ResetStateTime(float time);
         void DecreaseStateTime(float time);
     }
-    
-    
+
+
     public class StateContainer : IStateContainer
     {
         readonly Dictionary<string, IState> _states = new();
@@ -43,11 +43,11 @@ namespace Character.State
                     return;
                 }
             }
-            
+
             _states.Add(state.GetID(), state);
             state.Enable();
             OnStateAdded?.Invoke(state);
-            
+
         }
 
         public bool HasState(string id)
@@ -59,7 +59,7 @@ namespace Character.State
         {
             return HasState(state.GetID());
         }
-        
+
         public void RemoveState(IState state)
         {
             RemoveState(state.GetID());
@@ -74,10 +74,10 @@ namespace Character.State
                 OnStateRemoved?.Invoke(id);
             }
         }
-        
+
         public void ResetStateTime(float time)
         {
-            foreach (var state in _states.Values)
+            foreach (IState state in _states.Values)
             {
                 if (state is IStateWithTime bt)
                 {
@@ -86,16 +86,16 @@ namespace Character.State
                 }
             }
         }
-        
+
         public void DecreaseStateTime(float time)
         {
 
             List<IState> states = new();
             _states.Values.ForEach(state => states.Add(state));
-            foreach (var state in states)
+            foreach (IState state in states)
             {
                 if (state is not IStateWithTime st) continue;
-                
+
                 st.DecreaseTime(time);
                 OnStateTimeChanged?.Invoke(st);
                 if (st.TimeLeft <= 0)
@@ -107,7 +107,7 @@ namespace Character.State
 
         public void ChangeStateCount(string id, int count)
         {
-            if (_states.TryGetValue(id, out var state))
+            if (_states.TryGetValue(id, out IState state))
             {
                 if (state is IStateWithCount bc)
                 {

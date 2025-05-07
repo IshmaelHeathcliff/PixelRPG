@@ -19,12 +19,12 @@ namespace Items
     {
         public Equipment()
         {
-            
+
         }
-        
+
         public Equipment(IEquipmentBase equipmentBase)
         {
-            foreach (var prop in equipmentBase.GetType().GetProperties())
+            foreach (System.Reflection.PropertyInfo prop in equipmentBase.GetType().GetProperties())
             {
                 prop.SetValue(this, prop.GetValue(equipmentBase));
             }
@@ -36,7 +36,7 @@ namespace Items
 
         public void Equip()
         {
-            foreach (var entry in Entries)
+            foreach (IModifier entry in Entries)
             {
                 entry.Register();
             }
@@ -44,7 +44,7 @@ namespace Items
 
         public void Takeoff()
         {
-            foreach (var entry in Entries)
+            foreach (IModifier entry in Entries)
             {
                 entry.Unregister();
             }
@@ -52,7 +52,7 @@ namespace Items
 
         public void Load()
         {
-            foreach (var entry in Entries)
+            foreach (IModifier entry in Entries)
             {
                 entry.Load();
             }
@@ -61,7 +61,7 @@ namespace Items
         public override string GetDescription()
         {
             var entriesInfo = new StringBuilder();
-            foreach (var entry in Entries)
+            foreach (IModifier entry in Entries)
             {
                 entriesInfo.Append(entry.GetDescription() + "\n");
             }

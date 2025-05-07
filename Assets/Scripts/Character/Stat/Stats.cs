@@ -29,7 +29,7 @@ namespace Character.Stat
         const string ColdResistanceName = "冰霜抗性";
         const string LightningResistanceName = "闪电抗性";
         const string ChaosResistanceName = "混沌抗性";
-        
+
         public ConsumableStat Health { get; } = new ConsumableStat(HealthName);
         public ConsumableStat Mana { get; } = new ConsumableStat(ManaName);
 
@@ -61,11 +61,11 @@ namespace Character.Stat
         {
             return new List<IStat>
             {
-                Health, 
-                Mana, 
-                Strength, 
-                Dexterity, 
-                Intelligence, 
+                Health,
+                Mana,
+                Strength,
+                Dexterity,
+                Intelligence,
                 Damage,
                 CriticalChance,
                 CriticalMultiplier,
@@ -119,20 +119,20 @@ namespace Character.Stat
                 _ => null
             };
         }
-        
+
         public IStat GetStat(StatModifierInfo modifierInfo)
         {
             return GetStat(modifierInfo.StatName);
         }
-        
+
         public IModifier CreateModifier(ModifierInfo modifierInfo)
         {
             return modifierInfo is not StatModifierInfo info ? null : CreateModifier(info);
         }
-        
+
         public IStatModifier CreateModifier(StatModifierInfo modifierInfo, int value)
         {
-            var stat = GetStat(modifierInfo.StatName);
+            IStat stat = GetStat(modifierInfo.StatName);
             StatModifier<int> modifier = null;
             if (stat != null)
             {
@@ -148,15 +148,15 @@ namespace Character.Stat
 
         public IStatModifier CreateModifier(StatModifierInfo modifierInfo)
         {
-            var stat = GetStat(modifierInfo.StatName);
+            IStat stat = GetStat(modifierInfo.StatName);
             IStatModifier modifier = null;
             if (stat != null)
             {
-                modifier = new StatSingleIntModifier(modifierInfo, stat); 
+                modifier = new StatSingleIntModifier(modifierInfo, stat);
             }
             else
             {
-                Debug.LogError("modifier stat name is not valid: " + modifierInfo.StatName );
+                Debug.LogError("modifier stat name is not valid: " + modifierInfo.StatName);
             }
 
             if (modifier != null)

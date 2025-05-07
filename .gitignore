@@ -29,6 +29,7 @@
 .vscode/
 .idea/
 *.code-workspace
+.history/
 
 # Gradle cache directory
 .gradle/

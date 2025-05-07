@@ -72,7 +72,7 @@ namespace Items
         {
             if (item is IStackableItem stackableItem)
             {
-                foreach (var (itemPos, ite) in _items)
+                foreach ((Vector2Int itemPos, IItem ite) in _items)
                 {
                     if (stackableItem.ID != ite.ID) continue;
 
@@ -84,9 +84,9 @@ namespace Items
                 }
             }
 
-            for (var i = 0; i < Size.x; i++)
+            for (int i = 0; i < Size.x; i++)
             {
-                for (var j = 0; j < Size.y; j++)
+                for (int j = 0; j < Size.y; j++)
                 {
                     var itemPos = new Vector2Int(i, j);
                     if (AddItem(item, itemPos))
@@ -107,7 +107,7 @@ namespace Items
 
         public void RemoveItem(Vector2Int pos)
         {
-            var item = GetItem(pos, out var itemPos);
+            IItem item = GetItem(pos, out Vector2Int itemPos);
             if (item != null)
             {
                 _items.Remove(itemPos);
@@ -122,7 +122,7 @@ namespace Items
 
         public void RemoveItem(IItem item)
         {
-            foreach (var (pos, it) in _items)
+            foreach ((Vector2Int pos, IItem it) in _items)
             {
                 if (item != it) continue;
                 RemoveItem(pos);
@@ -138,10 +138,10 @@ namespace Items
                 return _items[pos];
             }
 
-            foreach (var (p, item) in _items)
+            foreach ((Vector2Int p, IItem item) in _items)
             {
-                var itemSize = item.Size;
-                var endPos = p + itemSize;
+                Vector2Int itemSize = item.Size;
+                Vector2Int endPos = p + itemSize;
 
                 if (!ContainPoint(p, endPos, pos))
                     continue;
@@ -161,7 +161,7 @@ namespace Items
                 return false;
             }
 
-            var item = GetItem(pos, out var itemPos);
+            IItem item = GetItem(pos, out Vector2Int itemPos);
             if (item == null)
             {
                 return false;
@@ -182,7 +182,7 @@ namespace Items
                 return false;
 
 
-            var overlap = CheckOverlap(itemPos, PickedUp.Value.Size);
+            List<Vector2Int> overlap = CheckOverlap(itemPos, PickedUp.Value.Size);
             switch (overlap.Count)
             {
                 case 0:
@@ -190,7 +190,7 @@ namespace Items
                     PickedUp.Value = null;
                     return true;
                 case 1:
-                    var tempPickedItem = _items[overlap[0]];
+                    IItem tempPickedItem = _items[overlap[0]];
                     RemoveItem(overlap[0]);
                     AddItem(PickedUp.Value, itemPos);
                     PickedUp.Value = tempPickedItem;
@@ -203,7 +203,7 @@ namespace Items
         //检查起始位置是否已被占据
         public bool CheckItemPos(Vector2Int pos)
         {
-            foreach (var (p, item) in _items)
+            foreach ((Vector2Int p, IItem item) in _items)
             {
                 if (ContainPoint(p, p + item.Size, pos))
                 {
@@ -227,24 +227,24 @@ namespace Items
             var overlap = new List<Vector2Int>();
 
             var posToCheck = new List<Vector2Int>();
-            for (var i = 0; i < itemSize.x; i++)
+            for (int i = 0; i < itemSize.x; i++)
             {
-                for (var j = 0; j < itemSize.y; j++)
+                for (int j = 0; j < itemSize.y; j++)
                 {
-                    var pos = itemPos;
+                    Vector2Int pos = itemPos;
                     pos.x += i;
                     pos.y += j;
                     posToCheck.Add(pos);
                 }
             }
 
-            foreach (var (pos, item) in _items)
+            foreach ((Vector2Int pos, IItem item) in _items)
             {
-                for (var i = 0; i < item.Size.x; i++)
+                for (int i = 0; i < item.Size.x; i++)
                 {
-                    for (var j = 0; j < item.Size.y; j++)
+                    for (int j = 0; j < item.Size.y; j++)
                     {
-                        var p = pos;
+                        Vector2Int p = pos;
                         p.x += i;
                         p.y += j;
                         if (posToCheck.Contains(p))
@@ -287,11 +287,11 @@ namespace Items
             // var serializedInventory = SaveLoadManager.Load<SerializedInventory>($"Inventory-{inventoryName}.json");
 
             var inventoryData = (Data<SerializedInventory>)data;
-            var serializedInventory = inventoryData.Value;
+            SerializedInventory serializedInventory = inventoryData.Value;
 
             Size = serializedInventory.GetSize();
-            var items = serializedInventory.Deserialize();
-            foreach (var (itemPos, item) in items)
+            Dictionary<Vector2Int, IItem> items = serializedInventory.Deserialize();
+            foreach ((Vector2Int itemPos, IItem item) in items)
             {
                 AddItem(item, itemPos);
             }

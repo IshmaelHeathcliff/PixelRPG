@@ -11,11 +11,11 @@ namespace Tool
             var items = itemWeights.Keys.ToList();
             var weights = itemWeights.Values.ToList();
             int totalWeight = weights.Sum();
-            
+
             var random = new Random();
             int randomValue = random.Next(0, totalWeight);
 
-            var i = 0;
+            int i = 0;
             while (true)
             {
                 if (randomValue < weights[i])
@@ -34,6 +34,6 @@ namespace Tool
 
             return default(T);
         }
-        
+
     }
 }

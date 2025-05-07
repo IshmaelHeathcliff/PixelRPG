@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Character.Damage
 {
-    public interface IDamageable
+    public interface IDamageable : ICharacterControlled
     {
         EasyEvent OnHurt { get; }
         EasyEvent OnDeath { get; }
@@ -14,12 +14,14 @@ namespace Character.Damage
         IStat LightningResistance { get; }
         IStat ColdResistance { get; }
         IStat ChaosResistance { get; }
-        bool IsDamageable { get; }
+        bool IsDamageable { get; set; }
         void TakeDamage(float damage);
 
     }
-    public class Damageable : MonoBehaviour, IDamageable
+    public class Damageable : MonoBehaviour, IDamageable, IController
     {
+        public ICharacterController CharacterController { get; set; }
+
         public EasyEvent OnHurt { get; protected set; }
         public EasyEvent OnDeath { get; protected set; }
         public IConsumableStat Health { get; protected set; }
@@ -37,15 +39,20 @@ namespace Character.Damage
             {
                 return;
             }
-            
+
             Health.ChangeCurrentValue(-damage);
             // Debug.Log("Left Health:" + Health.CurrentValue);
             OnHurt.Trigger();
 
-            if (Health.CurrentValue<= 0)
+            if (Health.CurrentValue <= 0)
             {
                 OnDeath.Trigger();
             }
+        }
+
+        public IArchitecture GetArchitecture()
+        {
+            return PixelRPG.Interface;
         }
     }
 }

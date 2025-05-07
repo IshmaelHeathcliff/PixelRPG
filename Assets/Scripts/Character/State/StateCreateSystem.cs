@@ -15,8 +15,8 @@ namespace Character.State
         void Load()
         {
             _stateInfoCache = new Dictionary<string, StateInfo>();
-            var stateInfoList = this.GetUtility<SaveLoadUtility>().Load<List<StateInfo>>(JsonName, JsonPath);
-            foreach (var stateInfo in stateInfoList)
+            List<StateInfo> stateInfoList = this.GetUtility<SaveLoadUtility>().Load<List<StateInfo>>(JsonName, JsonPath);
+            foreach (StateInfo stateInfo in stateInfoList)
             {
                 _stateInfoCache.Add(stateInfo.ID, stateInfo);
             }
@@ -28,15 +28,15 @@ namespace Character.State
             {
                 Load();
             }
-            
+
             return _stateInfoCache.GetValueOrDefault(id);
         }
 
         public IState CreateState(string id, string factoryID, int[] values)
         {
-            var stateInfo = GetStateInfo(id);
-            var entrySystem = this.GetSystem<ModifierSystem>();
-            var entries = stateInfo.ModifierID.Select(
+            StateInfo stateInfo = GetStateInfo(id);
+            ModifierSystem entrySystem = this.GetSystem<ModifierSystem>();
+            IEnumerable<IStatModifier> entries = stateInfo.ModifierID.Select(
                     (entryId, i) => entrySystem.CreateStatModifier(entryId, factoryID, values[i]));
 
             return new State(stateInfo, entries);
@@ -44,27 +44,27 @@ namespace Character.State
 
         public IStateWithTime CreateState(string id, string factoryID, int[] values, int time)
         {
-            var stateInfo = GetStateInfo(id);
-            var entrySystem = this.GetSystem<ModifierSystem>();
+            StateInfo stateInfo = GetStateInfo(id);
+            ModifierSystem entrySystem = this.GetSystem<ModifierSystem>();
 
             if (stateInfo.ModifierID.Count != values.Length)
             {
                 Debug.LogError("values.Length != stateInfo.EntryID.Count");
                 return null;
             }
-            
+
             var entries = new List<IModifier>();
 
             for (int i = 0; i < stateInfo.ModifierID.Count; i++)
             {
                 entries.Add(entrySystem.CreateStatModifier(stateInfo.ModifierID[i], factoryID, values[i]));
             }
-            
+
             return new StateWithTime(stateInfo, entries, time);
         }
-        
-        
-        
+
+
+
         protected override void OnInit()
         {
             _stateInfoCache = new Dictionary<string, StateInfo>();

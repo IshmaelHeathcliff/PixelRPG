@@ -7,11 +7,11 @@ namespace Character.Modifier
 {
     public interface IStatModifier : IModifier
     {
-        public IStat GetStat();
-        public void RandomizeLevel();
-        public void RandomizeValue();
+        IStat GetStat();
+        void RandomizeLevel();
+        void RandomizeValue();
     }
-    
+
     [Serializable]
     public abstract class StatModifier<T> : Modifier<T>, IStatModifier
     {
@@ -19,22 +19,22 @@ namespace Character.Modifier
         {
             return PixelRPG.Interface.GetSystem<ModifierSystem>().GetStat(modifier);
         }
-        
+
         [JsonProperty] protected int Level;
-        
+
         protected IStat Stat;
 
         protected StatModifier()
         {
         }
-        
+
         protected StatModifier(StatModifierInfo modifierInfo, IStat stat)
         {
             ModifierInfo = modifierInfo;
             Stat = stat;
             ModifierID = modifierInfo.ModifierID;
         }
-        
+
         public abstract void RandomizeLevel();
         public abstract void RandomizeValue();
 
@@ -69,7 +69,7 @@ namespace Character.Modifier
         More,
         Fixed,
     }
-        
+
 
     [Serializable]
     public class StatModifierInfo : ModifierInfo
@@ -80,5 +80,5 @@ namespace Character.Modifier
         [JsonProperty][ShowInInspector][TableList(ShowIndexLabels = true)] public LevelRange[] LevelRanges { get; set; }
     }
 
-    
+
 }
