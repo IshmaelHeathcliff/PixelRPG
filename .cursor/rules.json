@@ -81,8 +81,8 @@
                 "accessors": true
             },
             "blocks": {
-                "preserveSingleLineBlocks": false,
-                "preserveSingleLineStatements": false
+                "preserveSingleLineBlocks": true,
+                "preserveSingleLineStatements": true
             },
             "using": {
                 "sortSystemDirectivesFirst": true,
