@@ -1,0 +1,118 @@
+{
+    "version": 1,
+    "rules": {
+        "formatting": {
+            "indentSize": 4,
+            "indentStyle": "space",
+            "endOfLine": "crlf",
+            "insertFinalNewline": true,
+            "trimTrailingWhitespace": true,
+            "charset": "utf-8"
+        },
+        "csharp": {
+            "braces": {
+                "newLineBeforeOpenBrace": "all",
+                "newLineBeforeElse": true,
+                "newLineBeforeCatch": true,
+                "newLineBeforeFinally": true,
+                "newLineBeforeMembersInObjectInitializers": true,
+                "newLineBeforeMembersInAnonymousTypes": true,
+                "newLineBetweenQueryExpressionClauses": true
+            },
+            "spacing": {
+                "afterCast": false,
+                "afterKeywordsInControlFlowStatements": true,
+                "betweenMethodDeclarationParameterListParentheses": false,
+                "betweenMethodCallParameterListParentheses": false,
+                "betweenParentheses": false,
+                "beforeColonInInheritanceClause": true,
+                "afterColonInInheritanceClause": true,
+                "aroundBinaryOperators": "before_and_after",
+                "betweenMethodDeclarationEmptyParameterListParentheses": false,
+                "betweenMethodCallNameAndOpeningParenthesis": false,
+                "betweenMethodCallEmptyParameterListParentheses": false
+            },
+            "naming": {
+                "privateFields": {
+                    "style": "camelCase",
+                    "prefix": "_",
+                    "severity": "warning"
+                },
+                "publicMembers": {
+                    "style": "pascalCase",
+                    "severity": "warning"
+                },
+                "interfaces": {
+                    "style": "pascalCase",
+                    "prefix": "I",
+                    "severity": "warning"
+                },
+                "privateConstants": {
+                    "style": "pascalCase",
+                    "severity": "warning"
+                },
+                "privateStaticFields": {
+                    "style": "camelCase",
+                    "prefix": "s_",
+                    "severity": "warning"
+                },
+                "privateStaticReadonly": {
+                    "style": "pascalCase",
+                    "severity": "warning"
+                },
+                "typeParameters": {
+                    "style": "pascalCase",
+                    "severity": "warning"
+                }
+            },
+            "modifiers": {
+                "requireAccessibilityModifiers": "omit_if_default",
+                "readonlyField": false
+            },
+            "var": {
+                "forBuiltInTypes": false,
+                "whenTypeIsApparent": true,
+                "elsewhere": false
+            },
+            "expressionBodied": {
+                "methods": false,
+                "properties": true,
+                "indexers": true,
+                "accessors": true
+            },
+            "blocks": {
+                "preserveSingleLineBlocks": false,
+                "preserveSingleLineStatements": false
+            },
+            "using": {
+                "sortSystemDirectivesFirst": true,
+                "separateImportDirectiveGroups": false
+            },
+            "other": {
+                "preferBraces": true,
+                "throwExpression": true,
+                "inlinedVariableDeclaration": true,
+                "patternMatchingOverIsWithCastCheck": true,
+                "patternMatchingOverAsWithNullCheck": true
+            }
+        },
+        "fileTypes": {
+            "yaml": {
+                "indentSize": 2,
+                "indentStyle": "space"
+            },
+            "json": {
+                "indentSize": 2,
+                "indentStyle": "space"
+            },
+            "asmdef": {
+                "indentSize": 2,
+                "indentStyle": "space"
+            },
+            "asmref": {
+                "indentSize": 2,
+                "indentStyle": "space"
+            }
+        }
+    }
+}
