@@ -15,10 +15,10 @@ namespace Character.State
         void Disable();
     }
 
-    public interface IStateWithTime: IState
+    public interface IStateWithTime : IState
     {
         float Duration { get; set; }
-        float TimeLeft { get;}
+        float TimeLeft { get; }
         void ResetTime();
         void DecreaseTime(float time);
     }
@@ -28,14 +28,14 @@ namespace Character.State
         int Count { get; set; }
         int MaxCount { get; set; }
     }
-    
+
     [Serializable]
     public class State : IState
     {
         StateInfo _info;
 
         List<IModifier> _modifiers;
-        
+
         public State(StateInfo info, IEnumerable<IModifier> entries)
         {
             _info = info;
@@ -65,7 +65,7 @@ namespace Character.State
 
         public void Enable()
         {
-            foreach (var modifier in _modifiers)
+            foreach (IModifier modifier in _modifiers)
             {
                 modifier.Register();
             }
@@ -73,13 +73,13 @@ namespace Character.State
 
         public void Disable()
         {
-            foreach (var modifier in _modifiers)
+            foreach (IModifier modifier in _modifiers)
             {
                 modifier.Unregister();
             }
         }
     }
-    
+
     public class StateWithTime : State, IStateWithTime
     {
         public float Duration { get; set; }
@@ -105,7 +105,7 @@ namespace Character.State
             }
         }
     }
-    
+
     public class StateWithCount : State, IStateWithCount
     {
         public int Count { get; set; }
@@ -117,7 +117,7 @@ namespace Character.State
             Enable();
         }
     }
-    
+
     public class StateWithTimeAndCount : StateWithTime, IStateWithCount
     {
         public int Count { get; set; }

@@ -13,8 +13,8 @@ namespace Core
         void OnGUI();
         void Exit();
     }
-    
-    
+
+
     public class CustomState : IState
     {
         Func<bool> _onCondition;
@@ -29,32 +29,32 @@ namespace Core
             _onCondition = onCondition;
             return this;
         }
-        
+
         public CustomState OnEnter(Action onEnter)
         {
             _onEnter = onEnter;
             return this;
         }
 
-        
+
         public CustomState OnUpdate(Action onUpdate)
         {
             _onUpdate = onUpdate;
             return this;
         }
-        
+
         public CustomState OnFixedUpdate(Action onFixedUpdate)
         {
             _onFixedUpdate = onFixedUpdate;
             return this;
         }
-        
+
         public CustomState OnGUI(Action onGUI)
         {
             _onGUI = onGUI;
             return this;
         }
-        
+
         public CustomState OnExit(Action onExit)
         {
             _onExit = onExit;
@@ -64,7 +64,7 @@ namespace Core
 
         public bool Condition()
         {
-            var result = _onCondition?.Invoke();
+            bool? result = _onCondition?.Invoke();
             return result == null || result.Value;
         }
 
@@ -72,7 +72,7 @@ namespace Core
         {
             _onEnter?.Invoke();
         }
-        
+
 
         public void Update()
         {
@@ -85,7 +85,7 @@ namespace Core
             _onFixedUpdate?.Invoke();
         }
 
-        
+
         public void OnGUI()
         {
             _onGUI?.Invoke();
@@ -97,20 +97,24 @@ namespace Core
         }
     }
 
-    
-    public class FSM<T> where T: struct, Enum
+    public interface IHasFSM<T> where T : struct, Enum
+    {
+        FSM<T> FSM { get; }
+    }
+
+    public class FSM<T> where T : struct, Enum
     {
         protected readonly Dictionary<T, IState> States = new Dictionary<T, IState>();
 
         public void AddState(T id, IState state)
         {
-            States.Add(id,state);
+            States.Add(id, state);
         }
-        
-        
+
+
         public CustomState State(T t)
         {
-            if (States.TryGetValue(t, out var st))
+            if (States.TryGetValue(t, out IState st))
             {
                 return st as CustomState;
             }
@@ -129,12 +133,15 @@ namespace Core
 
         public long FrameCountOfCurrentState = 1;
         public float SecondsOfCurrentState = 0.0f;
-        
+
         public void ChangeState(T t)
         {
-            if (t.Equals(CurrentStateId)) return;
-            
-            if (States.TryGetValue(t, out var state))
+            if (t.Equals(CurrentStateId))
+            {
+                return;
+            }
+
+            if (States.TryGetValue(t, out IState state))
             {
                 if (_currentState != null && state.Condition())
                 {
@@ -151,7 +158,7 @@ namespace Core
         }
 
         Action<T, T> _onStateChanged = (_, __) => { };
-        
+
         public void OnStateChanged(Action<T, T> onStateChanged)
         {
             _onStateChanged += onStateChanged;
@@ -159,7 +166,7 @@ namespace Core
 
         public void StartState(T t)
         {
-            if (States.TryGetValue(t, out var state))
+            if (States.TryGetValue(t, out IState state))
             {
                 PreviousStateId = t;
                 _currentState = state;
@@ -194,13 +201,13 @@ namespace Core
             States.Clear();
         }
     }
-    
-    public abstract class AbstractState<TStateId,TTarget> : IState where TStateId : struct, Enum
+
+    public abstract class AbstractState<TStateId, TTarget> : IState where TStateId : struct, Enum
     {
         protected FSM<TStateId> FSM;
         protected TTarget Target;
 
-        protected AbstractState(FSM<TStateId> fsm,TTarget target)
+        protected AbstractState(FSM<TStateId> fsm, TTarget target)
         {
             FSM = fsm;
             Target = target;
@@ -209,7 +216,7 @@ namespace Core
 
         bool IState.Condition()
         {
-            return OnCondition();;
+            return OnCondition(); ;
         }
 
         void IState.Enter()
@@ -244,17 +251,17 @@ namespace Core
 
         protected virtual void OnUpdate()
         {
-            
+
         }
 
         protected virtual void OnFixedUpdate()
         {
-            
+
         }
 
         protected virtual void OnExit()
         {
-            
+
         }
     }
 }

@@ -25,9 +25,9 @@ namespace Character.Stat
         void RemoveIncreaseModifier(string key);
         void RemoveMoreModifier(string key);
     }
-    
+
     [Serializable]
-    public class Stat :  IStat
+    public class Stat : IStat
     {
         public string Name { get; private set; }
         public float Value => GetValue();
@@ -42,7 +42,7 @@ namespace Character.Stat
         protected Dictionary<string, Modifier<int>> FixedValueModifiers = new();
         protected Dictionary<string, Modifier<int>> IncreaseModifiers = new();
         protected Dictionary<string, Modifier<int>> MoreModifiers = new();
-        
+
         EasyEvent<float> _onValueChanged = new();
 
         public Stat(string name)
@@ -117,7 +117,7 @@ namespace Character.Stat
 
         protected float Calculate(float addedMultiplier = 1)
         {
-            return (BaseValue + AddedValue * addedMultiplier) * (1 + Increase/100f) * More + FixedValue;
+            return (BaseValue + AddedValue * addedMultiplier) * (1 + Increase / 100f) * More + FixedValue;
         }
 
         void SetValues()
@@ -128,11 +128,11 @@ namespace Character.Stat
             Increase = IncreaseModifiers.Sum(x => x.Value.Value);
 
             More = 1;
-            foreach (var mod in MoreModifiers)
+            foreach (KeyValuePair<string, Modifier<int>> mod in MoreModifiers)
             {
                 More *= (float)(mod.Value.Value) / 100 + 1;
             }
-            
+
         }
 
         public float GetValue()
@@ -146,7 +146,7 @@ namespace Character.Stat
             return Register(Action);
             void Action(float _) => onValueChanged();
         }
-        
+
         public IUnRegister Register(Action<float> onValueChanged)
         {
             return _onValueChanged.Register(onValueChanged);
@@ -166,10 +166,10 @@ namespace Character.Stat
 
     public interface IConsumableStat : IStat
     {
-        public float CurrentValue { get; }
-        public void ChangeCurrentValue(float value);
-        public void SetCurrentValue(float value);
-        public void SetMaxValue();
+        float CurrentValue { get; }
+        void ChangeCurrentValue(float value);
+        void SetCurrentValue(float value);
+        void SetMaxValue();
     }
 
     [Serializable]
@@ -209,7 +209,7 @@ namespace Character.Stat
             float newCurrentValue = CurrentValue + value;
             CurrentValue = CheckValue(newCurrentValue);
         }
-        
+
         public void SetCurrentValue(float value)
         {
             CurrentValue = CheckValue(value);
@@ -224,7 +224,7 @@ namespace Character.Stat
         {
             CurrentValue = GetValue();
         }
-        
+
         public IUnRegister Register(Action<float, float> onValueChanged)
         {
             return _onValueChanged.Register(onValueChanged);
@@ -245,10 +245,10 @@ namespace Character.Stat
 
     public interface IKeywordStat : IStat
     {
-        public float GetValueByKeywords(IEnumerable<string> keywords);
-        public float GetValueByKeywords(float baseValue, IEnumerable<string> keywords, float addedMultiplier=1);
+        float GetValueByKeywords(IEnumerable<string> keywords);
+        float GetValueByKeywords(float baseValue, IEnumerable<string> keywords, float addedMultiplier = 1);
     }
-    
+
     [Serializable]
     public class KeywordStat : Stat, IKeywordStat
     {
@@ -258,38 +258,38 @@ namespace Character.Stat
 
         void SetValuesByKeywords(IEnumerable<string> keywords)
         {
-            var effectiveBaseValueModifiers =
+            IEnumerable<Modifier<int>> effectiveBaseValueModifiers =
                 BaseValueModifiers.Values.Where(x => x.ModifierInfo.Keywords.All(keywords.Contains));
-            var effectiveAddedValueModifiers = 
+            IEnumerable<Modifier<int>> effectiveAddedValueModifiers =
                 AddedValueModifiers.Values.Where(x => x.ModifierInfo.Keywords.All(keywords.Contains));
-            var effectiveFixedValueModifiers = 
+            IEnumerable<Modifier<int>> effectiveFixedValueModifiers =
                 FixedValueModifiers.Values.Where(x => x.ModifierInfo.Keywords.All(keywords.Contains));
-            var effectiveIncreaseModifiers = 
+            IEnumerable<Modifier<int>> effectiveIncreaseModifiers =
                 IncreaseModifiers.Values.Where(x => x.ModifierInfo.Keywords.All(keywords.Contains));
-            var effectiveMoreModifiers = 
+            IEnumerable<Modifier<int>> effectiveMoreModifiers =
                 MoreModifiers.Values.Where(x => x.ModifierInfo.Keywords.All(keywords.Contains));
 
-            
+
             BaseValue = effectiveBaseValueModifiers.Sum(x => x.Value);
             AddedValue = effectiveAddedValueModifiers.Sum(x => x.Value);
             FixedValue = effectiveFixedValueModifiers.Sum(x => x.Value);
             Increase = effectiveIncreaseModifiers.Sum(x => x.Value);
 
             More = 1;
-            foreach (var mod in effectiveMoreModifiers)
+            foreach (Modifier<int> mod in effectiveMoreModifiers)
             {
                 More *= (float)(mod.Value) / 100 + 1;
             }
         }
 
-        
+
         public float GetValueByKeywords(IEnumerable<string> keywords)
         {
             SetValuesByKeywords(keywords);
             return Calculate();
         }
 
-        public float GetValueByKeywords(float baseValue, IEnumerable<string> keywords, float addedMultiplier=1)
+        public float GetValueByKeywords(float baseValue, IEnumerable<string> keywords, float addedMultiplier = 1)
         {
             SetValuesByKeywords(keywords);
             BaseValue = baseValue;

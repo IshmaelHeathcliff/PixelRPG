@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Character.Enemy
 {
-    public class EnemyIdleState : AbstractState<EnemyStateId, EnemyController>
+    public class EnemyIdleState : EnemyState
     {
         float _idleTime;
         public EnemyIdleState(FSM<EnemyStateId> fsm, EnemyController target) : base(fsm, target)
@@ -29,9 +29,9 @@ namespace Character.Enemy
 
         protected override void OnEnter()
         {
-            _idleTime = Target.IdleTime;
-            Target.PlayAnimation(EnemyController.Idle);
-            Target.Freeze();
+            _idleTime = MoveController.IdleTime;
+            MoveController.PlayAnimation(EnemyMoveController.Idle);
+            MoveController.Freeze();
         }
     }
 }

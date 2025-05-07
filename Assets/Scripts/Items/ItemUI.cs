@@ -104,7 +104,7 @@ namespace Items
                 return _iconRect;
             }
         }
-        
+
         public void SetUIPosition(Vector2 pos)
         {
             Rect.anchoredPosition = pos;
@@ -130,7 +130,7 @@ namespace Items
         public async UniTaskVoid SetIcon(string icon)
         {
             AddressablesManager.Release(_iconHandle);
-            var iconPath = UIItemsName + $"{icon}";
+            string iconPath = UIItemsName + $"{icon}";
             _iconHandle = Addressables.LoadAssetAsync<Sprite>(iconPath);
             Icon.sprite = await _iconHandle;
 
@@ -146,13 +146,13 @@ namespace Items
             IconRect.sizeDelta = iconSize;
             IconRect.localScale = Vector3.one;
         }
-        
+
         public void SetIconAnchor(Vector2 min, Vector2 max)
         {
             IconRect.anchorMax = max;
             IconRect.anchorMin = min;
         }
-        
+
         public void SetIconPivot(Vector2 pivot)
         {
             IconRect.pivot = pivot;
@@ -200,12 +200,12 @@ namespace Items
         {
             Count.enabled = false;
         }
-        
+
         protected virtual void Release()
         {
             // Icon.sprite = null;
             // Background.sprite = null;
-            
+
             AddressablesManager.Release(_iconHandle);
             AddressablesManager.Release(_bgHandle);
         }

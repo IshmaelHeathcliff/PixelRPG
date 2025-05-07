@@ -21,7 +21,7 @@ namespace Items
 
 
         Dictionary<Vector2Int, ItemUI> _itemUIs = new();
-        
+
         // 用于仓库定位
 
         CurrentItemUI _currentItemUI;
@@ -42,15 +42,15 @@ namespace Items
 
                 return _itemsHolder;
             }
-            
+
         }
 
         public void InitInventoryUI(Vector2Int size)
-        {                   
-            if(_itemUIs != null)
+        {
+            if (_itemUIs != null)
             {
-                foreach (var (pos, itemUI) in _itemUIs)
-                { 
+                foreach ((Vector2Int pos, ItemUI itemUI) in _itemUIs)
+                {
                     _pool.Push(itemUI);
                 }
 
@@ -61,16 +61,16 @@ namespace Items
                 _itemUIs = new Dictionary<Vector2Int, ItemUI>();
             }
 
-            _gridSize = size;            
+            _gridSize = size;
             _rect.sizeDelta = _gridSize * _tileSize + Vector2.one * (_frameWidth * 2);
             _rect.pivot = new Vector2(0, 1);
-            
+
         }
 
 
         public async UniTaskVoid AddItemUI(Vector2Int gridPos, IItem item)
         {
-            var itemUI = await _pool.Pop();
+            ItemUI itemUI = await _pool.Pop();
             itemUI.transform.SetParent(ItemsHolder);
             _itemUIs.Add(gridPos, itemUI);
 
@@ -82,11 +82,11 @@ namespace Items
             itemUI.SetUIPosition(GridPosToUIPos(gridPos, itemUI.Size));
             itemUI.SetUISize(itemUI.Size * _tileSize - new Vector2Int(2, 2) * _frameWidth);
             itemUI.SetIcon(item.IconName).Forget();
-            
+
             if (item is IStackableItem stackableItem)
             {
-               itemUI.SetCount(stackableItem.Count); 
-               itemUI.EnableCount();
+                itemUI.SetCount(stackableItem.Count);
+                itemUI.EnableCount();
             }
             else
             {
@@ -109,8 +109,8 @@ namespace Items
                 ResetItemInfo();
                 return;
             }
-            
-            foreach (var (p, itemUI) in _itemUIs)
+
+            foreach ((Vector2Int p, ItemUI itemUI) in _itemUIs)
             {
                 if (InventoryModel.ContainPoint(itemUI.StartPos, itemUI.StartPos + itemUI.Size, pos))
                 {
@@ -131,7 +131,7 @@ namespace Items
                 CurrentItemUI.SetIcon(item.IconName).Forget();
                 CurrentItemUI.SetIconSize(CurrentItemUI.Size * _tileSize - new Vector2Int(2, 2) * _frameWidth);
             }
-            
+
             SetItemInfo(item.GetDescription());
         }
 
@@ -145,11 +145,11 @@ namespace Items
 
         Vector2 GridPosToUIPos(Vector2Int gridPos, Vector2Int size)
         {
-            var pos = Vector2.Scale(gridPos + (Vector2)size / 2 , new Vector2(1, -1)) * (_tileSize);
+            Vector2 pos = Vector2.Scale(gridPos + (Vector2)size / 2, new Vector2(1, -1)) * (_tileSize);
             pos += new Vector2(1, -1) * _frameWidth;
             return pos;
         }
-        
+
         Transform InitItemsHolder()
         {
             var t = (RectTransform)transform.Find("ItemsHolder");
@@ -166,10 +166,10 @@ namespace Items
 
             return t;
         }
-        
+
         async UniTaskVoid InitCurrentItemUI()
         {
-            var currentTransform = transform.Find("CurrentItemUI");
+            Transform currentTransform = transform.Find("CurrentItemUI");
             if (currentTransform != null)
             {
                 if (!currentTransform.TryGetComponent(out _currentItemUI))
@@ -179,18 +179,18 @@ namespace Items
             }
             else
             {
-                var currentItemUI = await _pool.GetNewCurrentItemUI();
+                CurrentItemUI currentItemUI = await _pool.GetNewCurrentItemUI();
                 currentItemUI.transform.SetParent(_rect);
                 currentItemUI.name = "CurrentItemUI";
-                
-                var image = currentItemUI.GetComponent<Image>();
+
+                Image image = currentItemUI.GetComponent<Image>();
                 image.raycastTarget = false;
 
                 currentItemUI.transform.SetAsLastSibling();
                 currentItemUI.gameObject.SetActive(false);
                 _currentItemUI = currentItemUI;
             }
-            
+
             _currentItemUI.SetAnchor(Vector2.up, Vector2.up);
             _currentItemUI.SetPivot(Vector2.one / 2);
             _currentItemUI.SetUIPosition(Vector2.zero);
@@ -198,7 +198,7 @@ namespace Items
             _currentItemUI.ItemInfo = _itemInfo;
             SetCurrentItemUI(Vector2Int.one, Vector2Int.one);
         }
-        
+
         void SetItemInfo(string info)
         {
             _itemInfo.text = info;
@@ -217,7 +217,7 @@ namespace Items
         void DisableItemInfo()
         {
             _itemInfo.gameObject.SetActive(false);
-            
+
         }
 
         public void EnableUI(Vector2Int gridPos)

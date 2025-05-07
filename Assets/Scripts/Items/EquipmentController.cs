@@ -16,7 +16,7 @@ namespace Items
     public class EquipmentController : MonoBehaviour, IEquipmentController
     {
         [SerializeField] EquipmentsUI _equipmentsUI;
-        
+
         EquipmentsModel _equipmentsModel;
         PlayerInput.EquipmentsActions _equipmentsInput;
 
@@ -48,27 +48,27 @@ namespace Items
 
         void MoveCurrentSlot(InputAction.CallbackContext context)
         {
-            var inputDirection = context.ReadValue<Vector2>().normalized;
-            var type = _equipmentsUI.MoveCurrentItemUI(inputDirection);
+            Vector2 inputDirection = context.ReadValue<Vector2>().normalized;
+            EquipmentType type = _equipmentsUI.MoveCurrentItemUI(inputDirection);
             _equipmentsUI.SetCurrentItemUI(type, _equipmentsModel.Equipments[type].Value);
         }
 
 
         void TakeoffEquipment(InputAction.CallbackContext context)
         {
-            var currentType = _equipmentsUI.GetCurrentEquipmentType();
-            var equipped = Takeoff(currentType);
+            EquipmentType currentType = _equipmentsUI.GetCurrentEquipmentType();
+            IEquipment equipped = Takeoff(currentType);
             if (equipped == null)
             {
                 return;
             }
-            
+
             if (!this.SendCommand(new PackageAddCommand(equipped)))
             {
                 Equip(equipped);
             }
         }
-        
+
         void RegisterInput()
         {
             _equipmentsInput.Move.performed += MoveCurrentSlot;
@@ -89,9 +89,9 @@ namespace Items
 
         public void Close()
         {
-             Disable();
-             IsOpen = false;
-             gameObject.SetActive(false);
+            Disable();
+            IsOpen = false;
+            gameObject.SetActive(false);
         }
 
         public void Open(Vector2Int pos)
@@ -110,14 +110,14 @@ namespace Items
 
         public void Enable(Vector2Int pos)
         {
-            var type = _equipmentsUI.GetEquipmentTypeByPos(pos);
-            var equipment = _equipmentsModel.Equipments[type].Value;
+            EquipmentType type = _equipmentsUI.GetEquipmentTypeByPos(pos);
+            IEquipment equipment = _equipmentsModel.Equipments[type].Value;
             _equipmentsUI.EnableUI(pos, equipment);
             _equipmentsInput.Enable();
             IsActive = true;
         }
         #endregion
-        
+
 
         void OnValidate()
         {

@@ -3,25 +3,25 @@ using Cysharp.Threading.Tasks;
 
 namespace Core
 {
-    public interface IObjectPool<T> where T: class
+    public interface IObjectPool<T> where T : class
     {
         T Pop();
         void Push(T obj);
     }
-    
-    public interface IAsyncObjectPool<T> where T: class
+
+    public interface IAsyncObjectPool<T> where T : class
     {
         UniTask<T> Pop();
         void Push(T obj);
     }
-    
-    public abstract class PoolSystem<T> : AbstractSystem, IObjectPool<T> where T: class
+
+    public abstract class PoolSystem<T> : AbstractSystem, IObjectPool<T> where T : class
     {
         public int MaxSize { private get; set; } = 1000;
         protected Stack<T> Pool;
         public virtual T Pop()
         {
-            var obj = Pool.Count > 0 ? Pool.Pop() : CreateObject();
+            T obj = Pool.Count > 0 ? Pool.Pop() : CreateObject();
 
             PresetPopObject(obj);
             return obj;
@@ -43,11 +43,11 @@ namespace Core
         {
             Pool = new Stack<T>();
 
-            for (var i = 0; i < size; i++)
+            for (int i = 0; i < size; i++)
             {
                 Pool.Push(CreateObject());
             }
-            
+
         }
 
         protected abstract T CreateObject();
@@ -61,12 +61,12 @@ namespace Core
         }
     }
 
-    public abstract class AsyncPoolSystem<T> : PoolSystem<T>, IAsyncObjectPool<T> where T: class
+    public abstract class AsyncPoolSystem<T> : PoolSystem<T>, IAsyncObjectPool<T> where T : class
     {
         public new virtual async UniTask<T> Pop()
         {
             T obj;
-            if(Pool.Count > 0)
+            if (Pool.Count > 0)
             {
                 obj = Pool.Pop();
             }
@@ -83,7 +83,7 @@ namespace Core
         {
             Pool = new Stack<T>();
 
-            for (var i = 0; i < size; i++)
+            for (int i = 0; i < size; i++)
             {
                 Pool.Push(await CreateObjectAsync());
             }
@@ -93,7 +93,7 @@ namespace Core
         {
             return null;
         }
-        
+
         protected abstract UniTask<T> CreateObjectAsync();
 
     }

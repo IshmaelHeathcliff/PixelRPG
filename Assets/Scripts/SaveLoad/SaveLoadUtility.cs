@@ -15,12 +15,12 @@ namespace SaveLoad
                 _dataPersisters.Add(persister);
             }
         }
-        
+
         public void UnregisterPersisters(ISaveData persister)
         {
             _dataPersisters.Remove(persister);
         }
-        
+
 
         public void ClearPersisters()
         {
@@ -30,14 +30,14 @@ namespace SaveLoad
         public void Save(object saveObject, string fileName, string folderName)
         {
             SaveLoadManager.Save(saveObject, fileName, folderName);
-            
+
         }
-        
+
         public T Load<T>(string fileName, string folderName)
         {
             return SaveLoadManager.Load<T>(fileName, folderName);
         }
-        
+
         public void SetDirty(ISaveData dp)
         {
             Save(dp);
@@ -45,7 +45,7 @@ namespace SaveLoad
 
         void SaveAllData()
         {
-            foreach (var dp in _dataPersisters)
+            foreach (ISaveData dp in _dataPersisters)
             {
                 Save(dp);
             }
@@ -62,11 +62,11 @@ namespace SaveLoad
 
         void LoadAllData()
         {
-            foreach (var dp in _dataPersisters)
+            foreach (ISaveData dp in _dataPersisters)
             {
                 if (!string.IsNullOrEmpty(dp.DataTag))
                 {
-                    if (_store.TryGetValue(dp.DataTag, out var data))
+                    if (_store.TryGetValue(dp.DataTag, out Data data))
                     {
                         dp.LoadData(data);
                     }
@@ -78,11 +78,11 @@ namespace SaveLoad
         {
             SaveAllData();
             var dataToSave = new Dictionary<string, Data>();
-            foreach (var dp in _dataPersisters)
+            foreach (ISaveData dp in _dataPersisters)
             {
                 if (!string.IsNullOrEmpty(dp.DataTag))
                 {
-                    if (_store.TryGetValue(dp.DataTag, out var data))
+                    if (_store.TryGetValue(dp.DataTag, out Data data))
                     {
                         dataToSave[dp.DataTag] = data;
                     }
@@ -94,12 +94,12 @@ namespace SaveLoad
 
         public void LoadAllDataFromFile()
         {
-            var data = SaveLoadManager.Load<Dictionary<string, Data>>("save.json");
-            foreach ((string k, var d) in data)
+            Dictionary<string, Data> data = SaveLoadManager.Load<Dictionary<string, Data>>("save.json");
+            foreach ((string k, Data d) in data)
             {
                 _store[k] = d;
             }
-            
+
             LoadAllData();
         }
     }

@@ -1,18 +1,12 @@
-﻿using System;
+﻿using Character.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Character.Damage
 {
-    public class PlayerDamageable : Damageable, IController
+    public class PlayerDamageable : Damageable
     {
-        [SerializeField] PlayerController _playerController;
         PlayerModel _model;
-
-        void OnValidate()
-        {
-            _playerController = GetComponentInParent<PlayerController>();
-        }
 
         void Awake()
         {
@@ -22,8 +16,8 @@ namespace Character.Damage
 
         void Start()
         {
-            _model = this.GetModel<PlayerModel>();
-            var stats = _model.PlayerStats;
+            _model = this.GetModel<PlayersModel>().Default();
+            Stat.Stats stats = _model.Stats;
             Health = stats.Health;
             Defence = stats.Defence;
             Evasion = stats.Evasion;
@@ -40,16 +34,9 @@ namespace Character.Damage
         {
             IsDamageable = false;
             await UniTask.Delay((int)(1000 * 0.5f));
-            _playerController.Respawn();
+            (CharacterController as PlayerController).Respawn();
             await UniTask.Delay((int)(1000 * 0.5f));
             IsDamageable = true;
-        }
-        
-        
-
-        public IArchitecture GetArchitecture()
-        {
-            return PixelRPG.Interface;
         }
     }
 }

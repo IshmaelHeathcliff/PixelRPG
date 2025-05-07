@@ -1,21 +1,51 @@
-﻿using Character.Stat;
+﻿using Character.Damage;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Character.Player
 {
-    public class PlayerAttackerController: MonoBehaviour, IController
+    public class PlayerAttackerController : AttackerController
     {
         [SerializeField] float _distanceToPlayer;
         [SerializeField] float _attackInterval;
         [SerializeField] GameObject _playerAttacker;
         PlayerInput.PlayerActions _playerInput;
-        PlayerModel _model;
         bool _canAttack = true;
-        
+
+        void Face(Vector2 direction)
+        {
+            transform.localPosition = direction.normalized * _distanceToPlayer;
+            transform.right = direction.normalized;
+        }
+
+        protected override IAttacker GetOrCreateAttackerInternal()
+        {
+            Face(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position);
+            PlayerAttacker attacker = Instantiate(_playerAttacker, transform).GetComponent<PlayerAttacker>();
+            attacker.SetStats(CharacterController.Stats);
+            transform.DetachChildren();
+            return attacker;
+        }
+
+        async UniTaskVoid Attack()
+        {
+            if (!CanAttack)
+            {
+                return;
+            }
+
+            CanAttack = false;
+            GetOrCreateAttacker();
+            await UniTask.Delay(TimeSpan.FromSeconds(_attackInterval));
+            CanAttack = true;
+        }
+
+        void AttackAction(InputAction.CallbackContext context)
+        {
+            Attack().Forget();
+        }
 
         void RegisterActions()
         {
@@ -31,49 +61,11 @@ namespace Character.Player
         {
             _playerInput = this.GetSystem<InputSystem>().PlayerActionMap;
             RegisterActions();
-            _model = this.GetModel<PlayerModel>();
         }
 
         void OnDisable()
         {
             UnregisterActions();
-        }
-
-        void Start()
-        {
-
-        }
-
-        void Face(Vector2 direction)
-        {
-            transform.localPosition= direction.normalized * _distanceToPlayer;
-            transform.right = direction.normalized;
-        }
-
-        async UniTaskVoid Attack()
-        {
-            if (!_canAttack)
-            {
-                return;
-            }
-            
-            _canAttack = false;
-            if (Camera.main != null)
-                Face(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - transform.position);
-            Instantiate(_playerAttacker, transform);
-            transform.DetachChildren();
-            await UniTask.Delay((int)(_attackInterval*1000));
-            _canAttack = true;
-        }
-
-        void AttackAction(InputAction.CallbackContext context)
-        {
-            Attack().Forget();
-        }       
-        
-        public IArchitecture GetArchitecture()
-        {
-            return PixelRPG.Interface;
         }
     }
 }

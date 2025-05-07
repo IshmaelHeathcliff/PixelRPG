@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.Serialization;
 
 namespace Character.State
 {
@@ -14,22 +13,22 @@ namespace Character.State
         [SerializeField] AssetReferenceGameObject _stateUICellReference;
         [SerializeField] int _initialSize = 10;
         [SerializeField] int _maxSize = 100;
-        
+
         AsyncOperationHandle<GameObject> _stateHandle;
         readonly Stack<StateUICell> _pool = new();
-        
+
         public int Count => _pool.Count;
-        
+
         async UniTask<StateUICell> CreatObject()
         {
             await _stateHandle;
             if (_stateHandle.Result == null) return null;
-            
-            var obj = Instantiate(_stateHandle.Result, transform);
+
+            GameObject obj = Instantiate(_stateHandle.Result, transform);
             obj.SetActive(false);
             return obj.GetOrAddComponent<StateUICell>();
         }
-        
+
         public async UniTask<StateUICell> Pop()
         {
             StateUICell stateUICell;
@@ -41,7 +40,7 @@ namespace Character.State
             {
                 stateUICell = await CreatObject();
             }
-            
+
             stateUICell.gameObject.SetActive(true);
             return stateUICell;
         }
@@ -60,13 +59,13 @@ namespace Character.State
         async UniTaskVoid Init()
         {
             _stateHandle = Addressables.LoadAssetAsync<GameObject>(_stateUICellReference);
-            
-            for (var i = 0; i < _initialSize; i++)
+
+            for (int i = 0; i < _initialSize; i++)
             {
                 _pool.Push(await CreatObject());
             }
         }
-        
+
         void OnEnable()
         {
             Init().Forget();

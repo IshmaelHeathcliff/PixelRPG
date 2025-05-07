@@ -1,10 +1,7 @@
-﻿using System;
-using Character.Enemy;
+﻿using Character.Enemy;
 using Core;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Character.Damage
 {
@@ -26,7 +23,7 @@ namespace Character.Damage
             {
                 _enemyController = GetComponentInParent<EnemyController>();
             }
-            
+
             _fsm = _enemyController.FSM;
             OnHurt = new EasyEvent();
             OnDeath = new EasyEvent();
@@ -34,8 +31,8 @@ namespace Character.Damage
 
         void Start()
         {
-            var stats = _enemyController.EnemyStats;
-            
+            Stat.Stats stats = _enemyController.Stats;
+
             Health = stats.Health;
             Defence = stats.Defence;
             Evasion = stats.Evasion;
@@ -44,7 +41,7 @@ namespace Character.Damage
             ColdResistance = stats.ColdResistance;
             ChaosResistance = stats.ChaosResistance;
 
-            OnHurt.Register(()=>Hurt().Forget()).UnRegisterWhenDisabled(this);
+            OnHurt.Register(() => Hurt().Forget()).UnRegisterWhenDisabled(this);
             OnDeath.Register(Dead).UnRegisterWhenDisabled(this);
         }
 
@@ -54,7 +51,7 @@ namespace Character.Damage
             {
                 return;
             }
-            
+
             Health.ChangeCurrentValue(-damage);
             // Debug.Log("Left Health:" + Health.CurrentValue);
             OnHurt.Trigger();
@@ -63,14 +60,14 @@ namespace Character.Damage
         async UniTaskVoid Hurt()
         {
             _fsm.ChangeState(EnemyStateId.Hurt);
-            await UniTask.Delay((int) (_hurtTime * 1000));
-            
-            if (Health.CurrentValue<= 0)
+            await UniTask.Delay((int)(_hurtTime * 1000));
+
+            if (Health.CurrentValue <= 0)
             {
                 OnDeath.Trigger();
                 return;
             }
-            
+
             _fsm.ChangeState(EnemyStateId.Idle);
         }
 

@@ -2,53 +2,40 @@
 using Character.Modifier;
 using Character.Player;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Character
 {
-    public class PlayerController : MonoBehaviour, IController
+    public class PlayerController : MyCharacterController
     {
-        [SerializeField] string _modifierFactoryID = "player";
         [SerializeField] Vector3 _initialPosition;
-        [SerializeField] PlayerMoveController _playerMoveController;
-        [SerializeField] PlayerAttackerController _playerAttackerController;
-        [SerializeField] PlayerDamageable _playerDamageable;
 
-        PlayerModel _model;
 
         public void Respawn()
         {
             transform.position = _initialPosition;
-            _model.PlayerStats.Health.SetMaxValue();
+            Model.Stats.Health.SetMaxValue();
         }
 
-        void OnValidate()
+        protected override void SetStats()
         {
-            _playerMoveController = GetComponentInChildren<PlayerMoveController>();
-            _playerAttackerController = GetComponentInChildren<PlayerAttackerController>();
-            _playerDamageable = GetComponentInChildren<PlayerDamageable>();
+            IStatModifier healthModifier = ModifierSystem.CreateStatModifier("health_base", "player", 100);
+            IStatModifier manaModifier = ModifierSystem.CreateStatModifier("mana_base", "player", 100);
+            IStatModifier accuracyModifier = ModifierSystem.CreateStatModifier("accuracy_base", "player", 100);
+            healthModifier.Register();
+            manaModifier.Register();
+            accuracyModifier.Register();
+            Stats.Health.SetMaxValue();
+            Stats.Mana.SetMaxValue();
         }
 
-        protected void Awake()
+        protected override void Awake()
         {
-            _model = this.GetModel<PlayerModel>();
-            _playerMoveController = GetComponent<PlayerMoveController>();
-        }
-
-        void OnEnable()
-        {
-            this.GetSystem<ModifierSystem>().RegisterFactory(_modifierFactoryID, _model.PlayerStats);
-
-        }
-
-        void OnDisable()
-        {
-            this.GetSystem<ModifierSystem>().UnregisterFactory(_modifierFactoryID);
-        }
-
-        public IArchitecture GetArchitecture()
-        {
-            return PixelRPG.Interface;
+            base.Awake();
+            ID = "player";
+            AttackerController = GetController<PlayerAttackerController>();
+            MoveController = GetController<PlayerMoveController>();
+            Damageable = GetController<PlayerDamageable>();
+            Model = this.GetModel<PlayersModel>().Default();
         }
     }
 }

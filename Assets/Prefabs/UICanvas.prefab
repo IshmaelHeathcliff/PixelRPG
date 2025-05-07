@@ -146,7 +146,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.0006866455, y: -0.00029871037}
+  m_AnchoredPosition: {x: 0.0006866455, y: -0.00039880534}
   m_SizeDelta: {x: 465, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &9094874430228275509
@@ -1058,9 +1058,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f118597407fb46db9cda66fb3ba8d5bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventorySize: {x: 8, y: 10}
-  _inventoryUI: {fileID: 3468204014549250162}
   _grid: {fileID: 5424489825168920300}
+  _inventoryUI: {fileID: 3468204014549250162}
+  _inventorySize: {x: 8, y: 10}
 --- !u!1 &3716067817224227011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,7 +1438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a06d7032484e288aad3a4628f8590d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuffUI: {fileID: 6702905300397808493}
+  _stateUI: {fileID: 6702905300397808493}
 --- !u!1 &5817144814765350680
 GameObject:
   m_ObjectHideFlags: 0
@@ -2395,7 +2395,7 @@ GameObject:
   - component: {fileID: 6702905300397808493}
   - component: {fileID: 5899640366388686026}
   m_Layer: 5
-  m_Name: BuffUI
+  m_Name: StateUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2445,12 +2445,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27fb203f2e7c4431a6a06128fb067b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buffUICellReference:
+  _stateUICellReference:
     m_AssetGUID: 424adfee9de12c84e9bf9c04d6d1fa86
     m_SubObjectName: 
     m_SubObjectGUID: 
     m_SubObjectType: 
-    m_EditorAssetChanged: 1
+    m_EditorAssetChanged: 0
   _initialSize: 10
   _maxSize: 100
 --- !u!1 &8312549972194198510
@@ -2831,7 +2831,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8722583648122456974
@@ -2957,9 +2957,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06677eeb6b4247b390db40e9dbe76ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventorySize: {x: 8, y: 5}
-  _inventoryUI: {fileID: 7461629204693388583}
   _grid: {fileID: 4038851950223926928}
+  _inventoryUI: {fileID: 7461629204693388583}
+  _inventorySize: {x: 8, y: 5}
 --- !u!1 &8798493202896145342
 GameObject:
   m_ObjectHideFlags: 0

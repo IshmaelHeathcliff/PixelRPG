@@ -1,34 +1,19 @@
-﻿using Character.State;
-using Character.Stat;
-using UnityEngine;
-
-namespace Character
+﻿namespace Character.Player
 {
-    public class PlayerModel : AbstractModel
+    public class PlayerModel : CharacterModel
     {
-        #region Position
-        Transform _playerTransform;
-        public Vector3 Position => _playerTransform.position;
-        public Vector2 Direction { get; set; }
-        public void BindTransform(Transform playerTransform)
-        {
-            _playerTransform = playerTransform;
-        }
-        
-        public void SetPosition(Vector3 position)
-        {
-            _playerTransform.position = position;
-        }
-        #endregion
-
-        public bool IsDetectable{ get; set; } = true;
-        public bool IsAttackable { get; set; } = true;
-
-        public Stats PlayerStats { get; } = new Stats();
-        public IStateContainer PlayerState { get; } = new StateContainer();
-
+    }
+    
+    public class PlayersModel: CharactersModel<PlayerModel>
+    {
         protected override void OnInit()
         {
+            AddModel("player", new PlayerModel());
+        }
+
+        public override PlayerModel Default()
+        {
+            return GetModel("player");
         }
     }
 }

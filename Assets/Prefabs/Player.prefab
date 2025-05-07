@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 461715177517504220}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.006, y: 0.555, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -91,7 +91,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d269f1cd31243e2af443bfa094b88a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerController: {fileID: 0}
 --- !u!1 &6306807894090136425
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +169,7 @@ Transform:
   m_GameObject: {fileID: 9007783603261809430}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.003265, y: -4.6277657, z: -0.056959152}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -232,7 +231,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!95 &7779864242822424869
 Animator:
   serializedVersion: 7
@@ -316,8 +315,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.01192628, y: -0.37866253}
-  m_Size: {x: 0.7557392, y: 0.3851328}
+  m_Offset: {x: -0.011926809, y: 0.18769538}
+  m_Size: {x: 0.7062736, y: 0.39098686}
   m_Direction: 1
 --- !u!114 &6438441766491902177
 MonoBehaviour:
@@ -331,11 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ddb7701d21640f48c6c2438b7664058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _modifierFactoryID: player
+  _characterId: 
   _initialPosition: {x: 0, y: 0, z: 0}
-  _playerMoveController: {fileID: 1624930545635589448}
-  _playerAttackerController: {fileID: 7763580824163688731}
-  _playerDamageable: {fileID: 5664932161630555105}
 --- !u!114 &1624930545635589448
 MonoBehaviour:
   m_ObjectHideFlags: 0

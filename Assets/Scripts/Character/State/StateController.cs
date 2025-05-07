@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Character.State
 {
     public interface IStateUI
     {
-        public void AddState(IState state);
-        public void RemoveState(string id);
-        public void ChangeStateTime(IStateWithTime state);
-        public void ChangeStateCount(IStateWithCount state);
+        void AddState(IState state);
+        void RemoveState(string id);
+        void ChangeStateTime(IStateWithTime state);
+        void ChangeStateCount(IStateWithCount state);
     }
-    
-    public abstract class StateUI: MonoBehaviour, IStateUI
+
+    public abstract class StateUI : MonoBehaviour, IStateUI
     {
         public abstract void AddState(IState state);
         public abstract void RemoveState(string id);
@@ -22,7 +21,7 @@ namespace Character.State
     public abstract class StateController : MonoBehaviour, IController
     {
         protected IStateContainer StateContainer;
-        [SerializeField]protected StateUI _stateUI;
+        [SerializeField] protected StateUI _stateUI;
 
 
         void OnValidate()

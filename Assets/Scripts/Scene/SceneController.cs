@@ -1,12 +1,12 @@
-﻿using Character;
-using Character.Modifier;
+﻿using Character.Modifier;
+using Character.Player;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace Scene
 {
-    public class SceneController: MonoBehaviour, IController
+    public class SceneController : MonoBehaviour, IController
     {
         SceneModel _model;
 
@@ -18,12 +18,12 @@ namespace Scene
         async UniTask Transition(string sceneName, string entranceTag)
         {
             _model.ClearEntrances();
-            
+
             this.GetSystem<ModifierSystem>().ClearModifierFactories();
-            
+
             await Addressables.LoadSceneAsync(sceneName);
-            
-            this.GetModel<PlayerModel>().SetPosition(_model.GetEntrance(entranceTag).transform.position);
+
+            this.GetModel<PlayersModel>().Default().Position = _model.GetEntrance(entranceTag).transform.position;
         }
 
         void Awake()
@@ -50,5 +50,5 @@ namespace Scene
         public string SceneName;
         public string EntranceTag;
     }
-    
+
 }

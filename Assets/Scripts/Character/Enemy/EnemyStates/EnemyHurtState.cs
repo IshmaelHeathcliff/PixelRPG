@@ -1,9 +1,8 @@
 ﻿using Core;
-using UnityEngine;
 
 namespace Character.Enemy
 {
-    public class EnemyHurtState : AbstractState<EnemyStateId, EnemyController>
+    public class EnemyHurtState : EnemyState
     {
         public EnemyHurtState(FSM<EnemyStateId> fsm, EnemyController target) : base(fsm, target)
         {
@@ -17,8 +16,8 @@ namespace Character.Enemy
         protected override void OnEnter()
         {
             Target.Damageable.IsDamageable = false;
-            Target.PlayAnimation(EnemyController.Hurt);
-            Target.Freeze();
+            MoveController.PlayAnimation(EnemyMoveController.Hurt);
+            MoveController.Freeze();
         }
 
         protected override void OnExit()

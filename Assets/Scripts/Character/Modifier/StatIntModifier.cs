@@ -9,9 +9,9 @@ namespace Character.Modifier
     {
         public StatSingleIntModifier()
         {
-            
+
         }
-        
+
         public StatSingleIntModifier(StatModifierInfo modifierInfo, IStat stat) : base(modifierInfo, stat)
         {
         }
@@ -22,11 +22,11 @@ namespace Character.Modifier
             Level = 1;
             Value = value;
         }
-        
+
         public override string GetDescription()
         {
-            return Value >= 0 ? 
-                string.Format(ModifierInfo.PositiveDescription, Stat.Name, Value) : 
+            return Value >= 0 ?
+                string.Format(ModifierInfo.PositiveDescription, Stat.Name, Value) :
                 string.Format(ModifierInfo.NegativeDescription, Stat.Name, -Value);
         }
 
@@ -37,7 +37,7 @@ namespace Character.Modifier
 
         public override void Register()
         {
-            switch (((StatModifierInfo) ModifierInfo).StatModifierType)
+            switch (((StatModifierInfo)ModifierInfo).StatModifierType)
             {
                 case StatModifierType.Base:
                     Stat.AddBaseValueModifier(InstanceID, this);
@@ -62,7 +62,7 @@ namespace Character.Modifier
 
         public override void Unregister()
         {
-            switch (((StatModifierInfo) ModifierInfo).StatModifierType)
+            switch (((StatModifierInfo)ModifierInfo).StatModifierType)
             {
                 case StatModifierType.Base:
                     Stat.RemoveBaseValueModifier(InstanceID);
@@ -106,8 +106,8 @@ namespace Character.Modifier
         {
             if (ModifierInfo is StatModifierInfo info)
             {
-                var levelRange = info.LevelRanges[Level];
-                Value = Random.Range(levelRange.Min, levelRange.Max+1);
+                LevelRange levelRange = info.LevelRanges[Level];
+                Value = Random.Range(levelRange.Min, levelRange.Max + 1);
             }
 
         }

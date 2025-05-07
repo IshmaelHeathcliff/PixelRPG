@@ -11,7 +11,7 @@ namespace Items
     {
         [JsonProperty] int _sizeX;
         [JsonProperty] int _sizeY;
-        
+
         [JsonProperty] ItemWithPos[] _itemsWithPos;
 
         [Serializable]
@@ -37,12 +37,12 @@ namespace Items
 
         public void Serialize(Dictionary<Vector2Int, IItem> itemDict)
         {
-            var keys = itemDict.Keys.ToArray();
-            var items = itemDict.Values.ToArray();
+            Vector2Int[] keys = itemDict.Keys.ToArray();
+            IItem[] items = itemDict.Values.ToArray();
 
             _itemsWithPos = new ItemWithPos[itemDict.Count];
 
-            for (var i = 0; i < itemDict.Count; i++)
+            for (int i = 0; i < itemDict.Count; i++)
             {
                 var itemWithPos = new ItemWithPos(items[i], keys[i]);
                 _itemsWithPos[i] = itemWithPos;
@@ -52,7 +52,7 @@ namespace Items
         public Dictionary<Vector2Int, IItem> Deserialize()
         {
             var itemDict = new Dictionary<Vector2Int, IItem>();
-            foreach (var itemWithPos in _itemsWithPos)
+            foreach (ItemWithPos itemWithPos in _itemsWithPos)
             {
                 var pos = new Vector2Int(itemWithPos.ItemPosX, itemWithPos.ItemPosY);
                 itemDict[pos] = (IItem)itemWithPos.Item;

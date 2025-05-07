@@ -17,9 +17,9 @@ namespace Items
 
         AsyncOperationHandle<GameObject> _itemUIHandle;
         AsyncOperationHandle<GameObject> _currentItemUIHandle;
-        
+
         readonly Stack<ItemUI> _pool = new();
-        
+
         Transform _itemsHolder;
 
         Transform ItemsHolder
@@ -33,7 +33,7 @@ namespace Items
 
                 return _itemsHolder;
             }
-            
+
         }
 
         int Count => _pool.Count;
@@ -55,7 +55,7 @@ namespace Items
         {
             await _currentItemUIHandle;
             if (_currentItemUIHandle.Result == null) return null;
-            var obj = Instantiate(_currentItemUIHandle.Result);
+            GameObject obj = Instantiate(_currentItemUIHandle.Result);
             return obj.GetOrAddComponent<CurrentItemUI>();
         }
 
@@ -63,8 +63,8 @@ namespace Items
         {
             await _itemUIHandle;
             if (_itemUIHandle.Result == null) return null;
-            
-            var obj = Instantiate(_itemUIHandle.Result, ItemsHolder);
+
+            GameObject obj = Instantiate(_itemUIHandle.Result, ItemsHolder);
             obj.SetActive(false);
             return obj.GetOrAddComponent<ItemUI>();
         }
@@ -78,7 +78,7 @@ namespace Items
             }
             else
             {
-                itemUI =  await CreatObject();
+                itemUI = await CreatObject();
             }
             itemUI.gameObject.SetActive(true);
             return itemUI;
@@ -92,7 +92,7 @@ namespace Items
                 Destroy(obj.gameObject);
                 return;
             }
-            
+
             obj.transform.SetParent(ItemsHolder);
             obj.gameObject.SetActive(false);
             _pool.Push(obj);
@@ -100,7 +100,7 @@ namespace Items
 
         async UniTaskVoid InitPool()
         {
-            for (var i = 0; i < _initialSize; i++)
+            for (int i = 0; i < _initialSize; i++)
             {
                 _pool.Push(await CreatObject());
             }
