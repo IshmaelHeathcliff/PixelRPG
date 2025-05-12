@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Character
 {
@@ -42,6 +43,17 @@ namespace Character
         {
             get => Model.Position;
             set => Model.Position = value;
+        }
+        public async UniTask PlayAnimation(string stateName)
+        {
+            Animator.Play(stateName);
+            await UniTask.WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+        }
+
+        public async UniTask PlayAnimation(int stateNameHash)
+        {
+            Animator.Play(stateNameHash);
+            await UniTask.WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         }
 
         public virtual void Face(Vector2 direction)

@@ -20,7 +20,7 @@ namespace Character.Enemy
         {
             Target.Damageable.IsDamageable = false;
             Target.AttackerController.CanAttack = false;
-            MoveController.PlayAnimation(EnemyMoveController.Dead);
+            MoveController.PlayAnimation(EnemyMoveController.Dead).Forget();
             MoveController.Freeze();
 
             await UniTask.Delay(TimeSpan.FromSeconds(2f));

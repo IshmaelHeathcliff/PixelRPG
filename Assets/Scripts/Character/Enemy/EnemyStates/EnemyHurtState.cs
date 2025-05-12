@@ -1,5 +1,5 @@
 ﻿using Core;
-
+using Cysharp.Threading.Tasks;
 namespace Character.Enemy
 {
     public class EnemyHurtState : EnemyState
@@ -16,7 +16,7 @@ namespace Character.Enemy
         protected override void OnEnter()
         {
             Target.Damageable.IsDamageable = false;
-            MoveController.PlayAnimation(EnemyMoveController.Hurt);
+            MoveController.PlayAnimation(EnemyMoveController.Hurt).Forget();
             MoveController.Freeze();
         }
 

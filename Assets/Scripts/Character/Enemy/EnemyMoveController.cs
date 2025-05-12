@@ -22,15 +22,6 @@ namespace Character.Enemy
         public static readonly int Hurt = Animator.StringToHash("Hurt");
         public static readonly int Dead = Animator.StringToHash("Dead");
 
-        public void PlayAnimation(string stateName)
-        {
-            Animator.Play(stateName);
-        }
-
-        public void PlayAnimation(int stateNameHash)
-        {
-            Animator.Play(stateNameHash);
-        }
 
         public void Move()
         {

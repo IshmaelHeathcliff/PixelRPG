@@ -1,4 +1,5 @@
 ﻿using Core;
+using Cysharp.Threading.Tasks;
 
 namespace Character.Enemy
 {
@@ -27,7 +28,7 @@ namespace Character.Enemy
 
         protected override void OnEnter()
         {
-            MoveController.PlayAnimation(EnemyMoveController.Chase);
+            MoveController.PlayAnimation(EnemyMoveController.Chase).Forget();
             _attackRadius = MoveController.AttackRadius;
         }
 

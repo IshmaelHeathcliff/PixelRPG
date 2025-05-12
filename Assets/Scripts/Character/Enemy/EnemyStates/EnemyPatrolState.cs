@@ -19,7 +19,7 @@ namespace Character.Enemy
         protected override void OnEnter()
         {
             _quitting = false;
-            MoveController.PlayAnimation(EnemyMoveController.Patrol);
+            MoveController.PlayAnimation(EnemyMoveController.Patrol).Forget();
             ChangeDirection().Forget();
         }
 

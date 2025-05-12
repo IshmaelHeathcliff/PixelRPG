@@ -21,14 +21,16 @@ namespace Character.Enemy
 
         protected async override void OnEnter()
         {
-            MoveController.PlayAnimation(EnemyMoveController.Attack); AttackerController = Target.AttackerController as EnemyAttackerController;
+            AttackerController = Target.AttackerController as EnemyAttackerController;
 
             // AttackerController.GetOrCreateAttacker().Attack().Forget();
 
             _cts = new();
             try
             {
-                await MoveController.AttackPlayer(_cts.Token);
+                UniTask moveTask = MoveController.AttackPlayer(_cts.Token);
+                UniTask animationTask = MoveController.PlayAnimation(EnemyMoveController.Attack);
+                await UniTask.WhenAll(moveTask, animationTask);
                 FSM.ChangeState(EnemyStateId.Idle);
             }
             catch (OperationCanceledException)

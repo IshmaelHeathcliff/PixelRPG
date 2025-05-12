@@ -1,4 +1,5 @@
 ﻿using Core;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Character.Enemy
@@ -30,7 +31,7 @@ namespace Character.Enemy
         protected override void OnEnter()
         {
             _idleTime = MoveController.IdleTime;
-            MoveController.PlayAnimation(EnemyMoveController.Idle);
+            MoveController.PlayAnimation(EnemyMoveController.Idle).Forget();
             MoveController.Freeze();
         }
     }
