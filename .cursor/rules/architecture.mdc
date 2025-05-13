@@ -1,0 +1,41 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# 架构指南
+
+## 基础工具
+- 使用 [QFramework.cs](mdc:Assets/Scripts/Core/QFramework.cs) 作为基础架构
+  - 将模块分为`Model`、`System`、`Controller`、`Utility`
+  - 大多数`Monobehaviour`都应该实现`IController`来接入QFramework
+  - 使用 QFramework 命令系统对 `Model` 进行进阶操作
+  - 使用 QFramework 查询系统 对 `Model` 信息进行查询
+  - 使用 QFramework 事件系统进行模块间通信
+- 使用 `UniTask` 处理异步操作
+  - 尽量使用异步操作代替协程、`Update`等
+  - 使用 `Forget()` 处理不需要等待的异步操作
+  - 及时合理的位置释放`AsyncOperationHandle`
+- 使用Unity的 `Addressables` 进行资源管理
+    使用`AddressablesManager.Release`释放异步资源加载产生的handle
+- 使用Unity的新输入系统 InputSystem
+  - 通过 `PlayerInput` 类处理输入事件
+  - 在 `OnEnable` 中注册输入事件，在 `OnDisable` 中注销
+- 在开发中使用 `Odin Inspector` 构建方便使用的Editor UI
+
+## QFramework 系统
+- `InputSystem`
+- `ModifierSystem`
+- `ItemCreateSystem`
+- `StateCreateSystem`
+
+## QFramework 模型
+- `PlayersModel`
+- `EnemiesModel`
+- `SceneModel`
+- `EquipmentsModel`
+- `StashModel`
+- `PackageModel`
+
+## QFramework 工具
+- `SaveLoadUtility`
