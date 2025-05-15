@@ -13,13 +13,13 @@ namespace Editor
 {
     public abstract class DataPresetEditor<T> : SerializedScriptableObject
     {
-        public string jsonName = ".json";
-        public string jsonPath = "Preset";
+        public string JsonName = ".json";
+        public string JsonPath = "Preset";
         [OdinSerialize]
         [ListDrawerSettings(
-            DraggableItems = false, 
-            ShowFoldout = false, 
-            ShowPaging = true, 
+            DraggableItems = false,
+            ShowFoldout = false,
+            ShowPaging = true,
             ShowIndexLabels = true,
             AddCopiesLastElement = true,
             NumberOfItemsPerPage = 10,
@@ -27,17 +27,18 @@ namespace Editor
             OnTitleBarGUI = "DrawRefreshButton",
             ListElementLabelName = "Name"
             )]
+        [ShowInInspector]
         public virtual List<T> Data { get; set; }
 
         protected virtual void ReadJson()
         {
-            Data = SaveLoadManager.Load<List<T>>(jsonName,jsonPath);
+            Data = SaveLoadManager.Load<List<T>>(JsonName, JsonPath);
 
         }
 
         public virtual void SaveToJson()
         {
-            SaveLoadManager.Save(Data, jsonName, jsonPath);
+            SaveLoadManager.Save(Data, JsonName, JsonPath);
         }
 
         protected void DrawRefreshButton()
@@ -46,7 +47,7 @@ namespace Editor
             {
                 ReadJson();
             }
-            
+
             if (SirenixEditorGUI.ToolbarButton(EditorIcons.File))
             {
                 SaveToJson();

@@ -28,9 +28,25 @@ namespace Character.Modifier
                 Load();
             }
 
-            return _modifierInfoCache.GetValueOrDefault(id);
+            if (!_modifierInfoCache.TryGetValue(id, out ModifierInfo modifierInfo))
+            {
+                Debug.LogError($"modifierID {id} is not registered");
+                return null;
+            }
+
+            return modifierInfo;
         }
 
+        public StatModifierInfo GetStatModifierInfo(string id)
+        {
+            if (GetModifierInfo(id) is not StatModifierInfo statModifierInfo)
+            {
+                Debug.LogError($"modifierID {id} is not a stat modifier");
+                return null;
+            }
+
+            return statModifierInfo;
+        }
 
         readonly Dictionary<string, IModifierFactory> _modifierFactories = new();
 
@@ -39,9 +55,9 @@ namespace Character.Modifier
             _modifierFactories.Clear();
         }
 
-        public void RegisterFactory(string factoryID, IModifierFactory factory)
+        public void RegisterFactory(IModifierFactory factory)
         {
-            _modifierFactories.Add(factoryID, factory);
+            _modifierFactories.Add(factory.FactoryID, factory);
         }
 
         public void UnregisterFactory(string factoryID)
@@ -51,40 +67,60 @@ namespace Character.Modifier
 
         public IStat GetStat(IStatModifier modifier)
         {
-            if (_modifierFactories.TryGetValue(modifier.FactoryID, out IModifierFactory factory))
+            var factory = GetStatModifierFactory(modifier.FactoryID);
+            if (factory == null)
             {
-                if (factory is IStatModifierFactory statFactory)
-                {
-                    return statFactory.GetStat(modifier.ModifierInfo as StatModifierInfo);
-                }
+                return null;
             }
 
-            return null;
+            return factory.GetStat(modifier.ModifierInfo as StatModifierInfo);
         }
 
-
-        public IStatModifier CreateStatModifier(string modifierId, string factoryID)
+        public IModifierFactory GetModifierFactory(string factoryID)
         {
             if (!_modifierFactories.TryGetValue(factoryID, out IModifierFactory factory))
             {
-                Debug.LogError("factoryID is invalid");
+                Debug.LogError($"factoryID {factoryID} is not registered");
+                return null;
+            }
+
+            return factory;
+        }
+
+        public IStatModifierFactory GetStatModifierFactory(string factoryID)
+        {
+            IModifierFactory factory = GetModifierFactory(factoryID);
+            if (factory == null)
+            {
                 return null;
             }
 
             if (factory is not IStatModifierFactory statFactory)
             {
-                Debug.LogError("factory is invalid");
+                Debug.LogError($"factoryID {factoryID} is not a stat modifier factory");
                 return null;
             }
 
-            return CreateStatModifier(modifierId, statFactory);
+            return statFactory;
+        }
+
+
+        public IStatModifier CreateStatModifier(string modifierId, string factoryID)
+        {
+            IStatModifierFactory factory = GetStatModifierFactory(factoryID);
+            if (factory == null)
+            {
+                return null;
+            }
+
+            return CreateStatModifier(modifierId, factory);
         }
 
         public IStatModifier CreateStatModifier(string modifierId, IStatModifierFactory factory)
         {
-            if (GetModifierInfo(modifierId) is not StatModifierInfo modifierInfo)
+            StatModifierInfo modifierInfo = GetStatModifierInfo(modifierId);
+            if (modifierInfo == null)
             {
-                Debug.LogError("modifierId is invalid");
                 return null;
             }
 
@@ -93,25 +129,20 @@ namespace Character.Modifier
 
         public IStatModifier CreateStatModifier(string modifierId, string factoryID, int value)
         {
-            if (GetModifierInfo(modifierId) is not StatModifierInfo modifierInfo)
+
+            IStatModifierFactory factory = GetStatModifierFactory(factoryID);
+            if (factory == null)
             {
-                Debug.LogError("modifierId is invalid");
                 return null;
             }
 
-            if (!_modifierFactories.TryGetValue(factoryID, out IModifierFactory factory))
+            StatModifierInfo modifierInfo = GetStatModifierInfo(modifierId);
+            if (modifierInfo == null)
             {
-                Debug.LogError("factory is not registered");
                 return null;
             }
 
-            if (factory is not IStatModifierFactory statModifierFactory)
-            {
-                Debug.LogError("factory is invalid");
-                return null;
-            }
-
-            return statModifierFactory.CreateModifier(modifierInfo, value);
+            return factory.CreateModifier(modifierInfo, value);
         }
 
         protected override void OnInit()

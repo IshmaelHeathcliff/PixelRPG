@@ -1,20 +1,13 @@
-{
-  "$type": "System.Collections.Generic.List`1[[Character.State.StateInfo, Assembly-CSharp]], mscorlib",
-  "$values": [
-    {
-      "$type": "Character.State.StateInfo, Assembly-CSharp",
-      "ID": "1",
-      "Name": "健实",
-      "Description": "加强生命",
-      "ModifierID": {
-        "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
-        "$values": [
-          "health_base",
-          "health_increase",
-          "health_more"
-        ]
-      },
-      "Icon": "Assets/Artworks/UI/buff.aseprite[buff]"
-    }
-  ]
-}
+[
+  {
+    "ID": "1",
+    "Name": "健实",
+    "Description": "加强生命",
+    "ModifierID": [
+      "health_base",
+      "health_increase",
+      "health_more"
+    ],
+    "Icon": "Assets/Artworks/UI/buff.aseprite[buff]"
+  }
+]

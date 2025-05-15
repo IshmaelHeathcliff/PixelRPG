@@ -12,8 +12,9 @@ namespace Items
         string IconName { get; set; }
         Vector2Int Size { get; set; }
         string GetDescription();
+        void Load();
     }
-    
+
     public interface IStackableItem : IItem
     {
         int Count { get; set; }
@@ -25,32 +26,34 @@ namespace Items
     {
         void Consume();
     }
-    
+
     [Serializable]
-    public abstract class Item: IItem
+    public abstract class Item : IItem
     {
-        [JsonProperty][ShowInInspector] public int ID { get; set; }
-        [JsonProperty][ShowInInspector] public string Name { get; set; }
-        [JsonProperty][ShowInInspector] public string IconName { get; set; }
-        [JsonProperty][ShowInInspector] public Vector2Int Size { get; set; }
+        [ShowInInspector] public int ID { get; set; }
+        [ShowInInspector] public string Name { get; set; }
+        [ShowInInspector] public string IconName { get; set; }
+        [ShowInInspector] public Vector2Int Size { get; set; }
         public abstract string GetDescription();
 
         public virtual void Init()
         {
-            
+
         }
 
         public object Clone()
         {
             return MemberwiseClone();
         }
+
+        public abstract void Load();
     }
-    
+
     [Serializable]
     public abstract class StackableItem : Item, IStackableItem
     {
-        [JsonProperty][ShowInInspector] public int Count { get; set; }
-        [JsonProperty][ShowInInspector] public int MaxCount { get; set; }
+        [ShowInInspector] public int Count { get; set; }
+        [ShowInInspector] public int MaxCount { get; set; }
         public int IncreaseCount(int count)
         {
             int newCount = Count + count;
@@ -78,8 +81,12 @@ namespace Items
         {
             return "This is a coin.";
         }
+
+        public override void Load()
+        {
+        }
     }
-    
+
     [Serializable]
     public class Potion : StackableItem, IConsumableItem
     {
@@ -91,6 +98,10 @@ namespace Items
         public override string GetDescription()
         {
             return "This is a potion.";
+        }
+
+        public override void Load()
+        {
         }
     }
 }

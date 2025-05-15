@@ -20,10 +20,11 @@ namespace Character.Modifier
             return PixelRPG.Interface.GetSystem<ModifierSystem>().GetStat(modifier);
         }
 
-        [JsonProperty] protected int Level;
+        public int Level { get; set; }
 
         protected IStat Stat;
 
+        [JsonConstructor]
         protected StatModifier()
         {
         }
@@ -48,7 +49,7 @@ namespace Character.Modifier
     [Serializable]
     public abstract class StatModifier<T1, T2> : StatModifier<T1>
     {
-        [JsonProperty] protected T2 Value2;
+        public T2 Value2 { get; set; }
         protected StatModifier(StatModifierInfo modifierInfo, IStat stat) : base(modifierInfo, stat)
         {
         }
@@ -57,8 +58,8 @@ namespace Character.Modifier
     [Serializable]
     public struct LevelRange
     {
-        [JsonProperty][ShowInInspector] public int Min { get; set; }
-        [JsonProperty][ShowInInspector] public int Max { get; set; }
+        [ShowInInspector] public int Min { get; set; }
+        [ShowInInspector] public int Max { get; set; }
     }
 
     public enum StatModifierType
@@ -74,10 +75,10 @@ namespace Character.Modifier
     [Serializable]
     public class StatModifierInfo : ModifierInfo
     {
-        [JsonProperty][ShowInInspector] public string StatName { get; set; }
-        [JsonProperty][ShowInInspector] public StatModifierType StatModifierType { get; set; }
-        [JsonProperty][ShowInInspector] public int MaxLevel { get; set; }
-        [JsonProperty][ShowInInspector][TableList(ShowIndexLabels = true)] public LevelRange[] LevelRanges { get; set; }
+        [ShowInInspector] public string StatName { get; set; }
+        [ShowInInspector] public StatModifierType StatModifierType { get; set; }
+        [ShowInInspector] public int MaxLevel { get; set; }
+        [ShowInInspector][TableList(ShowIndexLabels = true)] public LevelRange[] LevelRanges { get; set; }
     }
 
 

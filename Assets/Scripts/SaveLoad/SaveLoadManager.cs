@@ -1,12 +1,11 @@
 using System.IO;
-using Newtonsoft.Json;
 using UnityEngine;
 
 namespace SaveLoad
 {
     public static class SaveLoadManager
     {
-        public static ISaveLoadManagerMethod SaveLoadMethod { get; set; } = new SaveLoadManagerMethodJson();
+        public static ISaveLoadMethod SaveLoadMethod { get; set; } = new SaveLoadMethodNewtonJson();
 
         const string BaseFolderName = "/Data/";
         const string DefaultFolderName = "Save";
@@ -53,7 +52,7 @@ namespace SaveLoad
         }
 
 
-        public static T Load<T>(string fileName, string folderName = DefaultFolderName, JsonConverter converter = null)
+        public static T Load<T>(string fileName, string folderName = DefaultFolderName)
         {
             string savePath = DetermineSavePath(folderName);
             string saveFileName = savePath + DetermineSaveFileName(fileName);
@@ -64,7 +63,7 @@ namespace SaveLoad
             }
 
             FileStream saveFile = File.Open(saveFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-            T returnObject = SaveLoadMethod.Load<T>(saveFile, converter);
+            T returnObject = SaveLoadMethod.Load<T>(saveFile);
             saveFile.Close();
 
             return returnObject;

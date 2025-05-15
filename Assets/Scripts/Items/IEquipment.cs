@@ -8,11 +8,10 @@ namespace Items
 {
     public interface IEquipment : IEquipmentBase
     {
-        List<IModifier> Entries { get; set; }
+        List<IModifier> Modifiers { get; set; }
         EquipmentBase.EquipmentRarity Rarity { get; set; }
         void Equip();
         void Takeoff();
-        void Load();
     }
     [Serializable]
     public class Equipment : EquipmentBase, IEquipment
@@ -30,42 +29,42 @@ namespace Items
             }
         }
 
-        [JsonProperty] public List<IModifier> Entries { get; set; }
+        public List<IModifier> Modifiers { get; set; }
 
-        [JsonProperty] public EquipmentRarity Rarity { get; set; }
+        public EquipmentRarity Rarity { get; set; }
 
         public void Equip()
         {
-            foreach (IModifier entry in Entries)
+            foreach (IModifier modifier in Modifiers)
             {
-                entry.Register();
+                modifier.Register();
             }
         }
 
         public void Takeoff()
         {
-            foreach (IModifier entry in Entries)
+            foreach (IModifier modifier in Modifiers)
             {
-                entry.Unregister();
+                modifier.Unregister();
             }
         }
 
-        public void Load()
+        public override void Load()
         {
-            foreach (IModifier entry in Entries)
+            foreach (IModifier modifier in Modifiers)
             {
-                entry.Load();
+                modifier.Load();
             }
         }
 
         public override string GetDescription()
         {
-            var entriesInfo = new StringBuilder();
-            foreach (IModifier entry in Entries)
+            var description = new StringBuilder();
+            foreach (IModifier modifier in Modifiers)
             {
-                entriesInfo.Append(entry.GetDescription() + "\n");
+                description.Append(modifier.GetDescription() + "\n");
             }
-            return $"{Name}\n{Rarity} {Type}\n\n{entriesInfo}";
+            return $"{Name}\n{Rarity} {Type}\n\n{description}";
         }
     }
 }

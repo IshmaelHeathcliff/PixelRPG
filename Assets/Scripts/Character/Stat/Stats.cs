@@ -56,6 +56,8 @@ namespace Character.Stat
         public Stat LightningResistance { get; } = new Stat(LightningResistanceName);
         public Stat ColdResistance { get; } = new Stat(ColdResistanceName);
         public Stat ChaosResistance { get; } = new Stat(ChaosResistanceName);
+        public string FactoryID { get; set; }
+
 
         public List<IStat> GetAllStats()
         {
@@ -127,45 +129,57 @@ namespace Character.Stat
 
         public IModifier CreateModifier(ModifierInfo modifierInfo)
         {
-            return modifierInfo is not StatModifierInfo info ? null : CreateModifier(info);
+            if (modifierInfo is not StatModifierInfo info)
+            {
+                Debug.LogError($"modifierInfo {modifierInfo.ModifierID} is not a stat modifier");
+                return null;
+            }
+
+            return CreateModifier(info);
         }
 
         public IStatModifier CreateModifier(StatModifierInfo modifierInfo, int value)
         {
             IStat stat = GetStat(modifierInfo.StatName);
-            StatModifier<int> modifier = null;
             if (stat != null)
             {
-                modifier = new StatSingleIntModifier(modifierInfo, stat, value);
+                var modifier = new StatSingleIntModifier(modifierInfo, stat, value)
+                {
+                    FactoryID = FactoryID
+                };
+                return modifier;
             }
             else
             {
                 Debug.LogError("modifier stat name is not valid: " + modifierInfo.StatName);
+                return null;
             }
-
-            return modifier;
         }
 
         public IStatModifier CreateModifier(StatModifierInfo modifierInfo)
         {
             IStat stat = GetStat(modifierInfo.StatName);
-            IStatModifier modifier = null;
             if (stat != null)
             {
-                modifier = new StatSingleIntModifier(modifierInfo, stat);
+                var modifier = new StatSingleIntModifier(modifierInfo, stat)
+                {
+                    FactoryID = FactoryID
+                };
+                if (modifier != null)
+                {
+                    modifier.RandomizeLevel();
+                    modifier.RandomizeValue();
+                }
+
+                return modifier;
             }
             else
             {
                 Debug.LogError("modifier stat name is not valid: " + modifierInfo.StatName);
+                return null;
             }
 
-            if (modifier != null)
-            {
-                modifier.RandomizeLevel();
-                modifier.RandomizeValue();
-            }
 
-            return modifier;
         }
 
         #endregion

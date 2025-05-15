@@ -33,6 +33,8 @@ namespace Character
         public IDamageable Damageable { get; protected set; }
         public IMoveController MoveController { get; protected set; }
         public ICharacterModel Model { get; protected set; }
+
+        // ! 由于Model和ID都需要在子类的Awake中设置，所以Stats不能在Awake中调用
         public Stats Stats => Model.Stats;
 
         public string ID
@@ -67,7 +69,8 @@ namespace Character
 
         protected virtual void OnEnable()
         {
-            ModifierSystem.RegisterFactory(ID, Stats);
+            Stats.FactoryID = ID;
+            ModifierSystem.RegisterFactory(Stats);
         }
 
         protected virtual void OnDisable()

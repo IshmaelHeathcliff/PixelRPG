@@ -40,5 +40,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  jsonName: States.json
-  jsonPath: Preset
+  JsonName: States.json
+  JsonPath: Preset

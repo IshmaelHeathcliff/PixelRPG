@@ -46,5 +46,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  jsonName: Items.json
-  jsonPath: Preset
+  JsonName: Items.json
+  JsonPath: Preset

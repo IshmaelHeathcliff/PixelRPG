@@ -8,10 +8,10 @@ namespace Character.State
     [Serializable]
     public class StateInfo
     {
-        [JsonProperty][ShowInInspector] public string ID { get; set; }
-        [JsonProperty][ShowInInspector] public string Name { get; set; }
-        [JsonProperty][ShowInInspector] public string Description { get; set; }
-        [JsonProperty][ShowInInspector] public List<string> ModifierID { get; set; }
-        [JsonProperty][ShowInInspector] public string Icon { get; set; }
+        [ShowInInspector] public string ID { get; set; }
+        [ShowInInspector] public string Name { get; set; }
+        [ShowInInspector] public string Description { get; set; }
+        [ShowInInspector] public List<string> ModifierID { get; set; }
+        [ShowInInspector] public string Icon { get; set; }
     }
 }

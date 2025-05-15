@@ -52,16 +52,28 @@ namespace Items
         public bool AddItem(IItem item, Vector2Int itemPos)
         {
             if (!CheckPos(itemPos, item.Size))
+            {
+                // Debug.LogError($"itemPos {itemPos} is not in the inventory");
                 return false;
+            }
 
             if (_items.ContainsKey(itemPos))
+            {
+                // Debug.LogError($"itemPos {itemPos} is already occupied");
                 return false;
+            }
 
             if (!CheckItemPos(itemPos))
+            {
+                // Debug.LogError($"itemPos {itemPos} is already occupied");
                 return false;
+            }
 
             if (CheckOverlap(itemPos, item.Size).Count != 0)
+            {
+                // Debug.LogError($"itemPos {itemPos} is overlapped");
                 return false;
+            }
 
             _items[itemPos] = item;
             SendAddEvent(item, itemPos);
@@ -74,13 +86,19 @@ namespace Items
             {
                 foreach ((Vector2Int itemPos, IItem ite) in _items)
                 {
-                    if (stackableItem.ID != ite.ID) continue;
+                    if (stackableItem.ID != ite.ID)
+                    {
+                        continue;
+                    }
 
                     int remain = ((IStackableItem)ite).IncreaseCount(stackableItem.Count);
                     stackableItem.Count = remain;
                     SendUpdateEvent(ite, itemPos);
 
-                    if (remain == 0) return true;
+                    if (remain == 0)
+                    {
+                        return true;
+                    }
                 }
             }
 
@@ -124,7 +142,11 @@ namespace Items
         {
             foreach ((Vector2Int pos, IItem it) in _items)
             {
-                if (item != it) continue;
+                if (item != it)
+                {
+                    continue;
+                }
+
                 RemoveItem(pos);
                 return;
             }
@@ -144,7 +166,9 @@ namespace Items
                 Vector2Int endPos = p + itemSize;
 
                 if (!ContainPoint(p, endPos, pos))
+                {
                     continue;
+                }
 
                 itemPos = p;
                 return item;
@@ -176,11 +200,14 @@ namespace Items
         public bool PutDown(Vector2Int itemPos)
         {
             if (PickedUp.Value == null)
+            {
                 return false;
+            }
 
             if (!CheckPos(itemPos, PickedUp.Value.Size))
+            {
                 return false;
-
+            }
 
             List<Vector2Int> overlap = CheckOverlap(itemPos, PickedUp.Value.Size);
             switch (overlap.Count)
@@ -250,7 +277,10 @@ namespace Items
                         if (posToCheck.Contains(p))
                         {
                             if (!overlap.Contains(pos))
+                            {
                                 overlap.Add(pos);
+                            }
+
                             goto @continue;
                         }
                     }
@@ -273,27 +303,28 @@ namespace Items
 
         public Data SaveData()
         {
-            var serializedInventory = new SerializedInventory(Size);
-            serializedInventory.Serialize(_items);
-
-            // SaveLoadManager.Save(serializedInventory, $"Inventory-{inventoryName}.json");
-            return new Data<SerializedInventory>(serializedInventory);
+            return new Data<Vector2Int, Dictionary<Vector2Int, IItem>, IItem>(Size, _items, PickedUp.Value);
         }
 
         public void LoadData(Data data)
         {
             InitInventory();
 
-            // var serializedInventory = SaveLoadManager.Load<SerializedInventory>($"Inventory-{inventoryName}.json");
+            var inventoryData = (Data<Vector2Int, Dictionary<Vector2Int, IItem>, IItem>)data;
 
-            var inventoryData = (Data<SerializedInventory>)data;
-            SerializedInventory serializedInventory = inventoryData.Value;
-
-            Size = serializedInventory.GetSize();
-            Dictionary<Vector2Int, IItem> items = serializedInventory.Deserialize();
+            Size = inventoryData.Value0;
+            Dictionary<Vector2Int, IItem> items = inventoryData.Value1;
             foreach ((Vector2Int itemPos, IItem item) in items)
             {
+                item.Load();
                 AddItem(item, itemPos);
+            }
+
+            var pickedUp = inventoryData.Value2;
+            if (pickedUp != null)
+            {
+                pickedUp.Load();
+                PickedUp.Value = pickedUp;
             }
         }
 

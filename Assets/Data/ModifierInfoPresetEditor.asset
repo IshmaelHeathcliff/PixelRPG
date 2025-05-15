@@ -70,5 +70,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  jsonName: Modifiers.json
-  jsonPath: Preset
+  JsonName: Modifiers.json
+  JsonPath: Preset

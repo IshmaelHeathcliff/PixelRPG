@@ -25,11 +25,11 @@ namespace Items
         Dictionary<string, int> ModifierPool { get; set; }
         string GetRandomModifierID();
     }
-    
+
     [Serializable]
     public class EquipmentBase : Item, IEquipmentBase
     {
-        [JsonProperty][ShowInInspector] public EquipmentType Type { get; set; }
+        [ShowInInspector] public EquipmentType Type { get; set; }
 
         public enum EquipmentRarity
         {
@@ -39,7 +39,7 @@ namespace Items
             Unique
         }
 
-        [JsonProperty][ShowInInspector] public Dictionary<string, int> ModifierPool { get; set; }
+        [ShowInInspector] public Dictionary<string, int> ModifierPool { get; set; }
 
         public string GetRandomModifierID()
         {
@@ -49,6 +49,10 @@ namespace Items
         public override string GetDescription()
         {
             return $"{Name}\n{Type}";
+        }
+
+        public override void Load()
+        {
         }
     }
 }

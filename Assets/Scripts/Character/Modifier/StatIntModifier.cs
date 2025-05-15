@@ -1,5 +1,7 @@
 ﻿using System;
 using Character.Stat;
+using Newtonsoft.Json;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Character.Modifier
@@ -7,6 +9,7 @@ namespace Character.Modifier
     [Serializable]
     public class StatSingleIntModifier : StatModifier<int>
     {
+        [JsonConstructor]
         public StatSingleIntModifier()
         {
 
@@ -32,6 +35,7 @@ namespace Character.Modifier
 
         public override void Check()
         {
+            // TODO: 检查Modifier生效条件
             throw new System.NotImplementedException();
         }
 

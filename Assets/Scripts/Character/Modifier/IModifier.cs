@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 
+
 namespace Character.Modifier
 {
     public interface IModifier
@@ -10,12 +11,12 @@ namespace Character.Modifier
         void Check();
         void Register();
         void Unregister();
-        string ModifierID { get; }
+        string ModifierID { get; set; }
         string FactoryID { get; set; }
         ModifierInfo ModifierInfo { get; set; }
         string GetDescription();
         List<string> Keywords { get; }
-        string InstanceID { get; }
+        string InstanceID { get; set; }
         void Load();
     }
 
@@ -25,11 +26,8 @@ namespace Character.Modifier
         {
             return PixelRPG.Interface.GetSystem<ModifierSystem>().GetModifierInfo(modifierId);
         }
-        
-        [JsonProperty] string _modifierID;
 
-        [JsonProperty] readonly string _instanceID = System.Guid.NewGuid().ToString();
-        [JsonProperty][ShowInInspector] public string FactoryID { get; set; }
+        public string FactoryID { get; set; }
 
         public abstract string GetDescription();
 
@@ -38,39 +36,35 @@ namespace Character.Modifier
         public abstract void Unregister();
         public abstract void Load();
 
-        public string ModifierID
-        {
-            get => _modifierID;
-            protected set => _modifierID = value;
-        }
-        
-        public List<string> Keywords => ModifierInfo.Keywords;
+        public string ModifierID { get; set; }
 
-        public ModifierInfo ModifierInfo { get; set; }
+        [JsonIgnore] public List<string> Keywords => ModifierInfo.Keywords;
 
-        public string InstanceID => _instanceID;
+        [JsonIgnore] public ModifierInfo ModifierInfo { get; set; }
+
+        public string InstanceID { get; set; } = System.Guid.NewGuid().ToString();
     }
-    
+
     public abstract class Modifier<T> : Modifier
     {
-        [JsonProperty] public T Value;
+        public T Value { get; set; }
     }
 
     public abstract class Modifier<T1, T2> : Modifier<T1>
     {
-        protected T2 Value2;
+        public T2 Value2 { get; set; }
     }
-    
+
     /// <summary>
     /// Modifier的生成信息
     /// </summary>
     [Serializable]
     public abstract class ModifierInfo
     {
-        [JsonProperty][ShowInInspector] public string ModifierID { get; set; }
-        [JsonProperty][ShowInInspector] public string Name { get; set; }
-        [JsonProperty][ShowInInspector] public string PositiveDescription { get; set; }
-        [JsonProperty][ShowInInspector] public string NegativeDescription { get; set; }
-        [JsonProperty][ShowInInspector] public List<string> Keywords { get; set; }
+        [ShowInInspector] public string ModifierID { get; set; }
+        [ShowInInspector] public string Name { get; set; }
+        [ShowInInspector] public string PositiveDescription { get; set; }
+        [ShowInInspector] public string NegativeDescription { get; set; }
+        [ShowInInspector] public List<string> Keywords { get; set; }
     }
 }

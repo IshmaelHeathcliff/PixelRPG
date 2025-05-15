@@ -2,6 +2,7 @@
 using Character.Modifier;
 using SaveLoad;
 using Tool;
+using UnityEngine;
 
 namespace Items
 {
@@ -39,7 +40,11 @@ namespace Items
                 Load();
             }
 
-            if (!_lookupCache.TryGetValue(itemID, out IItem item)) return null;
+            if (!_lookupCache.TryGetValue(itemID, out IItem item))
+            {
+                Debug.LogError($"Item with ID {itemID} not found");
+                return null;
+            }
 
 
             return item switch
@@ -54,7 +59,7 @@ namespace Items
             var equipment = new Equipment(equipmentBase)
             {
                 Rarity = WeightRandom<EquipmentBase.EquipmentRarity>.GetRandom(_rarityWeights),
-                Entries = new List<IModifier>()
+                Modifiers = new List<IModifier>()
             };
 
 
@@ -76,13 +81,13 @@ namespace Items
                 _ => 0
             };
 
-            int entryCount = UnityEngine.Random.Range(minEntryCount, maxEntryCount + 1);
+            int modifierCount = UnityEngine.Random.Range(minEntryCount, maxEntryCount + 1);
 
-            for (int i = 0; i < entryCount; i++)
+            for (int i = 0; i < modifierCount; i++)
             {
                 // TODO: 装备只有玩家拥有，所以指定了factoryID为player。让所有对象都可以拥有装备？
-                IStatModifier entry = _modifierSystem.CreateStatModifier(equipment.GetRandomModifierID(), "player");
-                equipment.Entries.Add(entry);
+                IStatModifier modifier = _modifierSystem.CreateStatModifier(equipment.GetRandomModifierID(), "player");
+                equipment.Modifiers.Add(modifier);
             }
 
 

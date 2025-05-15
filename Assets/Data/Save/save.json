@@ -1,120 +1,42 @@
 {
-  "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[SaveLoad.Data, Assembly-CSharp]], mscorlib",
   "Equipments": {
     "$type": "SaveLoad.Data`1[[System.Collections.Generic.Dictionary`2[[Items.EquipmentType, Assembly-CSharp],[Items.IEquipment, Assembly-CSharp]], mscorlib]], Assembly-CSharp",
     "Value": {
-      "$type": "System.Collections.Generic.Dictionary`2[[Items.EquipmentType, Assembly-CSharp],[Items.IEquipment, Assembly-CSharp]], mscorlib",
       "Helmet": null,
       "Armour": null,
       "Gloves": null,
       "Boots": null,
       "MainWeapon": {
         "$type": "Items.Equipment, Assembly-CSharp",
-        "Entries": {
-          "$type": "System.Collections.Generic.List`1[[Character.Entry.IEntry, Assembly-CSharp]], mscorlib",
-          "$values": [
-            {
-              "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-              "Level": 1,
-              "Value": 24.3216972,
-              "_entryID": 1,
-              "_instanceID": "bc604024-fedf-425e-9921-3656eb01ddd3",
-              "EntryID": 1,
-              "EntryInfo": {
-                "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                "AttributeName": "Health",
-                "AttributeType": 2,
-                "MaxLevel": 3,
-                "LevelRanges": {
-                  "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                  "$values": [
-                    {
-                      "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                      "Min": 1.0,
-                      "Max": 20.0
-                    },
-                    {
-                      "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                      "Min": 21.0,
-                      "Max": 40.0
-                    },
-                    {
-                      "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                      "Min": 41.0,
-                      "Max": 60.0
-                    }
-                  ]
-                },
-                "EntryID": 1,
-                "Name": "生命值提高",
-                "EntryType": 0,
-                "FactoryID": "player",
-                "PositiveDescription": "{0}提高{1}%",
-                "NegativeDescription": "{0}降低{1}%"
-              },
-              "InstanceID": "bc604024-fedf-425e-9921-3656eb01ddd3"
-            },
-            {
-              "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-              "Level": 1,
-              "Value": 39.0631866,
-              "_entryID": 1,
-              "_instanceID": "3fd3caed-e9b6-4540-b4cf-84c99752d858",
-              "EntryID": 1,
-              "EntryInfo": {
-                "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                "AttributeName": "Health",
-                "AttributeType": 2,
-                "MaxLevel": 3,
-                "LevelRanges": {
-                  "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                  "$values": [
-                    {
-                      "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                      "Min": 1.0,
-                      "Max": 20.0
-                    },
-                    {
-                      "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                      "Min": 21.0,
-                      "Max": 40.0
-                    },
-                    {
-                      "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                      "Min": 41.0,
-                      "Max": 60.0
-                    }
-                  ]
-                },
-                "EntryID": 1,
-                "Name": "生命值提高",
-                "EntryType": 0,
-                "FactoryID": "player",
-                "PositiveDescription": "{0}提高{1}%",
-                "NegativeDescription": "{0}降低{1}%"
-              },
-              "InstanceID": "3fd3caed-e9b6-4540-b4cf-84c99752d858"
-            }
-          ]
-        },
-        "Rarity": 1,
+        "Modifiers": [
+          {
+            "$type": "Character.Modifier.StatSingleIntModifier, Assembly-CSharp",
+            "Level": 1,
+            "Value": 32,
+            "FactoryID": "player",
+            "ModifierID": "health_increase",
+            "InstanceID": "cbe35299-a5a2-45e3-8a52-69b715b3608e"
+          },
+          {
+            "$type": "Character.Modifier.StatSingleIntModifier, Assembly-CSharp",
+            "Level": 0,
+            "Value": 2,
+            "FactoryID": "player",
+            "ModifierID": "health_more",
+            "InstanceID": "ce15b35d-e515-4c18-bfa2-7fb223436270"
+          }
+        ],
+        "Rarity": 0,
         "Type": 4,
-        "EntryPool": {
-          "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32, mscorlib]], mscorlib",
-          "0": 10,
-          "1": 10,
-          "2": 5
+        "ModifierPool": {
+          "health_base": 10,
+          "health_increase": 20,
+          "health_more": 30
         },
-        "ID": 1,
+        "ID": 2,
         "Name": "大剑",
         "IconName": "Sword/Sword_02_01.png",
-        "Size": {
-          "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-          "x": 2,
-          "y": 3,
-          "magnitude": 3.60555124,
-          "sqrMagnitude": 13
-        }
+        "Size": "(2, 3)"
       },
       "Offhand": null,
       "Belt": null,
@@ -123,561 +45,143 @@
     }
   },
   "Stash": {
-    "$type": "SaveLoad.Data`1[[Items.SerializedInventory, Assembly-CSharp]], Assembly-CSharp",
-    "Value": {
-      "$type": "Items.SerializedInventory, Assembly-CSharp",
-      "_sizeX": 8,
-      "_sizeY": 8,
-      "_itemsWithPos": {
-        "$type": "Items.SerializedInventory+ItemWithPos[], Assembly-CSharp",
-        "$values": [
-          {
-            "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
-            "Item": {
-              "$type": "Items.Equipment, Assembly-CSharp",
-              "Entries": {
-                "$type": "System.Collections.Generic.List`1[[Character.Entry.IEntry, Assembly-CSharp]], mscorlib",
-                "$values": [
-                  {
-                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-                    "Level": 2,
-                    "Value": 21.8654613,
-                    "_entryID": 2,
-                    "_instanceID": "19af92ae-9499-4f15-927f-93e226ec89f5",
-                    "EntryID": 2,
-                    "EntryInfo": {
-                      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                      "AttributeName": "Health",
-                      "AttributeType": 3,
-                      "MaxLevel": 3,
-                      "LevelRanges": {
-                        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                        "$values": [
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 1.0,
-                            "Max": 10.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 11.0,
-                            "Max": 20.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 21.0,
-                            "Max": 30.0
-                          }
-                        ]
-                      },
-                      "EntryID": 2,
-                      "Name": "生命值总增",
-                      "EntryType": 0,
-                      "FactoryID": "player",
-                      "PositiveDescription": "{0}总增{1}%",
-                      "NegativeDescription": "{0}总降{1}%"
-                    },
-                    "InstanceID": "19af92ae-9499-4f15-927f-93e226ec89f5"
-                  },
-                  {
-                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-                    "Level": 0,
-                    "Value": 8.432161,
-                    "_entryID": 2,
-                    "_instanceID": "6ec8c2f3-fce1-46b9-a181-40c030b04271",
-                    "EntryID": 2,
-                    "EntryInfo": {
-                      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                      "AttributeName": "Health",
-                      "AttributeType": 3,
-                      "MaxLevel": 3,
-                      "LevelRanges": {
-                        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                        "$values": [
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 1.0,
-                            "Max": 10.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 11.0,
-                            "Max": 20.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 21.0,
-                            "Max": 30.0
-                          }
-                        ]
-                      },
-                      "EntryID": 2,
-                      "Name": "生命值总增",
-                      "EntryType": 0,
-                      "FactoryID": "player",
-                      "PositiveDescription": "{0}总增{1}%",
-                      "NegativeDescription": "{0}总降{1}%"
-                    },
-                    "InstanceID": "6ec8c2f3-fce1-46b9-a181-40c030b04271"
-                  },
-                  {
-                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-                    "Level": 0,
-                    "Value": 2.80898237,
-                    "_entryID": 1,
-                    "_instanceID": "ea76a81c-f7f4-4811-bf94-8580279f2527",
-                    "EntryID": 1,
-                    "EntryInfo": {
-                      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                      "AttributeName": "Health",
-                      "AttributeType": 2,
-                      "MaxLevel": 3,
-                      "LevelRanges": {
-                        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                        "$values": [
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 1.0,
-                            "Max": 20.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 21.0,
-                            "Max": 40.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 41.0,
-                            "Max": 60.0
-                          }
-                        ]
-                      },
-                      "EntryID": 1,
-                      "Name": "生命值提高",
-                      "EntryType": 0,
-                      "FactoryID": "player",
-                      "PositiveDescription": "{0}提高{1}%",
-                      "NegativeDescription": "{0}降低{1}%"
-                    },
-                    "InstanceID": "ea76a81c-f7f4-4811-bf94-8580279f2527"
-                  }
-                ]
-              },
-              "Rarity": 2,
-              "Type": 4,
-              "EntryPool": {
-                "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32, mscorlib]], mscorlib",
-                "0": 10,
-                "1": 10,
-                "2": 5
-              },
-              "ID": 1,
-              "Name": "大剑",
-              "IconName": "Sword/Sword_02_01.png",
-              "Size": {
-                "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-                "x": 2,
-                "y": 3,
-                "magnitude": 3.60555124,
-                "sqrMagnitude": 13
-              }
-            },
-            "ItemPosX": 0,
-            "ItemPosY": 0
-          },
-          {
-            "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
-            "Item": {
-              "$type": "Items.Coin, Assembly-CSharp",
-              "Count": 2,
-              "MaxCount": 2,
-              "ID": 0,
-              "Name": "金币",
-              "IconName": "Loots/Loots_11.png",
-              "Size": {
-                "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-                "x": 1,
-                "y": 1,
-                "magnitude": 1.41421354,
-                "sqrMagnitude": 2
-              }
-            },
-            "ItemPosX": 0,
-            "ItemPosY": 3
-          }
-        ]
+    "$type": "SaveLoad.Data`3[[UnityEngine.Vector2Int, UnityEngine.CoreModule],[System.Collections.Generic.Dictionary`2[[UnityEngine.Vector2Int, UnityEngine.CoreModule],[Items.IItem, Assembly-CSharp]], mscorlib],[Items.IItem, Assembly-CSharp]], Assembly-CSharp",
+    "Value0": "(8, 10)",
+    "Value1": {
+      "(0, 0)": {
+        "$type": "Items.Equipment, Assembly-CSharp",
+        "Modifiers": [],
+        "Rarity": 0,
+        "Type": 4,
+        "ModifierPool": {
+          "health_base": 10,
+          "health_increase": 20,
+          "health_more": 30
+        },
+        "ID": 2,
+        "Name": "大剑",
+        "IconName": "Sword/Sword_02_01.png",
+        "Size": "(2, 3)"
       }
+    },
+    "Value2": {
+      "$type": "Items.Equipment, Assembly-CSharp",
+      "Modifiers": [
+        {
+          "$type": "Character.Modifier.StatSingleIntModifier, Assembly-CSharp",
+          "Level": 0,
+          "Value": 20,
+          "FactoryID": "player",
+          "ModifierID": "health_base",
+          "InstanceID": "fec9632a-4afe-4267-9484-017aff636665"
+        },
+        {
+          "$type": "Character.Modifier.StatSingleIntModifier, Assembly-CSharp",
+          "Level": 2,
+          "Value": 28,
+          "FactoryID": "player",
+          "ModifierID": "health_more",
+          "InstanceID": "dc50781e-bc5b-49af-bb00-f3270a7571fc"
+        }
+      ],
+      "Rarity": 0,
+      "Type": 4,
+      "ModifierPool": {
+        "health_base": 10,
+        "health_increase": 20,
+        "health_more": 30
+      },
+      "ID": 2,
+      "Name": "大剑",
+      "IconName": "Sword/Sword_02_01.png",
+      "Size": "(2, 3)"
     }
   },
   "Package": {
-    "$type": "SaveLoad.Data`1[[Items.SerializedInventory, Assembly-CSharp]], Assembly-CSharp",
-    "Value": {
-      "$type": "Items.SerializedInventory, Assembly-CSharp",
-      "_sizeX": 8,
-      "_sizeY": 5,
-      "_itemsWithPos": {
-        "$type": "Items.SerializedInventory+ItemWithPos[], Assembly-CSharp",
-        "$values": [
+    "$type": "SaveLoad.Data`3[[UnityEngine.Vector2Int, UnityEngine.CoreModule],[System.Collections.Generic.Dictionary`2[[UnityEngine.Vector2Int, UnityEngine.CoreModule],[Items.IItem, Assembly-CSharp]], mscorlib],[Items.IItem, Assembly-CSharp]], Assembly-CSharp",
+    "Value0": "(8, 5)",
+    "Value1": {
+      "(0, 0)": {
+        "$type": "Items.Coin, Assembly-CSharp",
+        "Count": 4,
+        "MaxCount": 50,
+        "ID": 1,
+        "Name": "金币",
+        "IconName": "Loots/Loots_11.png",
+        "Size": "(1, 1)"
+      },
+      "(6, 0)": {
+        "$type": "Items.Equipment, Assembly-CSharp",
+        "Modifiers": [
           {
-            "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
-            "Item": {
-              "$type": "Items.Equipment, Assembly-CSharp",
-              "Entries": {
-                "$type": "System.Collections.Generic.List`1[[Character.Entry.IEntry, Assembly-CSharp]], mscorlib",
-                "$values": [
-                  {
-                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-                    "Level": 2,
-                    "Value": 42.3175,
-                    "_entryID": 1,
-                    "_instanceID": "31306716-b8a3-4a03-89a3-32ac73112ccb",
-                    "EntryID": 1,
-                    "EntryInfo": {
-                      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                      "AttributeName": "Health",
-                      "AttributeType": 2,
-                      "MaxLevel": 3,
-                      "LevelRanges": {
-                        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                        "$values": [
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 1.0,
-                            "Max": 20.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 21.0,
-                            "Max": 40.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 41.0,
-                            "Max": 60.0
-                          }
-                        ]
-                      },
-                      "EntryID": 1,
-                      "Name": "生命值提高",
-                      "EntryType": 0,
-                      "FactoryID": "player",
-                      "PositiveDescription": "{0}提高{1}%",
-                      "NegativeDescription": "{0}降低{1}%"
-                    },
-                    "InstanceID": "31306716-b8a3-4a03-89a3-32ac73112ccb"
-                  }
-                ]
-              },
-              "Rarity": 0,
-              "Type": 4,
-              "EntryPool": {
-                "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32, mscorlib]], mscorlib",
-                "0": 10,
-                "1": 10,
-                "2": 5
-              },
-              "ID": 1,
-              "Name": "大剑",
-              "IconName": "Sword/Sword_02_01.png",
-              "Size": {
-                "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-                "x": 2,
-                "y": 3,
-                "magnitude": 3.60555124,
-                "sqrMagnitude": 13
-              }
-            },
-            "ItemPosX": 2,
-            "ItemPosY": 0
+            "$type": "Character.Modifier.StatSingleIntModifier, Assembly-CSharp",
+            "Level": 2,
+            "Value": 22,
+            "FactoryID": "player",
+            "ModifierID": "health_more",
+            "InstanceID": "fbe0a1b8-7882-4139-a4f4-8215d484f69d"
           },
           {
-            "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
-            "Item": {
-              "$type": "Items.Equipment, Assembly-CSharp",
-              "Entries": {
-                "$type": "System.Collections.Generic.List`1[[Character.Entry.IEntry, Assembly-CSharp]], mscorlib",
-                "$values": [
-                  {
-                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-                    "Level": 4,
-                    "Value": 47.5748062,
-                    "_entryID": 0,
-                    "_instanceID": "4cc4c753-81c1-46c2-a3b5-3fd487c7d1c7",
-                    "EntryID": 0,
-                    "EntryInfo": {
-                      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                      "AttributeName": "Health",
-                      "AttributeType": 0,
-                      "MaxLevel": 5,
-                      "LevelRanges": {
-                        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                        "$values": [
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 1.0,
-                            "Max": 10.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 11.0,
-                            "Max": 20.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 21.0,
-                            "Max": 30.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 31.0,
-                            "Max": 40.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 41.0,
-                            "Max": 50.0
-                          }
-                        ]
-                      },
-                      "EntryID": 0,
-                      "Name": "生命基础值",
-                      "EntryType": 0,
-                      "FactoryID": "player",
-                      "PositiveDescription": "增加{0}基础值{1}点",
-                      "NegativeDescription": "减少{0}基础值{1}点"
-                    },
-                    "InstanceID": "4cc4c753-81c1-46c2-a3b5-3fd487c7d1c7"
-                  },
-                  {
-                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-                    "Level": 0,
-                    "Value": 8.191392,
-                    "_entryID": 1,
-                    "_instanceID": "3c7aacd0-cc3a-4ecc-8b78-46258ba5601e",
-                    "EntryID": 1,
-                    "EntryInfo": {
-                      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                      "AttributeName": "Health",
-                      "AttributeType": 2,
-                      "MaxLevel": 3,
-                      "LevelRanges": {
-                        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                        "$values": [
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 1.0,
-                            "Max": 20.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 21.0,
-                            "Max": 40.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 41.0,
-                            "Max": 60.0
-                          }
-                        ]
-                      },
-                      "EntryID": 1,
-                      "Name": "生命值提高",
-                      "EntryType": 0,
-                      "FactoryID": "player",
-                      "PositiveDescription": "{0}提高{1}%",
-                      "NegativeDescription": "{0}降低{1}%"
-                    },
-                    "InstanceID": "3c7aacd0-cc3a-4ecc-8b78-46258ba5601e"
-                  },
-                  {
-                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-                    "Level": 2,
-                    "Value": 27.40583,
-                    "_entryID": 0,
-                    "_instanceID": "b480b10f-542b-4a56-976e-da61c05fcba2",
-                    "EntryID": 0,
-                    "EntryInfo": {
-                      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                      "AttributeName": "Health",
-                      "AttributeType": 0,
-                      "MaxLevel": 5,
-                      "LevelRanges": {
-                        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                        "$values": [
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 1.0,
-                            "Max": 10.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 11.0,
-                            "Max": 20.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 21.0,
-                            "Max": 30.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 31.0,
-                            "Max": 40.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 41.0,
-                            "Max": 50.0
-                          }
-                        ]
-                      },
-                      "EntryID": 0,
-                      "Name": "生命基础值",
-                      "EntryType": 0,
-                      "FactoryID": "player",
-                      "PositiveDescription": "增加{0}基础值{1}点",
-                      "NegativeDescription": "减少{0}基础值{1}点"
-                    },
-                    "InstanceID": "b480b10f-542b-4a56-976e-da61c05fcba2"
-                  },
-                  {
-                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-                    "Level": 4,
-                    "Value": 47.1465645,
-                    "_entryID": 0,
-                    "_instanceID": "94e933e9-7324-47b6-b33b-d251a9be5683",
-                    "EntryID": 0,
-                    "EntryInfo": {
-                      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                      "AttributeName": "Health",
-                      "AttributeType": 0,
-                      "MaxLevel": 5,
-                      "LevelRanges": {
-                        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                        "$values": [
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 1.0,
-                            "Max": 10.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 11.0,
-                            "Max": 20.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 21.0,
-                            "Max": 30.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 31.0,
-                            "Max": 40.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 41.0,
-                            "Max": 50.0
-                          }
-                        ]
-                      },
-                      "EntryID": 0,
-                      "Name": "生命基础值",
-                      "EntryType": 0,
-                      "FactoryID": "player",
-                      "PositiveDescription": "增加{0}基础值{1}点",
-                      "NegativeDescription": "减少{0}基础值{1}点"
-                    },
-                    "InstanceID": "94e933e9-7324-47b6-b33b-d251a9be5683"
-                  },
-                  {
-                    "$type": "Character.Entry.AttributeSingleFloatEntry, Assembly-CSharp",
-                    "Level": 0,
-                    "Value": 9.01602,
-                    "_entryID": 1,
-                    "_instanceID": "cbef6bbb-21f3-473a-ad5e-eca3199d817d",
-                    "EntryID": 1,
-                    "EntryInfo": {
-                      "$type": "Character.Entry.AttributeEntryInfo, Assembly-CSharp",
-                      "AttributeName": "Health",
-                      "AttributeType": 2,
-                      "MaxLevel": 3,
-                      "LevelRanges": {
-                        "$type": "Character.Entry.LevelRange[], Assembly-CSharp",
-                        "$values": [
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 1.0,
-                            "Max": 20.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 21.0,
-                            "Max": 40.0
-                          },
-                          {
-                            "$type": "Character.Entry.LevelRange, Assembly-CSharp",
-                            "Min": 41.0,
-                            "Max": 60.0
-                          }
-                        ]
-                      },
-                      "EntryID": 1,
-                      "Name": "生命值提高",
-                      "EntryType": 0,
-                      "FactoryID": "player",
-                      "PositiveDescription": "{0}提高{1}%",
-                      "NegativeDescription": "{0}降低{1}%"
-                    },
-                    "InstanceID": "cbef6bbb-21f3-473a-ad5e-eca3199d817d"
-                  }
-                ]
-              },
-              "Rarity": 2,
-              "Type": 4,
-              "EntryPool": {
-                "$type": "System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Int32, mscorlib]], mscorlib",
-                "0": 10,
-                "1": 10,
-                "2": 5
-              },
-              "ID": 1,
-              "Name": "大剑",
-              "IconName": "Sword/Sword_02_01.png",
-              "Size": {
-                "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-                "x": 2,
-                "y": 3,
-                "magnitude": 3.60555124,
-                "sqrMagnitude": 13
-              }
-            },
-            "ItemPosX": 0,
-            "ItemPosY": 2
+            "$type": "Character.Modifier.StatSingleIntModifier, Assembly-CSharp",
+            "Level": 1,
+            "Value": 31,
+            "FactoryID": "player",
+            "ModifierID": "health_increase",
+            "InstanceID": "e61e2a15-e489-4539-9fce-d3bd5b3bfc59"
           },
           {
-            "$type": "Items.SerializedInventory+ItemWithPos, Assembly-CSharp",
-            "Item": {
-              "$type": "Items.Coin, Assembly-CSharp",
-              "Count": 2,
-              "MaxCount": 2,
-              "ID": 0,
-              "Name": "金币",
-              "IconName": "Loots/Loots_11.png",
-              "Size": {
-                "$type": "UnityEngine.Vector2Int, UnityEngine.CoreModule",
-                "x": 1,
-                "y": 1,
-                "magnitude": 1.41421354,
-                "sqrMagnitude": 2
-              }
-            },
-            "ItemPosX": 0,
-            "ItemPosY": 1
+            "$type": "Character.Modifier.StatSingleIntModifier, Assembly-CSharp",
+            "Level": 0,
+            "Value": 5,
+            "FactoryID": "player",
+            "ModifierID": "health_more",
+            "InstanceID": "04fc125e-2855-46a8-8b8e-f4da0dd143f0"
           }
-        ]
+        ],
+        "Rarity": 1,
+        "Type": 4,
+        "ModifierPool": {
+          "health_base": 10,
+          "health_increase": 20,
+          "health_more": 30
+        },
+        "ID": 2,
+        "Name": "大剑",
+        "IconName": "Sword/Sword_02_01.png",
+        "Size": "(2, 3)"
       }
+    },
+    "Value2": {
+      "$type": "Items.Equipment, Assembly-CSharp",
+      "Modifiers": [
+        {
+          "$type": "Character.Modifier.StatSingleIntModifier, Assembly-CSharp",
+          "Level": 0,
+          "Value": 20,
+          "FactoryID": "player",
+          "ModifierID": "health_base",
+          "InstanceID": "fec9632a-4afe-4267-9484-017aff636665"
+        },
+        {
+          "$type": "Character.Modifier.StatSingleIntModifier, Assembly-CSharp",
+          "Level": 2,
+          "Value": 28,
+          "FactoryID": "player",
+          "ModifierID": "health_more",
+          "InstanceID": "dc50781e-bc5b-49af-bb00-f3270a7571fc"
+        }
+      ],
+      "Rarity": 0,
+      "Type": 4,
+      "ModifierPool": {
+        "health_base": 10,
+        "health_increase": 20,
+        "health_more": 30
+      },
+      "ID": 2,
+      "Name": "大剑",
+      "IconName": "Sword/Sword_02_01.png",
+      "Size": "(2, 3)"
     }
   }
 }
